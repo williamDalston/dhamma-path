@@ -181,6 +181,21 @@
             display: inline-block !important;
             visibility: visible !important;
         }
+        
+        /* Ensure all start buttons are visible */
+        #timer-start-btn, #journal-start-btn, #workout-start-btn, #start-recording-btn {
+            background-color: #2d5016 !important;
+            color: white !important;
+            display: inline-block !important;
+            visibility: visible !important;
+            border: 2px solid #2d5016 !important;
+            font-weight: bold !important;
+        }
+        
+        #timer-start-btn:hover, #journal-start-btn:hover, #workout-start-btn:hover, #start-recording-btn:hover {
+            background-color: #1a3009 !important;
+            border-color: #1a3009 !important;
+        }
         .btn-primary:hover {
             box-shadow: var(--shadow-hover);
         }
@@ -607,6 +622,156 @@
                  </div>
             </section>
 
+            <!-- Daily Morning Routine -->
+            <section class="bg-gradient-to-r from-light-green/30 to-light-gold/30 rounded-xl p-8 sm:p-12">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-charcoal font-lora mb-4">Your Daily Morning Routine</h2>
+                    <p class="text-lg text-charcoal/80 max-w-2xl mx-auto">Start each day with purpose and mindfulness. Choose from these four core practices to build a meaningful morning routine.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Meditation Timer -->
+                    <a href="#" data-page="timer" class="main-nav-link group block p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-black/5 hover:border-forest-green/30">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-forest-green rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-charcoal font-lora mb-2">Meditation Timer</h3>
+                            <p class="text-sm text-charcoal/70 mb-3">5-30 minute guided sessions with customizable bells and progress tracking.</p>
+                            <span class="inline-block px-3 py-1 bg-forest-green/10 text-forest-green text-xs font-semibold rounded-full">Quick Start</span>
+                        </div>
+                    </a>
+
+                    <!-- Mindful Journal -->
+                    <a href="#" data-page="journal" class="main-nav-link group block p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-black/5 hover:border-earthy-gold/30">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-earthy-gold rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-charcoal font-lora mb-2">Mindful Journal</h3>
+                            <p class="text-sm text-charcoal/70 mb-3">Freewriting practice with auto-save and flexible timing options.</p>
+                            <span class="inline-block px-3 py-1 bg-earthy-gold/10 text-earthy-gold text-xs font-semibold rounded-full">Self-Reflection</span>
+                        </div>
+                    </a>
+
+                    <!-- 7-Minute Workout -->
+                    <a href="#" data-page="workout" class="main-nav-link group block p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-black/5 hover:border-light-green/30">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-light-green rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                                <svg class="w-8 h-8 text-forest-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-charcoal font-lora mb-2">7-Minute Workout</h3>
+                            <p class="text-sm text-charcoal/70 mb-3">High-intensity circuit training with visual guides and progress tracking.</p>
+                            <span class="inline-block px-3 py-1 bg-light-green/20 text-forest-green text-xs font-semibold rounded-full">Energy Boost</span>
+                        </div>
+                    </a>
+
+                    <!-- Confidence Practice -->
+                    <a href="#" data-page="interview" class="main-nav-link group block p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-black/5 hover:border-blue-600/30">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-charcoal font-lora mb-2">Confidence Practice</h3>
+                            <p class="text-sm text-charcoal/70 mb-3">Video practice for storytelling, communication, and speaking confidence.</p>
+                            <span class="inline-block px-3 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full">Build Skills</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="text-center mt-8">
+                    <p class="text-sm text-charcoal/60">💡 <strong>Pro Tip:</strong> Start with just 5 minutes of meditation, then add journaling or workout as you build your routine!</p>
+                </div>
+            </section>
+
+            <!-- Daily Progress Tracker -->
+            <section class="bg-white rounded-xl p-8 shadow-sm border border-black/5">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-charcoal font-lora mb-2">Today's Progress</h2>
+                    <p class="text-charcoal/70">Track your daily morning routine completion</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <!-- Meditation Progress -->
+                    <div class="flex items-center p-4 bg-light-green/20 rounded-lg">
+                        <div class="flex-shrink-0">
+                            <div id="meditation-status" class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <p class="text-sm font-medium text-charcoal">Meditation</p>
+                            <p id="meditation-time" class="text-xs text-charcoal/60">Not started</p>
+                        </div>
+                    </div>
+
+                    <!-- Journal Progress -->
+                    <div class="flex items-center p-4 bg-earthy-gold/20 rounded-lg">
+                        <div class="flex-shrink-0">
+                            <div id="journal-status" class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <p class="text-sm font-medium text-charcoal">Journal</p>
+                            <p id="journal-time" class="text-xs text-charcoal/60">Not started</p>
+                        </div>
+                    </div>
+
+                    <!-- Workout Progress -->
+                    <div class="flex items-center p-4 bg-light-green/20 rounded-lg">
+                        <div class="flex-shrink-0">
+                            <div id="workout-status" class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <p class="text-sm font-medium text-charcoal">Workout</p>
+                            <p id="workout-time" class="text-xs text-charcoal/60">Not started</p>
+                        </div>
+                    </div>
+
+                    <!-- Confidence Practice Progress -->
+                    <div class="flex items-center p-4 bg-blue-100 rounded-lg">
+                        <div class="flex-shrink-0">
+                            <div id="confidence-status" class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <p class="text-sm font-medium text-charcoal">Confidence</p>
+                            <p id="confidence-time" class="text-xs text-charcoal/60">Not started</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overall Progress Bar -->
+                <div class="bg-gray-200 rounded-full h-3 mb-4">
+                    <div id="overall-progress" class="bg-gradient-to-r from-forest-green to-earthy-gold h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                
+                <div class="flex justify-between items-center text-sm">
+                    <span id="progress-text" class="text-charcoal/70">Complete 0 of 4 activities</span>
+                    <span id="streak-text" class="text-charcoal/70">🔥 0 day streak</span>
+                 </div>
+            </section>
+
             <!-- Start Your Journey -->
             <section>
                 <h2 class="text-3xl font-bold text-center text-charcoal font-lora mb-10">Begin Your Transformative Journey</h2>
@@ -703,7 +868,7 @@
     <template id="template-about">
         <div class="max-w-3xl mx-auto prose-p:text-charcoal/80">
             <header class="text-center mb-12">
-            <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora">About The Dhamma Path</h1>
+                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora">About The Dhamma Path</h1>
             <p class="mt-4 text-xl">We're dedicated to making the profound wisdom of the Buddha accessible, practical, and transformative for modern seekers.</p>
             </header>
             <div class="text-lg leading-relaxed space-y-6">
@@ -724,7 +889,7 @@
     <template id="template-glossary">
         <div class="max-w-4xl mx-auto">
             <header class="text-center mb-12">
-            <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora">Pāli Glossary</h1>
+                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora">Pāli Glossary</h1>
             <p class="mt-4 max-w-2xl mx-auto text-xl text-charcoal/80">Deepen your understanding with clear definitions of key Buddhist terms from the ancient Pāli language.</p>
             </header>
             <div id="glossary-list" class="space-y-6 stagger-in">
@@ -777,7 +942,7 @@
                     </div>
                 </div>
                 <div class="flex items-center justify-center space-x-4">
-                    <button id="timer-start-btn" class="px-10 py-5 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 transition text-2xl shadow-xl transform hover:scale-105">Begin Meditation</button>
+                    <button id="timer-start-btn" class="px-10 py-5 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 transition text-2xl shadow-xl transform hover:scale-105 border-2 border-forest-green" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">Begin Meditation</button>
                     <button id="timer-pause-btn" class="px-8 py-4 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition text-xl hidden shadow-lg">Pause Session</button>
                     <button id="timer-reset-btn" class="p-4 bg-gray-200 text-charcoal rounded-full hover:bg-gray-300 transition dark:bg-gray-700 dark:hover:bg-gray-600">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 4l1.5 1.5A9 9 0 0120.5 15M20 20l-1.5-1.5A9 9 0 003.5 9"></path></svg>
@@ -813,11 +978,11 @@
                 <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
                     <div class="flex items-center space-x-6">
                         <div class="flex items-center space-x-3">
-                            <label class="flex items-center space-x-2 cursor-pointer">
-                                <input type="checkbox" id="workout-double-mode" class="h-4 w-4 rounded text-forest-green focus:ring-forest-green">
+                 <label class="flex items-center space-x-2 cursor-pointer">
+                    <input type="checkbox" id="workout-double-mode" class="h-4 w-4 rounded text-forest-green focus:ring-forest-green">
                                 <span class="font-medium text-charcoal">14-Minute Mode</span>
-                            </label>
-                        </div>
+                 </label>
+            </div>
                         <div class="flex items-center space-x-3">
                             <label for="workout-sound" class="text-sm font-medium text-charcoal">Sound:</label>
                             <select id="workout-sound" class="px-3 py-2 border border-gray-300/50 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600">
@@ -842,15 +1007,15 @@
                 <!-- Exercise Visual -->
                 <div class="order-2 lg:order-1">
                     <div id="workout-visual" class="bg-light-green rounded-lg p-8 flex items-center justify-center h-80 lg:h-96">
-                        <!-- SVG Animation will be injected here -->
-                    </div>
+                    <!-- SVG Animation will be injected here -->
+                </div>
                     
                     <!-- Exercise Instructions -->
                     <div id="workout-instructions" class="mt-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-black/5">
                         <h3 class="text-lg font-semibold text-charcoal mb-2">Instructions</h3>
                         <p id="workout-instruction-text" class="text-charcoal/80">Get ready to start with jumping jacks. Stand with feet together and arms at your sides.</p>
                     </div>
-                </div>
+                    </div>
 
                 <!-- Workout Controls -->
                 <div class="order-1 lg:order-2">
@@ -873,7 +1038,7 @@
                         <button id="workout-back-btn" class="btn-icon" title="Previous Exercise">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
                         </button>
-                        <button id="workout-start-btn" class="px-10 py-5 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 transition text-2xl shadow-xl transform hover:scale-105">Begin Workout</button>
+                        <button id="workout-start-btn" class="px-10 py-5 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 transition text-2xl shadow-xl transform hover:scale-105 border-2 border-forest-green" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">Begin Workout</button>
                         <button id="workout-pause-btn" class="px-8 py-4 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition text-xl hidden shadow-lg">Pause Session</button>
                         <button id="workout-forward-btn" class="btn-icon" title="Next Exercise">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
@@ -885,7 +1050,7 @@
                         <div class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-black/5">
                             <div id="workout-total-time" class="text-2xl font-bold text-forest-green">0:00</div>
                             <div class="text-sm text-charcoal/70">Total Time</div>
-                        </div>
+                </div>
                         <div class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-black/5">
                             <div id="workout-calories" class="text-2xl font-bold text-earthy-gold">0</div>
                             <div class="text-sm text-charcoal/70">Calories</div>
@@ -909,11 +1074,15 @@
             
             <!-- Quick Morning Practice Options -->
             <div class="bg-earthy-gold/10 p-6 rounded-lg mb-8">
-                <h3 class="text-lg font-semibold text-charcoal mb-4 text-center">Choose Your Morning Practice</h3>
-                <div class="flex flex-wrap justify-center gap-3">
-                    <button data-category="general" class="interview-cat-btn px-6 py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition shadow-lg">Daily Conversations</button>
-                    <button data-category="behavioral" class="interview-cat-btn px-6 py-3 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition shadow-lg">Professional Skills</button>
-                    <button data-category="presentation" class="interview-cat-btn px-6 py-3 bg-light-green text-forest-green font-semibold rounded-lg hover:bg-light-green/80 transition shadow-lg">Presentation Practice</button>
+                <h3 class="text-lg font-semibold text-charcoal mb-4 text-center">Choose Your Confidence Practice</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <button data-category="general" class="interview-cat-btn px-4 py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition shadow-lg text-sm">Daily Life</button>
+                    <button data-category="storytelling" class="interview-cat-btn px-4 py-3 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition shadow-lg text-sm">Storytelling</button>
+                    <button data-category="communication" class="interview-cat-btn px-4 py-3 bg-light-green text-forest-green font-semibold rounded-lg hover:bg-light-green/80 transition shadow-lg text-sm">Communication</button>
+                    <button data-category="creativity" class="interview-cat-btn px-4 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition shadow-lg text-sm">Creativity</button>
+                </div>
+                <div class="mt-4 text-center">
+                    <button id="random-question-btn" class="px-6 py-2 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition shadow-lg">🎲 Random Question</button>
                 </div>
             </div>
 
@@ -934,10 +1103,10 @@
                             </div>
                         </div>
                         <div id="recorder-controls" class="mt-4 flex items-center justify-center space-x-4">
-                    <button id="start-recording-btn" class="px-10 py-5 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 transition text-xl shadow-xl transform hover:scale-105">Start Morning Practice</button>
+                    <button id="start-recording-btn" class="px-10 py-5 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 transition text-xl shadow-xl transform hover:scale-105 border-2 border-forest-green" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">Start Morning Practice</button>
                     <button id="stop-recording-btn" class="px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition text-lg hidden shadow-lg">
                         <span class="flex items-center"><span class="w-3 h-3 bg-white rounded-full mr-2 recording-dot"></span>End Recording</span>
-                    </button>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -955,8 +1124,12 @@
                 </div>
             </div>
             
-            <div class="text-center mt-8">
-                <button id="next-question-btn" class="px-6 py-3 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition">Practice Next Question</button>
+            <div class="text-center mt-8 space-y-4">
+                <div class="flex justify-center space-x-4">
+                    <button id="next-question-btn" class="px-8 py-4 bg-earthy-gold text-white font-bold rounded-xl hover:bg-earthy-gold/90 transition text-lg shadow-xl transform hover:scale-105">🔄 Next Question</button>
+                    <button id="previous-question-btn" class="px-8 py-4 bg-gray-600 text-white font-bold rounded-xl hover:bg-gray-700 transition text-lg shadow-xl transform hover:scale-105">⬅️ Previous</button>
+                </div>
+                <p class="text-sm text-charcoal/70">Click to change your practice prompt</p>
             </div>
         </div>
     </template>
@@ -995,7 +1168,7 @@
                             <option value="3600">1 hour</option>
                         </select>
                     </div>
-                    <button id="journal-start-btn" class="px-10 py-5 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 transition text-xl shadow-xl transform hover:scale-105 w-full lg:w-auto">Begin Freewriting</button>
+                    <button id="journal-start-btn" class="px-10 py-5 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 transition text-xl shadow-xl transform hover:scale-105 w-full lg:w-auto border-2 border-forest-green" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">Begin Freewriting</button>
                 </div>
                 <textarea id="journal-entry" placeholder="Let your thoughts flow freely... the timer will begin as soon as you start typing." class="w-full h-64 p-4 border border-gray-300/50 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600" style="font-family: 'Lora', serif; font-size: 1.1rem; line-height: 1.8;"></textarea>
             </div>
@@ -1245,34 +1418,170 @@
                 "Describe your ideal morning routine.",
                 "What's something you're looking forward to this week?",
                 "How do you stay focused throughout the day?",
-                "What's a recent accomplishment you're proud of?"
+                "What's a recent accomplishment you're proud of?",
+                "Describe your perfect day from start to finish.",
+                "What's the best advice you've ever received?",
+                "Tell me about a person who has influenced you greatly.",
+                "What's something you're currently learning or want to learn?",
+                "Describe a place that makes you feel peaceful.",
+                "What's your favorite way to unwind after a long day?",
+                "Tell me about a book, movie, or song that changed your perspective."
             ],
-            behavioral: [
-                "Tell me about a time you had to adapt to a difficult situation.",
-                "Describe a time you helped someone solve a problem.",
-                "Tell me about a time you had to learn something new quickly.",
-                "How do you handle unexpected challenges?",
-                "Give an example of when you had to work with a difficult person.",
-                "Describe a time you had to make a tough decision.",
-                "Tell me about a time you failed and what you learned from it.",
-                "How do you stay motivated when things get tough?"
+            storytelling: [
+                "Tell me about a time you overcame a fear.",
+                "Describe your most memorable travel experience.",
+                "Share a story about a time you helped someone.",
+                "Tell me about a moment when you felt truly proud.",
+                "Describe a time you had to be brave.",
+                "Share a story about a mistake that taught you something valuable.",
+                "Tell me about a time you had to stand up for what you believed in.",
+                "Describe a moment when you felt completely at peace.",
+                "Share a story about a time you had to start over.",
+                "Tell me about a time you surprised yourself.",
+                "Describe a moment when you felt deeply grateful.",
+                "Share a story about a time you had to be patient.",
+                "Tell me about a time you had to trust your instincts.",
+                "Describe a moment when you felt truly connected to someone.",
+                "Share a story about a time you had to let go of something."
             ],
-            presentation: [
-                "Present your morning routine to a friend.",
+            communication: [
                 "Explain why meditation is important for daily life.",
                 "Describe your ideal work environment.",
                 "Present three ways to stay productive throughout the day.",
                 "Explain the benefits of a healthy morning routine.",
                 "Describe how you would teach someone to be more confident.",
                 "Present your vision for personal growth this year.",
-                "Explain why self-care is essential for success."
+                "Explain why self-care is essential for success.",
+                "Describe how you handle stress and pressure.",
+                "Explain what mindfulness means to you.",
+                "Describe your approach to building meaningful relationships.",
+                "Present your philosophy on work-life balance.",
+                "Explain how you stay motivated during difficult times.",
+                "Describe what success means to you personally.",
+                "Present your thoughts on the importance of gratitude.",
+                "Explain how you would help someone who's feeling overwhelmed."
+            ],
+            creativity: [
+                "If you could have dinner with anyone, who would it be and why?",
+                "Describe your dream job or career path.",
+                "If you could travel anywhere in the world, where would you go?",
+                "What's a skill you wish you had more time to develop?",
+                "If you could solve one world problem, what would it be?",
+                "Describe your ideal weekend.",
+                "What's something you've always wanted to try but haven't yet?",
+                "If you could give your younger self one piece of advice, what would it be?",
+                "Describe a project or hobby you're passionate about.",
+                "What's a goal you have for the next five years?",
+                "If you could learn any language instantly, which would you choose?",
+                "Describe your perfect home or living space.",
+                "What's a cause or issue you care deeply about?",
+                "If you could have any superpower, what would it be and why?",
+                "Describe what happiness looks like to you."
             ]
+        }
+    };
+
+        // --- PROGRESS TRACKING --- //
+        const ProgressTracker = {
+            activities: {
+                meditation: { completed: false, time: null },
+                journal: { completed: false, time: null },
+                workout: { completed: false, time: null },
+                confidence: { completed: false, time: null }
+            },
+            
+            init() {
+                this.loadProgress();
+                this.updateDisplay();
+            },
+            
+            markComplete(activity, duration = null) {
+                this.activities[activity].completed = true;
+                this.activities[activity].time = new Date();
+                this.saveProgress();
+                this.updateDisplay();
+            },
+            
+            loadProgress() {
+                const today = new Date().toDateString();
+                const saved = localStorage.getItem('dailyProgress');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    if (data.date === today) {
+                        this.activities = data.activities;
+                    } else {
+                        // New day, reset progress
+                        this.resetProgress();
+                    }
+                }
+            },
+            
+            saveProgress() {
+                const data = {
+                    date: new Date().toDateString(),
+                    activities: this.activities
+                };
+                localStorage.setItem('dailyProgress', JSON.stringify(data));
+            },
+            
+            resetProgress() {
+                Object.keys(this.activities).forEach(key => {
+                    this.activities[key] = { completed: false, time: null };
+                });
+                this.saveProgress();
+            },
+            
+            updateDisplay() {
+                const completedCount = Object.values(this.activities).filter(a => a.completed).length;
+                const progressPercent = (completedCount / 4) * 100;
+                
+                // Update progress bar
+                const progressBar = document.getElementById('overall-progress');
+                const progressText = document.getElementById('progress-text');
+                if (progressBar && progressText) {
+                    progressBar.style.width = `${progressPercent}%`;
+                    progressText.textContent = `Complete ${completedCount} of 4 activities`;
+                }
+                
+                // Update individual activity status
+                Object.keys(this.activities).forEach(activity => {
+                    const statusEl = document.getElementById(`${activity}-status`);
+                    const timeEl = document.getElementById(`${activity}-time`);
+                    
+                    if (statusEl && timeEl) {
+                        if (this.activities[activity].completed) {
+                            statusEl.className = 'w-8 h-8 rounded-full bg-forest-green flex items-center justify-center';
+                            statusEl.innerHTML = '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+                            const time = this.activities[activity].time;
+                            timeEl.textContent = time ? time.toLocaleTimeString() : 'Completed';
+                        } else {
+                            statusEl.className = 'w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center';
+                            timeEl.textContent = 'Not started';
+                        }
+                    }
+                });
+                
+                // Update streak
+                this.updateStreak();
+            },
+            
+            updateStreak() {
+                const streakEl = document.getElementById('streak-text');
+                if (streakEl) {
+                    // Simple streak calculation - in a real app, you'd track this more sophisticatedly
+                    const allCompleted = Object.values(this.activities).every(a => a.completed);
+                    const streak = allCompleted ? 1 : 0; // Simplified for now
+                    streakEl.textContent = `🔥 ${streak} day streak`;
+                }
         }
     };
 
     // --- APP LOGIC --- //
     document.addEventListener('DOMContentLoaded', () => {
         const mainContent = document.getElementById('main-content');
+            
+            // Initialize progress tracking
+            ProgressTracker.init();
         
         // --- Dark Mode --- //
         const darkModeToggle = document.getElementById('dark-mode-toggle');
@@ -1709,7 +2018,7 @@
                 notification.classList.add('translate-x-full');
             }, 3000);
         };
-
+        
         const navigateTo = (pageName, id = null) => {
             // Show loading for non-instant transitions
             if (pageName !== 'home') {
@@ -1850,7 +2159,7 @@
                     break;
             }
         });
-
+        
         // --- Search with Autocomplete --- //
         const searchInput = document.getElementById('search-input');
         const autocompleteResults = document.getElementById('autocomplete-results');
@@ -2007,6 +2316,8 @@
                             sounds[soundSelect.value].play();
                             logSession();
                             resetTimer();
+                            // Mark meditation as complete
+                            ProgressTracker.markComplete('meditation');
                         }
                     }, 1000);
                 }
@@ -2140,6 +2451,10 @@
                 }
             });
             
+            // Debug button visibility
+            console.log('Timer start button found:', startBtn);
+            console.log('Timer start button visible:', startBtn ? startBtn.offsetWidth > 0 : false);
+            
             startBtn.addEventListener('click', startTimer);
             pauseBtn.addEventListener('click', pauseTimer);
             resetBtn.addEventListener('click', resetTimer);
@@ -2218,7 +2533,7 @@
                     
                     // Add pulse animation during rest
                     timerEl.classList.add('workout-pulse');
-                    if (secondsRemaining === 3 && isPaused === false) speak(`Next: ${currentEx.name}`);
+                     if (secondsRemaining === 3 && isPaused === false) speak(`Next: ${currentEx.name}`);
                 } else {
                     statusEl.textContent = `Workout #${currentExerciseIndex + 1}`;
                     exerciseEl.textContent = currentEx.name;
@@ -2336,6 +2651,8 @@
                  
                  speak('Workout complete. Well done!');
                  showNotification(`Workout complete! You burned ${totalCalories} calories in ${Math.floor(totalTime/60)}:${(totalTime%60).toString().padStart(2, '0')}`);
+                 // Mark workout as complete
+                 ProgressTracker.markComplete('workout');
             }
 
             startBtn.addEventListener('click', startWorkout);
@@ -2405,6 +2722,9 @@
                             url: videoURL,
                             timestamp: new Date()
                         });
+                        
+                        // Mark confidence practice as complete
+                        ProgressTracker.markComplete('confidence');
                     };
                 } catch (err) {
                     console.error("Error accessing camera:", err);
@@ -2419,11 +2739,14 @@
                 const item = document.createElement('div');
                 item.className = 'p-4 bg-light-green dark:bg-gray-700/50 rounded-lg flex items-center justify-between';
                 item.innerHTML = `
-                    <div>
+                    <div class="flex-1">
                         <p class="font-semibold text-charcoal">${recording.question}</p>
                         <p class="text-sm text-charcoal/70">${recording.timestamp.toLocaleTimeString()}</p>
                     </div>
-                    <button class="play-recording-btn px-4 py-2 bg-forest-green text-white text-sm font-semibold rounded-lg hover:bg-forest-green/90 transition" data-url="${recording.url}">Play</button>
+                    <div class="flex space-x-2">
+                        <button class="play-recording-btn px-4 py-2 bg-forest-green text-white text-sm font-semibold rounded-lg hover:bg-forest-green/90 transition" data-url="${recording.url}">▶️ Play</button>
+                        <button class="delete-recording-btn px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition" data-url="${recording.url}">🗑️ Delete</button>
+                    </div>
                 `;
                 recordingsList.appendChild(item);
                 
@@ -2465,16 +2788,61 @@
                 feedbackEl.classList.add('hidden');
             }
             
+            function previousQuestion() {
+                currentQuestionIndex = currentQuestionIndex === 0 ? 
+                    db.interviewQuestions[currentCategory].length - 1 : 
+                    currentQuestionIndex - 1;
+                updateQuestion();
+                playbackVideo.classList.add('hidden');
+                feedbackEl.classList.add('hidden');
+            }
+            
+            // Debug interview button visibility
+            console.log('Interview start button found:', startBtn);
+            console.log('Interview start button visible:', startBtn ? startBtn.offsetWidth > 0 : false);
+            
             startBtn.addEventListener('click', startRecording);
             stopBtn.addEventListener('click', stopRecording);
             nextBtn.addEventListener('click', nextQuestion);
+            
+            // Previous question button
+            const prevBtn = document.getElementById('previous-question-btn');
+            prevBtn.addEventListener('click', previousQuestion);
             catButtons.forEach(btn => btn.addEventListener('click', () => setCategory(btn.dataset.category)));
+            
+            // Random question button
+            const randomBtn = document.getElementById('random-question-btn');
+            randomBtn.addEventListener('click', () => {
+                const allQuestions = Object.values(db.interviewQuestions).flat();
+                const randomIndex = Math.floor(Math.random() * allQuestions.length);
+                questionEl.textContent = allQuestions[randomIndex];
+                // Highlight the random button briefly
+                randomBtn.classList.add('bg-yellow-500');
+                setTimeout(() => randomBtn.classList.remove('bg-yellow-500'), 1000);
+            });
+            
             recordingsList.addEventListener('click', (e) => {
                 if(e.target.classList.contains('play-recording-btn')) {
                     playbackVideo.src = e.target.dataset.url;
                     playbackVideo.classList.remove('hidden');
                     playbackVideo.play();
                     feedbackEl.classList.add('hidden');
+                } else if(e.target.classList.contains('delete-recording-btn')) {
+                    const url = e.target.dataset.url;
+                    // Remove from session recordings array
+                    const index = sessionRecordings.findIndex(r => r.url === url);
+                    if (index > -1) {
+                        sessionRecordings.splice(index, 1);
+                    }
+                    // Remove from DOM
+                    e.target.closest('div').remove();
+                    // Revoke the URL to free memory
+                    URL.revokeObjectURL(url);
+                    // Show no recordings message if list is empty
+                    if (sessionRecordings.length === 0) {
+                        noRecordingsMsg.classList.remove('hidden');
+                        playbackVideo.classList.add('hidden');
+                    }
                 }
             });
             
@@ -2548,6 +2916,9 @@
                     };
                     entries.unshift(newEntry);
                     localStorage.setItem('journalEntries', JSON.stringify(entries));
+                    
+                    // Mark journal as complete
+                    ProgressTracker.markComplete('journal');
                 } catch(e) {
                     console.error("Failed to save journal entry:", e);
                 }
@@ -2587,7 +2958,7 @@
                     resetTimer();
                 }
             });
-
+            
             entryEl.addEventListener('input', () => {
                 if (!isRunning && entryEl.value.length > 0) {
                      startJournal();
