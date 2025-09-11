@@ -178,6 +178,8 @@
             @apply px-6 py-3 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105;
             background: var(--gradient-primary);
             box-shadow: var(--shadow-soft);
+            display: inline-block !important;
+            visibility: visible !important;
         }
         .btn-primary:hover {
             box-shadow: var(--shadow-hover);
@@ -751,17 +753,18 @@
                     <circle class="timer-ring-bg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent"></circle>
                     <circle id="timer-progress-ring" class="timer-ring-fg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent" stroke-dasharray="283" stroke-dashoffset="283"></circle>
                 </svg>
-                <div id="timer-display" class="absolute inset-0 flex items-center justify-center text-5xl font-lora text-charcoal">10:00</div>
+                <div id="timer-display" class="absolute inset-0 flex items-center justify-center text-6xl font-lora text-charcoal font-bold">10:00</div>
             </div>
             <div id="timer-controls">
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center mb-6">
                     <div>
                         <label for="duration-select" class="text-sm uppercase tracking-wider text-charcoal/70">Meditation Duration</label>
-                        <div id="duration-buttons" class="flex justify-center space-x-2 mt-2">
-                            <button data-duration="10" class="timer-duration-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition">10</button>
-                            <button data-duration="15" class="timer-duration-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition">15</button>
-                            <button data-duration="20" class="timer-duration-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition">20</button>
-                            <button data-duration="30" class="timer-duration-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition">30</button>
+                        <div id="duration-buttons" class="flex flex-wrap justify-center gap-2 mt-2">
+                            <button data-duration="5" class="timer-duration-btn px-4 py-2 rounded-full bg-forest-green text-white font-semibold transition hover:bg-forest-green/90">5 min</button>
+                            <button data-duration="10" class="timer-duration-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition hover:bg-light-green/80">10 min</button>
+                            <button data-duration="15" class="timer-duration-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition hover:bg-light-green/80">15 min</button>
+                            <button data-duration="20" class="timer-duration-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition hover:bg-light-green/80">20 min</button>
+                            <button data-duration="30" class="timer-duration-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition hover:bg-light-green/80">30 min</button>
                         </div>
                     </div>
                      <div>
@@ -774,8 +777,8 @@
                     </div>
                 </div>
                 <div class="flex items-center justify-center space-x-4">
-                    <button id="timer-start-btn" class="px-8 py-4 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition text-xl">Begin Meditation</button>
-                    <button id="timer-pause-btn" class="px-8 py-4 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition text-xl hidden">Pause Session</button>
+                    <button id="timer-start-btn" class="px-10 py-5 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 transition text-2xl shadow-xl transform hover:scale-105">Begin Meditation</button>
+                    <button id="timer-pause-btn" class="px-8 py-4 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition text-xl hidden shadow-lg">Pause Session</button>
                     <button id="timer-reset-btn" class="p-4 bg-gray-200 text-charcoal rounded-full hover:bg-gray-300 transition dark:bg-gray-700 dark:hover:bg-gray-600">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 4l1.5 1.5A9 9 0 0120.5 15M20 20l-1.5-1.5A9 9 0 003.5 9"></path></svg>
                     </button>
@@ -870,8 +873,8 @@
                         <button id="workout-back-btn" class="btn-icon" title="Previous Exercise">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
                         </button>
-                        <button id="workout-start-btn" class="btn-primary text-xl px-8 py-4">Begin Workout</button>
-                        <button id="workout-pause-btn" class="btn-secondary text-xl px-8 py-4 hidden">Pause Session</button>
+                        <button id="workout-start-btn" class="px-10 py-5 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 transition text-2xl shadow-xl transform hover:scale-105">Begin Workout</button>
+                        <button id="workout-pause-btn" class="px-8 py-4 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition text-xl hidden shadow-lg">Pause Session</button>
                         <button id="workout-forward-btn" class="btn-icon" title="Next Exercise">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
                         </button>
@@ -900,13 +903,18 @@
     <template id="template-interview">
         <div class="max-w-5xl mx-auto">
             <header class="text-center mb-12">
-            <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora">Confident Interview Practice</h1>
-            <p class="mt-4 max-w-2xl mx-auto text-xl text-charcoal/80">Build confidence and refine your responses with our interactive interview simulator. Practice with real questions and review your performance privately.</p>
+            <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora">Morning Confidence Practice</h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-charcoal/80">Start your day with confidence! Practice speaking skills, build self-assurance, and prepare for any conversation with our quick morning practice sessions.</p>
             </header>
             
-            <div id="interview-controls" class="flex justify-center space-x-2 mb-8">
-                 <button data-category="general" class="interview-cat-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition">General / HR</button>
-                 <button data-category="behavioral" class="interview-cat-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition">Behavioral</button>
+            <!-- Quick Morning Practice Options -->
+            <div class="bg-earthy-gold/10 p-6 rounded-lg mb-8">
+                <h3 class="text-lg font-semibold text-charcoal mb-4 text-center">Choose Your Morning Practice</h3>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button data-category="general" class="interview-cat-btn px-6 py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition shadow-lg">Daily Conversations</button>
+                    <button data-category="behavioral" class="interview-cat-btn px-6 py-3 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition shadow-lg">Professional Skills</button>
+                    <button data-category="presentation" class="interview-cat-btn px-6 py-3 bg-light-green text-forest-green font-semibold rounded-lg hover:bg-light-green/80 transition shadow-lg">Presentation Practice</button>
+                </div>
             </div>
 
             <div id="interview-question-box" class="p-6 bg-light-gold rounded-lg text-center mb-8">
@@ -926,8 +934,8 @@
                             </div>
                         </div>
                         <div id="recorder-controls" class="mt-4 flex items-center justify-center space-x-4">
-                    <button id="start-recording-btn" class="px-6 py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition">Start Practice</button>
-                    <button id="stop-recording-btn" class="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition hidden">
+                    <button id="start-recording-btn" class="px-10 py-5 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 transition text-xl shadow-xl transform hover:scale-105">Start Morning Practice</button>
+                    <button id="stop-recording-btn" class="px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition text-lg hidden shadow-lg">
                         <span class="flex items-center"><span class="w-3 h-3 bg-white rounded-full mr-2 recording-dot"></span>End Recording</span>
                     </button>
                         </div>
@@ -960,15 +968,25 @@
             <p class="mt-4 max-w-2xl mx-auto text-xl text-charcoal/80">Cultivate self-awareness through stream-of-consciousness writing. Let your thoughts flow freely for your chosen duration—everything saves automatically.</p>
             </header>
             
+            <!-- Quick Morning Presets -->
+            <div class="bg-earthy-gold/10 p-4 rounded-lg mb-4">
+                <h3 class="text-lg font-semibold text-charcoal mb-3 text-center">Quick Morning Presets</h3>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button class="quick-preset-btn px-6 py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition shadow-lg" data-duration="300">5-Min Quick</button>
+                    <button class="quick-preset-btn px-6 py-3 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition shadow-lg" data-duration="600">10-Min Standard</button>
+                    <button class="quick-preset-btn px-6 py-3 bg-light-green text-forest-green font-semibold rounded-lg hover:bg-light-green/80 transition shadow-lg" data-duration="900">15-Min Deep</button>
+                </div>
+            </div>
+            
             <div class="bg-light-green p-6 rounded-lg shadow-sm mb-6">
-                <div class="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-4 sm:space-y-0">
+                <div class="flex flex-col lg:flex-row justify-between items-center mb-4 space-y-4 lg:space-y-0">
                     <div class="flex items-center space-x-4">
-                        <div id="journal-timer" class="text-2xl font-lora text-forest-green font-bold">10:00</div>
+                        <div id="journal-timer" class="text-3xl font-lora text-forest-green font-bold">10:00</div>
                         <div class="text-sm text-charcoal/70">remaining</div>
                     </div>
                     <div class="flex items-center space-x-3">
-                        <label for="timer-duration" class="text-sm font-medium text-charcoal">Writing Duration:</label>
-                        <select id="timer-duration" class="px-3 py-2 border border-gray-300/50 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600">
+                        <label for="timer-duration" class="text-sm font-medium text-charcoal">Custom Duration:</label>
+                        <select id="timer-duration" class="px-4 py-2 border border-gray-300/50 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600 bg-white">
                             <option value="300">5 minutes</option>
                             <option value="600" selected>10 minutes</option>
                             <option value="900">15 minutes</option>
@@ -977,7 +995,7 @@
                             <option value="3600">1 hour</option>
                         </select>
                     </div>
-                    <button id="journal-start-btn" class="btn-primary">Begin Freewriting</button>
+                    <button id="journal-start-btn" class="px-10 py-5 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 transition text-xl shadow-xl transform hover:scale-105 w-full lg:w-auto">Begin Freewriting</button>
                 </div>
                 <textarea id="journal-entry" placeholder="Let your thoughts flow freely... the timer will begin as soon as you start typing." class="w-full h-64 p-4 border border-gray-300/50 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600" style="font-family: 'Lora', serif; font-size: 1.1rem; line-height: 1.8;"></textarea>
             </div>
@@ -1221,18 +1239,33 @@
         interviewQuestions: {
             general: [
                 "Tell me about yourself.",
-                "Where do you see yourself in five years?",
-                "Why do you want to work for this company?",
-                "What are your salary expectations?",
-                "Why are you leaving your current job?",
-                "Do you have any questions for us?"
+                "What are your goals for today?",
+                "How do you like to start your mornings?",
+                "What motivates you to get up each day?",
+                "Describe your ideal morning routine.",
+                "What's something you're looking forward to this week?",
+                "How do you stay focused throughout the day?",
+                "What's a recent accomplishment you're proud of?"
             ],
             behavioral: [
-                "Tell me about a time you had a conflict with a coworker.",
-                "Describe a time you went above and beyond.",
-                "Tell me about a time you failed. What did you learn?",
-                "How do you handle pressure or stressful situations?",
-                "Give an example of a goal you reached and how you achieved it."
+                "Tell me about a time you had to adapt to a difficult situation.",
+                "Describe a time you helped someone solve a problem.",
+                "Tell me about a time you had to learn something new quickly.",
+                "How do you handle unexpected challenges?",
+                "Give an example of when you had to work with a difficult person.",
+                "Describe a time you had to make a tough decision.",
+                "Tell me about a time you failed and what you learned from it.",
+                "How do you stay motivated when things get tough?"
+            ],
+            presentation: [
+                "Present your morning routine to a friend.",
+                "Explain why meditation is important for daily life.",
+                "Describe your ideal work environment.",
+                "Present three ways to stay productive throughout the day.",
+                "Explain the benefits of a healthy morning routine.",
+                "Describe how you would teach someone to be more confident.",
+                "Present your vision for personal growth this year.",
+                "Explain why self-care is essential for success."
             ]
         }
     };
@@ -1956,6 +1989,7 @@
             }
 
             function startTimer() {
+                console.log('Timer start clicked, isPaused:', isPaused);
                 if (isPaused) {
                     isPaused = false;
                     startBtn.classList.add('hidden');
@@ -2469,6 +2503,7 @@
                 totalDuration = parseInt(durationSelect.value);
                 secondsRemaining = totalDuration;
                 updateDisplay();
+                console.log('Journal timer reset to:', secondsRemaining, 'seconds');
             }
 
             function startJournal() {
@@ -2560,9 +2595,22 @@
             });
             
             startBtn.addEventListener('click', () => {
+                console.log('Journal start clicked');
                 entryEl.disabled = false;
                 entryEl.value = '';
                 entryEl.focus();
+            });
+
+            // Quick preset buttons
+            document.querySelectorAll('.quick-preset-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const duration = parseInt(btn.dataset.duration);
+                    durationSelect.value = duration;
+                    resetTimer();
+                    // Visual feedback
+                    document.querySelectorAll('.quick-preset-btn').forEach(b => b.classList.remove('ring-2', 'ring-forest-green'));
+                    btn.classList.add('ring-2', 'ring-forest-green');
+                });
             });
 
             // Initialize timer display
