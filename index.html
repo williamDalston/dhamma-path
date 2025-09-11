@@ -745,6 +745,974 @@
             left: 100%;
         }
         
+        /* Ambient Motion Effects */
+        .ambient-breathe {
+            animation: ambientBreathe 8s ease-in-out infinite;
+        }
+        
+        .ambient-float {
+            animation: ambientFloat 12s ease-in-out infinite;
+        }
+        
+        .ambient-gradient {
+            background: linear-gradient(-45deg, #f0f8f0, #e8f5e8, #f5f0e8, #f0f8f0);
+            background-size: 400% 400%;
+            animation: ambientGradient 20s ease infinite;
+        }
+        
+        .ambient-shadow {
+            animation: ambientShadow 6s ease-in-out infinite;
+        }
+        
+        .floating-particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 15s linear infinite;
+        }
+        
+        .particle-1 { width: 4px; height: 4px; background: rgba(45, 80, 22, 0.1); }
+        .particle-2 { width: 6px; height: 6px; background: rgba(184, 134, 11, 0.08); }
+        .particle-3 { width: 3px; height: 3px; background: rgba(212, 237, 218, 0.12); }
+        .particle-4 { width: 5px; height: 5px; background: rgba(45, 80, 22, 0.06); }
+        .particle-5 { width: 4px; height: 4px; background: rgba(184, 134, 11, 0.1); }
+        
+        @keyframes ambientBreathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.02); opacity: 1; }
+        }
+        
+        @keyframes ambientFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(1deg); }
+            50% { transform: translateY(-5px) rotate(-1deg); }
+            75% { transform: translateY(-15px) rotate(0.5deg); }
+        }
+        
+        @keyframes ambientGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes ambientShadow {
+            0%, 100% { 
+                box-shadow: 0 10px 25px rgba(45, 80, 22, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
+            }
+            50% { 
+                box-shadow: 0 15px 35px rgba(45, 80, 22, 0.15), 0 6px 15px rgba(0, 0, 0, 0.08);
+            }
+        }
+        
+        @keyframes particleFloat {
+            0% { 
+                transform: translateY(100vh) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { 
+                transform: translateY(-100px) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Enhanced breathing for existing elements */
+        .enhanced-breathe {
+            animation: enhancedBreathe 6s ease-in-out infinite;
+        }
+        
+        @keyframes enhancedBreathe {
+            0%, 100% { 
+                transform: scale(1) translateY(0px);
+                filter: brightness(1);
+            }
+            50% { 
+                transform: scale(1.01) translateY(-2px);
+                filter: brightness(1.02);
+            }
+        }
+        
+        /* Gentle card breathing */
+        .card-breathe-gentle {
+            animation: cardBreatheGentle 8s ease-in-out infinite;
+        }
+        
+        @keyframes cardBreatheGentle {
+            0%, 100% { 
+                transform: translateY(0px);
+                box-shadow: 0 10px 25px rgba(45, 80, 22, 0.1);
+            }
+            50% { 
+                transform: translateY(-1px);
+                box-shadow: 0 12px 30px rgba(45, 80, 22, 0.12);
+            }
+        }
+        
+        /* Typography Enhancements */
+        
+        /* Beautiful Text Selection Styling */
+        ::selection {
+            background: linear-gradient(135deg, rgba(45, 80, 22, 0.2), rgba(184, 134, 11, 0.2));
+            color: #2d5016;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        }
+        
+        ::-moz-selection {
+            background: linear-gradient(135deg, rgba(45, 80, 22, 0.2), rgba(184, 134, 11, 0.2));
+            color: #2d5016;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Smooth Text Transitions */
+        .text-smooth-transition {
+            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+        }
+        
+        .text-smooth-transition:hover {
+            color: #2d5016;
+            text-shadow: 0 2px 4px rgba(45, 80, 22, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        /* Enhanced Typography Hierarchy */
+        .text-hierarchy-1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+        
+        .text-hierarchy-2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.25rem;
+        }
+        
+        .text-hierarchy-3 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            line-height: 1.3;
+            letter-spacing: 0;
+            margin-bottom: 1rem;
+        }
+        
+        .text-hierarchy-4 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+            letter-spacing: 0;
+            margin-bottom: 0.875rem;
+        }
+        
+        .text-hierarchy-5 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            line-height: 1.5;
+            letter-spacing: 0;
+            margin-bottom: 0.75rem;
+        }
+        
+        .text-body-large {
+            font-size: 1.125rem;
+            font-weight: 400;
+            line-height: 1.7;
+            letter-spacing: 0.01em;
+        }
+        
+        .text-body {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.6;
+            letter-spacing: 0.01em;
+        }
+        
+        .text-body-small {
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+        }
+        
+        /* Reading Progress Indicator */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #2d5016, #b8860b, #d4edda);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            box-shadow: 0 2px 4px rgba(45, 80, 22, 0.2);
+        }
+        
+        /* Enhanced Text Effects */
+        .text-glow-subtle {
+            text-shadow: 0 0 20px rgba(45, 80, 22, 0.1);
+        }
+        
+        .text-glow-medium {
+            text-shadow: 0 0 30px rgba(45, 80, 22, 0.15);
+        }
+        
+        .text-glow-strong {
+            text-shadow: 0 0 40px rgba(45, 80, 22, 0.2);
+        }
+        
+        /* Smooth Color Transitions for Links */
+        .link-smooth {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .link-smooth:hover {
+            color: #2d5016;
+            transform: translateY(-1px);
+        }
+        
+        .link-smooth::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #2d5016, #b8860b);
+            transition: width 0.3s ease;
+        }
+        
+        .link-smooth:hover::after {
+            width: 100%;
+        }
+        
+        /* Enhanced Paragraph Spacing */
+        .paragraph-spacing {
+            margin-bottom: 1.5rem;
+        }
+        
+        .paragraph-spacing:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Typography Focus States */
+        .text-focus {
+            transition: all 0.2s ease;
+        }
+        
+        .text-focus:focus {
+            outline: none;
+            color: #2d5016;
+            text-shadow: 0 0 8px rgba(45, 80, 22, 0.2);
+        }
+        
+        /* Reading Flow Enhancements */
+        .reading-flow {
+            max-width: 65ch;
+            margin: 0 auto;
+        }
+        
+        .reading-flow h1,
+        .reading-flow h2,
+        .reading-flow h3,
+        .reading-flow h4,
+        .reading-flow h5,
+        .reading-flow h6 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .reading-flow p {
+            margin-bottom: 1.25rem;
+        }
+        
+        .reading-flow ul,
+        .reading-flow ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        
+        .reading-flow li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Enhanced Quote Styling */
+        .quote-enhanced {
+            position: relative;
+            padding: 2rem;
+            margin: 2rem 0;
+            background: linear-gradient(135deg, rgba(45, 80, 22, 0.05), rgba(184, 134, 11, 0.05));
+            border-left: 4px solid #2d5016;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            font-size: 1.125rem;
+            line-height: 1.7;
+        }
+        
+        .quote-enhanced::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: rgba(45, 80, 22, 0.2);
+            font-family: serif;
+        }
+        
+        /* Micro-Interactions & Feedback */
+        
+        /* Button Press Animations */
+        .btn-press {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-press:active {
+            transform: translateY(2px) scale(0.98);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-press:active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            animation: pressRipple 0.3s ease-out;
+        }
+        
+        @keyframes pressRipple {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+        
+        /* Enhanced Form Focus States */
+        .form-focus {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .form-focus:focus {
+            outline: none;
+            border-color: #2d5016;
+            box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1), 0 0 0 6px rgba(45, 80, 22, 0.05);
+            transform: translateY(-1px);
+        }
+        
+        .form-focus:focus::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 2px solid transparent;
+            border-radius: inherit;
+            background: linear-gradient(45deg, #2d5016, #b8860b) border-box;
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            animation: focusPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes focusPulse {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+        
+        /* Skeleton Loading States */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeletonLoading 1.5s infinite;
+            border-radius: 4px;
+        }
+        
+        .skeleton-text {
+            height: 1em;
+            margin-bottom: 0.5rem;
+        }
+        
+        .skeleton-text:last-child {
+            margin-bottom: 0;
+        }
+        
+        .skeleton-text.w-3\/4 {
+            width: 75%;
+        }
+        
+        .skeleton-text.w-1\/2 {
+            width: 50%;
+        }
+        
+        .skeleton-text.w-1\/4 {
+            width: 25%;
+        }
+        
+        .skeleton-card {
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        @keyframes skeletonLoading {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+        
+        /* Success/Error Feedback */
+        .feedback-success {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            animation: feedbackSlideIn 0.4s ease-out;
+        }
+        
+        .feedback-error {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            animation: feedbackSlideIn 0.4s ease-out;
+        }
+        
+        .feedback-info {
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            animation: feedbackSlideIn 0.4s ease-out;
+        }
+        
+        @keyframes feedbackSlideIn {
+            0% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Button State Feedback */
+        .btn-success {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            animation: successPulse 0.6s ease-out;
+        }
+        
+        .btn-error {
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            color: white;
+            animation: errorShake 0.6s ease-out;
+        }
+        
+        @keyframes successPulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes errorShake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-5px);
+            }
+            75% {
+                transform: translateX(5px);
+            }
+        }
+        
+        /* Loading Spinner Enhancements */
+        .loading-spinner-enhanced {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2d5016;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: relative;
+        }
+        
+        .loading-spinner-enhanced::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid #b8860b;
+            border-radius: 50%;
+            animation: spin 0.5s linear infinite reverse;
+        }
+        
+        /* Progress Indicators */
+        .progress-indicator {
+            position: relative;
+            overflow: hidden;
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 8px;
+        }
+        
+        .progress-indicator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: progressShimmer 2s infinite;
+        }
+        
+        @keyframes progressShimmer {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            animation: toastSlideIn 0.3s ease-out;
+            max-width: 300px;
+        }
+        
+        .toast-success {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+        
+        .toast-error {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+        
+        .toast-info {
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+        
+        @keyframes toastSlideIn {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Hover State Enhancements */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .hover-glow {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-glow:hover {
+            box-shadow: 0 0 20px rgba(45, 80, 22, 0.3);
+        }
+        
+        /* Scroll-Based Animations */
+        
+        /* Parallax Elements */
+        .parallax-slow {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+        
+        .parallax-medium {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+        
+        .parallax-fast {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+        
+        /* Fade-in on Scroll */
+        .fade-in-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .fade-in-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .fade-in-scroll-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .fade-in-scroll-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .fade-in-scroll-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .fade-in-scroll-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .fade-in-scroll-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .fade-in-scroll-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* Sticky Elements */
+        .sticky-element {
+            position: sticky;
+            top: 20px;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .sticky-element.sticky {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        
+        /* Interactive Elements */
+        
+        /* Enhanced Ripple Effects */
+        .ripple-enhanced {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .ripple-enhanced::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            pointer-events: none;
+        }
+        
+        .ripple-enhanced:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* Card Lift Effects */
+        .card-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .card-lift:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-lift:active {
+            transform: translateY(-4px) scale(1.01);
+        }
+        
+        /* Animated Link Underlines */
+        .link-underline {
+            position: relative;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .link-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #2d5016, #b8860b);
+            transition: width 0.3s ease;
+        }
+        
+        .link-underline:hover::after {
+            width: 100%;
+        }
+        
+        .link-underline-draw {
+            position: relative;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .link-underline-draw::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #2d5016, #b8860b);
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: left;
+        }
+        
+        .link-underline-draw:hover::after {
+            width: 100%;
+        }
+        
+        /* Performance & Polish */
+        
+        /* Smooth Transitions */
+        .smooth-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .smooth-transition-fast {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .smooth-transition-slow {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Lazy Loading */
+        .lazy-load {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .lazy-load.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Error Boundaries */
+        .error-boundary {
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            color: #721c24;
+        }
+        
+        .error-boundary h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .error-boundary button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .error-boundary button:hover {
+            background: #c82333;
+        }
+        
+        /* Offline Indicators */
+        .offline-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #dc3545;
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            z-index: 9999;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .offline-indicator.show {
+            transform: translateY(0);
+        }
+        
+        .online-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #28a745;
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            z-index: 9999;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .online-indicator.show {
+            transform: translateY(0);
+        }
+        
+        /* Loading States */
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeletonLoading 1.5s infinite;
+            border-radius: 4px;
+        }
+        
+        .loading-skeleton-text {
+            height: 1em;
+            margin-bottom: 0.5rem;
+        }
+        
+        .loading-skeleton-text:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #2d5016, #b8860b, #d4edda);
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+        
+        /* Intersection Observer Classes */
+        .observe-fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .observe-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .observe-slide-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .observe-slide-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .observe-slide-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .observe-slide-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .observe-scale {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .observe-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* Ripple Effect */
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
         /* Respect reduced motion */
         @media (prefers-reduced-motion: reduce) {
             .breathing-bg,
@@ -752,8 +1720,44 @@
             .icon-breathe,
             .float-animation,
             .zen-particles::before,
-            .zen-particles::after {
-                animation: none;
+            .zen-particles::after,
+            .ambient-breathe,
+            .ambient-float,
+            .ambient-gradient,
+            .ambient-shadow,
+            .floating-particle,
+            .enhanced-breathe,
+            .card-breathe-gentle,
+            .btn-press:active,
+            .form-focus:focus::after,
+            .skeleton,
+            .feedback-success,
+            .feedback-error,
+            .feedback-info,
+            .btn-success,
+            .btn-error,
+            .loading-spinner-enhanced,
+            .progress-indicator::before,
+            .toast,
+            .parallax-slow,
+            .parallax-medium,
+            .parallax-fast,
+            .fade-in-scroll,
+            .fade-in-scroll-left,
+            .fade-in-scroll-right,
+            .fade-in-scroll-scale,
+            .ripple-enhanced::before,
+            .card-lift,
+            .link-underline::after,
+            .link-underline-draw::after,
+            .loading-skeleton,
+            .observe-fade-in,
+            .observe-slide-left,
+            .observe-slide-right,
+            .observe-scale {
+                animation: none !important;
+                transform: none !important;
+                transition: none !important;
             }
         }
         
@@ -1140,22 +2144,22 @@
                         <path class="logo-path" fill="url(#logoGradient)" stroke="none" d="M20 80 C 30 45, 50 30, 50 20 C 50 30, 60 40, 70 50 C 90 40, 80 70, 50 80 C 20 90, 30 50, 20 80 Z" />
                         <circle cx="50" cy="50" r="3" fill="currentColor" opacity="0.6"/>
                     </svg>
-                    <span class="font-lora text-2xl font-bold text-charcoal">The Dhamma Path</span>
+                    <span class="font-lora text-lg font-bold text-charcoal">The Dhamma Path</span>
                 </a>
 
                 <!-- Enhanced Desktop Nav -->
                 <div id="desktop-nav-links" class="hidden md:flex items-center space-x-1">
                     <!-- Activities First -->
-                    <a href="#" data-page="timer" class="main-nav-link gradient-underline text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">🧘 Meditate</a>
-                    <a href="#" data-page="journal" class="main-nav-link gradient-underline text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">✍️ Journal</a>
-                    <a href="#" data-page="workout" class="main-nav-link gradient-underline text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">💪 Exercise</a>
-                    <a href="#" data-page="interview" class="main-nav-link gradient-underline text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">🎤 Practice</a>
+                    <a href="#" data-page="timer" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">🧘 Meditate</a>
+                    <a href="#" data-page="journal" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">✍️ Journal</a>
+                    <a href="#" data-page="workout" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">💪 Exercise</a>
+                    <a href="#" data-page="interview" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">🎤 Practice</a>
                     <!-- Info Pages Last -->
-                    <a href="#" data-page="category-meditation" class="main-nav-link gradient-underline text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">📚 Learning</a>
-                    <a href="#" data-page="glossary" class="main-nav-link gradient-underline text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">Glossary</a>
-                    <a href="#" data-page="about" class="main-nav-link gradient-underline text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">About</a>
+                    <a href="#" data-page="category-meditation" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">📚 Learning</a>
+                    <a href="#" data-page="glossary" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">Glossary</a>
+                    <a href="#" data-page="about" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">About</a>
                     <div class="relative">
-                        <input type="search" id="search-input" placeholder="Search wisdom..." class="focus-grow focus-ring w-40 bg-gradient-to-r from-gray-100 to-gray-50 border border-transparent rounded-full px-4 py-2 focus:w-48 focus:bg-white focus:border-earthy-gold focus:outline-none focus:shadow-lg transition-all duration-300 dark:bg-gray-700 dark:text-white">
+                        <input type="search" id="search-input" placeholder="Search wisdom..." class="form-focus focus-grow focus-ring w-40 bg-gradient-to-r from-gray-100 to-gray-50 border border-transparent rounded-full px-4 py-2 focus:w-48 focus:bg-white focus:border-earthy-gold focus:outline-none focus:shadow-lg transition-all duration-300 dark:bg-gray-700 dark:text-white">
                         <svg class="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         <div id="autocomplete-results" class="hidden absolute top-full mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl"></div>
                     </div>
@@ -1199,6 +2203,22 @@
         </div>
     </header>
 
+    <!-- Reading Progress Indicator -->
+    <div class="reading-progress" id="reading-progress"></div>
+    
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+    
+    <!-- Offline Indicator -->
+    <div class="offline-indicator" id="offline-indicator">
+        <span>You're offline. Some features may not be available.</span>
+    </div>
+    
+    <!-- Online Indicator -->
+    <div class="online-indicator" id="online-indicator">
+        <span>You're back online!</span>
+    </div>
+    
     <!-- Loading Indicator -->
     <div id="loading-indicator" class="fixed inset-0 bg-linen-white/90 backdrop-blur-sm z-50 flex items-center justify-center hidden">
         <div class="text-center fade-in-scale">
@@ -1258,7 +2278,7 @@
         <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="space-y-4 md:col-span-2">
-                    <a href="#" data-page="home" class="main-nav-link flex items-center space-x-2" aria-label="The Dhamma Path - Home">
+                    <a href="#" data-page="home" class="main-nav-link link-smooth flex items-center space-x-2" aria-label="The Dhamma Path - Home">
                          <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="fill-charcoal transition-colors duration-300" aria-hidden="true">
                              <defs>
                                  <linearGradient id="logoGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1304,23 +2324,31 @@
     <template id="template-home">
         <article class="space-y-16 sm:space-y-24 max-w-5xl mx-auto">
             <!-- Hero Section -->
-            <header class="text-left py-16 sm:py-24 rounded-2xl breathing-bg floating-particles zen-particles dark:from-gray-800/30 dark:via-gray-900/20 dark:to-transparent relative overflow-hidden">
+            <header class="text-left py-16 sm:py-24 rounded-2xl breathing-bg floating-particles zen-particles ambient-gradient dark:from-gray-800/30 dark:via-gray-900/20 dark:to-transparent relative overflow-hidden">
                 <!-- Subtle background pattern with floating animation -->
                 <div class="absolute inset-0 opacity-5">
-                    <div class="absolute top-10 left-10 w-32 h-32 bg-forest-green rounded-full blur-3xl float-animation"></div>
-                    <div class="absolute bottom-10 right-10 w-24 h-24 bg-earthy-gold rounded-full blur-2xl float-animation"></div>
-                    <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-light-green rounded-full blur-xl float-animation"></div>
+                    <div class="absolute top-10 left-10 w-32 h-32 bg-forest-green rounded-full blur-3xl float-animation ambient-breathe"></div>
+                    <div class="absolute bottom-10 right-10 w-24 h-24 bg-earthy-gold rounded-full blur-2xl float-animation ambient-float"></div>
+                    <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-light-green rounded-full blur-xl float-animation ambient-breathe"></div>
                 </div>
+                
+                <!-- Floating Particles -->
+                <div class="floating-particle parallax-slow particle-1" style="left: 10%; animation-delay: 0s;"></div>
+                <div class="floating-particle parallax-medium particle-2" style="left: 20%; animation-delay: 3s;"></div>
+                <div class="floating-particle parallax-fast particle-3" style="left: 30%; animation-delay: 6s;"></div>
+                <div class="floating-particle parallax-slow particle-4" style="left: 70%; animation-delay: 9s;"></div>
+                <div class="floating-particle parallax-medium particle-5" style="left: 80%; animation-delay: 12s;"></div>
+                <div class="floating-particle parallax-fast particle-1" style="left: 90%; animation-delay: 15s;"></div>
                 <div class="relative max-w-4xl">
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gradient font-lora leading-tight mb-6 text-glow slide-in-left">Transform Your Mornings, Transform Your Life</h1>
-                    <p class="text-xl text-charcoal/80 leading-relaxed max-w-3xl slide-in-right">Master the art of mindful mornings with our integrated toolkit: meditation, journaling, exercise, and confidence practice. Discover how 30 minutes each morning can revolutionize your entire day.</p>
+                    <h1 class="text-hierarchy-1 text-gradient font-lora text-glow-strong slide-in-left">Transform Your Mornings, Transform Your Life</h1>
+                    <p class="text-body-large text-charcoal/80 text-smooth-transition max-w-3xl slide-in-right">Master the art of mindful mornings with our integrated toolkit: meditation, journaling, exercise, and confidence practice. Discover how 30 minutes each morning can revolutionize your entire day.</p>
                     <!-- Shimmer divider -->
                     <div class="mt-8 shimmer-divider w-24 mx-auto"></div>
                 </div>
             </header>
 
             <!-- Daily Morning Routine -->
-            <section class="bg-gradient-to-br from-light-green/40 via-white to-light-gold/20 rounded-2xl p-10 sm:p-14 shadow-lg border border-light-green/20 relative overflow-hidden">
+            <section class="observe-fade-in bg-gradient-to-br from-light-green/40 via-white to-light-gold/20 rounded-2xl p-10 sm:p-14 shadow-lg border border-light-green/20 relative overflow-hidden">
                 <!-- Subtle background elements -->
                 <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-forest-green/10 to-transparent rounded-full blur-2xl"></div>
                 <div class="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-earthy-gold/10 to-transparent rounded-full blur-xl"></div>
@@ -1338,39 +2366,39 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Meditation Timer -->
-                    <a href="#" data-page="timer" class="main-nav-link group block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-forest-green/10 hover:border-forest-green/30 hover:-translate-y-1 relative overflow-hidden gentle-bounce card-breathe">
+                    <a href="#" data-page="timer" class="main-nav-link card-lift observe-scale group block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-forest-green/10 hover:border-forest-green/30 hover:-translate-y-1 relative overflow-hidden gentle-bounce card-breathe card-breathe-gentle ambient-shadow">
                         <!-- Subtle gradient overlay -->
                         <div class="absolute inset-0 bg-gradient-to-br from-forest-green/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <div class="text-center relative">
                             <div class="w-20 h-20 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-500 shadow-lg gentle-rotate">
                                 <svg class="w-10 h-10 text-white drop-shadow-sm icon-breathe" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold text-charcoal font-lora mb-3 group-hover:text-forest-green transition-colors duration-300">Meditation Overview</h3>
-                            <p class="text-sm text-charcoal/70 mb-4 leading-relaxed">Find your center with 5-30 minute sessions, customizable bells, and gentle progress tracking.</p>
+                            <h3 class="text-hierarchy-4 text-charcoal font-lora mb-3 group-hover:text-forest-green text-smooth-transition">Meditation Overview</h3>
+                            <p class="text-body-small text-charcoal/70 mb-4 paragraph-spacing">Find your center with 5-30 minute sessions, customizable bells, and gentle progress tracking.</p>
                             <span class="inline-block px-4 py-2 bg-gradient-to-r from-forest-green/10 to-forest-green/5 text-forest-green text-xs font-semibold rounded-full border border-forest-green/20">Quick Start</span>
                         </div>
                     </a>
 
                     <!-- Mindful Journal -->
-                    <a href="#" data-page="journal" class="main-nav-link group block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-earthy-gold/10 hover:border-earthy-gold/30 hover:-translate-y-1 relative overflow-hidden gentle-bounce card-breathe">
+                    <a href="#" data-page="journal" class="main-nav-link card-lift observe-scale group block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-earthy-gold/10 hover:border-earthy-gold/30 hover:-translate-y-1 relative overflow-hidden gentle-bounce card-breathe card-breathe-gentle ambient-shadow">
                         <!-- Subtle gradient overlay -->
                         <div class="absolute inset-0 bg-gradient-to-br from-earthy-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <div class="text-center relative">
                             <div class="w-20 h-20 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-500 shadow-lg gentle-rotate">
                                 <svg class="w-10 h-10 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold text-charcoal font-lora mb-3 group-hover:text-earthy-gold transition-colors duration-300">Mindful Journal</h3>
-                            <p class="text-sm text-charcoal/70 mb-4 leading-relaxed">Capture your thoughts with freewriting practice, auto-save, and flexible timing options.</p>
+                            <h3 class="text-hierarchy-4 text-charcoal font-lora mb-3 group-hover:text-earthy-gold text-smooth-transition">Mindful Journal</h3>
+                            <p class="text-body-small text-charcoal/70 mb-4 paragraph-spacing">Capture your thoughts with freewriting practice, auto-save, and flexible timing options.</p>
                             <span class="inline-block px-4 py-2 bg-gradient-to-r from-earthy-gold/10 to-earthy-gold/5 text-earthy-gold text-xs font-semibold rounded-full border border-earthy-gold/20">Self-Reflection</span>
                         </div>
                     </a>
 
                     <!-- 7-Minute Workout -->
-                    <a href="#" data-page="workout" class="main-nav-link group block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-light-green/10 hover:border-light-green/30 hover:-translate-y-1 relative overflow-hidden card-breathe">
+                    <a href="#" data-page="workout" class="main-nav-link card-lift observe-scale group block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-light-green/10 hover:border-light-green/30 hover:-translate-y-1 relative overflow-hidden card-breathe card-breathe-gentle ambient-shadow">
                         <!-- Subtle gradient overlay -->
                         <div class="absolute inset-0 bg-gradient-to-br from-light-green/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <div class="text-center relative">
@@ -1379,14 +2407,14 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold text-charcoal font-lora mb-3 group-hover:text-light-green transition-colors duration-300">7-Minute Workout</h3>
-                            <p class="text-sm text-charcoal/70 mb-4 leading-relaxed">Energize your body with high-intensity circuit training, visual guides, and progress tracking.</p>
+                            <h3 class="text-hierarchy-4 text-charcoal font-lora mb-3 group-hover:text-light-green text-smooth-transition">7-Minute Workout</h3>
+                            <p class="text-body-small text-charcoal/70 mb-4 paragraph-spacing">Energize your body with high-intensity circuit training, visual guides, and progress tracking.</p>
                             <span class="inline-block px-4 py-2 bg-gradient-to-r from-light-green/20 to-light-green/10 text-forest-green text-xs font-semibold rounded-full border border-light-green/20">Energy Boost</span>
                         </div>
                     </a>
 
                     <!-- Confidence Practice -->
-                    <a href="#" data-page="interview" class="main-nav-link group block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-blue-600/10 hover:border-blue-600/30 hover:-translate-y-1 relative overflow-hidden card-breathe">
+                    <a href="#" data-page="interview" class="main-nav-link card-lift observe-scale group block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-blue-600/10 hover:border-blue-600/30 hover:-translate-y-1 relative overflow-hidden card-breathe card-breathe-gentle ambient-shadow">
                         <!-- Subtle gradient overlay -->
                         <div class="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <div class="text-center relative">
@@ -1395,8 +2423,8 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold text-charcoal font-lora mb-3 group-hover:text-blue-600 transition-colors duration-300">Confidence Practice</h3>
-                            <p class="text-sm text-charcoal/70 mb-4 leading-relaxed">Build speaking confidence with video practice for storytelling, communication, and presentation skills.</p>
+                            <h3 class="text-hierarchy-4 text-charcoal font-lora mb-3 group-hover:text-blue-600 text-smooth-transition">Confidence Practice</h3>
+                            <p class="text-body-small text-charcoal/70 mb-4 paragraph-spacing">Build speaking confidence with video practice for storytelling, communication, and presentation skills.</p>
                             <span class="inline-block px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-600 text-xs font-semibold rounded-full border border-blue-200">Build Skills</span>
                         </div>
                     </a>
@@ -1427,7 +2455,7 @@
                         <div class="flex-shrink-0">
                             <div id="meditation-status" class="w-10 h-10 rounded-full bg-gradient-to-br from-forest-green to-forest-green/80 flex items-center justify-center shadow-lg">
                                 <svg class="w-5 h-5 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
                                 </svg>
                             </div>
                         </div>
@@ -1442,7 +2470,7 @@
                         <div class="flex-shrink-0">
                             <div id="journal-status" class="w-10 h-10 rounded-full bg-gradient-to-br from-earthy-gold to-earthy-gold/80 flex items-center justify-center shadow-lg">
                                 <svg class="w-5 h-5 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                                 </svg>
                             </div>
                         </div>
@@ -1518,7 +2546,7 @@
                     <div class="text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-forest-green/10 hover:border-forest-green/30 group">
                         <div class="w-16 h-16 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                             <svg class="w-8 h-8 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
                             </svg>
                         </div>
                         <h3 class="text-xl font-bold text-charcoal mb-4 group-hover:text-forest-green transition-colors duration-300">Energy & Focus</h3>
@@ -1528,7 +2556,7 @@
                     <div class="text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-earthy-gold/10 hover:border-earthy-gold/30 group">
                         <div class="w-16 h-16 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                             <svg class="w-8 h-8 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                             </svg>
                         </div>
                         <h3 class="text-xl font-bold text-charcoal mb-4 group-hover:text-earthy-gold transition-colors duration-300">Habit Formation</h3>
@@ -1643,25 +2671,48 @@
     </template>
 
     <template id="template-about">
-        <div class="max-w-5xl mx-auto">
-            <!-- Enhanced header -->
-            <header class="text-center mb-16">
-                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mb-6 drop-shadow-sm">About The Dhamma Path</h1>
-                <p class="text-xl text-charcoal/80 leading-relaxed max-w-3xl mx-auto">A personal journey of morning routines, mindfulness, and timeless wisdom</p>
-                <!-- Shimmer divider -->
-                <div class="mt-8 shimmer-divider w-24 mx-auto"></div>
+        <div class="max-w-6xl mx-auto">
+            <!-- Hero Section with Enhanced Styling -->
+            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-12 sm:p-16 mb-16 relative overflow-hidden">
+                <!-- Subtle background elements -->
+                <div class="absolute inset-0 opacity-10">
+                    <div class="absolute top-10 left-10 w-40 h-40 bg-forest-green rounded-full blur-3xl float-animation ambient-breathe"></div>
+                    <div class="absolute bottom-10 right-10 w-32 h-32 bg-earthy-gold rounded-full blur-2xl float-animation ambient-float"></div>
+                    <div class="absolute top-1/2 left-1/3 w-24 h-24 bg-light-green rounded-full blur-xl float-animation ambient-breathe"></div>
+                </div>
+                
+                <!-- Floating Particles -->
+                <div class="floating-particle particle-1" style="left: 18%; animation-delay: 2.5s;"></div>
+                <div class="floating-particle particle-2" style="left: 42%; animation-delay: 5.5s;"></div>
+                <div class="floating-particle particle-3" style="left: 68%; animation-delay: 8.5s;"></div>
+                <div class="floating-particle particle-4" style="left: 92%; animation-delay: 11.5s;"></div>
+                
+                <header class="text-center relative z-10">
+                    <div class="w-24 h-24 bg-gradient-to-br from-forest-green/30 to-earthy-gold/30 rounded-full flex items-center justify-center mx-auto mb-8 icon-breathe">
+                        <svg class="w-12 h-12 text-forest-green drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-5xl sm:text-6xl font-bold text-gradient font-lora mb-6 text-glow">About The Dhamma Path</h1>
+                    <p class="text-xl text-charcoal/80 max-w-3xl mx-auto leading-relaxed mb-8">A personal journey of morning routines, mindfulness, and timeless wisdom</p>
+                    <!-- Shimmer divider -->
+                    <div class="shimmer-divider w-32 mx-auto"></div>
             </header>
+            </div>
             
             <!-- Enhanced Personal Story Section -->
             <section class="mb-20">
-                <div class="bg-gradient-to-br from-light-green/40 via-white to-light-gold/20 rounded-2xl p-10 sm:p-14 shadow-xl border border-light-green/20 relative overflow-hidden">
+                <div class="bg-gradient-to-br from-light-green/40 via-white to-light-gold/20 rounded-3xl p-12 sm:p-16 shadow-xl border border-light-green/20 relative overflow-hidden">
                     <!-- Subtle background elements -->
-                    <div class="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-forest-green/10 to-transparent rounded-full blur-3xl"></div>
-                    <div class="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-earthy-gold/10 to-transparent rounded-full blur-2xl"></div>
+                    <div class="absolute inset-0 opacity-10">
+                        <div class="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-forest-green/20 to-transparent rounded-full blur-3xl float-animation"></div>
+                        <div class="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-earthy-gold/20 to-transparent rounded-full blur-2xl float-animation"></div>
+                        <div class="absolute top-1/2 left-1/2 w-24 h-24 bg-light-green rounded-full blur-xl float-animation"></div>
+                    </div>
                     
-                    <div class="relative">
-                        <h2 class="text-3xl font-bold text-charcoal font-lora mb-8 drop-shadow-sm">My Story</h2>
-                        <div class="text-lg leading-relaxed space-y-6">
+                    <div class="relative z-10">
+                        <h2 class="text-4xl font-bold text-charcoal font-lora mb-8 text-gradient drop-shadow-sm">My Story</h2>
+            <div class="text-lg leading-relaxed space-y-6">
                             <p>Hi, I'm William. This website began as my personal morning routine companion—a simple tool to help me start each day with intention through meditation, journaling, exercise, and confidence practice.</p>
                             <p>Like many people, I struggled with establishing consistent morning habits. I knew the benefits of meditation and mindful practices, but found it challenging to maintain a routine that actually stuck. That's when I decided to build something that would make it easier for me to show up for myself each morning.</p>
                             <p>What began as a personal project has evolved into a comprehensive platform that combines practical morning routine tools with the profound wisdom of Buddhist teachings. I believe that the best self-help is grounded in timeless principles, and that's why I've integrated authentic Buddhist wisdom throughout the site.</p>
@@ -1673,13 +2724,16 @@
 
             <!-- Enhanced Buddhist Foundation Section -->
             <section class="mb-20">
-                <div class="bg-gradient-to-br from-earthy-gold/15 via-white to-earthy-gold/5 rounded-2xl p-10 sm:p-14 shadow-xl border border-earthy-gold/20 relative overflow-hidden">
+                <div class="bg-gradient-to-br from-earthy-gold/15 via-white to-earthy-gold/5 rounded-3xl p-12 sm:p-16 shadow-xl border border-earthy-gold/20 relative overflow-hidden">
                     <!-- Subtle background elements -->
-                    <div class="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-earthy-gold/10 to-transparent rounded-full blur-2xl"></div>
-                    <div class="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-forest-green/10 to-transparent rounded-full blur-xl"></div>
+                    <div class="absolute inset-0 opacity-10">
+                        <div class="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-earthy-gold/20 to-transparent rounded-full blur-2xl float-animation"></div>
+                        <div class="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-forest-green/20 to-transparent rounded-full blur-xl float-animation"></div>
+                        <div class="absolute top-1/2 right-1/4 w-20 h-20 bg-light-green rounded-full blur-lg float-animation"></div>
+                    </div>
                     
-                    <div class="relative">
-                        <h2 class="text-3xl font-bold text-charcoal font-lora mb-8 drop-shadow-sm">The Buddhist Foundation</h2>
+                    <div class="relative z-10">
+                        <h2 class="text-4xl font-bold text-charcoal font-lora mb-8 text-gradient drop-shadow-sm">The Buddhist Foundation</h2>
                         <div class="text-lg leading-relaxed space-y-6">
                             <p>The Dhamma Path is grounded in the profound wisdom of Theravāda Buddhism, the oldest surviving Buddhist tradition. In a world of noise and distraction, we believe the path of mindfulness and wisdom offers a profound way to cultivate inner peace and clarity.</p>
                             <p>As a long-term practitioner of Vipassanā meditation, I found that many online resources were either too academic and dense for beginners, or too commercialized and disconnected from the original teachings. This website is an attempt to bridge that gap.</p>
@@ -1687,10 +2741,10 @@
                             <h3 class="text-2xl font-bold text-charcoal font-lora mt-10 mb-6">Our Approach</h3>
                             <p>We are committed to presenting the Dhamma (the teachings of the Buddha) as it is found in the Pāli Canon, the earliest collection of Buddhist scriptures. Our content is written with three core principles in mind:</p>
                             <ul class="list-disc list-inside space-y-3 ml-6 mt-4">
-                            <li><strong>Authenticity:</strong> We ground our content in the suttas and the Theravāda tradition.</li>
-                            <li><strong>Clarity:</strong> We strive to explain complex concepts in simple, practical language without sacrificing depth.</li>
-                            <li><strong>Practicality:</strong> We emphasize how these ancient teachings can be applied to modern life to reduce stress and cultivate genuine well-being.</li>
-                        </ul>
+                    <li><strong>Authenticity:</strong> We ground our content in the suttas and the Theravāda tradition.</li>
+                    <li><strong>Clarity:</strong> We strive to explain complex concepts in simple, practical language without sacrificing depth.</li>
+                    <li><strong>Practicality:</strong> We emphasize how these ancient teachings can be applied to modern life to reduce stress and cultivate genuine well-being.</li>
+                </ul>
                     </div>
                 </div>
             </section>
@@ -1704,17 +2758,17 @@
                         <div class="absolute bottom-0 left-0 w-40 h-40 bg-forest-green rounded-full blur-2xl"></div>
                     </div>
                     <div class="relative">
-                        <h2 class="text-3xl font-bold font-lora text-earthy-gold mb-8 drop-shadow-sm">Our Mission</h2>
-                        <p class="text-xl leading-relaxed">To help you build a powerful morning routine that transforms your life, guided by timeless wisdom and modern self-help principles. We believe that the first hour of your day shapes everything that follows.</p>
+                        <h2 class="text-4xl font-bold font-lora text-gradient mb-8 drop-shadow-sm">Our Mission</h2>
+                        <p class="text-xl leading-relaxed text-charcoal/80">To help you build a powerful morning routine that transforms your life, guided by timeless wisdom and modern self-help principles. We believe that the first hour of your day shapes everything that follows.</p>
                     </div>
                 </div>
             </section>
 
             <!-- Enhanced Contact Section -->
             <section class="text-center">
-                <h2 class="text-3xl font-bold text-charcoal font-lora mb-8 drop-shadow-sm">Get In Touch</h2>
-                <p class="text-lg text-charcoal/80 mb-10 max-w-2xl mx-auto">Have questions, suggestions, or want to share your morning routine journey? I'd love to hear from you.</p>
-                <div class="bg-gradient-to-br from-light-green/40 via-white to-light-green/20 rounded-2xl p-8 max-w-lg mx-auto shadow-xl border border-light-green/20 relative overflow-hidden">
+                <h2 class="text-4xl font-bold text-charcoal font-lora mb-8 text-gradient drop-shadow-sm">Get In Touch</h2>
+                <p class="text-xl text-charcoal/80 mb-12 max-w-3xl mx-auto leading-relaxed">Have questions, suggestions, or want to share your morning routine journey? I'd love to hear from you.</p>
+                <div class="bg-gradient-to-br from-light-green/40 via-white to-light-green/20 rounded-3xl p-10 max-w-2xl mx-auto shadow-xl border border-light-green/20 relative overflow-hidden">
                     <!-- Subtle background elements -->
                     <div class="absolute inset-0 opacity-5">
                         <div class="absolute top-0 left-0 w-24 h-24 bg-forest-green rounded-full blur-xl"></div>
@@ -1928,13 +2982,90 @@
     </template>
     
     <template id="template-glossary">
-        <div class="max-w-4xl mx-auto">
-            <header class="text-center mb-12">
-                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora">Pāli Glossary</h1>
-            <p class="mt-4 max-w-2xl mx-auto text-xl text-charcoal/80">Deepen your understanding with clear definitions of key Buddhist terms from the ancient Pāli language.</p>
+        <div class="max-w-6xl mx-auto">
+            <!-- Hero Section with Enhanced Styling -->
+            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-12 sm:p-16 mb-16 relative overflow-hidden">
+                <!-- Subtle background elements -->
+                <div class="absolute inset-0 opacity-10">
+                    <div class="absolute top-10 left-10 w-40 h-40 bg-forest-green rounded-full blur-3xl float-animation ambient-breathe"></div>
+                    <div class="absolute bottom-10 right-10 w-32 h-32 bg-earthy-gold rounded-full blur-2xl float-animation ambient-float"></div>
+                    <div class="absolute top-1/2 left-1/3 w-24 h-24 bg-light-green rounded-full blur-xl float-animation ambient-breathe"></div>
+                </div>
+                
+                <!-- Floating Particles -->
+                <div class="floating-particle particle-1" style="left: 12%; animation-delay: 1.5s;"></div>
+                <div class="floating-particle particle-2" style="left: 35%; animation-delay: 4.5s;"></div>
+                <div class="floating-particle particle-3" style="left: 65%; animation-delay: 7.5s;"></div>
+                <div class="floating-particle particle-4" style="left: 88%; animation-delay: 10.5s;"></div>
+                
+                <header class="text-center relative z-10">
+                    <div class="w-24 h-24 bg-gradient-to-br from-forest-green/30 to-earthy-gold/30 rounded-full flex items-center justify-center mx-auto mb-8 icon-breathe">
+                        <svg class="w-12 h-12 text-forest-green drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-5xl sm:text-6xl font-bold text-gradient font-lora mb-6 text-glow">Pāli Glossary</h1>
+                    <p class="text-xl text-charcoal/80 max-w-3xl mx-auto leading-relaxed mb-8">Deepen your understanding with clear definitions of key Buddhist terms from the ancient Pāli language.</p>
+                    <!-- Shimmer divider -->
+                    <div class="shimmer-divider w-32 mx-auto"></div>
             </header>
-            <div id="glossary-list" class="space-y-6 stagger-in">
+            </div>
+            
+            <!-- Search and Filter Section -->
+            <div class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-8 shadow-xl border border-gray-100 mb-12 relative overflow-hidden">
+                <!-- Subtle background elements -->
+                <div class="absolute inset-0 opacity-5">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-forest-green rounded-full blur-xl float-animation"></div>
+                    <div class="absolute bottom-0 left-0 w-16 h-16 bg-earthy-gold rounded-full blur-lg float-animation"></div>
+                </div>
+                
+                <div class="relative z-10">
+                    <h2 class="text-2xl font-bold text-charcoal font-lora mb-6 text-center">Find Your Term</h2>
+                    <div class="max-w-md mx-auto">
+                        <input type="text" id="glossary-search" placeholder="Search for a Pāli term..." class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-forest-green focus:border-forest-green transition-all duration-300 shadow-sm focus:shadow-lg">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Glossary Terms Grid -->
+            <div id="glossary-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-in">
                 <!-- Glossary terms will be injected here -->
+            </div>
+            
+            <!-- Learning Tips Card -->
+            <div class="mt-16 bg-gradient-to-br from-earthy-gold/15 via-white to-earthy-gold/5 rounded-3xl p-10 shadow-xl border border-earthy-gold/20 relative overflow-hidden">
+                <!-- Subtle background elements -->
+                <div class="absolute inset-0 opacity-10">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-earthy-gold rounded-full blur-2xl float-animation"></div>
+                    <div class="absolute bottom-0 left-0 w-24 h-24 bg-forest-green rounded-full blur-xl float-animation"></div>
+                </div>
+                
+                <div class="text-center relative z-10">
+                    <h3 class="text-3xl font-bold text-charcoal font-lora mb-6 text-gradient">Understanding Pāli</h3>
+                    <p class="text-lg text-charcoal/70 max-w-3xl mx-auto mb-8">Pāli is the ancient language of the Buddha's teachings. These terms carry deep meaning and can transform your understanding of meditation and mindfulness.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                        <div class="text-left">
+                            <h4 class="text-xl font-bold text-charcoal font-lora mb-4 flex items-center">
+                                <div class="w-8 h-8 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-white text-sm font-bold">1</span>
+                                </div>
+                                Pronunciation Guide
+                            </h4>
+                            <p class="text-charcoal/70 leading-relaxed">Pāli uses simple phonetic pronunciation. Each letter is pronounced as written, with vowels similar to Spanish or Italian.</p>
+                        </div>
+                        
+                        <div class="text-left">
+                            <h4 class="text-xl font-bold text-charcoal font-lora mb-4 flex items-center">
+                                <div class="w-8 h-8 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-white text-sm font-bold">2</span>
+                                </div>
+                                Context Matters
+                            </h4>
+                            <p class="text-charcoal/70 leading-relaxed">These terms often have multiple layers of meaning. Understanding the context helps reveal their deeper significance.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </template>
@@ -1952,41 +3083,82 @@
     </template>
     
     <template id="template-timer">
-        <div class="max-w-2xl mx-auto text-center">
-            <!-- Header with enhanced styling -->
-            <div class="mb-12">
-                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mb-4 drop-shadow-sm">Meditation Overview</h1>
-                <p class="text-lg text-charcoal/70 max-w-xl mx-auto">Find your center with gentle guidance and peaceful timing</p>
-                <!-- Decorative line -->
-                <div class="mt-6 w-20 h-1 bg-gradient-to-r from-forest-green to-earthy-gold rounded-full mx-auto"></div>
+        <div class="max-w-4xl mx-auto">
+            <!-- Hero Section with Breathing Background -->
+            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-12 sm:p-16 mb-12 relative overflow-hidden">
+                <!-- Subtle background elements -->
+                <div class="absolute inset-0 opacity-10">
+                    <div class="absolute top-10 left-10 w-32 h-32 bg-forest-green rounded-full blur-3xl float-animation ambient-breathe"></div>
+                    <div class="absolute bottom-10 right-10 w-24 h-24 bg-earthy-gold rounded-full blur-2xl float-animation ambient-float"></div>
+                    <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-light-green rounded-full blur-xl float-animation ambient-breathe"></div>
+                </div>
+                
+                <!-- Floating Particles -->
+                <div class="floating-particle particle-1" style="left: 15%; animation-delay: 2s;"></div>
+                <div class="floating-particle particle-2" style="left: 25%; animation-delay: 5s;"></div>
+                <div class="floating-particle particle-3" style="left: 75%; animation-delay: 8s;"></div>
+                <div class="floating-particle particle-4" style="left: 85%; animation-delay: 11s;"></div>
+                
+                <!-- Header with enhanced styling -->
+                <div class="text-center relative z-10">
+                    <h1 class="text-hierarchy-1 text-gradient font-lora mb-6 text-glow-strong">Meditation Overview</h1>
+                    <p class="text-body-large text-charcoal/80 max-w-2xl mx-auto mb-8 text-smooth-transition">Find your center with gentle guidance and peaceful timing. Begin your journey to inner peace.</p>
+                    <!-- Shimmer divider -->
+                    <div class="shimmer-divider w-24 mx-auto"></div>
+                </div>
+                
+                <!-- Meditation Image with enhanced styling -->
+                <div class="mt-12 flex justify-center relative z-10">
+                    <div class="w-40 h-40 bg-gradient-to-br from-forest-green/30 to-earthy-gold/30 rounded-full flex items-center justify-center shadow-2xl icon-breathe">
+                        <svg class="w-20 h-20 text-forest-green drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
+                        </svg>
+                    </div>
+                </div>
             </div>
             
-            <!-- Enhanced timer ring container with breathing animation -->
-            <div class="relative mb-12">
-                <div id="timer-ring-container" class="relative w-72 h-72 sm:w-80 sm:h-80 mx-auto breathe">
-                    <!-- Outer glow effect -->
-                    <div class="absolute inset-0 rounded-full bg-gradient-to-r from-forest-green/20 to-earthy-gold/20 blur-xl scale-110 float-animation"></div>
-                    
-                    <!-- Timer ring -->
-                    <div class="relative w-full h-full">
-                        <svg class="w-full h-full drop-shadow-lg" viewBox="0 0 100 100">
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Timer Section -->
+                <div class="space-y-8">
+            
+                    <!-- Enhanced timer ring container with breathing animation -->
+                    <div class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-8 shadow-xl border border-gray-100 relative overflow-hidden">
+                        <!-- Subtle floating background elements -->
+                        <div class="absolute inset-0 opacity-5">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-forest-green rounded-full blur-2xl float-animation"></div>
+                            <div class="absolute bottom-0 left-0 w-24 h-24 bg-earthy-gold rounded-full blur-xl float-animation"></div>
+                        </div>
+                        
+                        <div class="text-center relative z-10">
+                            <h2 class="text-2xl font-bold text-charcoal font-lora mb-6">Your Meditation Timer</h2>
+                            
+                            <!-- Timer Ring -->
+                            <div class="relative w-64 h-64 mx-auto mb-8 breathe">
+                                <!-- Outer glow effect -->
+                                <div class="absolute inset-0 rounded-full bg-gradient-to-r from-forest-green/20 to-earthy-gold/20 blur-xl scale-110 float-animation"></div>
+                                
+                                <!-- Timer ring -->
+                                <div class="relative w-full h-full">
+                                    <svg class="w-full h-full drop-shadow-lg" viewBox="0 0 100 100">
                     <circle class="timer-ring-bg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent"></circle>
                     <circle id="timer-progress-ring" class="timer-ring-fg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent" stroke-dasharray="283" stroke-dashoffset="283"></circle>
                 </svg>
-                        <div id="timer-display" class="absolute inset-0 flex items-center justify-center text-6xl font-lora text-charcoal font-bold drop-shadow-sm">10:00</div>
+                                    <div id="timer-display" class="absolute inset-0 flex items-center justify-center text-5xl font-lora text-charcoal font-bold drop-shadow-sm">10:00</div>
             </div>
-                </div>
-            </div>
-            <!-- Enhanced timer controls with floating background -->
-            <div id="timer-controls" class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-8 shadow-lg border border-gray-100 relative overflow-hidden">
-                <!-- Subtle floating background elements -->
-                <div class="absolute inset-0 opacity-5">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-forest-green rounded-full blur-2xl float-animation"></div>
-                    <div class="absolute bottom-0 left-0 w-24 h-24 bg-earthy-gold rounded-full blur-xl float-animation"></div>
-                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Enhanced timer controls with floating background -->
+                    <div id="timer-controls" class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-8 shadow-xl border border-gray-100 relative overflow-hidden ambient-shadow">
+                        <!-- Subtle floating background elements -->
+                        <div class="absolute inset-0 opacity-5">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-forest-green rounded-full blur-2xl float-animation"></div>
+                            <div class="absolute bottom-0 left-0 w-24 h-24 bg-earthy-gold rounded-full blur-xl float-animation"></div>
+                        </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-8">
                     <div>
-                        <label for="duration-select" class="text-sm uppercase tracking-wider text-charcoal/70 font-semibold mb-4 block">Meditation Duration</label>
+                        <label for="duration-buttons" class="text-sm uppercase tracking-wider text-charcoal/70 font-semibold mb-4 block">Meditation Duration</label>
                         <div id="duration-buttons" class="flex flex-wrap justify-center gap-3">
                             <button data-duration="5" class="timer-duration-btn px-6 py-3 rounded-full bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 border-2 border-forest-green shadow-md" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">5 min</button>
                             <button data-duration="10" class="timer-duration-btn px-6 py-3 rounded-full bg-gradient-to-r from-light-green to-light-green/80 text-forest-green transition-all duration-300 hover:shadow-lg hover:scale-105 border-2 border-forest-green shadow-md" style="background-color: #d4edda !important; color: #2d5016 !important; display: inline-block !important; visibility: visible !important;">10 min</button>
@@ -2007,7 +3179,7 @@
                 
                 <!-- Enhanced control buttons -->
                 <div class="flex items-center justify-center space-x-6">
-                    <button id="timer-start-btn" class="ripple hover-soft btn-zen px-12 py-5 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-2xl shadow-xl border-2 border-forest-green" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
+                    <button id="timer-start-btn" class="btn-press ripple hover-soft btn-zen px-12 py-5 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-2xl shadow-xl border-2 border-forest-green" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
                         <span class="flex items-center space-x-3">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -2015,7 +3187,7 @@
                             <span>Begin Meditation</span>
                         </span>
                     </button>
-                    <button id="timer-pause-btn" class="px-10 py-4 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-xl hidden shadow-lg border-2 border-earthy-gold" style="background-color: #b8860b !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #b8860b !important;">
+                    <button id="timer-pause-btn" class="btn-press px-12 py-5 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-2xl hidden shadow-xl border-2 border-earthy-gold" style="background-color: #b8860b !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #b8860b !important;">
                         <span class="flex items-center space-x-2">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -2023,25 +3195,149 @@
                             <span>Pause Session</span>
                         </span>
                     </button>
-                    <button id="timer-reset-btn" class="p-5 bg-gradient-to-r from-gray-200 to-gray-100 text-charcoal rounded-full hover:shadow-lg hover:scale-110 transition-all duration-300 dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300">
+                    <button id="timer-reset-btn" class="btn-press p-5 bg-gradient-to-r from-gray-200 to-gray-100 text-charcoal rounded-full hover:shadow-lg hover:scale-110 transition-all duration-300 dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 4l1.5 1.5A9 9 0 0120.5 15M20 20l-1.5-1.5A9 9 0 003.5 9"></path></svg>
                     </button>
                 </div>
             </div>
-            <!-- Enhanced practice log -->
-            <div id="practice-log" class="mt-12 text-left bg-gradient-to-br from-light-green/30 to-light-green/10 p-8 rounded-2xl border border-light-green/20 shadow-lg"></div>
+                </div>
+                
+                <!-- Meditation Tips Sidebar -->
+                <div class="space-y-6">
+                    <!-- Quick Tips Card -->
+                    <div class="bg-gradient-to-br from-earthy-gold/15 via-white to-earthy-gold/5 rounded-2xl p-8 shadow-xl border border-earthy-gold/20 relative overflow-hidden card-breathe-gentle ambient-shadow">
+                        <!-- Subtle background elements -->
+                        <div class="absolute inset-0 opacity-10">
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-earthy-gold rounded-full blur-xl float-animation"></div>
+                            <div class="absolute bottom-0 left-0 w-16 h-16 bg-forest-green rounded-full blur-lg float-animation"></div>
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <h3 class="text-hierarchy-3 text-charcoal font-lora mb-6 text-gradient text-glow-subtle">Meditation Tips</h3>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                        <span class="text-white text-sm font-bold">1</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-hierarchy-5 text-charcoal mb-1 text-smooth-transition">Find Your Posture</h4>
+                                        <p class="text-body-small text-charcoal/70 paragraph-spacing">Sit comfortably with a straight spine. You don't need to be perfect - just stable and alert.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                        <span class="text-white text-sm font-bold">2</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-hierarchy-5 text-charcoal mb-1 text-smooth-transition">Focus on Breath</h4>
+                                        <p class="text-body-small text-charcoal/70 paragraph-spacing">Notice the natural rhythm of your breathing. When your mind wanders, gently return to the breath.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-light-green to-light-green/80 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                        <span class="text-forest-green text-sm font-bold">3</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-hierarchy-5 text-charcoal mb-1 text-smooth-transition">Be Kind to Yourself</h4>
+                                        <p class="text-body-small text-charcoal/70 paragraph-spacing">Thoughts will arise - that's normal. Simply notice them and return to your focus without judgment.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Practice Log Card -->
+                    <div class="bg-gradient-to-br from-light-green/30 to-light-green/10 rounded-2xl p-8 shadow-xl border border-light-green/20 relative overflow-hidden card-breathe-gentle ambient-shadow">
+                        <div class="relative z-10">
+                            <h3 class="text-2xl font-bold text-charcoal font-lora mb-6 text-gradient">Your Progress</h3>
+                            <div id="practice-log" class="text-left"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </template>
     
     <template id="template-path">
-        <div class="max-w-4xl mx-auto">
-            <header class="text-center mb-12">
-                <p class="text-earthy-gold font-semibold uppercase tracking-wider">Guided Path</p>
-                <h1 id="path-title" class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mt-2"></h1>
-                <p id="path-description" class="mt-4 max-w-2xl mx-auto text-xl text-charcoal/80"></p>
+        <div class="max-w-6xl mx-auto">
+            <!-- Hero Section with Enhanced Styling -->
+            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-12 sm:p-16 mb-16 relative overflow-hidden">
+                <!-- Subtle background elements -->
+                <div class="absolute inset-0 opacity-10">
+                    <div class="absolute top-10 left-10 w-40 h-40 bg-forest-green rounded-full blur-3xl float-animation ambient-breathe"></div>
+                    <div class="absolute bottom-10 right-10 w-32 h-32 bg-earthy-gold rounded-full blur-2xl float-animation ambient-float"></div>
+                    <div class="absolute top-1/2 left-1/3 w-24 h-24 bg-light-green rounded-full blur-xl float-animation ambient-breathe"></div>
+                </div>
+                
+                <!-- Floating Particles -->
+                <div class="floating-particle particle-1" style="left: 20%; animation-delay: 1s;"></div>
+                <div class="floating-particle particle-2" style="left: 40%; animation-delay: 4s;"></div>
+                <div class="floating-particle particle-3" style="left: 60%; animation-delay: 7s;"></div>
+                <div class="floating-particle particle-4" style="left: 80%; animation-delay: 10s;"></div>
+                
+                <header class="text-center relative z-10">
+                    <p class="text-earthy-gold font-semibold uppercase tracking-wider text-lg mb-4">Guided Learning Path</p>
+                    <h1 id="path-title" class="text-5xl sm:text-6xl font-bold text-gradient font-lora mb-6 text-glow"></h1>
+                    <p id="path-description" class="text-xl text-charcoal/80 max-w-3xl mx-auto leading-relaxed mb-8"></p>
+                    <!-- Shimmer divider -->
+                    <div class="shimmer-divider w-32 mx-auto"></div>
             </header>
-            <div id="path-steps-list" class="space-y-4 stagger-in">
+            </div>
+            
+            <!-- Learning Path Steps with Enhanced Design -->
+            <div class="space-y-8">
+                <div id="path-steps-list" class="space-y-6 stagger-in">
                 <!-- Path steps will be injected here -->
+                </div>
+            </div>
+            
+            <!-- Progress Summary Card -->
+            <div class="mt-16 bg-gradient-to-br from-light-green/20 via-white to-earthy-gold/10 rounded-3xl p-10 shadow-xl border border-light-green/20 relative overflow-hidden card-breathe-gentle ambient-shadow">
+                <!-- Subtle background elements -->
+                <div class="absolute inset-0 opacity-5">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-forest-green rounded-full blur-2xl float-animation"></div>
+                    <div class="absolute bottom-0 left-0 w-24 h-24 bg-earthy-gold rounded-full blur-xl float-animation"></div>
+                </div>
+                
+                <div class="text-center relative z-10">
+                    <h3 class="text-3xl font-bold text-charcoal font-lora mb-6 text-gradient">Your Learning Journey</h3>
+                    <p class="text-lg text-charcoal/70 max-w-2xl mx-auto mb-8">Each step builds upon the last, creating a solid foundation for your understanding and practice.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <div class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <div class="w-16 h-16 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-charcoal font-lora mb-2">Foundation</h4>
+                            <p class="text-charcoal/70 text-sm">Build your understanding from the ground up</p>
+                        </div>
+                        
+                        <div class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <div class="w-16 h-16 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-charcoal font-lora mb-2">Practice</h4>
+                            <p class="text-charcoal/70 text-sm">Apply your knowledge through mindful practice</p>
+                        </div>
+                        
+                        <div class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <div class="w-16 h-16 bg-gradient-to-br from-light-green to-light-green/80 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-forest-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-charcoal font-lora mb-2">Integration</h4>
+                            <p class="text-charcoal/70 text-sm">Integrate wisdom into your daily life</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </template>
@@ -2318,6 +3614,15 @@
                 <div class="mt-8 w-24 h-1 bg-gradient-to-r from-forest-green to-earthy-gold rounded-full mx-auto"></div>
             </header>
             
+            <!-- Journal Image -->
+            <div class="mb-12 flex justify-center">
+                <div class="w-32 h-32 bg-gradient-to-br from-earthy-gold/20 to-forest-green/20 rounded-full flex items-center justify-center shadow-lg">
+                    <svg class="w-16 h-16 text-earthy-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+            </div>
+
             <!-- Enhanced Quick Morning Presets -->
             <div class="bg-gradient-to-br from-earthy-gold/15 via-white to-earthy-gold/5 rounded-2xl p-8 mb-8 shadow-lg border border-earthy-gold/20 relative overflow-hidden">
                 <!-- Subtle background elements with floating animation -->
@@ -2369,6 +3674,18 @@
                     </button>
                 </div>
                 <textarea id="journal-entry" placeholder="Let your thoughts flow freely... the timer will begin as soon as you start typing." class="w-full h-80 p-6 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-earthy-gold focus:border-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600 shadow-sm transition-all duration-300" style="font-family: 'Lora', serif; font-size: 1.1rem; line-height: 1.8;"></textarea>
+                
+                <!-- Save Button -->
+                <div class="mt-6 flex justify-center">
+                    <button id="journal-save-btn" class="px-8 py-4 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg shadow-lg border-2 border-forest-green hidden" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
+                        <span class="flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                            <span>Save Entry</span>
+                        </span>
+                    </button>
+                </div>
             </div>
 
             <!-- Enhanced journal history -->
@@ -2840,6 +4157,18 @@
                 progressBar.style.width = '0%';
             }
         };
+        
+        // Reading Progress Indicator
+        const updateReadingProgress = () => {
+            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+            if (scrollHeight > clientHeight) {
+                const scrollPercent = Math.min((scrollTop / (scrollHeight - clientHeight)) * 100, 100);
+                const readingProgress = document.getElementById('reading-progress');
+                if (readingProgress) {
+                    readingProgress.style.width = `${scrollPercent}%`;
+                }
+            }
+        };
         // --- Performance Utilities --- //
         const debounce = (func, wait) => {
             let timeout;
@@ -2866,7 +4195,10 @@
             };
         };
 
-        window.addEventListener('scroll', throttle(updateProgressBar, 16)); // 60fps
+        window.addEventListener('scroll', throttle(() => {
+            updateProgressBar();
+            updateReadingProgress();
+        }, 16)); // 60fps
 
         const cleanupPageResources = () => {
             // Clear all intervals
@@ -2890,7 +4222,7 @@
             // Clear main content
             mainContent.innerHTML = '';
         };
-
+        
         // --- Templating & Routing --- //
         const templates = {
             home: document.getElementById('template-home').content.cloneNode(true),
@@ -3376,6 +4708,201 @@
                     .catch(registrationError => console.log('SW registration failed: ', registrationError));
             });
         }
+
+        // --- SCROLL-BASED ANIMATIONS & INTERACTIVE ELEMENTS --- //
+        
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with scroll animation classes
+        document.querySelectorAll('.observe-fade-in, .observe-slide-left, .observe-slide-right, .observe-scale').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Parallax scrolling effect
+        let ticking = false;
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax-slow, .parallax-medium, .parallax-fast');
+            
+            parallaxElements.forEach(el => {
+                const speed = el.classList.contains('parallax-slow') ? 0.5 : 
+                             el.classList.contains('parallax-medium') ? 0.3 : 0.1;
+                const yPos = -(scrolled * speed);
+                el.style.transform = `translateY(${yPos}px)`;
+            });
+            
+            ticking = false;
+        }
+
+        function requestParallaxUpdate() {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', requestParallaxUpdate);
+
+        // Scroll progress indicator
+        function updateScrollProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            const progressBar = document.getElementById('scroll-progress');
+            if (progressBar) {
+                progressBar.style.width = scrollPercent + '%';
+            }
+        }
+
+        window.addEventListener('scroll', throttle(updateScrollProgress, 16));
+
+        // Sticky elements
+        function handleStickyElements() {
+            const stickyElements = document.querySelectorAll('.sticky-element');
+            const scrollTop = window.pageYOffset;
+            
+            stickyElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (scrollTop > 20) {
+                    el.classList.add('sticky');
+                } else {
+                    el.classList.remove('sticky');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', throttle(handleStickyElements, 16));
+
+        // Enhanced ripple effects
+        function addRippleEffect(element) {
+            element.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple-effect');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        }
+
+        // Apply ripple effects to buttons
+        document.querySelectorAll('.btn-press, .ripple-enhanced').forEach(addRippleEffect);
+
+        // Online/Offline status indicators
+        function updateOnlineStatus() {
+            const offlineIndicator = document.getElementById('offline-indicator');
+            const onlineIndicator = document.getElementById('online-indicator');
+            
+            if (navigator.onLine) {
+                if (offlineIndicator) offlineIndicator.classList.remove('show');
+                if (onlineIndicator) {
+                    onlineIndicator.classList.add('show');
+                    setTimeout(() => onlineIndicator.classList.remove('show'), 3000);
+                }
+            } else {
+                if (offlineIndicator) offlineIndicator.classList.add('show');
+                if (onlineIndicator) onlineIndicator.classList.remove('show');
+            }
+        }
+
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        updateOnlineStatus(); // Initial check
+
+        // Lazy loading for images
+        function lazyLoadImages() {
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy-load');
+                        img.classList.add('loaded');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            images.forEach(img => imageObserver.observe(img));
+        }
+
+        // Initialize lazy loading
+        lazyLoadImages();
+
+        // Error boundary functionality
+        function showErrorBoundary(message, error) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-boundary';
+            errorDiv.innerHTML = `
+                <h3>Something went wrong</h3>
+                <p>${message}</p>
+                <button onclick="this.parentElement.remove()">Dismiss</button>
+            `;
+            document.body.appendChild(errorDiv);
+            console.error('Error boundary caught:', error);
+        }
+
+        // Global error handler
+        window.addEventListener('error', (e) => {
+            showErrorBoundary('An unexpected error occurred. Please refresh the page.', e.error);
+        });
+
+        // Toast notification system
+        function showToast(message, type = 'info', duration = 3000) {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
+        // Make toast function globally available
+        window.showToast = showToast;
+
+        // Performance optimization: Preload critical resources
+        function preloadCriticalResources() {
+            const criticalImages = [
+                // Add any critical image paths here
+            ];
+            
+            criticalImages.forEach(src => {
+                const link = document.createElement('link');
+                link.rel = 'preload';
+                link.as = 'image';
+                link.href = src;
+                document.head.appendChild(link);
+            });
+        }
+
+        preloadCriticalResources();
 
         // Performance Monitoring
         if ('performance' in window) {
@@ -4142,6 +5669,7 @@
             const entryEl = document.getElementById('journal-entry');
             const historyList = document.getElementById('journal-history-list');
             const durationSelect = document.getElementById('timer-duration');
+            const saveBtn = document.getElementById('journal-save-btn');
             
             let secondsRemaining = 600;
             let totalDuration = 600;
@@ -4249,6 +5777,12 @@
                 if (!isRunning && entryEl.value.length > 0) {
                      startJournal();
                 }
+                // Show save button when user starts typing
+                if (entryEl.value.length > 0) {
+                    saveBtn.classList.remove('hidden');
+                } else {
+                    saveBtn.classList.add('hidden');
+                }
             });
             
             startBtn.addEventListener('click', () => {
@@ -4256,6 +5790,13 @@
                 entryEl.disabled = false;
                 entryEl.value = '';
                 entryEl.focus();
+            });
+
+            saveBtn.addEventListener('click', () => {
+                if (entryEl.value.trim()) {
+                    saveEntry();
+                    showNotification('Entry saved successfully!');
+                }
             });
 
             // Quick preset buttons
