@@ -1,0 +1,1965 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dhamma Path</title>
+    <meta name="description" content="A clear and practical guide to Theravāda Buddhism and mindfulness meditation. Explore core teachings, learn to meditate, and find your path to wisdom.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Styles and Dark Mode Logic -->
+    <style>
+        :root {
+            --linen-white: #FDFBF5;
+            --charcoal: #333333;
+            --forest-green: #4A6C55;
+            --earthy-gold: #B98B4C;
+            --light-gold: #EADDC7;
+            --light-green: #E4EAE6;
+        }
+
+        /* Light Mode */
+        html {
+            background-color: var(--linen-white);
+            color: var(--charcoal);
+        }
+
+        /* Dark Mode */
+        html.dark {
+            background-color: #1a1a1a;
+            color: #d1d1d1;
+        }
+        
+        html.dark .bg-linen-white { background-color: #1a1a1a; }
+        html.dark .text-charcoal { color: #d1d1d1; }
+        html.dark .text-forest-green { color: #86b596; }
+        html.dark .text-earthy-gold { color: #dcb981; }
+        html.dark .border-earthy-gold { border-color: #dcb981; }
+        html.dark .bg-light-gold { background-color: #3a3021; }
+        html.dark .bg-light-green { background-color: #2c3a32; }
+        html.dark .bg-charcoal { background-color: #111; }
+        html.dark .fill-charcoal { fill: #d1d1d1; }
+        html.dark nav, html.dark footer {
+             background-color: #111;
+             border-color: #444;
+        }
+        html.dark .hover\:bg-gray-100:hover {
+            background-color: #333;
+        }
+         html.dark .logo-path {
+            stroke: var(--linen-white);
+        }
+        html.dark .prose-p\:text-charcoal\/80 p { color: #d1d1d1; }
+        html.dark .border-black\/5 { border-color: #ffffff1a; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+            font-size: 18px;
+        }
+
+        h1, h2, h3, h4, h5, h6, .font-lora {
+            font-family: 'Lora', serif;
+        }
+        
+        /* Global Enhancements */
+        .main-nav-link, .timer-duration-btn, button, .card-link {
+            transition: all 0.4s ease-in-out;
+        }
+        .card-link:hover {
+             transform: translateY(-4px);
+             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+         html.dark .card-link:hover {
+             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -2px rgba(0,0,0,0.2);
+         }
+        button:active {
+            transform: scale(0.97);
+        }
+        
+        .main-nav-link.active {
+            font-weight: 700;
+            color: var(--forest-green);
+        }
+        html.dark .main-nav-link.active {
+            color: #86b596;
+        }
+        
+        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+            outline: 2px solid var(--earthy-gold);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        #skip-to-content {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        #skip-to-content:focus {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            width: auto;
+            height: auto;
+            padding: 0.5rem 1rem;
+            background: var(--charcoal);
+            color: var(--linen-white);
+            z-index: 1000;
+            border-radius: 6px;
+        }
+        
+        /* Custom UI Elements */
+        .article-content blockquote {
+            border-left: 4px solid var(--earthy-gold);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            font-family: 'Lora', serif;
+            letter-spacing: 0.025em;
+            color: #555;
+        }
+        html.dark .article-content blockquote {
+            border-left-color: #dcb981;
+            color: #aaa;
+        }
+
+        .call-out-box {
+            background-color: var(--light-green);
+            border-left: 4px solid var(--forest-green);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        html.dark .call-out-box {
+            background-color: #2c3a32;
+            border-left-color: #86b596;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background-color: var(--forest-green);
+            width: 0%;
+            z-index: 100;
+            transition: width 0.1s linear;
+        }
+        html.dark #progress-bar {
+            background-color: #86b596;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        .stagger-in > * {
+            animation: fadeIn 0.6s ease-in-out both;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Pali Term Tooltip */
+        .pali-term {
+            border-bottom: 2px dotted var(--earthy-gold);
+            cursor: help;
+            position: relative;
+        }
+        html.dark .pali-term { border-bottom-color: #dcb981; }
+
+        .pali-tooltip {
+            visibility: hidden;
+            width: 250px;
+            background-color: var(--charcoal);
+            color: var(--linen-white);
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        html.dark .pali-tooltip { background-color: #f0f0f0; color: #111; }
+        
+        .pali-term:hover .pali-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Meditation Timer Styles */
+        .timer-ring-bg {
+            stroke: var(--light-green);
+        }
+        .timer-ring-fg {
+            stroke: var(--forest-green);
+            transform: rotate(-90deg);
+            transform-origin: center;
+            transition: stroke-dashoffset 1s linear;
+        }
+        html.dark .timer-ring-bg { stroke: #2c3a32; }
+        html.dark .timer-ring-fg { stroke: #86b596; }
+        
+        /* Interview Recorder Styles */
+        #live-video, #playback-video {
+            transform: scaleX(-1); /* Mirror effect */
+        }
+        
+        .recording-dot {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+    </style>
+</head>
+<body class="bg-linen-white text-charcoal transition-colors duration-300">
+    <a href="#main-content" id="skip-to-content">Skip to main content</a>
+    <div id="progress-bar"></div>
+    
+    <!-- Onboarding Modal -->
+    <div id="onboarding-modal" class="hidden fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4">
+        <div class="bg-linen-white dark:bg-charcoal rounded-lg shadow-2xl max-w-lg w-full p-8 text-center fade-in">
+            <h2 class="text-3xl font-bold font-lora text-forest-green mb-4">Welcome to The Dhamma Path</h2>
+            <p class="text-charcoal/80 dark:text-gray-300 mb-6">To help you get started, what is your primary goal today?</p>
+            <div class="space-y-4">
+                <button class="onboarding-choice w-full p-4 bg-light-green hover:bg-green-200/50 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg text-left">
+                    <strong class="text-forest-green">Learn about Buddhism</strong>
+                    <p class="text-sm text-charcoal/70 dark:text-gray-400">I'm new and want to understand the core concepts.</p>
+                </button>
+                <button class="onboarding-choice w-full p-4 bg-light-green hover:bg-green-200/50 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg text-left">
+                     <strong class="text-forest-green">Start Meditating</strong>
+                    <p class="text-sm text-charcoal/70 dark:text-gray-400">I want to begin or deepen my meditation practice.</p>
+                </button>
+            </div>
+            <button id="close-onboarding" class="mt-8 text-sm text-charcoal/60 dark:text-gray-400 hover:underline">Or, just explore the site</button>
+        </div>
+    </div>
+
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-linen-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200/50 transition-colors duration-300">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" data-page="home" class="flex items-center space-x-2 main-nav-link">
+                     <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="fill-charcoal transition-colors duration-300">
+                        <path class="logo-path" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M20 80 C 30 45, 50 30, 50 20 C 50 30, 60 40, 70 50 C 90 40, 80 70, 50 80 C 20 90, 30 50, 20 80 Z" />
+                    </svg>
+                    <span class="font-lora text-2xl font-bold text-charcoal">The Dhamma Path</span>
+                </a>
+
+                <!-- Desktop Nav -->
+                <div id="desktop-nav-links" class="hidden md:flex items-center space-x-4">
+                    <a href="#" data-page="category-meditation" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">Meditation</a>
+                    <a href="#" data-page="timer" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">Timer</a>
+                    <a href="#" data-page="journal" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">Journal</a>
+                    <a href="#" data-page="workout" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">Workout</a>
+                    <a href="#" data-page="interview" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">Interview</a>
+                    <a href="#" data-page="glossary" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">Glossary</a>
+                    <a href="#" data-page="about" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">About</a>
+                    <div class="relative">
+                        <input type="search" id="search-input" placeholder="Search..." class="w-40 bg-gray-100 border border-transparent rounded-full px-4 py-1.5 focus:w-48 focus:bg-white focus:border-earthy-gold focus:outline-none transition-all duration-300 dark:bg-gray-700 dark:text-white">
+                        <svg class="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <div id="autocomplete-results" class="hidden absolute top-full mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg"></div>
+                    </div>
+                    <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <!-- Sun Icon -->
+                        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                        <!-- Moon Icon -->
+                        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-charcoal hover:text-forest-green focus:outline-none">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div id="mobile-nav-links" class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" data-page="category-meditation" class="main-nav-link text-charcoal hover:text-forest-green block px-3 py-2 rounded-md text-base font-medium">Meditation</a>
+                <a href="#" data-page="timer" class="main-nav-link text-charcoal hover:text-forest-green block px-3 py-2 rounded-md text-base font-medium">Timer</a>
+                <a href="#" data-page="journal" class="main-nav-link text-charcoal hover:text-forest-green block px-3 py-2 rounded-md text-base font-medium">Journal</a>
+                <a href="#" data-page="workout" class="main-nav-link text-charcoal hover:text-forest-green block px-3 py-2 rounded-md text-base font-medium">Workout</a>
+                <a href="#" data-page="interview" class="main-nav-link text-charcoal hover:text-forest-green block px-3 py-2 rounded-md text-base font-medium">Interview</a>
+                <a href="#" data-page="glossary" class="main-nav-link text-charcoal hover:text-forest-green block px-3 py-2 rounded-md text-base font-medium">Glossary</a>
+                <a href="#" data-page="about" class="main-nav-link text-charcoal hover:text-forest-green block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <div class="px-3 py-2">
+                    <button id="dark-mode-toggle-mobile" class="w-full flex items-center justify-between p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <span>Toggle Theme</span>
+                        <div class="flex items-center">
+                           <svg class="h-6 w-6 text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><use href="#sun-icon" /><use href="#moon-icon" /></svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <!-- Page content will be injected here -->
+    </main>
+    
+    <footer class="bg-light-green border-t border-gray-200/80 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="space-y-4 md:col-span-2">
+                    <a href="#" data-page="home" class="main-nav-link flex items-center space-x-2">
+                         <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="fill-charcoal transition-colors duration-300">
+                             <use href=".logo-path" />
+                         </svg>
+                        <span class="font-lora text-xl font-bold text-charcoal">The Dhamma Path</span>
+                    </a>
+                    <p class="text-charcoal/70">A clear and practical guide to Theravāda Buddhism and mindfulness meditation.</p>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-charcoal tracking-wider uppercase font-lora">Explore</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" data-page="timer" class="main-nav-link text-base text-charcoal/80 hover:text-forest-green">Meditation Timer</a></li>
+                        <li><a href="#" data-page="journal" class="main-nav-link text-base text-charcoal/80 hover:text-forest-green">Daily Journal</a></li>
+                        <li><a href="#" data-page="workout" class="main-nav-link text-base text-charcoal/80 hover:text-forest-green">7-Min Workout</a></li>
+                        <li><a href="#" data-page="interview" class="main-nav-link text-base text-charcoal/80 hover:text-forest-green">Interview Practice</a></li>
+                        <li><a href="#" data-page="about" class="main-nav-link text-base text-charcoal/80 hover:text-forest-green">About Us</a></li>
+                        <li><a href="#" data-page="glossary" class="main-nav-link text-base text-charcoal/80 hover:text-forest-green">Pāli Glossary</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-charcoal tracking-wider uppercase font-lora">Legal</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" data-page="privacy" class="main-nav-link text-base text-charcoal/80 hover:text-forest-green">Privacy Policy</a></li>
+                        <li><a href="#" data-page="terms" class="main-nav-link text-base text-charcoal/80 hover:text-forest-green">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-300/50 text-center text-charcoal/60">
+                <p>&copy; 2025 The Dhamma Path. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- TEMPLATES for dynamic content -->
+    <template id="template-home">
+        <div class="space-y-16 sm:space-y-24 max-w-5xl mx-auto">
+            <!-- Hero Section -->
+            <section class="text-left py-12 sm:py-20 rounded-lg bg-gradient-to-b from-light-green/50 to-linen-white dark:from-gray-800/20 dark:to-transparent">
+                 <div class="max-w-3xl">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-forest-green font-lora leading-tight">A Path to Clarity and Peace</h1>
+                    <p class="mt-6 text-xl text-charcoal/80">A clear and practical guide to Theravāda Buddhism and mindfulness meditation.</p>
+                 </div>
+            </section>
+
+            <!-- Start Your Journey -->
+            <section>
+                <h2 class="text-3xl font-bold text-center text-charcoal font-lora mb-10">Start Your Journey</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stagger-in">
+                    <!-- Card 1 -->
+                    <a href="#" data-page="category-introduction" class="main-nav-link card-link block p-8 bg-light-green rounded-lg shadow-sm duration-300 border border-black/5" style="animation-delay: 0.1s;">
+                        <h3 class="text-2xl font-bold text-forest-green font-lora">What is Theravāda?</h3>
+                        <p class="mt-2 text-charcoal/80">Discover the oldest school of Buddhism and its foundational principles.</p>
+                    </a>
+                    <!-- Card 2 -->
+                    <a href="#" data-page="path" data-path-id="7-day-mindfulness" class="main-nav-link card-link block p-8 bg-light-gold rounded-lg shadow-sm duration-300 border border-black/5" style="animation-delay: 0.2s;">
+                        <h3 class="text-2xl font-bold text-earthy-gold font-lora">7-Day Intro to Mindfulness</h3>
+                        <p class="mt-2 text-charcoal/80">A guided path for beginners to establish a daily practice.</p>
+                    </a>
+                    <!-- Card 3 -->
+                    <a href="#" data-page="article" data-article-id="four-noble-truths" class="main-nav-link card-link block p-8 bg-light-green rounded-lg shadow-sm duration-300 border border-black/5" style="animation-delay: 0.3s;">
+                        <h3 class="text-2xl font-bold text-forest-green font-lora">The Four Noble Truths</h3>
+                        <p class="mt-2 text-charcoal/80">Understand the core teaching that forms the basis of all Buddhist thought.</p>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Latest Articles -->
+            <section>
+                 <h2 class="text-3xl font-bold text-center text-charcoal font-lora mb-10">Latest Articles</h2>
+                 <div id="latest-articles-grid" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12 stagger-in">
+                    <!-- Article cards will be injected by JS -->
+                 </div>
+            </section>
+
+             <!-- From the Canon -->
+            <section class="bg-charcoal text-linen-white rounded-lg p-10 sm:p-16 text-center">
+                <h2 class="text-3xl font-bold font-lora text-earthy-gold mb-6">From the Canon</h2>
+                <blockquote class="text-2xl sm:text-3xl font-lora italic leading-relaxed">
+                    "Just as a solid rock is not shaken by the wind, so are the wise unshaken by praise or blame."
+                </blockquote>
+                <cite class="block mt-6 text-lg text-linen-white/70 not-italic">- The Dhammapada, Verse 81</cite>
+            </section>
+        </div>
+    </template>
+    
+    <template id="template-category">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <h1 id="category-title" class="text-4xl sm:text-5xl font-bold text-forest-green font-lora"></h1>
+                <p id="category-description" class="mt-4 max-w-2xl mx-auto text-xl text-charcoal/80"></p>
+            </div>
+            <div id="category-paths-section" class="mb-16"></div>
+            <div id="category-articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-in">
+                <!-- Category article cards will be injected by JS -->
+            </div>
+        </div>
+    </template>
+
+    <template id="template-article">
+        <article class="max-w-3xl mx-auto">
+            <header class="text-center mb-10">
+                <a href="#" id="article-category-link" data-page="" class="main-nav-link text-earthy-gold font-semibold uppercase tracking-wider"></a>
+                <h1 id="article-title" class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mt-2"></h1>
+                <div class="mt-4 text-charcoal/60 text-sm flex justify-center items-center space-x-4">
+                    <span>Last updated on <span id="article-date"></span></span> &bull; 
+                    <span id="article-read-time"></span> min read
+                    <button id="read-aloud-btn" class="flex items-center space-x-2 text-sm text-forest-green hover:underline">
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" /></svg>
+                        <span>Read Aloud</span>
+                    </button>
+                </div>
+            </header>
+            
+            <div id="audio-player-container" class="my-8"></div>
+
+            <div id="article-toc" class="p-6 bg-light-gold rounded-lg my-8">
+                <h3 class="text-xl font-bold font-lora text-earthy-gold mb-3">Table of Contents</h3>
+                <ul id="toc-list" class="space-y-2"></ul>
+            </div>
+            
+            <div id="article-content" class="article-content text-lg leading-relaxed space-y-6">
+                <!-- Article content will be injected by JS -->
+            </div>
+
+            <hr class="my-12 border-gray-300/70 dark:border-gray-600">
+
+            <!-- Author Bio -->
+            <section id="author-bio" class="p-6 bg-light-green rounded-lg flex items-center space-x-6"></section>
+
+            <!-- Related Articles -->
+            <section id="related-articles" class="mt-16"></section>
+
+            <!-- Comments Section -->
+            <section id="comments-section" class="mt-16"></section>
+        </article>
+    </template>
+
+    <template id="template-about">
+        <div class="max-w-3xl mx-auto prose-p:text-charcoal/80">
+            <header class="text-center mb-12">
+                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora">About The Dhamma Path</h1>
+                <p class="mt-4 text-xl">Our mission is to share the timeless teachings of the Buddha in a clear, accessible, and authentic way.</p>
+            </header>
+            <div class="text-lg leading-relaxed space-y-6">
+                <p>The Dhamma Path was born from a simple desire: to create a quiet, trustworthy space on the internet for exploring the teachings of Theravāda Buddhism. In a world of noise and distraction, we believe the path of mindfulness and wisdom offers a profound way to cultivate inner peace and clarity.</p>
+                <p>Our founder, a long-term practitioner of Vipassanā meditation, found that many online resources were either too academic and dense for beginners, or too commercialized and disconnected from the original teachings. This website is an attempt to bridge that gap.</p>
+                <h2 class="text-3xl font-bold text-charcoal font-lora !mt-12">Our Approach</h2>
+                <p>We are committed to presenting the Dhamma (the teachings of the Buddha) as it is found in the Pāli Canon, the earliest collection of Buddhist scriptures. Our articles are written with three core principles in mind:</p>
+                <ul class="list-disc list-inside space-y-2">
+                    <li><strong>Authenticity:</strong> We ground our content in the suttas and the Theravāda tradition.</li>
+                    <li><strong>Clarity:</strong> We strive to explain complex concepts in simple, practical language without sacrificing depth.</li>
+                    <li><strong>Practicality:</strong> We emphasize how these ancient teachings can be applied to modern life to reduce stress and cultivate genuine well-being.</li>
+                </ul>
+                <p>This is not a commercial enterprise. It is a work of passion, offered freely for the benefit of all who are curious. We hope you find it helpful on your journey.</p>
+            </div>
+        </div>
+    </template>
+    
+    <template id="template-glossary">
+        <div class="max-w-4xl mx-auto">
+            <header class="text-center mb-12">
+                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora">Pāli Glossary</h1>
+                <p class="mt-4 max-w-2xl mx-auto text-xl text-charcoal/80">A guide to common terms found in the Theravāda scriptures.</p>
+            </header>
+            <div id="glossary-list" class="space-y-6 stagger-in">
+                <!-- Glossary terms will be injected here -->
+            </div>
+        </div>
+    </template>
+
+    <template id="template-search-results">
+        <div class="max-w-4xl mx-auto">
+            <header class="text-center mb-12">
+                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora">Search Results</h1>
+                <p id="search-results-query" class="mt-4 max-w-2xl mx-auto text-xl text-charcoal/80"></p>
+            </header>
+            <div id="search-results-list" class="space-y-8">
+                <!-- Search results will be injected here -->
+            </div>
+        </div>
+    </template>
+    
+    <template id="template-timer">
+        <div class="max-w-xl mx-auto text-center">
+            <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mb-8">Meditation Timer</h1>
+            <div class="relative w-64 h-64 sm:w-80 sm:h-80 mx-auto mb-8">
+                <svg class="w-full h-full" viewBox="0 0 100 100">
+                    <circle class="timer-ring-bg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent"></circle>
+                    <circle id="timer-progress-ring" class="timer-ring-fg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent" stroke-dasharray="283" stroke-dashoffset="283"></circle>
+                </svg>
+                <div id="timer-display" class="absolute inset-0 flex items-center justify-center text-5xl font-lora text-charcoal">10:00</div>
+            </div>
+            <div id="timer-controls">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center mb-6">
+                    <div>
+                        <label for="duration-select" class="text-sm uppercase tracking-wider text-charcoal/70">Duration (minutes)</label>
+                        <div id="duration-buttons" class="flex justify-center space-x-2 mt-2">
+                            <button data-duration="10" class="timer-duration-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition">10</button>
+                            <button data-duration="15" class="timer-duration-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition">15</button>
+                            <button data-duration="20" class="timer-duration-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition">20</button>
+                            <button data-duration="30" class="timer-duration-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition">30</button>
+                        </div>
+                    </div>
+                     <div>
+                        <label for="sound-select" class="text-sm uppercase tracking-wider text-charcoal/70">Bell Sound</label>
+                        <select id="sound-select" class="mt-2 w-full p-2 border border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-earthy-gold focus:outline-none">
+                            <option value="chime">Gentle Chime</option>
+                            <option value="bowl">Tibetan Bowl</option>
+                            <option value="wood">Wooden Block</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center space-x-4">
+                    <button id="timer-start-btn" class="px-8 py-4 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition text-xl">Start</button>
+                    <button id="timer-pause-btn" class="px-8 py-4 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition text-xl hidden">Pause</button>
+                    <button id="timer-reset-btn" class="p-4 bg-gray-200 text-charcoal rounded-full hover:bg-gray-300 transition dark:bg-gray-700 dark:hover:bg-gray-600">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 4l1.5 1.5A9 9 0 0120.5 15M20 20l-1.5-1.5A9 9 0 003.5 9"></path></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="practice-log" class="mt-12 text-left bg-light-green p-6 rounded-lg"></div>
+        </div>
+    </template>
+    
+    <template id="template-path">
+        <div class="max-w-4xl mx-auto">
+            <header class="text-center mb-12">
+                <p class="text-earthy-gold font-semibold uppercase tracking-wider">Guided Path</p>
+                <h1 id="path-title" class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mt-2"></h1>
+                <p id="path-description" class="mt-4 max-w-2xl mx-auto text-xl text-charcoal/80"></p>
+            </header>
+            <div id="path-steps-list" class="space-y-4 stagger-in">
+                <!-- Path steps will be injected here -->
+            </div>
+        </div>
+    </template>
+    
+    <template id="template-workout">
+         <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mb-8">7-Minute Workout</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div id="workout-visual" class="bg-light-green rounded-lg p-4 flex items-center justify-center h-64 md:h-full">
+                    <!-- SVG Animation will be injected here -->
+                </div>
+                <div>
+                    <div id="workout-display" class="p-8 bg-light-green rounded-lg">
+                        <p id="workout-status" class="text-xl font-semibold text-earthy-gold uppercase tracking-wider">Get Ready!</p>
+                        <h2 id="workout-exercise" class="text-4xl font-bold font-lora text-charcoal my-2">Jumping Jacks</h2>
+                        <div id="workout-timer" class="text-7xl font-lora text-forest-green">10</div>
+                    </div>
+                    <div id="workout-next" class="text-lg text-charcoal/70 mt-4">
+                        Next up: Wall Sit
+                    </div>
+                    <div id="workout-controls" class="mt-8 flex items-center justify-center space-x-4">
+                        <button id="workout-start-btn" class="px-8 py-4 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition text-xl">Start</button>
+                        <button id="workout-pause-btn" class="px-8 py-4 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition text-xl hidden">Pause</button>
+                        <button id="workout-reset-btn" class="p-4 bg-gray-200 text-charcoal rounded-full hover:bg-gray-300 transition dark:bg-gray-700 dark:hover:bg-gray-600">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 4l1.5 1.5A9 9 0 0120.5 15M20 20l-1.5-1.5A9 9 0 003.5 9"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    <template id="template-interview">
+        <div class="max-w-5xl mx-auto">
+            <header class="text-center mb-12">
+                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora">Interview Practice</h1>
+                <p class="mt-4 max-w-2xl mx-auto text-xl text-charcoal/80">Record and review your answers to common job interview questions. All recordings are stored locally in your browser.</p>
+            </header>
+            
+            <div id="interview-controls" class="flex justify-center space-x-2 mb-8">
+                 <button data-category="general" class="interview-cat-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition">General / HR</button>
+                 <button data-category="behavioral" class="interview-cat-btn px-4 py-2 rounded-full bg-light-green text-forest-green transition">Behavioral</button>
+            </div>
+
+            <div id="interview-question-box" class="p-6 bg-light-gold rounded-lg text-center mb-8">
+                <h2 id="interview-question" class="text-2xl font-lora text-earthy-gold">Tell me about yourself.</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Recording Side -->
+                <div>
+                    <h3 class="text-2xl font-bold font-lora text-charcoal mb-4 text-center">Your Camera</h3>
+                    <div id="recorder-section">
+                        <video id="live-video" class="w-full bg-gray-200 dark:bg-gray-800 rounded-lg aspect-video" autoplay muted></video>
+                        <div id="recorder-controls" class="mt-4 flex items-center justify-center space-x-4">
+                            <button id="start-recording-btn" class="px-6 py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition">Start Recording</button>
+                            <button id="stop-recording-btn" class="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition hidden">
+                                <span class="flex items-center"><span class="w-3 h-3 bg-white rounded-full mr-2 recording-dot"></span>Stop Recording</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Playback Side -->
+                <div>
+                    <h3 class="text-2xl font-bold font-lora text-charcoal mb-4 text-center">Session Recordings</h3>
+                    <div id="playback-section" class="space-y-4">
+                         <div id="no-recordings-message" class="text-center p-8 bg-light-green rounded-lg text-charcoal/70">
+                             Your recordings for this session will appear here.
+                         </div>
+                         <div id="recordings-list"></div>
+                         <video id="playback-video" class="w-full bg-gray-200 dark:bg-gray-800 rounded-lg hidden aspect-video" controls></video>
+                         <div id="interview-feedback" class="hidden text-center p-4 bg-light-green rounded-lg text-charcoal/80 mt-4"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button id="next-question-btn" class="px-6 py-3 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition">Next Question</button>
+            </div>
+        </div>
+    </template>
+    
+    <template id="template-journal">
+        <div class="max-w-4xl mx-auto">
+            <header class="text-center mb-12">
+                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora">10-Minute Freewrite</h1>
+                <p class="mt-4 max-w-2xl mx-auto text-xl text-charcoal/80">Clear your mind. Write whatever comes up for 10 minutes without stopping. The text will be saved automatically.</p>
+            </header>
+            
+            <div class="bg-light-green p-6 rounded-lg shadow-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <div id="journal-timer" class="text-2xl font-lora text-forest-green font-bold">10:00</div>
+                    <button id="journal-start-btn" class="px-6 py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition">Start Writing</button>
+                </div>
+                <textarea id="journal-entry" placeholder="Begin writing when you start the timer..." disabled class="w-full h-64 p-4 border border-gray-300/50 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600 disabled:opacity-50" style="font-family: 'Lora', serif; font-size: 1.1rem; line-height: 1.8;"></textarea>
+            </div>
+
+            <div id="journal-history" class="mt-12">
+                <h2 class="text-3xl font-bold text-charcoal font-lora mb-6 text-center">Your Entries</h2>
+                <div id="journal-history-list" class="space-y-6">
+                    <!-- Saved entries will be injected here -->
+                </div>
+            </div>
+        </div>
+    </template>
+
+
+    <script>
+    // --- DATABASE --- //
+    const db = {
+        articles: {
+            "what-is-theravada": {
+                title: "What Is Theravāda Buddhism? A Simple Guide",
+                category: "Introduction",
+                categoryId: "introduction",
+                date: "September 10, 2025",
+                readTime: 8,
+                author: "Alan Dhamma",
+                tags: ["theravada", "buddhism", "introduction"],
+                content: `
+                    <p><span class="pali-term" data-term="theravada">Theravāda</span>, which means "The Way of the Elders" in the Pāli language, is the oldest surviving school of Buddhism. It is widely considered to be the most faithful representation of the original teachings of Siddhartha Gautama, the Buddha. For over two millennia, its traditions have been passed down from teacher to student, preserving a path of wisdom that is both profound and practical.</p>
+                    <h2>The Foundation: The Pāli Canon</h2>
+                    <p>The core of Theravāda Buddhism is the Pāli Canon, the most complete and earliest collection of the Buddha's discourses. This vast body of texts, known as the Tipiṭaka (or "Three Baskets"), is organized into three main sections:</p>
+                    <ul>
+                        <li><strong>Vinaya Piṭaka:</strong> The code of monastic discipline for monks and nuns.</li>
+                        <li><strong>Sutta Piṭaka:</strong> The collection of discourses and sermons delivered by the Buddha and his senior disciples. This is the heart of the teachings.</li>
+                        <li><strong>Abhidhamma Piṭaka:</strong> A detailed philosophical and psychological analysis of the nature of mind and matter.</li>
+                    </ul>
+                    <p>Unlike some other Buddhist schools, Theravāda does not recognize later scriptures or sutras as canonical. It holds that the path to liberation is found within these original teachings.</p>
+                    <blockquote>"Ardently do today what must be done. Who knows? Tomorrow, death comes."</blockquote>
+                    <h2>Core Beliefs: The Three Marks of Existence</h2>
+                    <p>At the heart of Theravāda philosophy are the Three Marks of Existence (Tilakkhaṇa), the fundamental characteristics of all conditioned phenomena:</p>
+                    <ol>
+                        <li><strong><span class="pali-term" data-term="anicca">Anicca</span> (Impermanence):</strong> Everything is in a constant state of flux. Nothing lasts forever.</li>
+                        <li><strong><span class="pali-term" data-term="dukkha">Dukkha</span> (Unsatisfactoriness):</strong> Because things are impermanent, clinging to them inevitably leads to suffering or a subtle sense of dissatisfaction.</li>
+                        <li><strong><span class="pali-term" data-term="anatta">Anattā</span> (Not-Self):</strong> There is no permanent, unchanging, independent self or soul. What we call "I" is merely a temporary combination of physical and mental components.</li>
+                    </ol>
+                    <div class="call-out-box">
+                        <p><strong>Key Takeaway:</strong> Understanding these three truths on an experiential level, not just an intellectual one, is the key to liberation in Theravāda Buddhism. This insight is cultivated through meditation.</p>
+                    </div>
+                    <h2>The Path to Liberation: The Noble Eightfold Path</h2>
+                    <p>The Buddha taught that the way to end suffering is to follow the Noble Eightfold Path. This isn't a linear sequence of steps, but rather eight interconnected factors that should be developed simultaneously. They are grouped into three divisions: Wisdom (<span class="pali-term" data-term="panna">Paññā</span>), Ethical Conduct (Sīla), and Mental Discipline (<span class="pali-term" data-term="samadhi">Samādhi</span>).</p>
+                    <p>By cultivating this path, practitioners aim to achieve the ultimate goal: <span class="pali-term" data-term="nibbana">Nibbāna</span> (Nirvana), the complete cessation of suffering and the cycle of rebirth.</p>
+                `
+            },
+            "vipassana-guide": {
+                title: "How to Practice Vipassanā: A Beginner's Guide",
+                category: "Meditation",
+                categoryId: "meditation",
+                date: "September 8, 2025",
+                readTime: 10,
+                author: "Jane Bodhi",
+                tags: ["meditation", "vipassana", "mindfulness", "guide"],
+                audioSrc: "placeholder.mp3", // Placeholder for audio file
+                content: `
+                    <p><span class="pali-term" data-term="vipassana">Vipassanā</span>, which means "to see things as they really are," is one of India's most ancient meditation techniques. It is a process of self-observation, a journey to the common root of mind and body that dissolves mental impurity, resulting in a balanced mind full of love and compassion.</p>
+                    <h2>Preparing for Your Practice</h2>
+                    <p>Before you begin, find a quiet place where you won't be disturbed for 15-20 minutes. Sit in a comfortable position, either on a cushion on the floor with your legs crossed or upright in a chair with your feet flat on the ground. The key is to keep your back straight but not stiff. Close your eyes gently.</p>
+                    <h2>The Practice: Mindfulness of Breath (<span class="pali-term" data-term="anapanasati">Ānāpānasati</span>)</h2>
+                    <p>The foundation of Vipassanā practice is mindfulness of breath. This is your anchor to the present moment.</p>
+                    <ol>
+                        <li><strong>Bring your attention to your breath.</strong> Observe the natural, normal sensation of the breath as it enters and leaves your nostrils. Don't try to control or change it. Just observe.</li>
+                        <li><strong>Focus on the sensation.</strong> Notice the feeling of the air touching the inside of your nostrils or the area of your upper lip. Stay with this sensation.</li>
+                        <li><strong>When the mind wanders, gently bring it back.</strong> And it will wander. Thoughts, sounds, or physical sensations will pull your attention away. This is normal. The moment you realize your mind has wandered, without any judgment or frustration, gently guide your attention back to the sensation of the breath.</li>
+                    </ol>
+                    <blockquote>"The breath is the bridge which connects life to consciousness, which unites your body to your thoughts."</blockquote>
+                    <h2>Expanding Awareness: Body Scan</h2>
+                    <p>Once you have developed some stability with the breath, you can begin to expand your awareness to the entire body. Systematically move your attention through your body, from the top of your head to the tips of your toes, observing whatever sensations arise.</p>
+                    <p>You might feel tingling, warmth, pressure, or nothing at all. Whatever the sensation, simply observe it with a balanced, equanimous mind. The goal is to understand the impermanent nature of all sensations without reacting to them with craving or aversion.</p>
+                    <div class="call-out-box">
+                        <p><strong>Key Insight:</strong> The practice is not about having pleasant sensations. It's about developing equanimity—the ability to observe your experience without being controlled by it.</p>
+                    </div>
+                    <p>End your session by taking a few moments to sit quietly, letting go of the technique. Then, when you are ready, gently open your eyes.</p>
+                `
+            },
+            "four-noble-truths": {
+                title: "The Four Noble Truths Explained",
+                category: "Core Teachings",
+                categoryId: "teachings",
+                date: "September 5, 2025",
+                readTime: 7,
+                author: "Alan Dhamma",
+                tags: ["theravada", "teachings", "four noble truths", "dukkha"],
+                content: `
+                    <p>The Four Noble Truths are the very first teaching the Buddha gave after his enlightenment. They are the foundation of all Buddhist traditions and provide a framework for understanding the nature of our experience and the path to liberation.</p>
+                    <h2>1. The Truth of Suffering (<span class="pali-term" data-term="dukkha">Dukkha</span>)</h2>
+                    <p>The first truth acknowledges that life inevitably contains suffering. This isn't a pessimistic view but a realistic one. It includes obvious suffering like pain, old age, and sickness, but also more subtle forms of dissatisfaction, like the stress of not getting what we want or the anxiety of holding onto what we have.</p>
+                    <h2>2. The Truth of the Origin of Suffering (Samudāya)</h2>
+                    <p>The second truth identifies the cause of suffering: craving and clinging (Taṇhā). We suffer because we cling to things, ideas, and even our sense of self, wishing they were permanent when they are not. This craving comes in three forms:</p>
+                    <ul>
+                        <li>Craving for sense pleasures.</li>
+                        <li>Craving for existence and becoming.</li>
+                        <li>Craving for non-existence.</li>
+                    </ul>
+                    <blockquote>"The root of suffering is attachment."</blockquote>
+                    <h2>3. The Truth of the Cessation of Suffering (Nirodhha)</h2>
+                    <p>The third truth is the good news: there is an end to suffering. By eliminating craving and clinging, we can attain <span class="pali-term" data-term="nibbana">Nibbāna</span> (Nirvana), a state of profound peace, freedom, and the complete cessation of Dukkha.</p>
+                    <h2>4. The Truth of the Path to the Cessation of Suffering (Magga)</h2>
+                    <p>The fourth and final truth lays out the practical method for ending suffering: The Noble Eightfold Path. This is the prescription for the ailment of Dukkha. By cultivating wisdom, ethical conduct, and mental discipline, we systematically uproot the causes of our dissatisfaction and move towards liberation.</p>
+                `
+            },
+            "noble-eightfold-path": {
+                title: "The Noble Eightfold Path: A Practical Guide",
+                category: "Core Teachings",
+                categoryId: "teachings",
+                date: "September 1, 2025",
+                readTime: 9,
+                author: "Alan Dhamma",
+                tags: ["teachings", "eightfold path", "ethics", "meditation"],
+                content: `
+                    <p>The Noble Eightfold Path is the Buddha's practical prescription for ending suffering. It is not a set of rules, but a group of eight interconnected factors that, when developed together, lead to wisdom, peace, and liberation.</p>
+                    <h2>Division 1: Wisdom (<span class="pali-term" data-term="panna">Paññā</span>)</h2>
+                    <ol>
+                        <li><strong>Right Understanding (Sammā Diṭṭhi):</strong> Seeing things as they truly are, which begins with understanding the Four Noble Truths.</li>
+                        <li><strong>Right Intention (Sammā Saṅkappa):</strong> Cultivating intentions of renunciation, goodwill, and harmlessness.</li>
+                    </ol>
+                    <h2>Division 2: Ethical Conduct (Sīla)</h2>
+                    <ol start="3">
+                        <li><strong>Right Speech (Sammā Vācā):</strong> Abstaining from lying, divisive speech, harsh speech, and idle chatter.</li>
+                        <li><strong>Right Action (Sammā Kammanta):</strong> Abstaining from killing, stealing, and sexual misconduct.</li>
+                        <li><strong>Right Livelihood (Sammā Ājīva):</strong> Earning a living in a way that does not harm others.</li>
+                    </ol>
+                    <h2>Division 3: Mental Discipline (<span class="pali-term" data-term="samadhi">Samādhi</span>)</h2>
+                    <ol start="6">
+                        <li><strong>Right Effort (Sammā Vāyāma):</strong> Actively preventing unwholesome states and cultivating wholesome ones.</li>
+                        <li><strong>Right Mindfulness (Sammā Sati):</strong> Developing bare awareness of the body, feelings, mind, and mental objects.</li>
+                        <li><strong>Right Concentration (Sammā Samādhi):</strong> Developing one-pointedness of mind, often through meditation, leading to deep states of calm and insight.</li>
+                    </ol>
+                    <div class="call-out-box"><p>These eight factors support and strengthen each other. Ethical conduct provides a stable foundation for concentration, which in turn clarifies the mind, allowing wisdom to arise.</p></div>
+                `
+            },
+            "metta-meditation": {
+                title: "A Guide to Mettā (Loving-Kindness) Meditation",
+                category: "Meditation",
+                categoryId: "meditation",
+                date: "September 12, 2025",
+                readTime: 8,
+                author: "Jane Bodhi",
+                tags: ["meditation", "metta", "loving-kindness", "compassion"],
+                audioSrc: "placeholder.mp3",
+                content: `
+                    <p><span class="pali-term" data-term="metta">Mettā</span>, or loving-kindness, is a meditation practice designed to cultivate unconditional, compassionate love for all beings. It is a powerful antidote to anger, ill will, and fear.</p>
+                    <h2>The Practice</h2>
+                    <p>Find a comfortable sitting position and gently close your eyes. Begin by offering loving-kindness to yourself. Silently repeat phrases that resonate with you, such as:</p>
+                    <ul>
+                        <li>May I be happy.</li>
+                        <li>May I be healthy.</li>
+                        <li>May I be safe.</li>
+                        <li>May I live with ease.</li>
+                    </ul>
+                    <p>Feel the intention behind the words. There is no need to force a particular feeling; simply offer the phrases with gentle sincerity.</p>
+                    <h2>Expanding the Circle of Kindness</h2>
+                    <p>After a few minutes of offering mettā to yourself, you gradually expand the circle of loving-kindness to include others:</p>
+                    <ol>
+                        <li><strong>A loved one:</strong> Bring to mind a close friend or family member. Offer them the same phrases: "May you be happy. May you be healthy..."</li>
+                        <li><strong>A neutral person:</strong> Think of someone you see regularly but don't have strong feelings about, like a cashier or a neighbor. Offer them mettā.</li>
+                        <li><strong>A difficult person:</strong> This can be challenging. Bring to mind someone with whom you have friction. To the best of your ability, offer them the same wishes for their happiness and well-being.</li>
+                        <li><strong>All beings:</strong> Finally, expand your loving-kindness to all living beings everywhere, without exception. "May all beings be happy. May all beings be healthy..."</li>
+                    </ol>
+                    <blockquote>"Just as a mother would protect her only child at the risk of her own life, even so, let him cultivate a boundless heart towards all beings."</blockquote>
+                `
+            }
+        },
+        categories: {
+            "introduction": {
+                title: "Introduction to Theravāda",
+                description: "Begin your journey here. Understand the origins, history, and foundational principles of the oldest school of Buddhism."
+            },
+            "teachings": {
+                title: "Core Teachings",
+                description: "Explore the fundamental doctrines of the Buddha, from the Four Noble Truths to the nature of reality. These articles form the philosophical heart of the path."
+            },
+            "meditation": {
+                title: "Meditation & Practice",
+                description: "Learn the practical techniques of mindfulness and concentration. Our guides provide clear, step-by-step instructions to help you establish a stable and fruitful practice."
+            }
+        },
+        glossary: {
+            "theravada": "The 'Way of the Elders'. The oldest surviving school of Buddhism, based on the Pāli Canon.",
+            "dukkha": "Unsatisfactoriness, suffering, stress. The inherent unease in conditioned existence.",
+            "anicca": "Impermanence. The principle that all conditioned things are in a constant state of flux.",
+            "anatta": "Not-self. The doctrine that there is no permanent, unchanging soul or self.",
+            "nibbana": "Nirvana. The ultimate goal, meaning 'to extinguish'. The cessation of suffering and the cycle of rebirth.",
+            "panna": "Wisdom, insight. One of the three divisions of the Noble Eightfold Path.",
+            "samadhi": "Concentration, mental discipline. The second division of the Noble Eightfold Path.",
+            "vipassana": "Insight meditation. The practice of seeing things as they truly are.",
+            "anapanasati": "Mindfulness of breathing. A core meditation practice.",
+            "metta": "Loving-kindness, goodwill. A meditation practice for cultivating universal, non-attached love."
+        },
+        authors: {
+            "Alan Dhamma": {
+                name: "Alan Dhamma",
+                bio: "Alan is the founder of The Dhamma Path and a long-term practitioner of Vipassanā meditation in the Theravāda tradition. His focus is on making the original teachings accessible and practical for modern life.",
+                avatar: "https://placehold.co/80x80/6b8576/FDFBF5?text=A"
+            },
+            "Jane Bodhi": {
+                name: "Jane Bodhi",
+                bio: "Jane has been a dedicated student of Buddhist meditation for over 15 years. She is a certified mindfulness instructor and is passionate about sharing the benefits of practice with others.",
+                 avatar: "https://placehold.co/80x80/c9a973/FDFBF5?text=J"
+            }
+        },
+        paths: {
+            "7-day-mindfulness": {
+                title: "7-Day Introduction to Mindfulness",
+                description: "A guided path for beginners to establish a daily practice. Each day includes a short reading and a guided meditation.",
+                steps: [
+                    { day: 1, title: "Finding Your Seat & Your Breath", articleId: "vipassana-guide", focus: "Posture and basic breath awareness."},
+                    { day: 2, title: "Working with a Wandering Mind", articleId: "vipassana-guide", focus: "Gently returning your attention without judgment."},
+                    { day: 3, title: "Mindfulness of the Body", articleId: "vipassana-guide", focus: "Expanding awareness to physical sensations."},
+                    { day: 4, title: "Cultivating Loving-Kindness", articleId: "metta-meditation", focus: "Introducing the practice of Mettā."},
+                    { day: 5, title: "Observing Thoughts and Feelings", articleId: "vipassana-guide", focus: "Seeing mental events as impermanent."},
+                    { day: 6, title: "Mindfulness in Daily Life", articleId: "what-is-theravada", focus: "Taking practice off the cushion."},
+                    { day: 7, title: "Establishing a Routine", articleId: "noble-eightfold-path", focus: "Tips for continuing your practice."}
+                ]
+            }
+        },
+        workout: {
+            exercises: [
+                { name: "Jumping Jacks", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="40" r="10"/><path d="M100 50v50m0 0l-20 40m20-40l20 40M100 70l-30-30m30 30l30-30"><animateTransform attributeName="transform" type="rotate" from="0 100 100" to="20 100 100" dur="0.5s" repeatCount="indefinite" alternate="true"/></path><path d="M70 140l-10-40m70 40l10-40"><animateTransform attributeName="transform" type="rotate" from="0 100 100" to="-20 100 100" dur="0.5s" repeatCount="indefinite" alternate="true"/></path></g></svg>' },
+                { name: "Wall Sit", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M50 20v160"/><circle cx="80" cy="60" r="10"/><path d="M80 70v40h-20l-10 30"/></g></svg>' },
+                { name: "Push-ups", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 140h120l-30-40h-60z"/><circle cx="100" cy="80" r="10"/><animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite" /></g></svg>' },
+                { name: "Crunches", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 140h120l-20-20-80 0 -20 20"/><path d="M80 120 l20-30 20 30"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 -10" dur="0.5s" repeatCount="indefinite" alternate="true"/></path><circle cx="100" cy="70" r="10"/></g></svg>' },
+                { name: "Step-ups", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 140h120v20H40z"/><circle cx="80" cy="60" r="10"/><path d="M80 70v50l-20 20"/><path d="M120 140V90l20-20"><animate attributeName="d" values="M120 140V90l20-20; M120 120V70l20-20; M120 140V90l20-20" dur="1s" repeatCount="indefinite" /></path></g></svg>' },
+                { name: "Squats", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="60" r="10"/><path d="M100 70v40m0 0l-20 40m20-40l20 40"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 20" dur="0.5s" repeatCount="indefinite" alternate="true"/></path></g></svg>' },
+                { name: "Triceps Dips", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 100h120v20H40z"/><circle cx="100" cy="50" r="10"/><path d="M100 60v20m-20 20l20-20l20 20m-40-10h40"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 10" dur="0.5s" repeatCount="indefinite" alternate="true"/></path></g></svg>' },
+                { name: "Plank", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M30 120h140l-20-20H50z"/><circle cx="100" cy="80" r="10"/><animateTransform attributeName="transform" type="translate" from="0 0" to="0 2" dur="1.5s" repeatCount="indefinite" alternate="true"/></g></svg>' },
+                { name: "High Knees", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="60" r="10"/><path d="M100 70v40m0 0l-20 40m20-40l20 40"/><path d="M80 150v-30"><animate attributeName="d" values="M80 150v-30; M80 120v-30; M80 150v-30" dur="0.5s" repeatCount="indefinite" /></path><path d="M120 120v30"><animate attributeName="d" values="M120 120v30; M120 150v-30; M120 120v30" dur="0.5s" repeatCount="indefinite" /></path></g></svg>' },
+                { name: "Lunges", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="60" r="10"/><path d="M100 70v40l20 40"/><path d="M100 110L80 150"><animate attributeName="d" values="M100 110L80 150; M100 110L120 150; M100 110L80 150" dur="1s" repeatCount="indefinite" /></path></g></svg>' },
+                { name: "Push-up & Rotation", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 140h120l-30-40h-60z"/><circle cx="100" cy="80" r="10"/><path d="M100 100V60"><animateTransform attributeName="transform" type="rotate" from="0 100 100" to="90 100 100" dur="1s" repeatCount="indefinite" alternate="true"/></path></g></svg>' },
+                { name: "Side Plank", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" transform="rotate(90 100 100)"><path d="M30 120h140l-20-20H50z"/><circle cx="100" cy="80" r="10"/><animateTransform attributeName="transform" type="translate" from="0 0" to="0 2" dur="1.5s" repeatCount="indefinite" alternate="true"/></g></svg>' }
+            ],
+            restDuration: 10
+        },
+        interviewQuestions: {
+            general: [
+                "Tell me about yourself.",
+                "Where do you see yourself in five years?",
+                "Why do you want to work for this company?",
+                "What are your salary expectations?",
+                "Why are you leaving your current job?",
+                "Do you have any questions for us?"
+            ],
+            behavioral: [
+                "Tell me about a time you had a conflict with a coworker.",
+                "Describe a time you went above and beyond.",
+                "Tell me about a time you failed. What did you learn?",
+                "How do you handle pressure or stressful situations?",
+                "Give an example of a goal you reached and how you achieved it."
+            ]
+        }
+    };
+
+    // --- APP LOGIC --- //
+    document.addEventListener('DOMContentLoaded', () => {
+        const mainContent = document.getElementById('main-content');
+        
+        // --- Dark Mode --- //
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        
+        const applyTheme = (isDark) => {
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                document.documentElement.classList.remove('dark');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        };
+
+        const toggleDarkMode = () => {
+            const isDark = !document.documentElement.classList.contains('dark');
+            localStorage.setItem('darkMode', isDark);
+            applyTheme(isDark);
+        };
+
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+        darkModeToggleMobile.addEventListener('click', toggleDarkMode);
+
+        // Check for saved preference
+        if (localStorage.getItem('darkMode') === 'true' || 
+           (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('darkMode'))) {
+            applyTheme(true);
+        } else {
+            applyTheme(false);
+        }
+
+        // --- Mobile Menu --- //
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- Scroll Progress Bar --- //
+        const progressBar = document.getElementById('progress-bar');
+        const updateProgressBar = () => {
+            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+            if (scrollHeight > clientHeight) {
+                const scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
+                progressBar.style.width = `${scrollPercent}%`;
+            } else {
+                progressBar.style.width = '0%';
+            }
+        };
+        window.addEventListener('scroll', updateProgressBar);
+        
+        // --- Templating & Routing --- //
+        const templates = {
+            home: document.getElementById('template-home').content.cloneNode(true),
+            category: document.getElementById('template-category').content.cloneNode(true),
+            article: document.getElementById('template-article').content.cloneNode(true),
+            about: document.getElementById('template-about').content.cloneNode(true),
+            glossary: document.getElementById('template-glossary').content.cloneNode(true),
+            searchResults: document.getElementById('template-search-results').content.cloneNode(true),
+            timer: document.getElementById('template-timer').content.cloneNode(true),
+            path: document.getElementById('template-path').content.cloneNode(true),
+            workout: document.getElementById('template-workout').content.cloneNode(true),
+            interview: document.getElementById('template-interview').content.cloneNode(true),
+            journal: document.getElementById('template-journal').content.cloneNode(true),
+        };
+
+        const renderArticleCard = (articleId, article, fullWidth = false, delay = 0) => {
+            const description = article.content.match(/<p>(.*?)<\/p>/)[1].replace(/<[^>]+>/g, '').substring(0, 100);
+            return `
+                <a href="#" data-page="article" data-article-id="${articleId}" class="main-nav-link card-link group block ${fullWidth ? '' : 'p-6 bg-light-green rounded-lg shadow-sm border border-black/5'}" style="animation-delay: ${delay}s">
+                    <div class="space-y-2">
+                         <p class="text-sm font-semibold uppercase tracking-wider text-earthy-gold">${article.category}</p>
+                         <h3 class="text-2xl font-bold text-charcoal font-lora group-hover:text-forest-green transition-colors">${article.title}</h3>
+                         <p class="text-charcoal/70">${description}...</p>
+                         <span class="text-sm text-forest-green font-semibold">Read more &rarr;</span>
+                    </div>
+                </a>
+            `;
+        };
+        
+        const renderHomePage = () => {
+            const page = templates.home.cloneNode(true);
+            const latestArticlesGrid = page.getElementById('latest-articles-grid');
+            Object.entries(db.articles).slice(0, 4).forEach(([id, article], index) => {
+                const card = document.createElement('div');
+                card.innerHTML = renderArticleCard(id, article, true, index * 0.1);
+                latestArticlesGrid.appendChild(card);
+            });
+            return page;
+        };
+        
+        const renderAboutPage = () => templates.about.cloneNode(true);
+
+        const renderGlossaryPage = () => {
+            const page = templates.glossary.cloneNode(true);
+            const list = page.getElementById('glossary-list');
+            Object.entries(db.glossary).sort().forEach(([term, def], index) => {
+                const item = document.createElement('div');
+                item.className = 'p-6 bg-light-green rounded-lg';
+                item.style.animationDelay = `${index * 0.05}s`;
+                item.innerHTML = `
+                    <h3 class="text-2xl font-bold text-forest-green font-lora">${term.charAt(0).toUpperCase() + term.slice(1)}</h3>
+                    <p class="mt-2 text-charcoal/80">${def}</p>
+                `;
+                list.appendChild(item);
+            });
+            return page;
+        };
+
+        const renderCategoryPage = (categoryId) => {
+            const page = templates.category.cloneNode(true);
+            const category = db.categories[categoryId];
+            if (!category) return renderHomePage();
+
+            page.getElementById('category-title').textContent = category.title;
+            page.getElementById('category-description').textContent = category.description;
+            const grid = page.getElementById('category-articles-grid');
+            
+            // Add paths section if it's the meditation category
+            if (categoryId === 'meditation') {
+                const pathsSection = page.getElementById('category-paths-section');
+                let pathsHtml = '<h2 class="text-3xl font-bold text-center text-charcoal font-lora mb-10">Guided Paths</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-8 stagger-in">';
+                Object.entries(db.paths).forEach(([id, path], index) => {
+                    pathsHtml += `
+                    <a href="#" data-page="path" data-path-id="${id}" class="main-nav-link card-link block p-8 bg-light-gold rounded-lg shadow-sm duration-300 border border-black/5" style="animation-delay: ${index * 0.1}s">
+                        <h3 class="text-2xl font-bold text-earthy-gold font-lora">${path.title}</h3>
+                        <p class="mt-2 text-charcoal/80">${path.description}</p>
+                    </a>
+                    `;
+                });
+                pathsHtml += '</div><hr class="my-16 border-gray-300/70 dark:border-gray-600">';
+                pathsSection.innerHTML = pathsHtml;
+            }
+
+            Object.entries(db.articles)
+                .filter(([id, article]) => article.categoryId === categoryId)
+                .forEach(([id, article], index) => {
+                    const card = document.createElement('div');
+                    card.innerHTML = renderArticleCard(id, article, false, index * 0.1);
+                    grid.appendChild(card);
+                });
+            return page;
+        };
+        
+        const renderArticlePage = (articleId) => {
+            const page = templates.article.cloneNode(true);
+            const article = db.articles[articleId];
+            if (!article) return renderHomePage();
+
+            const categoryLink = page.getElementById('article-category-link');
+            categoryLink.textContent = article.category;
+            categoryLink.dataset.page = `category-${article.categoryId}`;
+
+            page.getElementById('article-title').textContent = article.title;
+            page.getElementById('article-date').textContent = article.date;
+            page.getElementById('article-read-time').textContent = article.readTime;
+            const articleContentDiv = page.getElementById('article-content');
+            articleContentDiv.innerHTML = article.content;
+
+            // Audio Player
+            if (article.audioSrc) {
+                const audioPlayerContainer = page.getElementById('audio-player-container');
+                audioPlayerContainer.innerHTML = `
+                    <div class="bg-light-green p-6 rounded-lg">
+                         <h3 class="text-xl font-bold font-lora text-forest-green mb-4">Guided Meditation</h3>
+                         <div class="flex items-center space-x-4">
+                            <button class="audio-play-btn w-14 h-14 bg-forest-green text-white rounded-full flex items-center justify-center hover:bg-forest-green/90 transition">
+                                <svg class="play-icon h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
+                                <svg class="pause-icon h-8 w-8 hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                            </button>
+                            <div class="flex-grow">
+                                <p class="font-semibold text-charcoal">${article.readTime}-Minute Guided Practice</p>
+                                <div class="relative pt-1">
+                                    <div class="overflow-hidden h-2 mt-2 text-xs flex rounded bg-gray-300">
+                                        <div style="width:0%" class="audio-progress shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-earthy-gold"></div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                `;
+            }
+
+            // Generate TOC
+            const tocList = page.getElementById('toc-list');
+            const headings = articleContentDiv.querySelectorAll('h2');
+            if(headings.length > 0){
+                headings.forEach(h => {
+                    const id = h.textContent.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+                    h.id = id;
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="#${id}" class="hover:text-forest-green">${h.textContent}</a>`;
+                    tocList.appendChild(li);
+                });
+            } else {
+                page.getElementById('article-toc').style.display = 'none';
+            }
+
+            // Author Bio
+            const author = db.authors[article.author];
+            if (author) {
+                const authorBioDiv = page.getElementById('author-bio');
+                authorBioDiv.innerHTML = `
+                    <img src="${author.avatar}" alt="${author.name}" class="w-20 h-20 rounded-full">
+                    <div>
+                        <p class="text-sm text-charcoal/70 uppercase tracking-wider">Written by</p>
+                        <h4 class="text-xl font-bold font-lora text-charcoal">${author.name}</h4>
+                        <p class="mt-1 text-charcoal/80">${author.bio}</p>
+                    </div>
+                `;
+            }
+
+            // Related Articles
+            const relatedArticlesDiv = page.getElementById('related-articles');
+            const relatedArticles = Object.entries(db.articles)
+                .filter(([id, a]) => id !== articleId && (a.categoryId === article.categoryId || a.tags.some(t => article.tags.includes(t))))
+                .slice(0, 3);
+            
+            if (relatedArticles.length > 0) {
+                relatedArticlesDiv.innerHTML = `<h3 class="text-3xl font-bold font-lora text-center mb-8">Related Articles</h3>`;
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-1 md:grid-cols-3 gap-8 stagger-in';
+                relatedArticles.forEach(([id, a], index) => {
+                    const card = document.createElement('div');
+                    card.innerHTML = renderArticleCard(id, a, false, index * 0.1);
+                    grid.appendChild(card);
+                });
+                relatedArticlesDiv.appendChild(grid);
+            }
+
+            // Comments
+            const commentsDiv = page.getElementById('comments-section');
+            commentsDiv.innerHTML = `
+                <h3 class="text-3xl font-bold font-lora mb-6">Leave a Comment</h3>
+                <form class="space-y-4">
+                    <textarea placeholder="Your comment..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-700 dark:border-gray-600" rows="4"></textarea>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-700 dark:border-gray-600">
+                        <input type="email" placeholder="Your Email (not published)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                    <button type="submit" class="px-6 py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition">Post Comment</button>
+                </form>
+                <div class="mt-12 space-y-8">
+                    <h4 class="text-2xl font-bold font-lora">2 Comments</h4>
+                    <div class="flex space-x-4">
+                        <img src="https://placehold.co/48x48/EADDC7/B98B4C?text=M" alt="User Avatar" class="w-12 h-12 rounded-full">
+                        <div>
+                            <p class="font-bold text-charcoal">Maria S.</p>
+                            <p class="text-sm text-charcoal/60 mb-2">September 9, 2025</p>
+                            <p class="text-charcoal/90">Thank you for this wonderful guide. The instructions for mindfulness of breath are the clearest I've ever read.</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <img src="https://placehold.co/48x48/E4EAE6/4A6C55?text=D" alt="User Avatar" class="w-12 h-12 rounded-full">
+                        <div>
+                            <p class="font-bold text-charcoal">David L.</p>
+                            <p class="text-sm text-charcoal/60 mb-2">September 11, 2025</p>
+                            <p class="text-charcoal/90">Really appreciate the breakdown of the body scan. It's a part of the practice I've always struggled with.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return page;
+        };
+        
+        const renderSearchResultsPage = (query) => {
+            const page = templates.searchResults.cloneNode(true);
+            const resultsList = page.getElementById('search-results-list');
+            const queryText = page.getElementById('search-results-query');
+
+            const lowerQuery = query.toLowerCase();
+            const results = Object.entries(db.articles).filter(([id, article]) => {
+                return article.title.toLowerCase().includes(lowerQuery) || article.content.toLowerCase().includes(lowerQuery);
+            });
+
+            if (results.length > 0) {
+                queryText.textContent = `Found ${results.length} result(s) for "${query}"`;
+                results.forEach(([id, article]) => {
+                     const card = document.createElement('div');
+                     card.className = 'border-b border-gray-200 dark:border-gray-700 pb-6';
+                     card.innerHTML = renderArticleCard(id, article, true);
+                     resultsList.appendChild(card);
+                });
+            } else {
+                queryText.textContent = `No results found for "${query}"`;
+            }
+            return page;
+        };
+        
+        const renderTimerPage = () => templates.timer.cloneNode(true);
+        const renderWorkoutPage = () => templates.workout.cloneNode(true);
+        const renderInterviewPage = () => templates.interview.cloneNode(true);
+        const renderJournalPage = () => templates.journal.cloneNode(true);
+
+        const renderPathPage = (pathId) => {
+            const page = templates.path.cloneNode(true);
+            const path = db.paths[pathId];
+            if (!path) return renderHomePage();
+
+            page.getElementById('path-title').textContent = path.title;
+            page.getElementById('path-description').textContent = path.description;
+            const list = page.getElementById('path-steps-list');
+            path.steps.forEach((step, index) => {
+                const item = document.createElement('a');
+                item.href = '#';
+                item.dataset.page = 'article';
+                item.dataset.articleId = step.articleId;
+                item.className = 'main-nav-link card-link block p-6 bg-light-green rounded-lg shadow-sm hover:shadow-md transition-shadow flex items-center space-x-6';
+                item.style.animationDelay = `${index * 0.1}s`;
+                item.innerHTML = `
+                    <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-forest-green text-white rounded-full font-lora text-2xl">${step.day}</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-charcoal font-lora">${step.title}</h3>
+                        <p class="text-charcoal/80">Focus: ${step.focus}</p>
+                    </div>
+                    <div class="ml-auto text-forest-green">&rarr;</div>
+                `;
+                list.appendChild(item);
+            });
+            return page;
+        };
+        
+        let timerInterval = null;
+        let workoutInterval = null;
+        let journalInterval = null;
+        let mediaRecorder = null;
+        let recordedChunks = [];
+        let sessionRecordings = [];
+
+        const sounds = {
+            chime: new Audio("data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YV8vT19IA38JfweLCPsI/wklDSAKNA04DhsPMg8ADBwPGA8kEI4Q8xAhEWgSChPWFBoU4BUkFWQWahd6F4EX7xgdGG4YzxkPG8wbKBwSHRseHR8ZICQjJCwmKSgqKiwqLCoqKCQjICAfIBwYGRUQEg8ODAsJCAgHBwUEAwIBAD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8A"),
+            bowl: new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAIARKwAABCxAgAEABAAZGF0YQAAAAA="),
+            wood: new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=")
+        };
+        
+        const navigateTo = (pageName, id = null) => {
+            clearInterval(timerInterval); 
+            clearInterval(workoutInterval);
+            clearInterval(journalInterval);
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+            }
+            if(window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+            mainContent.innerHTML = '';
+            let pageContent;
+
+            switch(pageName) {
+                case 'category-introduction': pageContent = renderCategoryPage('introduction'); break;
+                case 'category-teachings': pageContent = renderCategoryPage('teachings'); break;
+                case 'category-meditation': pageContent = renderCategoryPage('meditation'); break;
+                case 'article': pageContent = renderArticlePage(id); break;
+                case 'about': pageContent = renderAboutPage(); break;
+                case 'glossary': pageContent = renderGlossaryPage(); break;
+                case 'searchResults': pageContent = renderSearchResultsPage(id); break;
+                case 'timer': pageContent = renderTimerPage(); break;
+                case 'path': pageContent = renderPathPage(id); break;
+                case 'workout': pageContent = renderWorkoutPage(); break;
+                case 'interview': pageContent = renderInterviewPage(); break;
+                case 'journal': pageContent = renderJournalPage(); break;
+                case 'home': default: pageContent = renderHomePage();
+            }
+            
+            mainContent.appendChild(pageContent);
+
+            if (pageName === 'timer') attachTimerLogic();
+            if (pageName === 'article') attachArticlePageLogic(id);
+            if (pageName === 'workout') attachWorkoutLogic();
+            if (pageName === 'interview') attachInterviewLogic();
+            if (pageName === 'journal') attachJournalLogic();
+
+            mainContent.classList.add('fade-in');
+            setTimeout(() => mainContent.classList.remove('fade-in'), 500);
+            window.scrollTo(0, 0);
+            mobileMenu.classList.add('hidden'); // Close mobile menu on nav
+            updateProgressBar(); // Recalculate progress for new page
+            updateActiveNavLink(pageName);
+        };
+        
+        function updateActiveNavLink(currentPage) {
+            document.querySelectorAll('#desktop-nav-links a, #mobile-nav-links a').forEach(link => {
+                const linkPage = link.dataset.page;
+                // Handle category pages as a special case
+                const isActive = (linkPage === currentPage) || 
+                               (linkPage.startsWith('category-') && currentPage === linkPage) ||
+                               (currentPage.startsWith('path') && linkPage === 'category-meditation');
+
+                if (isActive) {
+                     link.classList.add('active');
+                } else {
+                     link.classList.remove('active');
+                }
+            });
+        }
+        
+        // --- Onboarding Logic --- //
+        const onboardingModal = document.getElementById('onboarding-modal');
+        if (!localStorage.getItem('dhammaPathVisited')) {
+            onboardingModal.classList.remove('hidden');
+        }
+        onboardingModal.addEventListener('click', (e) => {
+            if (e.target.closest('.onboarding-choice') || e.target.id === 'close-onboarding') {
+                onboardingModal.classList.add('hidden');
+                localStorage.setItem('dhammaPathVisited', 'true');
+            }
+        });
+
+        // Initial page load
+        navigateTo('home');
+
+        // Navigation event listener
+        document.body.addEventListener('click', (e) => {
+            const link = e.target.closest('.main-nav-link');
+            if (link) {
+                e.preventDefault();
+                const page = link.dataset.page;
+                const id = link.dataset.articleId || link.dataset.pathId;
+                navigateTo(page, id);
+            }
+        });
+        
+        // --- Search with Autocomplete --- //
+        const searchInput = document.getElementById('search-input');
+        const autocompleteResults = document.getElementById('autocomplete-results');
+        
+        searchInput.addEventListener('keyup', (e) => {
+            const query = searchInput.value.toLowerCase();
+            if (e.key === 'Enter' && query.trim() !== '') {
+                navigateTo('searchResults', query.trim());
+                autocompleteResults.classList.add('hidden');
+                searchInput.blur();
+                return;
+            }
+
+            if (query.length < 2) {
+                autocompleteResults.classList.add('hidden');
+                return;
+            }
+
+            const results = Object.entries(db.articles)
+                .filter(([id, article]) => article.title.toLowerCase().includes(query))
+                .slice(0, 5);
+
+            if (results.length > 0) {
+                autocompleteResults.innerHTML = results.map(([id, article]) => 
+                    `<a href="#" data-page="article" data-article-id="${id}" class="main-nav-link block px-4 py-2 hover:bg-light-green dark:hover:bg-gray-700">${article.title}</a>`
+                ).join('');
+                autocompleteResults.classList.remove('hidden');
+            } else {
+                autocompleteResults.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target)) {
+                autocompleteResults.classList.add('hidden');
+            }
+        });
+
+
+        // Pāli Term Tooltips
+        mainContent.addEventListener('mouseover', (e) => {
+            if (e.target.classList.contains('pali-term')) {
+                const term = e.target.dataset.term;
+                const definition = db.glossary[term];
+                if (definition && !e.target.querySelector('.pali-tooltip')) {
+                    const tooltip = document.createElement('span');
+                    tooltip.className = 'pali-tooltip';
+                    tooltip.textContent = definition;
+                    e.target.appendChild(tooltip);
+                }
+            }
+        });
+        
+        function attachArticlePageLogic(articleId) {
+             // Attach audio player if it exists
+            const player = mainContent.querySelector('#audio-player-container');
+            if (player) {
+                attachAudioPlayerLogic();
+            }
+            
+            // Attach read-aloud logic
+            const readAloudBtn = document.getElementById('read-aloud-btn');
+            readAloudBtn.addEventListener('click', () => {
+                const articleContent = document.getElementById('article-content');
+                const text = articleContent.innerText;
+                if(speechSynthesis.speaking) {
+                    speechSynthesis.cancel();
+                    readAloudBtn.querySelector('span').textContent = 'Read Aloud';
+                } else {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    speechSynthesis.speak(utterance);
+                    readAloudBtn.querySelector('span').textContent = 'Stop Reading';
+                    utterance.onend = () => {
+                        readAloudBtn.querySelector('span').textContent = 'Read Aloud';
+                    };
+                }
+            });
+        }
+        
+        function attachAudioPlayerLogic() {
+            const player = mainContent.querySelector('#audio-player-container');
+            if (!player) return;
+
+            const playBtn = player.querySelector('.audio-play-btn');
+            const playIcon = player.querySelector('.play-icon');
+            const pauseIcon = player.querySelector('.pause-icon');
+            const progress = player.querySelector('.audio-progress');
+            
+            let isPlaying = false;
+            let progressInterval;
+
+            playBtn.addEventListener('click', () => {
+                isPlaying = !isPlaying;
+                if(isPlaying) {
+                    playIcon.classList.add('hidden');
+                    pauseIcon.classList.remove('hidden');
+                    let width = 0;
+                    progressInterval = setInterval(() => {
+                        width += 1;
+                        progress.style.width = `${width}%`;
+                        if (width >= 100) {
+                            clearInterval(progressInterval);
+                            playIcon.classList.remove('hidden');
+                            pauseIcon.classList.add('hidden');
+                        }
+                    }, 1000); // Fakes 100 second audio
+                } else {
+                    playIcon.classList.remove('hidden');
+                    pauseIcon.classList.add('hidden');
+                    clearInterval(progressInterval);
+                }
+            });
+        }
+        
+        function attachTimerLogic() {
+            const display = document.getElementById('timer-display');
+            const progressRing = document.getElementById('timer-progress-ring');
+            const startBtn = document.getElementById('timer-start-btn');
+            const pauseBtn = document.getElementById('timer-pause-btn');
+            const resetBtn = document.getElementById('timer-reset-btn');
+            const durationButtons = document.getElementById('duration-buttons');
+            const soundSelect = document.getElementById('sound-select');
+
+            let totalSeconds = 600; // default 10 mins
+            let secondsRemaining = totalSeconds;
+            let isPaused = true;
+            const ringCircumference = 2 * Math.PI * 45; // 2 * PI * r
+            
+            function updateDisplay() {
+                const minutes = Math.floor(secondsRemaining / 60);
+                const seconds = secondsRemaining % 60;
+                display.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                const offset = ringCircumference - (secondsRemaining / totalSeconds) * ringCircumference;
+                progressRing.style.strokeDashoffset = offset;
+            }
+
+            function startTimer() {
+                if (isPaused) {
+                    isPaused = false;
+                    startBtn.classList.add('hidden');
+                    pauseBtn.classList.remove('hidden');
+                    durationButtons.style.pointerEvents = 'none';
+                    soundSelect.disabled = true;
+                    if (secondsRemaining === totalSeconds) sounds[soundSelect.value].play();
+                    
+                    timerInterval = setInterval(() => {
+                        secondsRemaining--;
+                        updateDisplay();
+                        if (secondsRemaining <= 0) {
+                            clearInterval(timerInterval);
+                            sounds[soundSelect.value].play();
+                            logSession();
+                            resetTimer();
+                        }
+                    }, 1000);
+                }
+            }
+
+            function pauseTimer() {
+                isPaused = true;
+                clearInterval(timerInterval);
+                startBtn.textContent = 'Resume';
+                startBtn.classList.remove('hidden');
+                pauseBtn.classList.add('hidden');
+            }
+
+            function resetTimer() {
+                clearInterval(timerInterval);
+                isPaused = true;
+                secondsRemaining = totalSeconds;
+                updateDisplay();
+                startBtn.textContent = 'Start';
+                startBtn.classList.remove('hidden');
+                pauseBtn.classList.add('hidden');
+                durationButtons.style.pointerEvents = 'auto';
+                 soundSelect.disabled = false;
+            }
+            
+            function setDuration(minutes) {
+                totalSeconds = minutes * 60;
+                resetTimer();
+            }
+
+            function logSession() {
+                const log = JSON.parse(localStorage.getItem('practiceLog')) || [];
+                const today = new Date().toISOString().split('T')[0];
+                log.push({ date: today, duration: totalSeconds / 60 });
+                localStorage.setItem('practiceLog', JSON.stringify(log));
+                displayPracticeLog();
+            }
+
+            function displayPracticeLog() {
+                const log = JSON.parse(localStorage.getItem('practiceLog')) || [];
+                const logContainer = document.getElementById('practice-log');
+                if (log.length > 0) {
+                    const totalMinutes = log.reduce((sum, entry) => sum + entry.duration, 0);
+                    let streak = 0;
+                    if(log.length > 0) {
+                        const uniqueDates = [...new Set(log.map(l => l.date))].sort().reverse();
+                        let today = new Date();
+                        if(new Date(uniqueDates[0]).toDateString() === today.toDateString()) {
+                            streak = 1;
+                        } else {
+                            today.setDate(today.getDate() -1);
+                             if(uniqueDates[0] && new Date(uniqueDates[0]).toDateString() === today.toDateString()) {
+                                streak = 1;
+                             }
+                        }
+                        
+                        if (streak > 0) {
+                             for(let i=0; i < uniqueDates.length -1; i++){
+                                let d1 = new Date(uniqueDates[i]);
+                                d1.setDate(d1.getDate() - 1);
+                                let d2 = new Date(uniqueDates[i+1]);
+                                if(d1.toDateString() === d2.toDateString()) {
+                                    streak++;
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    logContainer.innerHTML = `
+                        <h3 class="text-2xl font-bold font-lora mb-4">Practice Log</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                           <div><p class="text-charcoal/80">Total Minutes</p><strong class="text-2xl font-lora text-forest-green">${totalMinutes}</strong></div>
+                           <div><p class="text-charcoal/80">Total Sessions</p><strong class="text-2xl font-lora text-forest-green">${log.length}</strong></div>
+                           <div><p class="text-charcoal/80">Current Streak</p><strong class="text-2xl font-lora text-forest-green">${streak} days</strong></div>
+                        </div>
+                        <canvas id="practice-chart" class="mt-4 h-40 w-full"></canvas>
+                    `;
+                    
+                    const canvas = document.getElementById('practice-chart');
+                    const ctx = canvas.getContext('2d');
+                    const last7DaysData = {};
+                    for(let i = 6; i >= 0; i--) {
+                        const d = new Date();
+                        d.setDate(d.getDate() - i);
+                        const key = d.toISOString().split('T')[0].slice(5);
+                        last7DaysData[key] = 0;
+                    }
+                    log.forEach(entry => {
+                        const key = entry.date.slice(5);
+                        if(last7DaysData[key] !== undefined) {
+                            last7DaysData[key] += entry.duration;
+                        }
+                    });
+                     // Basic chart drawing - no external libs
+                    const maxValue = Math.max(...Object.values(last7DaysData), 10);
+                    const barWidth = canvas.width / 7;
+                    let i = 0;
+                    const isDark = document.documentElement.classList.contains('dark');
+                    ctx.font = '12px Inter';
+                    for(const [day, minutes] of Object.entries(last7DaysData)) {
+                        const barHeight = (minutes / maxValue) * (canvas.height - 20);
+                        ctx.fillStyle = isDark ? '#86b596' : 'var(--forest-green)';
+                        ctx.fillRect(i * barWidth + 5, canvas.height - barHeight - 15, barWidth - 10, barHeight);
+                        ctx.fillStyle = isDark ? '#d1d1d1' : 'var(--charcoal)';
+                        ctx.fillText(day, i * barWidth + 10, canvas.height - 2);
+                        i++;
+                    }
+
+
+                } else {
+                     logContainer.innerHTML = `<p class="text-center text-charcoal/70">Your practice log will appear here once you complete a session.</p>`;
+                }
+            }
+
+            durationButtons.addEventListener('click', e => {
+                if (e.target.classList.contains('timer-duration-btn')) {
+                    setDuration(parseInt(e.target.dataset.duration));
+                }
+            });
+            
+            startBtn.addEventListener('click', startTimer);
+            pauseBtn.addEventListener('click', pauseTimer);
+            resetBtn.addEventListener('click', resetTimer);
+
+            updateDisplay();
+            displayPracticeLog();
+        }
+        
+        function attachWorkoutLogic() {
+            const statusEl = document.getElementById('workout-status');
+            const exerciseEl = document.getElementById('workout-exercise');
+            const timerEl = document.getElementById('workout-timer');
+            const nextEl = document.getElementById('workout-next');
+            const startBtn = document.getElementById('workout-start-btn');
+            const pauseBtn = document.getElementById('workout-pause-btn');
+            const resetBtn = document.getElementById('workout-reset-btn');
+            const visualEl = document.getElementById('workout-visual');
+
+            const { exercises, restDuration } = db.workout;
+            let currentExerciseIndex = 0;
+            let isResting = true;
+            let secondsRemaining = 10;
+            let isPaused = true;
+            
+            const bellSound = sounds.chime;
+
+            function speak(text) {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.rate = 1.2;
+                    window.speechSynthesis.speak(utterance);
+                }
+            }
+            
+            function updateDisplay() {
+                timerEl.textContent = secondsRemaining;
+                const currentEx = exercises[currentExerciseIndex];
+                visualEl.innerHTML = currentEx.visual;
+                
+                if (isResting) {
+                    statusEl.textContent = 'Get Ready!';
+                    exerciseEl.textContent = currentEx.name;
+                    nextEl.style.visibility = 'visible';
+                     if (secondsRemaining === 3 && isPaused === false) speak(`Next: ${currentEx.name}`);
+                } else {
+                    statusEl.textContent = 'Workout!';
+                    exerciseEl.textContent = currentEx.name;
+                    nextEl.style.visibility = 'hidden';
+                }
+                
+                const nextIndex = currentExerciseIndex + 1;
+                if(nextIndex < exercises.length) {
+                   nextEl.textContent = `Next up: ${exercises[nextIndex].name}`;
+                } else {
+                   nextEl.textContent = 'Last one!';
+                }
+            }
+            
+            function tick() {
+                secondsRemaining--;
+                if (secondsRemaining <= 3 && secondsRemaining > 0) speak(secondsRemaining);
+                if (secondsRemaining < 0) {
+                    bellSound.play();
+                    isResting = !isResting;
+                    if (!isResting) { // Finished rest, start exercise
+                        secondsRemaining = exercises[currentExerciseIndex].duration;
+                        speak('Begin');
+                    } else { // Finished exercise, start rest
+                        currentExerciseIndex++;
+                        if (currentExerciseIndex >= exercises.length) {
+                            finishWorkout();
+                            return;
+                        }
+                        secondsRemaining = restDuration;
+                    }
+                }
+                updateDisplay();
+            }
+
+            function startWorkout() {
+                if (isPaused) {
+                    isPaused = false;
+                    startBtn.classList.add('hidden');
+                    pauseBtn.classList.remove('hidden');
+                    if(secondsRemaining === 10 && currentExerciseIndex === 0) {
+                        speak('Starting 7 minute workout.');
+                    }
+                    workoutInterval = setInterval(tick, 1000);
+                }
+            }
+            
+            function pauseWorkout() {
+                isPaused = true;
+                clearInterval(workoutInterval);
+                startBtn.textContent = 'Resume';
+                startBtn.classList.remove('hidden');
+                pauseBtn.classList.add('hidden');
+            }
+            
+            function resetWorkout() {
+                clearInterval(workoutInterval);
+                isPaused = true;
+                currentExerciseIndex = 0;
+                isResting = true;
+                secondsRemaining = 10;
+                startBtn.textContent = 'Start';
+                startBtn.classList.remove('hidden');
+                pauseBtn.classList.add('hidden');
+                updateDisplay();
+            }
+            
+            function finishWorkout() {
+                 clearInterval(workoutInterval);
+                 statusEl.textContent = 'Finished!';
+                 exerciseEl.textContent = 'Well Done!';
+                 timerEl.textContent = '🎉';
+                 nextEl.style.visibility = 'hidden';
+                 speak('Workout complete. Well done!');
+            }
+
+            startBtn.addEventListener('click', startWorkout);
+            pauseBtn.addEventListener('click', pauseWorkout);
+            resetBtn.addEventListener('click', resetWorkout);
+
+            resetWorkout(); // Initialize display
+        }
+        
+        function attachInterviewLogic() {
+            const questionEl = document.getElementById('interview-question');
+            const liveVideo = document.getElementById('live-video');
+            const playbackVideo = document.getElementById('playback-video');
+            const startBtn = document.getElementById('start-recording-btn');
+            const stopBtn = document.getElementById('stop-recording-btn');
+            const nextBtn = document.getElementById('next-question-btn');
+            const playbackSection = document.getElementById('playback-section');
+            const recordingsList = document.getElementById('recordings-list');
+            const noRecordingsMsg = document.getElementById('no-recordings-message');
+            const catButtons = document.querySelectorAll('.interview-cat-btn');
+            const feedbackEl = document.getElementById('interview-feedback');
+            
+            let currentCategory = 'general';
+            let currentQuestionIndex = 0;
+            sessionRecordings = [];
+
+            function setCategory(category) {
+                currentCategory = category;
+                currentQuestionIndex = 0;
+                updateQuestion();
+                catButtons.forEach(btn => {
+                    btn.classList.toggle('bg-earthy-gold', btn.dataset.category === category);
+                     btn.classList.toggle('text-white', btn.dataset.category === category);
+                });
+            }
+
+            function updateQuestion() {
+                questionEl.textContent = db.interviewQuestions[currentCategory][currentQuestionIndex];
+            }
+
+            async function setupCamera() {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                    liveVideo.srcObject = stream;
+                    
+                    mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+                    mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
+                    mediaRecorder.onstop = () => {
+                        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                        recordedChunks = [];
+                        const videoURL = URL.createObjectURL(blob);
+                        addRecordingToList({
+                            question: db.interviewQuestions[currentCategory][currentQuestionIndex],
+                            url: videoURL,
+                            timestamp: new Date()
+                        });
+                    };
+                } catch (err) {
+                    console.error("Error accessing camera:", err);
+                    alert("Could not access camera. Please allow camera and microphone permissions.");
+                }
+            }
+            
+            function addRecordingToList(recording) {
+                sessionRecordings.push(recording);
+                noRecordingsMsg.classList.add('hidden');
+                
+                const item = document.createElement('div');
+                item.className = 'p-4 bg-light-green dark:bg-gray-700/50 rounded-lg flex items-center justify-between';
+                item.innerHTML = `
+                    <div>
+                        <p class="font-semibold text-charcoal">${recording.question}</p>
+                        <p class="text-sm text-charcoal/70">${recording.timestamp.toLocaleTimeString()}</p>
+                    </div>
+                    <button class="play-recording-btn px-4 py-2 bg-forest-green text-white text-sm font-semibold rounded-lg hover:bg-forest-green/90 transition" data-url="${recording.url}">Play</button>
+                `;
+                recordingsList.appendChild(item);
+                
+                playbackVideo.src = recording.url;
+                playbackVideo.classList.remove('hidden');
+                playbackVideo.onended = showFeedback;
+            }
+
+            function showFeedback() {
+                const feedbacks = ["Great pacing!", "Clear and confident delivery.", "Excellent example. Try to vary your tone slightly.", "Strong eye contact with the camera."];
+                const randomFeedback = feedbacks[Math.floor(Math.random() * feedbacks.length)];
+                feedbackEl.textContent = `💡 Feedback: ${randomFeedback}`;
+                feedbackEl.classList.remove('hidden');
+            }
+
+            function startRecording() {
+                if(mediaRecorder) {
+                    recordedChunks = [];
+                    mediaRecorder.start();
+                    startBtn.classList.add('hidden');
+                    stopBtn.classList.remove('hidden');
+                    playbackVideo.classList.add('hidden');
+                    feedbackEl.classList.add('hidden');
+                }
+            }
+
+            function stopRecording() {
+                if(mediaRecorder) {
+                    mediaRecorder.stop();
+                    startBtn.classList.remove('hidden');
+                    stopBtn.classList.add('hidden');
+                }
+            }
+            
+            function nextQuestion() {
+                currentQuestionIndex = (currentQuestionIndex + 1) % db.interviewQuestions[currentCategory].length;
+                updateQuestion();
+                playbackVideo.classList.add('hidden');
+                feedbackEl.classList.add('hidden');
+            }
+            
+            startBtn.addEventListener('click', startRecording);
+            stopBtn.addEventListener('click', stopRecording);
+            nextBtn.addEventListener('click', nextQuestion);
+            catButtons.forEach(btn => btn.addEventListener('click', () => setCategory(btn.dataset.category)));
+            recordingsList.addEventListener('click', (e) => {
+                if(e.target.classList.contains('play-recording-btn')) {
+                    playbackVideo.src = e.target.dataset.url;
+                    playbackVideo.classList.remove('hidden');
+                    playbackVideo.play();
+                    feedbackEl.classList.add('hidden');
+                }
+            });
+            
+            setCategory('general');
+            setupCamera();
+        }
+        
+        function attachJournalLogic() {
+            const timerEl = document.getElementById('journal-timer');
+            const startBtn = document.getElementById('journal-start-btn');
+            const entryEl = document.getElementById('journal-entry');
+            const historyList = document.getElementById('journal-history-list');
+            
+            let secondsRemaining = 600;
+            let isRunning = false;
+            
+            const bellSound = sounds.chime; // Reuse a sound
+
+            function updateDisplay() {
+                const minutes = Math.floor(secondsRemaining / 60);
+                const seconds = secondsRemaining % 60;
+                timerEl.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+
+            function startJournal() {
+                if(isRunning) return;
+                isRunning = true;
+                entryEl.disabled = false;
+                entryEl.focus();
+                startBtn.disabled = true;
+                startBtn.textContent = 'Writing...';
+
+                journalInterval = setInterval(() => {
+                    secondsRemaining--;
+                    updateDisplay();
+                    if(secondsRemaining <= 0) {
+                        finishJournal();
+                    }
+                }, 1000);
+            }
+
+            function finishJournal() {
+                clearInterval(journalInterval);
+                bellSound.play();
+                entryEl.disabled = true;
+                startBtn.disabled = false;
+                startBtn.textContent = 'Start New Entry';
+                saveEntry();
+                secondsRemaining = 600;
+                updateDisplay();
+                isRunning = false;
+            }
+            
+            function saveEntry() {
+                const content = entryEl.value.trim();
+                if (content === '') return;
+                
+                const entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+                const newEntry = {
+                    date: new Date().toISOString(),
+                    content: content
+                };
+                entries.unshift(newEntry);
+                localStorage.setItem('journalEntries', JSON.stringify(entries));
+                
+                entryEl.value = '';
+                displayEntries();
+            }
+
+            function displayEntries() {
+                const entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+                historyList.innerHTML = '';
+                if(entries.length === 0) {
+                    historyList.innerHTML = `<p class="text-center text-charcoal/70">Your saved journal entries will appear here.</p>`;
+                    return;
+                }
+
+                entries.forEach(entry => {
+                    const date = new Date(entry.date);
+                    const item = document.createElement('div');
+                    item.className = 'bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-black/5';
+                    item.innerHTML = `
+                        <p class="font-semibold text-earthy-gold">${date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        <p class="mt-2 text-charcoal/80 whitespace-pre-wrap">${entry.content}</p>
+                    `;
+                    historyList.appendChild(item);
+                });
+            }
+            
+            startBtn.addEventListener('click', startJournal);
+            updateDisplay();
+            displayEntries();
+        }
+
+    });
+    </script>
+</body>
+</html>
+
