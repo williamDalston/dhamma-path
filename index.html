@@ -771,11 +771,11 @@
             animation: particleFloat 15s linear infinite;
         }
         
-        .particle-1 { width: 4px; height: 4px; background: rgba(45, 80, 22, 0.1); }
-        .particle-2 { width: 6px; height: 6px; background: rgba(184, 134, 11, 0.08); }
-        .particle-3 { width: 3px; height: 3px; background: rgba(212, 237, 218, 0.12); }
-        .particle-4 { width: 5px; height: 5px; background: rgba(45, 80, 22, 0.06); }
-        .particle-5 { width: 4px; height: 4px; background: rgba(184, 134, 11, 0.1); }
+        .particle-1 { width: 6px; height: 6px; background: rgba(45, 80, 22, 0.3); box-shadow: 0 0 8px rgba(45, 80, 22, 0.5); }
+        .particle-2 { width: 8px; height: 8px; background: rgba(184, 134, 11, 0.25); box-shadow: 0 0 10px rgba(184, 134, 11, 0.4); }
+        .particle-3 { width: 5px; height: 5px; background: rgba(212, 237, 218, 0.4); box-shadow: 0 0 6px rgba(212, 237, 218, 0.6); }
+        .particle-4 { width: 7px; height: 7px; background: rgba(45, 80, 22, 0.2); box-shadow: 0 0 9px rgba(45, 80, 22, 0.4); }
+        .particle-5 { width: 6px; height: 6px; background: rgba(184, 134, 11, 0.3); box-shadow: 0 0 8px rgba(184, 134, 11, 0.5); }
         
         @keyframes ambientBreathe {
             0%, 100% { transform: scale(1); opacity: 0.8; }
@@ -2322,7 +2322,7 @@
 
     <!-- TEMPLATES for dynamic content -->
     <template id="template-home">
-        <article class="space-y-16 sm:space-y-24 max-w-5xl mx-auto">
+        <article class="space-y-8 sm:space-y-12 max-w-5xl mx-auto">
             <!-- Hero Section -->
             <header class="text-left py-16 sm:py-24 rounded-2xl breathing-bg floating-particles zen-particles ambient-gradient dark:from-gray-800/30 dark:via-gray-900/20 dark:to-transparent relative overflow-hidden">
                 <!-- Subtle background pattern with floating animation -->
@@ -3107,11 +3107,11 @@
                     <div class="shimmer-divider w-24 mx-auto"></div>
                 </div>
                 
-                <!-- Meditation Image with enhanced styling -->
+                <!-- Foundation Icon with enhanced styling -->
                 <div class="mt-12 flex justify-center relative z-10">
-                    <div class="w-40 h-40 bg-gradient-to-br from-forest-green/30 to-earthy-gold/30 rounded-full flex items-center justify-center shadow-2xl icon-breathe">
-                        <svg class="w-20 h-20 text-forest-green drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
+                    <div class="w-48 h-48 bg-gradient-to-br from-forest-green/40 to-earthy-gold/40 rounded-full flex items-center justify-center shadow-2xl icon-breathe border-4 border-white/20">
+                        <svg class="w-24 h-24 text-forest-green drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
                         </svg>
                     </div>
                 </div>
@@ -3134,7 +3134,7 @@
                             <h2 class="text-2xl font-bold text-charcoal font-lora mb-6">Your Meditation Timer</h2>
                             
                             <!-- Timer Ring -->
-                            <div class="relative w-64 h-64 mx-auto mb-8 breathe">
+                            <div id="timer-ring-container" class="relative w-64 h-64 mx-auto mb-8 breathe">
                                 <!-- Outer glow effect -->
                                 <div class="absolute inset-0 rounded-full bg-gradient-to-r from-forest-green/20 to-earthy-gold/20 blur-xl scale-110 float-animation"></div>
                                 
@@ -3144,7 +3144,7 @@
                     <circle class="timer-ring-bg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent"></circle>
                     <circle id="timer-progress-ring" class="timer-ring-fg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent" stroke-dasharray="283" stroke-dashoffset="283"></circle>
                 </svg>
-                                    <div id="timer-display" class="absolute inset-0 flex items-center justify-center text-5xl font-lora text-charcoal font-bold drop-shadow-sm">10:00</div>
+                                    <div id="timer-display" class="absolute inset-0 flex items-center justify-center text-6xl font-lora text-forest-green font-bold drop-shadow-lg">10:00</div>
             </div>
                             </div>
                         </div>
@@ -3252,7 +3252,7 @@
                     <!-- Practice Log Card -->
                     <div class="bg-gradient-to-br from-light-green/30 to-light-green/10 rounded-2xl p-8 shadow-xl border border-light-green/20 relative overflow-hidden card-breathe-gentle ambient-shadow">
                         <div class="relative z-10">
-                            <h3 class="text-2xl font-bold text-charcoal font-lora mb-6 text-gradient">Your Progress</h3>
+                            <h3 class="text-3xl font-bold text-charcoal font-lora mb-6 text-gradient text-center">📊 Practice Log</h3>
                             <div id="practice-log" class="text-left"></div>
                         </div>
                     </div>
@@ -5094,37 +5094,67 @@
             let totalSeconds = 600; // default 10 mins
             let secondsRemaining = totalSeconds;
             let isPaused = true;
+            let timerInterval = null;
             const ringCircumference = 2 * Math.PI * 45; // 2 * PI * r
             
+            // Debug logging
+            console.log('Timer elements found:', {
+                display: !!display,
+                ringContainer: !!ringContainer,
+                progressRing: !!progressRing,
+                startBtn: !!startBtn,
+                pauseBtn: !!pauseBtn,
+                resetBtn: !!resetBtn,
+                durationButtons: !!durationButtons,
+                soundSelect: !!soundSelect
+            });
+            
             function updateDisplay() {
+                if (!display) {
+                    console.error('Timer display element not found');
+                    return;
+                }
                 const minutes = Math.floor(secondsRemaining / 60);
                 const seconds = secondsRemaining % 60;
                 display.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                const offset = ringCircumference - (secondsRemaining / totalSeconds) * ringCircumference;
-                progressRing.style.strokeDashoffset = offset;
+                
+                if (progressRing) {
+                    const offset = ringCircumference - (secondsRemaining / totalSeconds) * ringCircumference;
+                    progressRing.style.strokeDashoffset = offset;
+                }
+                
+                console.log('Timer updated:', display.textContent);
             }
 
             function startTimer() {
                 console.log('Timer start clicked, isPaused:', isPaused);
                 if (isPaused) {
                     isPaused = false;
-                    startBtn.classList.add('hidden');
-                    pauseBtn.classList.remove('hidden');
-                    durationButtons.style.pointerEvents = 'none';
-                    soundSelect.disabled = true;
-                    ringContainer.classList.add('timer-active');
-                    if (secondsRemaining === totalSeconds) sounds[soundSelect.value].play();
+                    if (startBtn) startBtn.classList.add('hidden');
+                    if (pauseBtn) pauseBtn.classList.remove('hidden');
+                    if (durationButtons) durationButtons.style.pointerEvents = 'none';
+                    if (soundSelect) soundSelect.disabled = true;
+                    if (ringContainer) ringContainer.classList.add('timer-active');
+                    
+                    // Play sound if available
+                    if (secondsRemaining === totalSeconds && soundSelect && sounds && sounds[soundSelect.value]) {
+                        sounds[soundSelect.value].play();
+                    }
                     
                     timerInterval = setInterval(() => {
                         secondsRemaining--;
                         updateDisplay();
                         if (secondsRemaining <= 0) {
                             clearInterval(timerInterval);
-                            sounds[soundSelect.value].play();
+                            if (soundSelect && sounds && sounds[soundSelect.value]) {
+                                sounds[soundSelect.value].play();
+                            }
                             logSession();
                             resetTimer();
                             // Mark meditation as complete
-                            ProgressTracker.markComplete('meditation');
+                            if (typeof ProgressTracker !== 'undefined') {
+                                ProgressTracker.markComplete('meditation');
+                            }
                         }
                     }, 1000);
                 }
@@ -5133,10 +5163,12 @@
             function pauseTimer() {
                 isPaused = true;
                 clearInterval(timerInterval);
-                startBtn.textContent = 'Resume';
-                startBtn.classList.remove('hidden');
-                pauseBtn.classList.add('hidden');
-                 ringContainer.classList.remove('timer-active');
+                if (startBtn) {
+                    startBtn.textContent = 'Resume';
+                    startBtn.classList.remove('hidden');
+                }
+                if (pauseBtn) pauseBtn.classList.add('hidden');
+                if (ringContainer) ringContainer.classList.remove('timer-active');
             }
 
             function resetTimer() {
@@ -5144,12 +5176,14 @@
                 isPaused = true;
                 secondsRemaining = totalSeconds;
                 updateDisplay();
-                startBtn.textContent = 'Start';
-                startBtn.classList.remove('hidden');
-                pauseBtn.classList.add('hidden');
-                durationButtons.style.pointerEvents = 'auto';
-                soundSelect.disabled = false;
-                ringContainer.classList.remove('timer-active');
+                if (startBtn) {
+                    startBtn.textContent = 'Start';
+                    startBtn.classList.remove('hidden');
+                }
+                if (pauseBtn) pauseBtn.classList.add('hidden');
+                if (durationButtons) durationButtons.style.pointerEvents = 'auto';
+                if (soundSelect) soundSelect.disabled = false;
+                if (ringContainer) ringContainer.classList.remove('timer-active');
             }
             
             function setDuration(minutes) {
@@ -5252,22 +5286,32 @@
                 }
             }
 
-            durationButtons.addEventListener('click', e => {
-                if (e.target.classList.contains('timer-duration-btn')) {
-                    setDuration(parseInt(e.target.dataset.duration));
-                }
-            });
+            if (durationButtons) {
+                durationButtons.addEventListener('click', e => {
+                    if (e.target.classList.contains('timer-duration-btn')) {
+                        setDuration(parseInt(e.target.dataset.duration));
+                    }
+                });
+            }
             
             // Debug button visibility
             console.log('Timer start button found:', startBtn);
             console.log('Timer start button visible:', startBtn ? startBtn.offsetWidth > 0 : false);
             
-            startBtn.addEventListener('click', startTimer);
-            pauseBtn.addEventListener('click', pauseTimer);
-            resetBtn.addEventListener('click', resetTimer);
+            if (startBtn) startBtn.addEventListener('click', startTimer);
+            if (pauseBtn) pauseBtn.addEventListener('click', pauseTimer);
+            if (resetBtn) resetBtn.addEventListener('click', resetTimer);
 
+            // Initialize display and practice log
             updateDisplay();
             displayPracticeLog();
+            
+            // Make sure the timer display is visible
+            if (display) {
+                display.style.display = 'flex';
+                display.style.visibility = 'visible';
+                console.log('Timer display initialized with:', display.textContent);
+            }
         }
         
         function attachWorkoutLogic() {
