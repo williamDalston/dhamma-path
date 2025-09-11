@@ -70,6 +70,7 @@
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet"></noscript>
     
     <!-- Tailwind CSS -->
+    <!-- Note: CDN is used for development/personal use. For production, consider using Tailwind CLI -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Structured Data (JSON-LD) -->
@@ -506,6 +507,7 @@
             left: 0;
             background: var(--text-gradient);
             transition: width 0.3s ease;
+            pointer-events: none;
         }
         
         .gradient-underline:hover::after {
@@ -529,6 +531,7 @@
             background: var(--ripple-color);
             transform: translate(-50%, -50%);
             transition: width 0.6s, height 0.6s;
+            pointer-events: none;
         }
         
         .ripple:active::before {
@@ -553,6 +556,7 @@
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(184, 139, 76, 0.5), transparent);
             animation: shimmer-sweep 3s infinite;
+            pointer-events: none;
         }
         
         @keyframes shimmer-sweep {
@@ -734,6 +738,7 @@
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s ease;
+            pointer-events: none;
         }
         
         .btn-zen:hover::before {
@@ -2835,32 +2840,7 @@
                 progressBar.style.width = '0%';
             }
         };
-        window.addEventListener('scroll', throttle(updateProgressBar, 16)); // 60fps
-        
         // --- Performance Utilities --- //
-        const cleanupPageResources = () => {
-            // Clear all intervals
-            clearInterval(timerInterval); 
-            clearInterval(workoutInterval);
-            clearInterval(journalInterval);
-            
-            // Reset page state
-            document.body.classList.remove('fullscreen-active', 'journal-focus');
-            
-            // Stop media recording
-            if (mediaRecorder && mediaRecorder.state === "recording") {
-                mediaRecorder.stop();
-            }
-            
-            // Stop speech synthesis
-            if(window.speechSynthesis.speaking) {
-                window.speechSynthesis.cancel();
-            }
-            
-            // Clear main content
-            mainContent.innerHTML = '';
-        };
-
         const debounce = (func, wait) => {
             let timeout;
             return function executedFunction(...args) {
@@ -2885,7 +2865,32 @@
                 }
             };
         };
-        
+
+        window.addEventListener('scroll', throttle(updateProgressBar, 16)); // 60fps
+
+        const cleanupPageResources = () => {
+            // Clear all intervals
+            clearInterval(timerInterval); 
+            clearInterval(workoutInterval);
+            clearInterval(journalInterval);
+            
+            // Reset page state
+            document.body.classList.remove('fullscreen-active', 'journal-focus');
+            
+            // Stop media recording
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+            }
+            
+            // Stop speech synthesis
+            if(window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+            
+            // Clear main content
+            mainContent.innerHTML = '';
+        };
+
         // --- Templating & Routing --- //
         const templates = {
             home: document.getElementById('template-home').content.cloneNode(true),
