@@ -64,12 +64,20 @@
             line-height: 1.8;
             font-size: 18px;
         }
+        
+        body.fullscreen-active #header, body.fullscreen-active footer { display: none; }
+        body.fullscreen-active #main-content { padding-top: 2rem; padding-bottom: 2rem; height: 100vh; }
+
 
         h1, h2, h3, h4, h5, h6, .font-lora {
             font-family: 'Lora', serif;
         }
         
         /* Global Enhancements */
+        .btn-primary { @apply px-6 py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition duration-300; }
+        .btn-secondary { @apply px-6 py-3 bg-transparent border border-earthy-gold text-earthy-gold font-semibold rounded-lg hover:bg-earthy-gold hover:text-white transition duration-300; }
+        .btn-icon { @apply p-3 bg-gray-200 text-charcoal rounded-full hover:bg-gray-300 transition dark:bg-gray-700 dark:hover:bg-gray-600; }
+        
         .main-nav-link, .timer-duration-btn, button, .card-link {
             transition: all 0.4s ease-in-out;
         }
@@ -87,10 +95,22 @@
         .main-nav-link.active {
             font-weight: 700;
             color: var(--forest-green);
+            position: relative;
         }
-        html.dark .main-nav-link.active {
-            color: #86b596;
+        .main-nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--forest-green);
+            border-radius: 50%;
         }
+        html.dark .main-nav-link.active { color: #86b596; }
+        html.dark .main-nav-link.active::after { background-color: #86b596; }
+        
         
         a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
             outline: 2px solid var(--earthy-gold);
@@ -212,6 +232,13 @@
             transform-origin: center;
             transition: stroke-dashoffset 1s linear;
         }
+        .timer-active .timer-ring-fg {
+            animation: pulse-ring 2s infinite ease-in-out;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { stroke-opacity: 1; }
+            50% { stroke-opacity: 0.7; }
+        }
         html.dark .timer-ring-bg { stroke: #2c3a32; }
         html.dark .timer-ring-fg { stroke: #86b596; }
         
@@ -227,7 +254,19 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.3; }
         }
-
+        
+        /* Journal Focus Mode */
+        .journal-focus #header, .journal-focus #footer {
+            display: none;
+        }
+        .journal-focus #main-content {
+            padding: 2rem 1rem;
+            max-width: 100%;
+        }
+        .journal-focus #journal-container {
+            max-width: 800px;
+            margin: auto;
+        }
     </style>
 </head>
 <body class="bg-linen-white text-charcoal transition-colors duration-300">
@@ -255,9 +294,9 @@
 
 
     <!-- Header & Navigation -->
-    <header id="header" class="bg-linen-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200/50 transition-colors duration-300">
+    <header id="header" class="bg-linen-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200/50 transition-all duration-300">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
+            <div class="flex items-center justify-between h-20 transition-all duration-300">
                 <!-- Logo -->
                 <a href="#" data-page="home" class="flex items-center space-x-2 main-nav-link">
                      <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="fill-charcoal transition-colors duration-300">
@@ -267,14 +306,14 @@
                 </a>
 
                 <!-- Desktop Nav -->
-                <div id="desktop-nav-links" class="hidden md:flex items-center space-x-4">
-                    <a href="#" data-page="category-meditation" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">Meditation</a>
-                    <a href="#" data-page="timer" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">Timer</a>
-                    <a href="#" data-page="journal" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">Journal</a>
-                    <a href="#" data-page="workout" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">Workout</a>
-                    <a href="#" data-page="interview" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">Interview</a>
-                    <a href="#" data-page="glossary" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">Glossary</a>
-                    <a href="#" data-page="about" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-2 py-1">About</a>
+                <div id="desktop-nav-links" class="hidden md:flex items-center space-x-2">
+                    <a href="#" data-page="category-meditation" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-4 py-3">Meditation</a>
+                    <a href="#" data-page="timer" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-4 py-3">Timer</a>
+                    <a href="#" data-page="journal" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-4 py-3">Journal</a>
+                    <a href="#" data-page="workout" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-4 py-3">Workout</a>
+                    <a href="#" data-page="interview" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-4 py-3">Interview</a>
+                    <a href="#" data-page="glossary" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-4 py-3">Glossary</a>
+                    <a href="#" data-page="about" class="main-nav-link text-charcoal hover:text-forest-green transition-colors px-4 py-3">About</a>
                     <div class="relative">
                         <input type="search" id="search-input" placeholder="Search..." class="w-40 bg-gray-100 border border-transparent rounded-full px-4 py-1.5 focus:w-48 focus:bg-white focus:border-earthy-gold focus:outline-none transition-all duration-300 dark:bg-gray-700 dark:text-white">
                         <svg class="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -324,7 +363,7 @@
         <!-- Page content will be injected here -->
     </main>
     
-    <footer class="bg-light-green border-t border-gray-200/80 transition-colors duration-300">
+    <footer id="footer" class="bg-light-green border-t border-gray-200/80 transition-colors duration-300">
         <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="space-y-4 md:col-span-2">
@@ -514,7 +553,7 @@
     <template id="template-timer">
         <div class="max-w-xl mx-auto text-center">
             <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mb-8">Meditation Timer</h1>
-            <div class="relative w-64 h-64 sm:w-80 sm:h-80 mx-auto mb-8">
+            <div id="timer-ring-container" class="relative w-64 h-64 sm:w-80 sm:h-80 mx-auto mb-8">
                 <svg class="w-full h-full" viewBox="0 0 100 100">
                     <circle class="timer-ring-bg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent"></circle>
                     <circle id="timer-progress-ring" class="timer-ring-fg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent" stroke-dasharray="283" stroke-dashoffset="283"></circle>
@@ -567,8 +606,15 @@
     </template>
     
     <template id="template-workout">
-         <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mb-8">7-Minute Workout</h1>
+         <div class="max-w-5xl mx-auto text-center">
+            <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mb-4">7-Minute Workout</h1>
+            <div class="flex justify-center items-center space-x-4 mb-8">
+                 <span class="text-charcoal/80">Mode:</span>
+                 <label class="flex items-center space-x-2 cursor-pointer">
+                    <input type="checkbox" id="workout-double-mode" class="h-4 w-4 rounded text-forest-green focus:ring-forest-green">
+                    <span>14-Minute Workout</span>
+                 </label>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div id="workout-visual" class="bg-light-green rounded-lg p-4 flex items-center justify-center h-64 md:h-full">
                     <!-- SVG Animation will be injected here -->
@@ -583,10 +629,13 @@
                         Next up: Wall Sit
                     </div>
                     <div id="workout-controls" class="mt-8 flex items-center justify-center space-x-4">
+                         <button id="workout-back-btn" class="p-4 bg-gray-200 text-charcoal rounded-full hover:bg-gray-300 transition dark:bg-gray-700 dark:hover:bg-gray-600">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                        </button>
                         <button id="workout-start-btn" class="px-8 py-4 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition text-xl">Start</button>
                         <button id="workout-pause-btn" class="px-8 py-4 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition text-xl hidden">Pause</button>
-                        <button id="workout-reset-btn" class="p-4 bg-gray-200 text-charcoal rounded-full hover:bg-gray-300 transition dark:bg-gray-700 dark:hover:bg-gray-600">
-                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 4l1.5 1.5A9 9 0 0120.5 15M20 20l-1.5-1.5A9 9 0 003.5 9"></path></svg>
+                         <button id="workout-forward-btn" class="p-4 bg-gray-200 text-charcoal rounded-full hover:bg-gray-300 transition dark:bg-gray-700 dark:hover:bg-gray-600">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
                         </button>
                     </div>
                 </div>
@@ -615,7 +664,13 @@
                 <div>
                     <h3 class="text-2xl font-bold font-lora text-charcoal mb-4 text-center">Your Camera</h3>
                     <div id="recorder-section">
-                        <video id="live-video" class="w-full bg-gray-200 dark:bg-gray-800 rounded-lg aspect-video" autoplay muted></video>
+                        <div class="relative">
+                            <video id="live-video" class="w-full bg-gray-200 dark:bg-gray-800 rounded-lg aspect-video" autoplay muted></video>
+                            <div id="camera-error" class="hidden absolute inset-0 bg-black/70 text-white flex flex-col items-center justify-center p-4">
+                                <h4 class="font-bold text-lg">Camera Error</h4>
+                                <p class="text-sm text-center">Could not access camera and microphone. Please check your browser permissions and try again.</p>
+                            </div>
+                        </div>
                         <div id="recorder-controls" class="mt-4 flex items-center justify-center space-x-4">
                             <button id="start-recording-btn" class="px-6 py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition">Start Recording</button>
                             <button id="stop-recording-btn" class="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition hidden">
@@ -656,7 +711,7 @@
                     <div id="journal-timer" class="text-2xl font-lora text-forest-green font-bold">10:00</div>
                     <button id="journal-start-btn" class="px-6 py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition">Start Writing</button>
                 </div>
-                <textarea id="journal-entry" placeholder="Begin writing when you start the timer..." disabled class="w-full h-64 p-4 border border-gray-300/50 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600 disabled:opacity-50" style="font-family: 'Lora', serif; font-size: 1.1rem; line-height: 1.8;"></textarea>
+                <textarea id="journal-entry" placeholder="Start typing here... the timer will begin automatically." class="w-full h-64 p-4 border border-gray-300/50 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600" style="font-family: 'Lora', serif; font-size: 1.1rem; line-height: 1.8;"></textarea>
             </div>
 
             <div id="journal-history" class="mt-12">
@@ -880,18 +935,18 @@
         },
         workout: {
             exercises: [
-                { name: "Jumping Jacks", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="40" r="10"/><path d="M100 50v50m0 0l-20 40m20-40l20 40M100 70l-30-30m30 30l30-30"><animateTransform attributeName="transform" type="rotate" from="0 100 100" to="20 100 100" dur="0.5s" repeatCount="indefinite" alternate="true"/></path><path d="M70 140l-10-40m70 40l10-40"><animateTransform attributeName="transform" type="rotate" from="0 100 100" to="-20 100 100" dur="0.5s" repeatCount="indefinite" alternate="true"/></path></g></svg>' },
-                { name: "Wall Sit", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M50 20v160"/><circle cx="80" cy="60" r="10"/><path d="M80 70v40h-20l-10 30"/></g></svg>' },
-                { name: "Push-ups", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 140h120l-30-40h-60z"/><circle cx="100" cy="80" r="10"/><animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite" /></g></svg>' },
-                { name: "Crunches", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 140h120l-20-20-80 0 -20 20"/><path d="M80 120 l20-30 20 30"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 -10" dur="0.5s" repeatCount="indefinite" alternate="true"/></path><circle cx="100" cy="70" r="10"/></g></svg>' },
-                { name: "Step-ups", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 140h120v20H40z"/><circle cx="80" cy="60" r="10"/><path d="M80 70v50l-20 20"/><path d="M120 140V90l20-20"><animate attributeName="d" values="M120 140V90l20-20; M120 120V70l20-20; M120 140V90l20-20" dur="1s" repeatCount="indefinite" /></path></g></svg>' },
-                { name: "Squats", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="60" r="10"/><path d="M100 70v40m0 0l-20 40m20-40l20 40"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 20" dur="0.5s" repeatCount="indefinite" alternate="true"/></path></g></svg>' },
-                { name: "Triceps Dips", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 100h120v20H40z"/><circle cx="100" cy="50" r="10"/><path d="M100 60v20m-20 20l20-20l20 20m-40-10h40"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 10" dur="0.5s" repeatCount="indefinite" alternate="true"/></path></g></svg>' },
-                { name: "Plank", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M30 120h140l-20-20H50z"/><circle cx="100" cy="80" r="10"/><animateTransform attributeName="transform" type="translate" from="0 0" to="0 2" dur="1.5s" repeatCount="indefinite" alternate="true"/></g></svg>' },
-                { name: "High Knees", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="60" r="10"/><path d="M100 70v40m0 0l-20 40m20-40l20 40"/><path d="M80 150v-30"><animate attributeName="d" values="M80 150v-30; M80 120v-30; M80 150v-30" dur="0.5s" repeatCount="indefinite" /></path><path d="M120 120v30"><animate attributeName="d" values="M120 120v30; M120 150v-30; M120 120v30" dur="0.5s" repeatCount="indefinite" /></path></g></svg>' },
-                { name: "Lunges", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="60" r="10"/><path d="M100 70v40l20 40"/><path d="M100 110L80 150"><animate attributeName="d" values="M100 110L80 150; M100 110L120 150; M100 110L80 150" dur="1s" repeatCount="indefinite" /></path></g></svg>' },
-                { name: "Push-up & Rotation", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 140h120l-30-40h-60z"/><circle cx="100" cy="80" r="10"/><path d="M100 100V60"><animateTransform attributeName="transform" type="rotate" from="0 100 100" to="90 100 100" dur="1s" repeatCount="indefinite" alternate="true"/></path></g></svg>' },
-                { name: "Side Plank", duration: 30, visual: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" transform="rotate(90 100 100)"><path d="M30 120h140l-20-20H50z"/><circle cx="100" cy="80" r="10"/><animateTransform attributeName="transform" type="translate" from="0 0" to="0 2" dur="1.5s" repeatCount="indefinite" alternate="true"/></g></svg>' }
+                { name: "Jumping Jacks", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="50" cy="20" r="5"/><path d="M50 25v30m0 0l-10 20m10-20l10 20M50 40L30 25m20 15L70 25"><animateTransform attributeName="transform" type="translate" values="0 0; 0 5; 0 0" dur="1s" repeatCount="indefinite"/></path><path d="M40 75L30 95m30-20l-10-20m30 20l10-20"><animateTransform attributeName="transform" type="translate" values="0 0; 0 -5; 0 0" dur="1s" repeatCount="indefinite"/></path></g></svg>' },
+                { name: "Wall Sit", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M30 10v80"/><circle cx="50" cy="35" r="5"/><path d="M50 40v20 H40 v20 H50 v10"/><path d="M50 60 L60 60"><animate attributeName="d" values="M50 60 L60 60; M50 60 L65 60; M50 60 L60 60" dur="2s" repeatCount="indefinite"/></path></g></svg>' },
+                { name: "Push-ups", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M10 80h80"/><path d="M20 80 L50 40 L80 80"><animate attributeName="d" values="M20 80 L50 40 L80 80; M20 80 L50 60 L80 80; M20 80 L50 40 L80 80" dur="1.5s" repeatCount="indefinite"/></path></g></svg>' },
+                { name: "Crunches", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M20 80 L40 60 H80 L90 80"/><path d="M45 60 L35 40 m 30 0 L75 40"><animateTransform attributeName="transform" type="translate" values="0 0; 0 5; 0 0" dur="1s" repeatCount="indefinite"/></path><circle cx="55" cy="30" r="5"><animateTransform attributeName="transform" type="translate" values="0 0; 0 5; 0 0" dur="1s" repeatCount="indefinite"/></circle></g></svg>' },
+                { name: "Step-ups", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M20 80H80v10H20z"/><circle cx="40" cy="30" r="5"/><path d="M40 35v35H30v10"><animate attributeName="d" values="M40 35v35H30v10; M60 35v35H50v10; M40 35v35H30v10" dur="1.5s" repeatCount="indefinite"/></path></g></svg>' },
+                { name: "Squats", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="50" cy="30" r="5"/><path d="M50 35v30m0 0L40 90m10-25L60 90"><animateTransform attributeName="transform" type="translate" values="0 0; 0 10; 0 0" dur="1s" repeatCount="indefinite"/></path></g></svg>' },
+                { name: "Triceps Dips", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M20 60h60v10H20z"/><g><circle cx="50" cy="30" r="5"/><path d="M50 35v15m-15-15l15 15l15-15"/><animateTransform attributeName="transform" type="translate" values="0 0; 0 10; 0 0" dur="1s" repeatCount="indefinite"/></g></g></svg>' },
+                { name: "Plank", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M10 70L30 50 H70 L90 70"/><path d="M30 50v20m40-20v20"><animateTransform attributeName="transform" type="translate" values="0 0; 0 2; 0 0" dur="2s" repeatCount="indefinite"/></path></g></svg>' },
+                { name: "High Knees", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="50" cy="30" r="5"/><path d="M50 35v25m0 0L40 85m10-25L60 85"/><path d="M40 85v-20h-5"><animate attributeName="d" values="M40 85v-20h-5; M40 65v-20h-5; M40 85v-20h-5" dur="0.5s" repeatCount="indefinite"/></path><path d="M60 65v20h5"><animate attributeName="d" values="M60 65v20h5; M60 85v-20h5; M60 65v20h5" dur="0.5s" repeatCount="indefinite"/></path></g></svg>' },
+                { name: "Lunges", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="50" cy="30" r="5"/><path d="M50 35v25L70 85"/><path d="M50 60L30 85"><animate attributeName="d" values="M50 60L30 85; M50 60L50 85; M50 60L30 85" dur="1s" repeatCount="indefinite" alternate="true"/></path></g></svg>' },
+                { name: "Push-up & Rotation", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M10 80h80"/><path d="M20 80 L50 40 L80 80"/><path d="M50 40v-15"><animateTransform attributeName="transform" type="rotate" values="0 50 40; 90 50 40; 0 50 40" dur="2s" repeatCount="indefinite"/></path></g></svg>' },
+                { name: "Side Plank", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M50 10v80"/><path d="M50 50l30-20v40z"/><circle cx="80" cy="30" r="5"><animateTransform attributeName="transform" type="translate" values="0 0; 0 2; 0 0" dur="2s" repeatCount="indefinite"/></path></g></svg>' }
             ],
             restDuration: 10
         },
@@ -1261,6 +1316,7 @@
             clearInterval(timerInterval); 
             clearInterval(workoutInterval);
             clearInterval(journalInterval);
+            document.body.classList.remove('fullscreen-active', 'journal-focus');
             if (mediaRecorder && mediaRecorder.state === "recording") {
                 mediaRecorder.stop();
             }
@@ -1460,6 +1516,7 @@
         
         function attachTimerLogic() {
             const display = document.getElementById('timer-display');
+            const ringContainer = document.getElementById('timer-ring-container');
             const progressRing = document.getElementById('timer-progress-ring');
             const startBtn = document.getElementById('timer-start-btn');
             const pauseBtn = document.getElementById('timer-pause-btn');
@@ -1487,6 +1544,7 @@
                     pauseBtn.classList.remove('hidden');
                     durationButtons.style.pointerEvents = 'none';
                     soundSelect.disabled = true;
+                    ringContainer.classList.add('timer-active');
                     if (secondsRemaining === totalSeconds) sounds[soundSelect.value].play();
                     
                     timerInterval = setInterval(() => {
@@ -1508,6 +1566,7 @@
                 startBtn.textContent = 'Resume';
                 startBtn.classList.remove('hidden');
                 pauseBtn.classList.add('hidden');
+                 ringContainer.classList.remove('timer-active');
             }
 
             function resetTimer() {
@@ -1519,7 +1578,8 @@
                 startBtn.classList.remove('hidden');
                 pauseBtn.classList.add('hidden');
                 durationButtons.style.pointerEvents = 'auto';
-                 soundSelect.disabled = false;
+                soundSelect.disabled = false;
+                ringContainer.classList.remove('timer-active');
             }
             
             function setDuration(minutes) {
@@ -1528,15 +1588,24 @@
             }
 
             function logSession() {
-                const log = JSON.parse(localStorage.getItem('practiceLog')) || [];
-                const today = new Date().toISOString().split('T')[0];
-                log.push({ date: today, duration: totalSeconds / 60 });
-                localStorage.setItem('practiceLog', JSON.stringify(log));
+                try {
+                    const log = JSON.parse(localStorage.getItem('practiceLog')) || [];
+                    const today = new Date().toISOString().split('T')[0];
+                    log.push({ date: today, duration: totalSeconds / 60 });
+                    localStorage.setItem('practiceLog', JSON.stringify(log));
+                } catch (e) {
+                    console.error("Could not save practice log:", e);
+                }
                 displayPracticeLog();
             }
 
             function displayPracticeLog() {
-                const log = JSON.parse(localStorage.getItem('practiceLog')) || [];
+                let log = [];
+                try {
+                    log = JSON.parse(localStorage.getItem('practiceLog')) || [];
+                } catch(e) {
+                    console.error("Could not read practice log:", e);
+                }
                 const logContainer = document.getElementById('practice-log');
                 if (log.length > 0) {
                     const totalMinutes = log.reduce((sum, entry) => sum + entry.duration, 0);
@@ -1634,10 +1703,12 @@
             const nextEl = document.getElementById('workout-next');
             const startBtn = document.getElementById('workout-start-btn');
             const pauseBtn = document.getElementById('workout-pause-btn');
-            const resetBtn = document.getElementById('workout-reset-btn');
+            const forwardBtn = document.getElementById('workout-forward-btn');
+            const backBtn = document.getElementById('workout-back-btn');
+            const doubleModeCheckbox = document.getElementById('workout-double-mode');
             const visualEl = document.getElementById('workout-visual');
 
-            const { exercises, restDuration } = db.workout;
+            let workoutPlan = [...db.workout.exercises];
             let currentExerciseIndex = 0;
             let isResting = true;
             let secondsRemaining = 10;
@@ -1656,7 +1727,7 @@
             
             function updateDisplay() {
                 timerEl.textContent = secondsRemaining;
-                const currentEx = exercises[currentExerciseIndex];
+                const currentEx = workoutPlan[currentExerciseIndex];
                 visualEl.innerHTML = currentEx.visual;
                 
                 if (isResting) {
@@ -1665,14 +1736,14 @@
                     nextEl.style.visibility = 'visible';
                      if (secondsRemaining === 3 && isPaused === false) speak(`Next: ${currentEx.name}`);
                 } else {
-                    statusEl.textContent = 'Workout!';
+                    statusEl.textContent = `Workout #${currentExerciseIndex + 1}`;
                     exerciseEl.textContent = currentEx.name;
                     nextEl.style.visibility = 'hidden';
                 }
                 
                 const nextIndex = currentExerciseIndex + 1;
-                if(nextIndex < exercises.length) {
-                   nextEl.textContent = `Next up: ${exercises[nextIndex].name}`;
+                if(nextIndex < workoutPlan.length) {
+                   nextEl.textContent = `Next up: ${workoutPlan[nextIndex].name}`;
                 } else {
                    nextEl.textContent = 'Last one!';
                 }
@@ -1685,15 +1756,15 @@
                     bellSound.play();
                     isResting = !isResting;
                     if (!isResting) { // Finished rest, start exercise
-                        secondsRemaining = exercises[currentExerciseIndex].duration;
+                        secondsRemaining = workoutPlan[currentExerciseIndex].duration;
                         speak('Begin');
                     } else { // Finished exercise, start rest
                         currentExerciseIndex++;
-                        if (currentExerciseIndex >= exercises.length) {
+                        if (currentExerciseIndex >= workoutPlan.length) {
                             finishWorkout();
                             return;
                         }
-                        secondsRemaining = restDuration;
+                        secondsRemaining = db.workout.restDuration;
                     }
                 }
                 updateDisplay();
@@ -1705,7 +1776,7 @@
                     startBtn.classList.add('hidden');
                     pauseBtn.classList.remove('hidden');
                     if(secondsRemaining === 10 && currentExerciseIndex === 0) {
-                        speak('Starting 7 minute workout.');
+                        speak(`Starting ${doubleModeCheckbox.checked ? '14' : '7'} minute workout.`);
                     }
                     workoutInterval = setInterval(tick, 1000);
                 }
@@ -1718,13 +1789,28 @@
                 startBtn.classList.remove('hidden');
                 pauseBtn.classList.add('hidden');
             }
-            
+
+            function changeExercise(direction) {
+                pauseWorkout();
+                currentExerciseIndex += direction;
+                if (currentExerciseIndex < 0) currentExerciseIndex = 0;
+                if (currentExerciseIndex >= workoutPlan.length) currentExerciseIndex = workoutPlan.length - 1;
+                isResting = true;
+                secondsRemaining = db.workout.restDuration;
+                updateDisplay();
+            }
+
             function resetWorkout() {
-                clearInterval(workoutInterval);
-                isPaused = true;
+                if (doubleModeCheckbox.checked) {
+                    workoutPlan = [...db.workout.exercises, ...db.workout.exercises];
+                } else {
+                    workoutPlan = [...db.workout.exercises];
+                }
                 currentExerciseIndex = 0;
                 isResting = true;
                 secondsRemaining = 10;
+                isPaused = true;
+                clearInterval(workoutInterval);
                 startBtn.textContent = 'Start';
                 startBtn.classList.remove('hidden');
                 pauseBtn.classList.add('hidden');
@@ -1742,7 +1828,9 @@
 
             startBtn.addEventListener('click', startWorkout);
             pauseBtn.addEventListener('click', pauseWorkout);
-            resetBtn.addEventListener('click', resetWorkout);
+            forwardBtn.addEventListener('click', () => changeExercise(1));
+            backBtn.addEventListener('click', () => changeExercise(-1));
+            doubleModeCheckbox.addEventListener('change', resetWorkout);
 
             resetWorkout(); // Initialize display
         }
@@ -1759,6 +1847,7 @@
             const noRecordingsMsg = document.getElementById('no-recordings-message');
             const catButtons = document.querySelectorAll('.interview-cat-btn');
             const feedbackEl = document.getElementById('interview-feedback');
+            const cameraErrorEl = document.getElementById('camera-error');
             
             let currentCategory = 'general';
             let currentQuestionIndex = 0;
@@ -1781,9 +1870,19 @@
             async function setupCamera() {
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                    if (!stream.getAudioTracks().length > 0) {
+                        throw new Error("No audio track found. Please check microphone permissions.");
+                    }
                     liveVideo.srcObject = stream;
                     
-                    mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+                    const options = { mimeType: 'video/webm;codecs=vp8,opus' };
+                    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                         console.warn(`${options.mimeType} is not supported, using default.`);
+                         mediaRecorder = new MediaRecorder(stream);
+                    } else {
+                         mediaRecorder = new MediaRecorder(stream, options);
+                    }
+                   
                     mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
                     mediaRecorder.onstop = () => {
                         const blob = new Blob(recordedChunks, { type: 'video/webm' });
@@ -1797,7 +1896,7 @@
                     };
                 } catch (err) {
                     console.error("Error accessing camera:", err);
-                    alert("Could not access camera. Please allow camera and microphone permissions.");
+                    cameraErrorEl.classList.remove('hidden');
                 }
             }
             
@@ -1880,8 +1979,6 @@
             let secondsRemaining = 600;
             let isRunning = false;
             
-            const bellSound = sounds.chime; // Reuse a sound
-
             function updateDisplay() {
                 const minutes = Math.floor(secondsRemaining / 60);
                 const seconds = secondsRemaining % 60;
@@ -1891,10 +1988,9 @@
             function startJournal() {
                 if(isRunning) return;
                 isRunning = true;
-                entryEl.disabled = false;
-                entryEl.focus();
                 startBtn.disabled = true;
                 startBtn.textContent = 'Writing...';
+                startBtn.classList.add('opacity-50');
 
                 journalInterval = setInterval(() => {
                     secondsRemaining--;
@@ -1907,10 +2003,11 @@
 
             function finishJournal() {
                 clearInterval(journalInterval);
-                bellSound.play();
+                sounds.chime.play();
                 entryEl.disabled = true;
                 startBtn.disabled = false;
                 startBtn.textContent = 'Start New Entry';
+                startBtn.classList.remove('opacity-50');
                 saveEntry();
                 secondsRemaining = 600;
                 updateDisplay();
@@ -1921,20 +2018,29 @@
                 const content = entryEl.value.trim();
                 if (content === '') return;
                 
-                const entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
-                const newEntry = {
-                    date: new Date().toISOString(),
-                    content: content
-                };
-                entries.unshift(newEntry);
-                localStorage.setItem('journalEntries', JSON.stringify(entries));
+                try {
+                    const entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+                    const newEntry = {
+                        date: new Date().toISOString(),
+                        content: content
+                    };
+                    entries.unshift(newEntry);
+                    localStorage.setItem('journalEntries', JSON.stringify(entries));
+                } catch(e) {
+                    console.error("Failed to save journal entry:", e);
+                }
                 
                 entryEl.value = '';
                 displayEntries();
             }
 
             function displayEntries() {
-                const entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+                 let entries = [];
+                try {
+                    entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+                } catch(e) {
+                    console.error("Failed to load journal entries:", e);
+                }
                 historyList.innerHTML = '';
                 if(entries.length === 0) {
                     historyList.innerHTML = `<p class="text-center text-charcoal/70">Your saved journal entries will appear here.</p>`;
@@ -1953,7 +2059,18 @@
                 });
             }
             
-            startBtn.addEventListener('click', startJournal);
+            entryEl.addEventListener('input', () => {
+                if (!isRunning && entryEl.value.length > 0) {
+                     startJournal();
+                }
+            });
+            
+            startBtn.addEventListener('click', () => {
+                entryEl.disabled = false;
+                entryEl.value = '';
+                entryEl.focus();
+            });
+
             updateDisplay();
             displayEntries();
         }
