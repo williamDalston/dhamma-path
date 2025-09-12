@@ -5417,52 +5417,27 @@
         // Set current page
         currentPage = pageName;
         
-        // Render new page using templates
-        let pageContent;
-        switch(pageName) {
-            case 'home':
-                pageContent = document.getElementById('template-home').content.cloneNode(true);
-                break;
-            case 'timer':
-                pageContent = document.getElementById('template-timer').content.cloneNode(true);
-                break;
-            case 'journal':
-                pageContent = document.getElementById('template-journal').content.cloneNode(true);
-                break;
-            case 'workout':
-                pageContent = document.getElementById('template-workout').content.cloneNode(true);
-                break;
-            case 'interview':
-                pageContent = document.getElementById('template-interview').content.cloneNode(true);
-                break;
-            case 'about':
-                pageContent = document.getElementById('template-about').content.cloneNode(true);
-                break;
-            case 'glossary':
-                pageContent = document.getElementById('template-glossary').content.cloneNode(true);
-                break;
-            case 'category-meditation':
-            case 'category-introduction':
-                pageContent = document.getElementById('template-category').content.cloneNode(true);
-                break;
-            case 'article':
-                pageContent = document.getElementById('template-article').content.cloneNode(true);
-                break;
-            case 'privacy':
-                pageContent = document.getElementById('template-privacy').content.cloneNode(true);
-                break;
-            case 'terms':
-                pageContent = document.getElementById('template-terms').content.cloneNode(true);
-                break;
-            case 'path':
-                pageContent = document.getElementById('template-path').content.cloneNode(true);
-                break;
-            case 'searchResults':
-                pageContent = document.getElementById('template-search-results').content.cloneNode(true);
-                break;
-            default:
-                pageContent = document.getElementById('template-home').content.cloneNode(true);
-        }
+        // Performance optimized template lookup
+        const pageTemplates = {
+            'home': 'template-home',
+            'timer': 'template-timer',
+            'journal': 'template-journal',
+            'workout': 'template-workout',
+            'interview': 'template-interview',
+            'about': 'template-about',
+            'glossary': 'template-glossary',
+            'category-meditation': 'template-category',
+            'category-introduction': 'template-category',
+            'article': 'template-article',
+            'privacy': 'template-privacy',
+            'terms': 'template-terms',
+            'path': 'template-path',
+            'searchResults': 'template-search-results'
+        };
+        
+        const templateId = pageTemplates[pageName] || 'template-home';
+        const template = document.getElementById(templateId);
+        const pageContent = template ? template.content.cloneNode(true) : null;
         
         if (pageContent) {
             // Use requestAnimationFrame for optimal performance
@@ -5770,7 +5745,7 @@
     function attachJournalLogic() {
         console.log('Attaching journal logic...');
         
-        const saveBtn = document.getElementById('save-journal-btn');
+        const saveBtn = document.getElementById('journal-save-btn');
         const entryText = document.getElementById('journal-entry');
         const entriesList = document.getElementById('journal-entries');
         
