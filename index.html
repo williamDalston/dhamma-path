@@ -2485,11 +2485,17 @@
         .exercise-card {
             transition: all 0.3s ease;
             animation: slideInUp 0.6s ease-out;
+            position: relative;
+            z-index: 10;
         }
         
         .exercise-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .exercise-card:active {
+            transform: translateY(0);
         }
         
         .exercise-number {
@@ -6680,7 +6686,10 @@
                     },
                     'workout': () => {
                         attachWorkoutLogic();
-                        setupEnhancedWorkoutFeatures();
+                        // Call enhanced features after a short delay to ensure DOM is ready
+                        setTimeout(() => {
+                            setupEnhancedWorkoutFeatures();
+                        }, 100);
                     },
                     'interview': () => {
                         attachInterviewLogic();
@@ -6984,93 +6993,6 @@
     }
 
     // Journal logic
-    function attachJournalLogic() {
-        // Attaching journal logic
-        
-        const saveBtn = document.getElementById('journal-save-btn');
-        const entryText = document.getElementById('journal-entry');
-        const entriesList = document.getElementById('journal-entries');
-        
-        function saveEntry() {
-            if (entryText && entryText.value.trim()) {
-                const entry = {
-                    text: entryText.value.trim(),
-                    date: new Date().toLocaleString()
-                };
-                
-                let entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
-                entries.unshift(entry);
-                localStorage.setItem('journalEntries', JSON.stringify(entries));
-                
-                // Clear textarea and draft
-                entryText.value = '';
-                localStorage.removeItem('journal-draft');
-                
-                // Hide save button
-                if (saveBtn) {
-                    saveBtn.classList.add('hidden');
-                }
-                
-                // Show enhanced success feedback
-                showToast('Entry saved successfully! ✍️', 'success');
-                triggerHapticFeedback('success');
-                
-                // Add floating animation to save button
-                if (saveBtn) {
-                    saveBtn.classList.add('float-up');
-                    setTimeout(() => {
-                        saveBtn.classList.remove('float-up');
-                    }, 600);
-                }
-                
-                // Refresh entries list
-                loadEntries();
-            }
-        }
-        
-        function loadEntries() {
-            const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
-            if (entriesList) {
-                entriesList.innerHTML = entries.map(entry => `
-                    <div class="bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-sm border border-gray-200/50">
-                        <div class="text-sm text-gray-600 mb-2">${entry.date}</div>
-                        <div class="text-gray-800 leading-relaxed">${entry.text}</div>
-                    </div>
-                `).join('');
-            }
-        }
-        
-        // Event listeners
-        if (saveBtn) {
-            saveBtn.addEventListener('click', saveEntry);
-        }
-        
-        // Auto-save draft
-        if (entryText) {
-            entryText.addEventListener('input', () => {
-                localStorage.setItem('journal-draft', entryText.value);
-                if (entryText.value.trim() && saveBtn) {
-                    saveBtn.classList.remove('hidden');
-                } else if (saveBtn) {
-                    saveBtn.classList.add('hidden');
-                }
-            });
-        }
-        
-        // Load draft on page load
-        if (entryText) {
-            const draft = localStorage.getItem('journal-draft');
-            if (draft) {
-                entryText.value = draft;
-                if (draft.trim() && saveBtn) {
-                    saveBtn.classList.remove('hidden');
-                }
-            }
-        }
-        
-        // Load existing entries
-        loadEntries();
-    }
 
     // Workout logic
 
@@ -7727,64 +7649,21 @@
         // Initialize
         nextQuestion();
     }
-    function attachJournalLogic() {
-        // Attaching journal logic
-        
-        const saveBtn = document.getElementById('journal-save-btn');
-        const entryText = document.getElementById('journal-entry');
-        const entriesList = document.getElementById('journal-entries');
-        
-        // Prevent zoom on double tap for mobile
-        if (isTouchDevice) {
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', function (event) {
-                const now = (new Date()).getTime();
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault();
-                }
-                lastTouchEnd = now;
-            }, false);
-        }
-        
-        function initAudio() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-        
-        function playBell() {
-            if (!soundToggle || !soundToggle.checked) return;
-            
-            initAudio();
-            if (audioContext.state === 'suspended') {
-                audioContext.resume();
-            }
-            
-            // Create a simple bell sound using Web Audio API
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.5);
-            
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.5);
-        }
-    }
 
     // Journal logic
     function attachJournalLogic() {
         // Attaching journal logic
+        console.log('🔧 Initializing journal logic...');
         
         const saveBtn = document.getElementById('journal-save-btn');
         const entryText = document.getElementById('journal-entry');
         const entriesList = document.getElementById('journal-entries');
+        
+        console.log('📝 Journal elements found:', {
+            saveBtn: !!saveBtn,
+            entryText: !!entryText,
+            entriesList: !!entriesList
+        });
         
         function saveEntry() {
             if (entryText && entryText.value.trim()) {
@@ -7844,9 +7723,18 @@
         }
         
         // Quick preset button functionality
+        const quickPresetBtns = document.querySelectorAll('.quick-preset-btn');
+        const durationSelect = document.getElementById('timer-duration');
+        
+        console.log('⏰ Quick preset elements found:', {
+            quickPresetBtns: quickPresetBtns.length,
+            durationSelect: !!durationSelect
+        });
+        
         quickPresetBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const duration = parseInt(btn.dataset.duration);
+                console.log('🎯 Quick preset clicked:', duration);
                 if (durationSelect) {
                     durationSelect.value = duration;
                 }
@@ -8741,6 +8629,17 @@
             
             // Throttled global click handler for navigation links
             const throttledNavigation = throttle((e) => {
+                // Skip clicks on decorative elements, overlays, and interactive elements
+                if (e.target.closest('#welcome-overlay') || 
+                    e.target.closest('.animate-pulse') ||
+                    e.target.closest('.absolute') ||
+                    e.target.closest('input') ||
+                    e.target.closest('button') ||
+                    e.target.closest('select') ||
+                    e.target.closest('textarea')) {
+                    return;
+                }
+                
                 console.log('Click detected on:', e.target);
                 const link = e.target.closest('.main-nav-link');
                 if (link) {
@@ -9100,11 +8999,15 @@
              if (doubleModeCheckbox) doubleModeCheckbox.addEventListener('change', toggleDoubleMode);
              if (soundSelect) soundSelect.addEventListener('change', toggleSound);
              
-             // Set up exercise card click listeners
-             const exerciseCards = document.querySelectorAll('.exercise-card');
-             exerciseCards.forEach((card, index) => {
-                 card.addEventListener('click', () => jumpToExercise(index));
-             });
+              // Set up exercise card click listeners
+              const exerciseCards = document.querySelectorAll('.exercise-card');
+              exerciseCards.forEach((card, index) => {
+                  card.addEventListener('click', (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      jumpToExercise(index);
+                  });
+              });
              
              // Load workout history
              loadWorkoutHistory();
@@ -9358,18 +9261,20 @@
              });
          }
          
-         function jumpToExercise(exerciseIndex) {
-             if (!isWorkoutRunning && exerciseIndex >= 0 && exerciseIndex < exercises.length) {
-                 currentExercise = exerciseIndex;
-                 const exerciseDuration = isDoubleMode ? 60 : 30;
-                 currentTime = exerciseDuration;
-                 
-                 updateCurrentExerciseDisplay();
-                 updateWorkoutDisplay();
-                 
-                 showNotification(`Jumped to ${exercises[currentExercise].name}`, 'info');
-             }
-         }
+          function jumpToExercise(exerciseIndex) {
+              if (!isWorkoutRunning && exerciseIndex >= 0 && exerciseIndex < exercises.length) {
+                  currentExercise = exerciseIndex;
+                  const exerciseDuration = isDoubleMode ? 60 : 30;
+                  currentTime = exerciseDuration;
+                  
+                  updateCurrentExerciseDisplay();
+                  updateWorkoutDisplay();
+                  
+                  showNotification(`Jumped to ${exercises[currentExercise].name}`, 'info');
+              } else if (isWorkoutRunning) {
+                  showNotification('Cannot jump to exercise while workout is running', 'warning');
+              }
+          }
         
         function toggleDoubleMode() {
             isDoubleMode = doubleModeCheckbox.checked;
