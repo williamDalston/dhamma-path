@@ -2213,6 +2213,41 @@
             transform: scale(1.02);
         }
         
+        /* Meditation timer animations */
+        @keyframes timerPulse {
+            0%, 100% { 
+                opacity: 0; 
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.05);
+            }
+        }
+        
+        .timer-pulse {
+            animation: timerPulse 2s ease-in-out infinite;
+        }
+        
+        .timer-running .timer-pulse {
+            opacity: 1;
+        }
+        
+        /* Enhanced timer display */
+        .timer-display {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Meditation guide hover effects */
+        .meditation-guide-card {
+            transition: all 0.3s ease;
+        }
+        
+        .meditation-guide-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
         /* Mobile-optimized touch targets */
         .recording-button {
             -webkit-tap-highlight-color: transparent;
@@ -3263,8 +3298,8 @@
                     <li><strong>Clarity:</strong> We strive to explain complex concepts in simple, practical language without sacrificing depth.</li>
                     <li><strong>Practicality:</strong> We emphasize how these ancient teachings can be applied to modern life to reduce stress and cultivate genuine well-being.</li>
                 </ul>
-                    </div>
-                </div>
+            </div>
+        </div>
             </section>
 
             <!-- Enhanced Mission Section -->
@@ -3274,7 +3309,7 @@
                     <div class="absolute inset-0 opacity-10">
                         <div class="absolute top-0 right-0 w-48 h-48 bg-earthy-gold rounded-full blur-3xl"></div>
                         <div class="absolute bottom-0 left-0 w-40 h-40 bg-forest-green rounded-full blur-2xl"></div>
-                    </div>
+            </div>
                     <div class="relative">
                         <h2 class="text-4xl font-bold font-lora text-gradient mb-8 drop-shadow-sm">Our Mission</h2>
                         <p class="text-xl leading-relaxed text-charcoal/80">To help you build a powerful morning routine that transforms your life, guided by timeless wisdom and modern self-help principles. We believe that the first hour of your day shapes everything that follows.</p>
@@ -3300,7 +3335,7 @@
             </section>
         </div>
     </template>
-    
+
     <template id="template-privacy">
         <div class="max-w-5xl mx-auto">
             <!-- Enhanced header -->
@@ -3442,34 +3477,34 @@
                         <div>
                             <h3 class="text-xl font-semibold text-charcoal mb-2">Buddhist Teachings</h3>
                             <p class="text-charcoal/80 leading-relaxed">The Buddhist content is based on public domain texts and traditional teachings. We present them respectfully and for educational purposes only.</p>
-                        </div>
-                        <div>
+            </div>
+                    <div>
                             <h3 class="text-xl font-semibold text-charcoal mb-2">Your Content</h3>
                             <p class="text-charcoal/80 leading-relaxed">Your journal entries, recordings, and personal data belong to you. We don't claim ownership of anything you create using our tools.</p>
                         </div>
                         <div>
                             <h3 class="text-xl font-semibold text-charcoal mb-2">Website Code</h3>
                             <p class="text-charcoal/80 leading-relaxed">The website design and functionality are original work. Please don't copy or reproduce without permission.</p>
-                        </div>
+                    </div>
                     </div>
                 </section>
 
                 <section class="mb-8">
                     <h2 class="text-2xl font-bold text-charcoal font-lora mb-4">Disclaimers</h2>
                     <div class="space-y-4">
-                        <div>
+                     <div>
                             <h3 class="text-xl font-semibold text-charcoal mb-2">Health and Wellness</h3>
                             <p class="text-charcoal/80 leading-relaxed">The meditation, exercise, and wellness content is for educational purposes only. Consult healthcare professionals for medical advice. Listen to your body and practice safely.</p>
-                        </div>
+                    </div>
                         <div>
                             <h3 class="text-xl font-semibold text-charcoal mb-2">Spiritual Guidance</h3>
                             <p class="text-charcoal/80 leading-relaxed">While we present Buddhist teachings respectfully, this is not a substitute for guidance from qualified teachers or spiritual advisors.</p>
-                        </div>
+                </div>
                         <div>
                             <h3 class="text-xl font-semibold text-charcoal mb-2">Technical Issues</h3>
                             <p class="text-charcoal/80 leading-relaxed">We strive for reliability, but this is a personal project. We're not liable for any technical issues, data loss, or service interruptions.</p>
-                        </div>
-                    </div>
+                </div>
+            </div>
                 </section>
 
                 <section class="mb-8">
@@ -3517,28 +3552,28 @@
                             <h3 class="text-xl font-semibold text-forest-green mb-3">Dhamma (Dharma)</h3>
                             <p class="text-charcoal/70 mb-3">The teachings of the Buddha; the universal law of nature; truth.</p>
                             <p class="text-sm text-charcoal/60">The fundamental teachings that lead to liberation from suffering.</p>
-                        </div>
+        </div>
                         
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-forest-green/10">
                             <h3 class="text-xl font-semibold text-forest-green mb-3">Sangha</h3>
                             <p class="text-charcoal/70 mb-3">The community of Buddhist practitioners, both monastic and lay.</p>
                             <p class="text-sm text-charcoal/60">One of the Three Jewels of Buddhism, providing support and guidance.</p>
-                        </div>
+            </div>
                         
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-forest-green/10">
                             <h3 class="text-xl font-semibold text-forest-green mb-3">Buddha</h3>
                             <p class="text-charcoal/70 mb-3">The awakened one; one who has achieved complete enlightenment.</p>
                             <p class="text-sm text-charcoal/60">The historical Buddha, Siddhartha Gautama, or any enlightened being.</p>
-                        </div>
+                </div>
                         
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-forest-green/10">
                             <h3 class="text-xl font-semibold text-forest-green mb-3">Nirvana (Nibbāna)</h3>
                             <p class="text-charcoal/70 mb-3">The ultimate goal of Buddhist practice; complete liberation from suffering.</p>
                             <p class="text-sm text-charcoal/60">The cessation of craving, hatred, and delusion; true peace.</p>
-                        </div>
+                    </div>
+                    </div>
                     </div>
                 </div>
-            </div>
 
             <!-- Meditation Terms Section -->
             <div class="bg-gradient-to-br from-earthy-gold/10 via-white to-earthy-gold/5 rounded-2xl p-6 sm:p-8 lg:p-12 shadow-xl border border-earthy-gold/20 mb-8 relative overflow-hidden">
@@ -3550,13 +3585,13 @@
                             <h3 class="text-xl font-semibold text-earthy-gold mb-3">Vipassanā</h3>
                             <p class="text-charcoal/70 mb-3">Insight meditation; the practice of seeing things as they really are.</p>
                             <p class="text-sm text-charcoal/60">A systematic method of developing mindfulness and wisdom.</p>
-                        </div>
+            </div>
                         
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-earthy-gold/10">
                             <h3 class="text-xl font-semibold text-earthy-gold mb-3">Samatha</h3>
                             <p class="text-charcoal/70 mb-3">Calm-abiding meditation; the development of concentration and tranquility.</p>
                             <p class="text-sm text-charcoal/60">Foundation practice that leads to mental stability and focus.</p>
-                        </div>
+        </div>
                         
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-earthy-gold/10">
                             <h3 class="text-xl font-semibold text-earthy-gold mb-3">Sati</h3>
@@ -3582,12 +3617,12 @@
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-light-green/10">
                             <h3 class="text-lg font-semibold text-forest-green mb-3">1. Dukkha (Suffering)</h3>
                             <p class="text-charcoal/70 text-sm">The truth that life contains suffering, dissatisfaction, and stress.</p>
-                        </div>
-                        
+            </div>
+            
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-light-green/10">
                             <h3 class="text-lg font-semibold text-forest-green mb-3">2. Samudaya (Origin)</h3>
                             <p class="text-charcoal/70 text-sm">The truth that suffering arises from craving and attachment.</p>
-                        </div>
+                            </div>
                         
                         <div class="bg-white rounded-xl p-6 shadow-lg border border-light-green/10">
                             <h3 class="text-lg font-semibold text-forest-green mb-3">3. Nirodha (Cessation)</h3>
@@ -3600,7 +3635,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                         </div>
             
             <!-- Learning Tips Card -->
             <div class="mt-16 bg-gradient-to-br from-earthy-gold/15 via-white to-earthy-gold/5 rounded-3xl p-10 shadow-xl border border-earthy-gold/20 relative overflow-hidden">
@@ -3608,7 +3643,7 @@
                 <div class="absolute inset-0 opacity-10">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-earthy-gold rounded-full blur-2xl float-animation"></div>
                     <div class="absolute bottom-0 left-0 w-24 h-24 bg-forest-green rounded-full blur-xl float-animation"></div>
-                </div>
+                    </div>
                 
                 <div class="text-center relative z-10">
                     <h3 class="text-3xl font-bold text-charcoal font-lora mb-6 text-gradient">Understanding Pāli</h3>
@@ -3619,12 +3654,12 @@
                             <h4 class="text-xl font-bold text-charcoal font-lora mb-4 flex items-center">
                                 <div class="w-8 h-8 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mr-3">
                                     <span class="text-white text-sm font-bold">1</span>
-                                </div>
+                </div>
                                 Pronunciation Guide
                             </h4>
                             <p class="text-charcoal/70 leading-relaxed">Pāli uses simple phonetic pronunciation. Each letter is pronounced as written, with vowels similar to Spanish or Italian.</p>
-                        </div>
-                        
+            </div>
+            
                         <div class="text-left">
                             <h4 class="text-xl font-bold text-charcoal font-lora mb-4 flex items-center">
                                 <div class="w-8 h-8 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center mr-3">
@@ -3639,7 +3674,7 @@
             </div>
         </div>
     </template>
-
+    
     <template id="template-search-results">
         <div class="max-w-4xl mx-auto">
             <header class="text-center mb-12">
@@ -3658,7 +3693,7 @@
             <div class="text-center mb-6 sm:mb-8">
                 <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gradient font-lora mb-3 sm:mb-4">Meditation Timer</h1>
                 <p class="text-base sm:text-lg text-charcoal/80 max-w-2xl mx-auto px-4">Find your center with our fully functional timer featuring progress tracking, gentle sounds, and customizable durations</p>
-            </div>
+                </div>
             
             <!-- Main Timer Section - Centered and Prominent -->
             <div class="max-w-4xl mx-auto">
@@ -3670,64 +3705,77 @@
                         <div class="absolute inset-0 opacity-5">
                             <div class="absolute top-0 right-0 w-32 h-32 bg-forest-green rounded-full blur-2xl float-animation"></div>
                             <div class="absolute bottom-0 left-0 w-24 h-24 bg-earthy-gold rounded-full blur-xl float-animation"></div>
-                        </div>
-                        
+            </div>
+
                         <div class="text-center relative z-10">
                             <h2 class="text-xl sm:text-2xl font-bold text-charcoal font-lora mb-4 sm:mb-6">Your Meditation Timer</h2>
                             
                             <!-- Timer Display with Progress Ring -->
-                            <div class="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 mx-auto mb-6 sm:mb-8">
+                            <div class="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 mx-auto mb-6 sm:mb-8">
                                 <!-- Progress Ring -->
-                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                <svg class="w-full h-full transform -rotate-90 drop-shadow-lg" viewBox="0 0 100 100">
                                     <!-- Background Circle -->
-                                    <circle cx="50" cy="50" r="45" stroke="#e5e7eb" stroke-width="4" fill="none"/>
+                                    <circle cx="50" cy="50" r="45" stroke="#e5e7eb" stroke-width="6" fill="none" opacity="0.3"/>
                                     <!-- Progress Circle -->
-                                    <circle id="progress-ring" cx="50" cy="50" r="45" stroke="#4A6C55" stroke-width="4" fill="none" 
+                                    <circle id="progress-ring" cx="50" cy="50" r="45" stroke="#4A6C55" stroke-width="6" fill="none" 
                                             stroke-dasharray="283" stroke-dashoffset="283" 
-                                            class="transition-all duration-1000 ease-linear"/>
+                                            class="transition-all duration-1000 ease-linear drop-shadow-lg"
+                                            stroke-linecap="round"/>
                                 </svg>
                                 
                                 <!-- Timer Content -->
                                 <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                    <div id="timer-display" class="text-3xl sm:text-4xl lg:text-5xl font-lora text-forest-green font-bold mb-2">10:00</div>
-                                    <div id="timer-status" class="text-sm sm:text-base text-charcoal/70">Ready to begin</div>
-                                    <div class="text-2xl sm:text-3xl lg:text-4xl mt-2">🧘‍♀️</div>
-                                </div>
-                            </div>
+                                    <div id="timer-display" class="text-4xl sm:text-5xl lg:text-6xl font-lora text-forest-green font-bold mb-3 drop-shadow-sm">10:00</div>
+                                    <div id="timer-status" class="text-base sm:text-lg text-charcoal/80 font-medium mb-3">Ready to begin</div>
+                                    <div class="text-3xl sm:text-4xl lg:text-5xl drop-shadow-sm">🧘‍♀️</div>
+                </div>
+                                
+                                <!-- Pulsing effect when running -->
+                                <div id="timer-pulse" class="absolute inset-0 rounded-full border-4 border-forest-green/30 opacity-0"></div>
+            </div>
                             
                             <!-- Timer Controls -->
-                            <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-6">
+                            <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-8">
                                 <!-- Duration Selection -->
-                                <div class="flex items-center space-x-2">
-                                    <label for="timer-duration" class="text-sm font-semibold text-charcoal">Duration:</label>
-                                    <select id="timer-duration" class="px-3 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-forest-green focus:border-forest-green focus:outline-none bg-white text-sm">
+                                <div class="flex items-center space-x-3 bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-gray-200">
+                                    <label for="timer-duration" class="text-sm font-bold text-charcoal">Duration:</label>
+                                    <select id="timer-duration" class="px-4 py-2 border-2 border-forest-green/30 rounded-xl focus:ring-2 focus:ring-forest-green focus:border-forest-green focus:outline-none bg-white text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-200">
                                         <option value="300">5 minutes</option>
                                         <option value="600" selected>10 minutes</option>
                                         <option value="900">15 minutes</option>
                                         <option value="1200">20 minutes</option>
                                         <option value="1800">30 minutes</option>
                                     </select>
-                                </div>
+        </div>
                                 
                                 <!-- Sound Toggle -->
-                                <div class="flex items-center space-x-2">
-                                    <label class="flex items-center space-x-2 cursor-pointer">
-                                        <input type="checkbox" id="timer-sound" class="h-4 w-4 rounded text-forest-green focus:ring-forest-green focus:ring-2" checked>
-                                        <span class="text-sm font-semibold text-charcoal">🔔 Sound</span>
+                                <div class="flex items-center space-x-3 bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-gray-200">
+                                    <label class="flex items-center space-x-3 cursor-pointer">
+                                        <input type="checkbox" id="timer-sound" class="h-5 w-5 rounded text-forest-green focus:ring-forest-green focus:ring-2" checked>
+                                        <span class="text-sm font-bold text-charcoal">🔔 Sound</span>
                                     </label>
                                 </div>
                             </div>
                             
                             <!-- Control Buttons -->
-                            <div class="flex justify-center space-x-4">
-                                <button id="timer-start-btn" class="px-6 sm:px-8 py-3 sm:py-4 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 hover:shadow-lg transition-all duration-300 text-sm sm:text-base min-h-[48px]">
-                                    ▶️ Start
+                            <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+                                <button id="timer-start-btn" class="px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-base sm:text-lg min-h-[56px] shadow-lg">
+                                    <div class="flex items-center justify-center space-x-2">
+                                        <span class="text-xl">▶️</span>
+                                        <span>Start Meditation</span>
+                    </div>
                                 </button>
-                                <button id="timer-pause-btn" class="px-6 sm:px-8 py-3 sm:py-4 bg-earthy-gold text-white font-bold rounded-xl hover:bg-earthy-gold/90 hover:shadow-lg transition-all duration-300 text-sm sm:text-base min-h-[48px] hidden">
-                                    ⏸️ Pause
+                                <button id="timer-pause-btn" class="px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-2xl hover:from-earthy-gold/90 hover:to-earthy-gold/80 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-base sm:text-lg min-h-[56px] shadow-lg hidden">
+                                    <div class="flex items-center justify-center space-x-2">
+                                        <span class="text-xl">⏸️</span>
+                                        <span>Pause</span>
+                    </div>
                                 </button>
-                                <button id="timer-reset-btn" class="px-6 sm:px-8 py-3 sm:py-4 bg-gray-500 text-white font-bold rounded-xl hover:bg-gray-600 hover:shadow-lg transition-all duration-300 text-sm sm:text-base min-h-[48px]">
-                                    🔄 Reset
+                                <button id="timer-reset-btn" class="px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold rounded-2xl hover:from-gray-600 hover:to-gray-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-base sm:text-lg min-h-[56px] shadow-lg">
+                                    <div class="flex items-center justify-center space-x-2">
+                                        <span class="text-xl">🔄</span>
+                                        <span>Reset</span>
+                                    </div>
                                 </button>
                             </div>
                             
@@ -3740,29 +3788,37 @@
                         </div>
                     </div>
                     <!-- Meditation Guide -->
-                    <div class="bg-gradient-to-br from-light-green/20 to-forest-green/10 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-xl border border-light-green/30">
-                        <h3 class="text-lg sm:text-xl font-bold text-charcoal mb-4 sm:mb-6 text-center">Meditation Guide</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-center">
-                            <div class="bg-white/50 rounded-xl p-4 sm:p-6">
-                                <div class="w-12 h-12 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                                    <span class="text-2xl">🏠</span>
+                    <div class="bg-gradient-to-br from-light-green/30 to-forest-green/20 rounded-2xl p-6 sm:p-8 lg:p-10 shadow-xl border-2 border-light-green/40 relative overflow-hidden">
+                        <!-- Subtle background elements -->
+                        <div class="absolute inset-0 opacity-10">
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-forest-green rounded-full blur-xl float-animation"></div>
+                            <div class="absolute bottom-0 left-0 w-20 h-20 bg-earthy-gold rounded-full blur-lg float-animation"></div>
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <h3 class="text-2xl sm:text-3xl font-bold text-charcoal mb-6 sm:mb-8 text-center font-lora">Meditation Guide</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
+                                <div class="meditation-guide-card bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-lg border border-white/50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                        <span class="text-3xl">🏠</span>
+                                    </div>
+                                    <h4 class="text-lg sm:text-xl font-bold text-charcoal mb-3">Find a Quiet Space</h4>
+                                    <p class="text-sm sm:text-base text-charcoal/80 leading-relaxed">Choose a peaceful spot where you won't be disturbed</p>
                                 </div>
-                                <h4 class="text-sm sm:text-base font-semibold text-charcoal mb-2">Find a Quiet Space</h4>
-                                <p class="text-xs sm:text-sm text-charcoal/70">Choose a peaceful spot where you won't be disturbed</p>
-                            </div>
-                            <div class="bg-white/50 rounded-xl p-4 sm:p-6">
-                                <div class="w-12 h-12 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                                    <span class="text-2xl">🧘</span>
+                                <div class="meditation-guide-card bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-lg border border-white/50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                        <span class="text-3xl">🧘</span>
+                                    </div>
+                                    <h4 class="text-lg sm:text-xl font-bold text-charcoal mb-3">Sit Comfortably</h4>
+                                    <p class="text-sm sm:text-base text-charcoal/80 leading-relaxed">Keep your back straight but relaxed, hands on your lap</p>
                                 </div>
-                                <h4 class="text-sm sm:text-base font-semibold text-charcoal mb-2">Sit Comfortably</h4>
-                                <p class="text-xs sm:text-sm text-charcoal/70">Keep your back straight but relaxed, hands on your lap</p>
-                            </div>
-                            <div class="bg-white/50 rounded-xl p-4 sm:p-6">
-                                <div class="w-12 h-12 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                                    <span class="text-2xl">🌬️</span>
+                                <div class="meditation-guide-card bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-lg border border-white/50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-light-green to-light-green/80 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                        <span class="text-3xl">🌬️</span>
+                                    </div>
+                                    <h4 class="text-lg sm:text-xl font-bold text-charcoal mb-3">Focus on Your Breath</h4>
+                                    <p class="text-sm sm:text-base text-charcoal/80 leading-relaxed">Breathe naturally and observe each inhale and exhale</p>
                                 </div>
-                                <h4 class="text-sm sm:text-base font-semibold text-charcoal mb-2">Focus on Your Breath</h4>
-                                <p class="text-xs sm:text-sm text-charcoal/70">Breathe naturally and observe each inhale and exhale</p>
                             </div>
                         </div>
                     </div>
@@ -3829,7 +3885,7 @@
                                 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                                 </svg>
-                            </div>
+                    </div>
                             <h4 class="text-xl font-bold text-charcoal font-lora mb-2">Foundation</h4>
                             <p class="text-charcoal/70 text-sm">Build your understanding from the ground up</p>
                         </div>
@@ -4034,12 +4090,12 @@
                             </button>
                             <p class="text-xs sm:text-sm text-charcoal/60 mt-3 px-4">Tap to test the exercise switch sound</p>
                             <p class="text-xs text-charcoal/50 mt-1 px-4">Works on mobile devices with audio support</p>
-                        </div>
-                    </div>
+                                    </div>
+                                </div>
                     
-                </div>
-            </div>
-        </div>
+                            </div>
+                         </div>
+                    </div>
     </template>
     
     <template id="template-interview">
@@ -4058,7 +4114,7 @@
                     <button id="interview-cat-btn" data-category="storytelling" class="px-4 sm:px-6 py-2 sm:py-3 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition-colors text-sm sm:text-base">Storytelling</button>
                     <button id="interview-cat-btn" data-category="communication" class="px-4 sm:px-6 py-2 sm:py-3 bg-light-green text-forest-green font-semibold rounded-lg hover:bg-light-green/80 transition-colors text-sm sm:text-base">Communication</button>
                     <button id="interview-cat-btn" data-category="creativity" class="px-4 sm:px-6 py-2 sm:py-3 bg-charcoal text-white font-semibold rounded-lg hover:bg-charcoal/90 transition-colors text-sm sm:text-base">Creativity</button>
-                </div>
+                    </div>
             </div>
 
             <!-- Main Practice Area -->
@@ -4084,9 +4140,9 @@
                             <button id="next-question-btn" class="px-3 sm:px-4 py-3 sm:py-4 bg-gray-200 text-charcoal font-semibold rounded-lg hover:bg-gray-300 transition-colors text-xs sm:text-sm min-h-[48px]">
                                 Next →
                             </button>
+                    </div>
                         </div>
                     </div>
-                </div>
 
                 <!-- Video Recording Area -->
                 <div class="interview-card bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100">
@@ -4103,9 +4159,9 @@
                                 </svg>
                                 <p class="text-sm text-charcoal/70 mb-2">Click "Start Camera" to begin recording</p>
                                 <p class="text-xs text-charcoal/50">Optimized for mobile devices</p>
-                            </div>
                         </div>
                     </div>
+                </div>
                     
                     <!-- Recording Controls -->
                     <div id="recorder-controls" class="flex flex-col sm:flex-row gap-3 sm:gap-4">
@@ -4198,7 +4254,7 @@
                 <div class="text-center mb-4 sm:mb-6 relative">
                     <h3 class="text-lg sm:text-xl font-bold text-charcoal mb-2 drop-shadow-sm">Quick Morning Presets</h3>
                     <p class="text-xs sm:text-sm text-charcoal/70">Choose your writing session length</p>
-                </div>
+                    </div>
                 <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
                     <button class="quick-preset-btn px-6 py-3 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg border-2 border-forest-green text-sm" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #2d5016 !important;" data-duration="300">⚡ 5 min</button>
                     <button class="quick-preset-btn px-6 py-3 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg border-2 border-earthy-gold text-sm" style="background-color: #b8860b !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #b8860b !important;" data-duration="600">🌟 10 min</button>
@@ -4462,8 +4518,8 @@
             oscillator.start(audioContext.currentTime);
             oscillator.stop(audioContext.currentTime + 0.5);
         }
-        
-        function updateDisplay() {
+            
+            function updateDisplay() {
             if (display) {
                 const minutes = Math.floor(timeRemaining / 60);
                 const seconds = timeRemaining % 60;
@@ -4488,17 +4544,23 @@
                     status.textContent = 'Ready to begin';
                 }
             }
-        }
-        
-        function startTimer() {
+            }
+
+            function startTimer() {
             if (!isRunning) {
                 isRunning = true;
-                isPaused = false;
+                    isPaused = false;
+                
+                // Add pulsing effect to timer container
+                const timerContainer = document.querySelector('.relative.w-56');
+                if (timerContainer) {
+                    timerContainer.classList.add('timer-running');
+                }
                 
                 if (startBtn) startBtn.classList.add('hidden');
                 if (pauseBtn) pauseBtn.classList.remove('hidden');
-                
-                timerInterval = setInterval(() => {
+                    
+                    timerInterval = setInterval(() => {
                     if (timeRemaining > 0) {
                         timeRemaining--;
                         updateDisplay();
@@ -4515,6 +4577,12 @@
                         clearInterval(timerInterval);
                         isRunning = false;
                         
+                        // Remove pulsing effect
+                        const timerContainer = document.querySelector('.relative.w-56');
+                        if (timerContainer) {
+                            timerContainer.classList.remove('timer-running');
+                        }
+                        
                         // Session complete
                         if (status) status.textContent = 'Session complete! 🎉';
                         playBell(); // Final completion bell
@@ -4524,31 +4592,46 @@
                             alert('Meditation session complete! 🧘‍♀️\n\nTake a moment to notice how you feel. Well done!');
                         }, 500);
                         
-                        if (startBtn) startBtn.classList.remove('hidden');
+                        if (startBtn) {
+                            startBtn.classList.remove('hidden');
+                            startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+                        }
                         if (pauseBtn) pauseBtn.classList.add('hidden');
-                    }
-                }, 1000);
+                        }
+                    }, 1000);
+                }
             }
-        }
-        
-        function pauseTimer() {
+
+            function pauseTimer() {
             if (isRunning) {
                 clearInterval(timerInterval);
                 isRunning = false;
                 isPaused = true;
                 
+                // Remove pulsing effect
+                const timerContainer = document.querySelector('.relative.w-56');
+                if (timerContainer) {
+                    timerContainer.classList.remove('timer-running');
+                }
+                
                 if (startBtn) {
-                    startBtn.classList.remove('hidden');
-                    startBtn.textContent = '▶️ Resume';
+                startBtn.classList.remove('hidden');
+                    startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Resume</span></div>';
                 }
                 if (pauseBtn) pauseBtn.classList.add('hidden');
             }
-        }
-        
-        function resetTimer() {
-            clearInterval(timerInterval);
+            }
+
+            function resetTimer() {
+                clearInterval(timerInterval);
             isRunning = false;
             isPaused = false;
+            
+            // Remove pulsing effect
+            const timerContainer = document.querySelector('.relative.w-56');
+            if (timerContainer) {
+                timerContainer.classList.remove('timer-running');
+            }
             
             // Reset to selected duration
             if (durationSelect) {
@@ -4563,7 +4646,7 @@
             
             if (startBtn) {
                 startBtn.classList.remove('hidden');
-                startBtn.textContent = '▶️ Start';
+                startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
             }
             if (pauseBtn) pauseBtn.classList.add('hidden');
         }
@@ -4645,7 +4728,7 @@
     }
 
     // Workout logic
-    function attachWorkoutLogic() {
+        function attachWorkoutLogic() {
         console.log('Workout page - adding mobile-friendly sound functionality');
         
         // Mobile-friendly audio setup
@@ -4742,7 +4825,7 @@
     }
 
     // Interview logic
-    function attachInterviewLogic() {
+        function attachInterviewLogic() {
         console.log('Interview page - adding dynamic functionality with video recording');
         
         // Interview questions by category
@@ -4796,9 +4879,9 @@
                 "Tell me about an ahead-of-its-time idea"
             ]
         };
-        
-        let currentCategory = 'general';
-        let currentQuestionIndex = 0;
+            
+            let currentCategory = 'general';
+            let currentQuestionIndex = 0;
         let currentQuestions = interviewQuestions.general;
         let mediaRecorder;
         let recordedChunks = [];
@@ -4897,7 +4980,7 @@
                 });
                 
                 // Optimize video for mobile performance
-                liveVideo.srcObject = stream;
+                    liveVideo.srcObject = stream;
                 liveVideo.style.display = 'block';
                 liveVideo.muted = true; // Mute to prevent feedback
                 liveVideo.playsInline = true; // Important for iOS
@@ -4973,7 +5056,7 @@
         startRecordingBtn.addEventListener('click', () => {
             if (!stream) return;
             
-            recordedChunks = [];
+                    recordedChunks = [];
             
             // Mobile-optimized recording settings
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -5128,7 +5211,7 @@
                     searchInput.blur();
                     return;
                 }
-                
+
                 if (query.length < 2) {
                     autocompleteResults.classList.add('hidden');
                     return;
