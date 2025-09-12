@@ -4196,8 +4196,10 @@
     };
 
     // --- APP LOGIC --- //
+    let mainContent; // Declare globally
+    
     document.addEventListener('DOMContentLoaded', () => {
-        const mainContent = document.getElementById('main-content');
+        mainContent = document.getElementById('main-content');
             
             // Initialize progress tracking
             ProgressTracker.init();
@@ -4226,8 +4228,12 @@
             applyTheme(isDark);
         };
 
-        darkModeToggle.addEventListener('click', toggleDarkMode);
-        darkModeToggleMobile.addEventListener('click', toggleDarkMode);
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+        }
+        if (darkModeToggleMobile) {
+            darkModeToggleMobile.addEventListener('click', toggleDarkMode);
+        }
 
         // Check for saved preference
         if (localStorage.getItem('darkMode') === 'true' || 
@@ -4240,9 +4246,11 @@
         // --- Mobile Menu --- //
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
 
         // --- Scroll Progress Bar --- //
         const progressBar = document.getElementById('progress-bar');
@@ -4318,7 +4326,9 @@
             }
             
             // Clear main content
-            mainContent.innerHTML = '';
+            if (mainContent) {
+                mainContent.innerHTML = '';
+            }
         };
         
         // --- Templating & Routing --- //
@@ -4711,6 +4721,15 @@
         
         // Make navigateTo globally accessible
         window.navigateTo = function(pageName, id = null) {
+            // Ensure mainContent is available
+            if (!mainContent) {
+                mainContent = document.getElementById('main-content');
+                if (!mainContent) {
+                    console.error('Main content container not found');
+                    return;
+                }
+            }
+            
             // Cleanup previous page resources
             cleanupPageResources();
             
