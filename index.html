@@ -9750,12 +9750,30 @@
             if (filteredQuestions.length > 0) {
                 const randomIndex = Math.floor(Math.random() * filteredQuestions.length);
                 const question = filteredQuestions[randomIndex];
+                currentQuestionIndex = questions.indexOf(question);
                 displayQuestion(question);
             } else {
                 // Fallback to any difficulty
                 const randomIndex = Math.floor(Math.random() * questions.length);
                 const question = questions[randomIndex];
+                currentQuestionIndex = randomIndex;
                 displayQuestion(question);
+            }
+        }
+        
+        function showPreviousQuestion() {
+            const questions = interviewQuestions[currentCategory] || interviewQuestions.general;
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion(questions[currentQuestionIndex]);
+            }
+        }
+        
+        function showNextQuestion() {
+            const questions = interviewQuestions[currentCategory] || interviewQuestions.general;
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion(questions[currentQuestionIndex]);
             }
         }
         
@@ -10039,6 +10057,84 @@
         // Show recordings section if there are recordings
         if (interviewHistory.length > 0 && recordingsSection) {
             recordingsSection.classList.remove('hidden');
+        }
+    }
+
+    // Notification System
+    function showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full`;
+        
+        // Set colors based on type
+        const colors = {
+            success: 'bg-green-500 text-white',
+            error: 'bg-red-500 text-white',
+            warning: 'bg-yellow-500 text-black',
+            info: 'bg-blue-500 text-white'
+        };
+        
+        notification.className += ` ${colors[type] || colors.info}`;
+        notification.textContent = message;
+        
+        // Add to DOM
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.classList.remove('translate-x-full');
+        }, 100);
+        
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            notification.classList.add('translate-x-full');
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
+    }
+
+    // Journal Entry Management
+    function loadJournalEntries() {
+        const entriesList = document.getElementById('journal-history-list');
+        if (entriesList) {
+            const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+            
+            if (entries.length === 0) {
+                entriesList.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="w-16 h-16 bg-light-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-forest-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-charcoal mb-2">No entries yet</h3>
+                        <p class="text-charcoal/70">Start writing to see your entries here</p>
+                    </div>
+                `;
+            } else {
+                entriesList.innerHTML = entries.map(entry => `
+                    <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">${entry.mood || '😊'}</span>
+                                <div>
+                                    <div class="text-sm font-semibold text-charcoal">${entry.date}</div>
+                                    <div class="text-xs text-charcoal/60">${entry.wordCount || entry.text.split(/\s+/).length} words</div>
+                                </div>
+                            </div>
+                            <button onclick="deleteJournalEntry(${entry.id})" class="text-charcoal/40 hover:text-red-500 transition-colors p-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="text-charcoal whitespace-pre-wrap leading-relaxed">${entry.text}</div>
+                    </div>
+                `).join('');
+            }
         }
     }
 
