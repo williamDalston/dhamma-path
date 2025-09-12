@@ -1,0 +1,89 @@
+{
+  "name": "The Dhamma Path",
+  "short_name": "Dhamma Path",
+  "description": "Build a powerful morning routine with meditation, journaling, exercise, and confidence practice. Start each day with purpose and transform your life through mindful habits and timeless wisdom.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDFBF5",
+  "theme_color": "#4A6C55",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["health", "lifestyle", "productivity", "mindfulness"],
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Desktop view of The Dhamma Path"
+    },
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile view of The Dhamma Path"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Meditation Timer",
+      "short_name": "Timer",
+      "description": "Start a meditation session",
+      "url": "/timer",
+      "icons": [
+        {
+          "src": "/favicon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Journal",
+      "short_name": "Journal",
+      "description": "Write in your journal",
+      "url": "/journal",
+      "icons": [
+        {
+          "src": "/favicon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Workout",
+      "short_name": "Workout",
+      "description": "Start 7-minute workout",
+      "url": "/workout",
+      "icons": [
+        {
+          "src": "/favicon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

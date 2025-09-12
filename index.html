@@ -40,6 +40,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="The Dhamma Path">
     
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
+    
     <!-- Canonical URL -->
     <link rel="canonical" href="https://thedhammapath.com/">
     
@@ -51,27 +59,28 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
     <!-- Additional SEO Links -->
     <link rel="alternate" type="application/rss+xml" title="The Dhamma Path RSS Feed" href="/rss.xml">
     
-    <!-- Performance Hints -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" as="style">
-    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
-    
-    <!-- Preconnect to external domains -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Performance Hints - Critical Resource Preloading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-
-    <!-- Fonts - Optimized loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet"></noscript>
     
-    <!-- Tailwind CSS -->
-    <!-- Note: CDN is used for development/personal use. For production, consider using Tailwind CLI -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Critical Font Preloading - Only Essential Weights -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Lora:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- Tailwind CSS - Optimized Loading -->
+    <script>
+        // Inline critical Tailwind classes to prevent FOUC
+        const criticalClasses = 'container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl min-h-screen bg-linen-white text-charcoal font-inter';
+        document.documentElement.className += ' ' + criticalClasses;
+    </script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -157,11 +166,54 @@
 
     <!-- Critical CSS - Above the fold styles -->
     <style>
-        /* Critical styles for immediate rendering */
-        body { margin: 0; font-family: 'Inter', sans-serif; }
-        .loading { display: none; }
+        /* Critical CSS - Above the fold styles for instant paint */
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            margin: 0; 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Critical layout classes */
+        .container { width: 100%; margin-left: auto; margin-right: auto; padding-left: 1rem; padding-right: 1rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .max-w-7xl { max-width: 80rem; }
+        .min-h-screen { min-height: 100vh; }
+        .bg-linen-white { background-color: #FDFBF5; }
+        .text-charcoal { color: #333333; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        
+        /* Critical animations */
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        /* Prevent layout shift */
+        .loading { display: none; }
+        img { max-width: 100%; height: auto; }
+        
+        /* Critical button styles */
+        button { 
+            cursor: pointer; 
+            border: none; 
+            background: none; 
+            font-family: inherit;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Critical responsive utilities */
+        @media (min-width: 640px) {
+            .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        }
+        @media (min-width: 1024px) {
+            .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+        }
     </style>
 
     <!-- Custom Styles and Dark Mode Logic -->
@@ -228,6 +280,85 @@
         /* Performance optimizations */
         * {
             box-sizing: border-box;
+        }
+
+        /* === FORM VALIDATION SYSTEM === */
+        
+        /* Form Group Container */
+        .form-group {
+            position: relative;
+            margin-bottom: var(--space-4);
+        }
+
+        .form-label {
+            display: block;
+            font-weight: var(--font-medium);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--space-2);
+            font-size: var(--text-sm);
+        }
+
+        /* Input with Error State */
+        .input-error {
+            border-color: var(--color-error-500) !important;
+            box-shadow: 0 0 0 3px var(--color-error-50) !important;
+        }
+
+        .input-error:focus {
+            border-color: var(--color-error-500) !important;
+            box-shadow: 0 0 0 3px var(--color-error-100) !important;
+        }
+
+        /* Input with Success State */
+        .input-success {
+            border-color: var(--color-success-500) !important;
+            box-shadow: 0 0 0 3px var(--color-success-50) !important;
+        }
+
+        .input-success:focus {
+            border-color: var(--color-success-500) !important;
+            box-shadow: 0 0 0 3px var(--color-success-100) !important;
+        }
+
+        /* Form Messages */
+        .form-error {
+            color: var(--color-error-600);
+            font-size: var(--text-sm);
+            margin-top: var(--space-1);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .form-error::before {
+            content: '⚠';
+            font-size: var(--text-xs);
+        }
+
+        .form-success {
+            color: var(--color-success-600);
+            font-size: var(--text-sm);
+            margin-top: var(--space-1);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .form-success::before {
+            content: '✓';
+            font-size: var(--text-xs);
+        }
+
+        .form-help {
+            color: var(--color-neutral-600);
+            font-size: var(--text-xs);
+            margin-top: var(--space-1);
+        }
+
+        /* Required Field Indicator */
+        .form-label.required::after {
+            content: ' *';
+            color: var(--color-error-500);
         }
         
         .stagger-in {
@@ -2584,10 +2715,10 @@
                 <a href="#" data-page="home" class="flex items-center space-x-2 main-nav-link" aria-label="The Dhamma Path - Home">
                      <svg width="32" height="32" class="sm:w-10 sm:h-10 fill-charcoal transition-colors duration-300" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="The Dhamma Path Logo" role="img">
                         <defs>
-                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <lineargradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" style="stop-color:currentColor;stop-opacity:0.8" />
                                 <stop offset="100%" style="stop-color:currentColor;stop-opacity:1" />
-                            </linearGradient>
+                            </lineargradient>
                         </defs>
                         <circle cx="50" cy="50" r="45" fill="none" stroke="url(#logoGradient)" stroke-width="2" opacity="0.3"/>
                         <path class="logo-path" fill="url(#logoGradient)" stroke="none" d="M20 80 C 30 45, 50 30, 50 20 C 50 30, 60 40, 70 50 C 90 40, 80 70, 50 80 C 20 90, 30 50, 20 80 Z" />
@@ -2607,12 +2738,6 @@
                     <a href="#" data-page="category-meditation" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">📚 Learning</a>
                     <a href="#" data-page="glossary" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">Glossary</a>
                     <a href="#" data-page="about" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">About</a>
-                    <div class="relative">
-                        <label for="search-input" class="sr-only">Search wisdom and teachings</label>
-                        <input type="search" id="search-input" placeholder="Search wisdom..." aria-label="Search wisdom and teachings" class="form-focus focus-grow focus-ring w-40 bg-gradient-to-r from-light-green to-linen-white border border-transparent rounded-full px-4 py-2 focus:w-48 focus:bg-white focus:border-earthy-gold focus:outline-none focus:shadow-lg transition-all duration-300 dark:bg-gray-700 dark:text-white">
-                        <svg class="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-charcoal/60" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Search icon" role="img"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        <div id="autocomplete-results" class="hidden absolute top-full mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl"></div>
-                    </div>
                     <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-light-green/20 dark:hover:bg-charcoal/20 transition-colors border border-forest-green/20" style="display: inline-block !important; visibility: visible !important;">
                         <!-- Sun Icon -->
                         <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Switch to dark mode" role="img"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
@@ -2624,19 +2749,19 @@
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center space-x-3">
                     <!-- Dark mode toggle for mobile -->
-                    <button id="dark-mode-toggle-mobile-header" class="p-2 rounded-full hover:bg-light-green/20 dark:hover:bg-charcoal/20 transition-colors border border-forest-green/20" style="display: inline-block !important; visibility: visible !important;" aria-label="Toggle dark mode">
+                    <button id="dark-mode-toggle-mobile-header" class="btn btn-ghost btn-sm focus-ring" aria-label="Toggle dark mode" style="display: inline-block !important; visibility: visible !important;">
                         <!-- Sun Icon -->
-                        <svg id="sun-icon-mobile" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Switch to dark mode" role="img"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                        <svg id="sun-icon-mobile" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                         <!-- Moon Icon -->
-                        <svg id="moon-icon-mobile" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forest-green hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Switch to light mode" role="img"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                        <svg id="moon-icon-mobile" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forest-green hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
                     </button>
                     
                     <!-- Enhanced Mobile Menu Button -->
-                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-3 rounded-xl text-charcoal hover:text-forest-green focus:outline-none bg-gradient-to-r from-forest-green/10 to-light-green/10 border-2 border-forest-green/30 hover:border-forest-green/60 hover:shadow-lg transition-all duration-300 min-h-[48px] min-w-[48px] group" style="display: inline-flex !important; visibility: visible !important;" aria-label="Open mobile menu" aria-expanded="false" aria-controls="mobile-menu">
-                        <svg id="hamburger-icon" class="h-6 w-6 transition-transform duration-300 group-hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Menu icon" role="img">
+                    <button id="mobile-menu-button" class="btn btn-outline btn-sm focus-ring min-h-[48px] min-w-[48px]" aria-label="Open mobile menu" aria-expanded="false" aria-controls="mobile-menu" style="display: inline-flex !important; visibility: visible !important;">
+                        <svg id="hamburger-icon" class="h-6 w-6 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16m-7 6h7" />
                         </svg>
-                        <svg id="close-icon" class="h-6 w-6 transition-transform duration-300 group-hover:scale-110 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Close menu icon" role="img">
+                        <svg id="close-icon" class="h-6 w-6 transition-transform duration-300 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
@@ -2720,10 +2845,10 @@
     </header>
 
     <!-- Reading Progress Indicator -->
-    <div class="reading-progress" id="reading-progress"></div>
+    <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
     
     <!-- Scroll Progress Bar -->
-    <div class="scroll-progress" id="scroll-progress"></div>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
     
     
     <!-- Loading Indicator -->
@@ -2740,7 +2865,7 @@
     </div>
 
     <!-- Enhanced Notification Toast -->
-    <div id="notification" class="fixed top-6 right-6 z-50 transform translate-x-full transition-all duration-500 ease-out">
+    <div id="notification" class="fixed top-6 right-6 z-50 transform translate-x-full transition-all duration-500 ease-out" role="alert" aria-live="assertive">
         <div class="bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl shadow-xl px-6 py-4 max-w-sm fade-in-scale">
             <div class="flex items-center space-x-3">
                 <div class="flex-shrink-0">
@@ -2768,10 +2893,10 @@
                     <a href="#" data-page="home" class="main-nav-link link-smooth flex items-center space-x-2" aria-label="The Dhamma Path - Home">
                          <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="fill-charcoal transition-colors duration-300" aria-label="The Dhamma Path Logo" role="img">
                              <defs>
-                                 <linearGradient id="logoGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
+                                 <lineargradient id="logoGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
                                      <stop offset="0%" style="stop-color:currentColor;stop-opacity:0.8" />
                                      <stop offset="100%" style="stop-color:currentColor;stop-opacity:1" />
-                                 </linearGradient>
+                                 </lineargradient>
                              </defs>
                              <circle cx="50" cy="50" r="45" fill="none" stroke="url(#logoGradientMobile)" stroke-width="2" opacity="0.3"/>
                              <path class="logo-path" fill="url(#logoGradientMobile)" stroke="none" d="M20 80 C 30 45, 50 30, 50 20 C 50 30, 60 40, 70 50 C 90 40, 80 70, 50 80 C 20 90, 30 50, 20 80 Z" />
@@ -3554,6 +3679,105 @@
                     "Just as a solid rock is not shaken by the wind, so are the wise unshaken by praise or blame."
                 </blockquote>
                 <cite class="block mt-6 text-lg text-linen-white/70 not-italic">- The Dhammapada, Verse 81</cite>
+            </section>
+
+            <!-- Enhanced Personal Story Section -->
+            <section class="mb-20">
+                <div class="bg-gradient-to-br from-light-green/40 via-white to-light-gold/20 rounded-3xl p-12 sm:p-16 shadow-xl border border-light-green/20 relative overflow-hidden">
+                    <!-- Subtle background elements -->
+                    <div class="absolute inset-0 opacity-10">
+                        <div class="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-forest-green/20 to-transparent rounded-full blur-3xl float-animation"></div>
+                        <div class="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-earthy-gold/20 to-transparent rounded-full blur-2xl float-animation"></div>
+                        <div class="absolute top-1/2 left-1/2 w-24 h-24 bg-light-green rounded-full blur-xl float-animation"></div>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <h2 class="text-4xl font-bold text-charcoal font-lora mb-8 text-gradient drop-shadow-sm">My Story</h2>
+            <div class="text-lg leading-relaxed space-y-6">
+                            <p>Hi, I'm William. This website began as my personal morning routine companion—a simple tool to help me start each day with intention through meditation, journaling, exercise, and confidence practice.</p>
+                            <p>Like many people, I struggled with establishing consistent morning habits. I knew the benefits of meditation and mindful practices, but found it challenging to maintain a routine that actually stuck. That's when I decided to build something that would make it easier for me to show up for myself each morning.</p>
+                            <p>What began as a personal project has evolved into a comprehensive platform that combines practical morning routine tools with the profound wisdom of Buddhist teachings. I believe that the best self-help is grounded in timeless principles, and that's why I've integrated authentic Buddhist wisdom throughout the site.</p>
+                            <p>This isn't just another productivity app or meditation timer. It's a holistic approach to personal transformation that honors both modern self-help principles and ancient wisdom traditions.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Enhanced Buddhist Foundation Section -->
+            <section class="mb-20">
+                <div class="bg-gradient-to-br from-earthy-gold/15 via-white to-earthy-gold/5 rounded-3xl p-12 sm:p-16 shadow-xl border border-earthy-gold/20 relative overflow-hidden">
+                    <!-- Subtle background elements -->
+                    <div class="absolute inset-0 opacity-10">
+                        <div class="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-earthy-gold/20 to-transparent rounded-full blur-2xl float-animation"></div>
+                        <div class="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-forest-green/20 to-transparent rounded-full blur-xl float-animation"></div>
+                        <div class="absolute top-1/2 right-1/4 w-20 h-20 bg-light-green rounded-full blur-lg float-animation"></div>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <h2 class="text-4xl font-bold text-charcoal font-lora mb-8 text-gradient drop-shadow-sm">The Buddhist Foundation</h2>
+                        <div class="text-lg leading-relaxed space-y-6">
+                            <p>The Dhamma Path is grounded in the profound wisdom of Theravāda Buddhism, the oldest surviving Buddhist tradition. In a world of noise and distraction, we believe the path of mindfulness and wisdom offers a profound way to cultivate inner peace and clarity.</p>
+                            <p>As a long-term practitioner of Vipassanā meditation, I found that many online resources were either too academic and dense for beginners, or too commercialized and disconnected from the original teachings. This website is an attempt to bridge that gap.</p>
+                            
+                            <h3 class="text-2xl font-bold text-charcoal font-lora mt-10 mb-6">Our Approach</h3>
+                            <p>We are committed to presenting the Dhamma (the teachings of the Buddha) as it is found in the Pāli Canon, the earliest collection of Buddhist scriptures. Our content is written with three core principles in mind:</p>
+                            <ul class="list-disc list-inside space-y-3 ml-6 mt-4">
+                    <li><strong>Authenticity:</strong> We ground our content in the suttas and the Theravāda tradition.</li>
+                    <li><strong>Clarity:</strong> We strive to explain complex concepts in simple, practical language without sacrificing depth.</li>
+                    <li><strong>Practicality:</strong> We emphasize how these ancient teachings can be applied to modern life to reduce stress and cultivate genuine well-being.</li>
+                </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Enhanced Mission Section -->
+            <section class="mb-20">
+                <div class="bg-gradient-to-br from-charcoal via-gray-800 to-charcoal text-linen-white rounded-2xl p-10 sm:p-14 text-center shadow-xl relative overflow-hidden">
+                    <!-- Subtle background elements -->
+                    <div class="absolute inset-0 opacity-10">
+                        <div class="absolute top-0 right-0 w-48 h-48 bg-earthy-gold rounded-full blur-3xl"></div>
+                        <div class="absolute bottom-0 left-0 w-40 h-40 bg-forest-green rounded-full blur-2xl"></div>
+                    </div>
+                    <div class="relative">
+                        <h2 class="text-4xl font-bold font-lora text-gradient mb-8 drop-shadow-sm">Our Mission</h2>
+                        <p class="text-xl leading-relaxed text-charcoal/80">To help you build a powerful morning routine that transforms your life, guided by timeless wisdom and modern self-help principles. We believe that the first hour of your day shapes everything that follows.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Enhanced Contact Section -->
+            <section class="text-center">
+                <h2 class="text-4xl font-bold text-charcoal font-lora mb-8 text-gradient drop-shadow-sm">Get In Touch</h2>
+                <p class="text-xl text-charcoal/80 mb-12 max-w-3xl mx-auto leading-relaxed">Have questions, suggestions, or want to share your morning routine journey? I'd love to hear from you.</p>
+                <div class="bg-gradient-to-br from-light-green/40 via-white to-light-green/20 rounded-3xl p-10 max-w-2xl mx-auto shadow-xl border border-light-green/20 relative overflow-hidden">
+                    <!-- Subtle background elements -->
+                    <div class="absolute inset-0 opacity-5">
+                        <div class="absolute top-0 left-0 w-24 h-24 bg-forest-green rounded-full blur-xl"></div>
+                        <div class="absolute bottom-0 right-0 w-20 h-20 bg-earthy-gold rounded-full blur-lg"></div>
+                    </div>
+                    
+                    <div class="relative">
+                        <h3 class="text-2xl font-bold text-charcoal font-lora mb-6">Connect With Me</h3>
+                        <p class="text-lg text-charcoal/80 mb-8 leading-relaxed">I'm always interested in hearing about your meditation practice, morning routine challenges, or any feedback about the site.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-center space-x-3">
+                                <svg class="w-6 h-6 text-forest-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                <span class="text-charcoal font-medium">will@thedhammapath.com</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-center space-x-3">
+                                <svg class="w-6 h-6 text-forest-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                                </svg>
+                                <span class="text-charcoal font-medium">@thedhammapath</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
     </template>
@@ -4880,10 +5104,10 @@
             <div class="bg-gradient-to-br from-forest-green/10 to-forest-green/5 rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 border border-forest-green/20">
                 <h3 class="text-lg sm:text-xl font-bold text-charcoal mb-4 text-center">Choose Your Practice Category</h3>
                 <div class="flex flex-wrap justify-center gap-2 sm:gap-3">
-                    <button id="interview-cat-btn" data-category="general" class="px-4 sm:px-6 py-2 sm:py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition-colors text-sm sm:text-base">General</button>
-                    <button id="interview-cat-btn" data-category="storytelling" class="px-4 sm:px-6 py-2 sm:py-3 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition-colors text-sm sm:text-base">Storytelling</button>
-                    <button id="interview-cat-btn" data-category="communication" class="px-4 sm:px-6 py-2 sm:py-3 bg-light-green text-forest-green font-semibold rounded-lg hover:bg-light-green/80 transition-colors text-sm sm:text-base">Communication</button>
-                    <button id="interview-cat-btn" data-category="creativity" class="px-4 sm:px-6 py-2 sm:py-3 bg-charcoal text-white font-semibold rounded-lg hover:bg-charcoal/90 transition-colors text-sm sm:text-base">Creativity</button>
+                    <button id="interview-cat-general" data-category="general" class="px-4 sm:px-6 py-2 sm:py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition-colors text-sm sm:text-base">General</button>
+                    <button id="interview-cat-storytelling" data-category="storytelling" class="px-4 sm:px-6 py-2 sm:py-3 bg-earthy-gold text-white font-semibold rounded-lg hover:bg-earthy-gold/90 transition-colors text-sm sm:text-base">Storytelling</button>
+                    <button id="interview-cat-communication" data-category="communication" class="px-4 sm:px-6 py-2 sm:py-3 bg-light-green text-forest-green font-semibold rounded-lg hover:bg-light-green/80 transition-colors text-sm sm:text-base">Communication</button>
+                    <button id="interview-cat-creativity" data-category="creativity" class="px-4 sm:px-6 py-2 sm:py-3 bg-charcoal text-white font-semibold rounded-lg hover:bg-charcoal/90 transition-colors text-sm sm:text-base">Creativity</button>
                     </div>
             </div>
 
@@ -5048,7 +5272,7 @@
                     </div>
                     <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
                         <label for="timer-duration" class="text-xs sm:text-sm font-semibold text-charcoal">Custom Duration:</label>
-                        <select id="timer-duration" class="px-3 sm:px-6 py-2 sm:py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-earthy-gold focus:border-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600 bg-white shadow-sm transition-all duration-300 text-sm">
+                        <select id="journal-timer-duration" class="px-3 sm:px-6 py-2 sm:py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-earthy-gold focus:border-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600 bg-white shadow-sm transition-all duration-300 text-sm">
                             <option value="300">5 minutes</option>
                             <option value="600" selected>10 minutes</option>
                             <option value="900">15 minutes</option>
@@ -5205,26 +5429,24 @@
         }
         
         if (pageContent) {
-            // Small delay to show loading indicator
-            setTimeout(() => {
+            // Use requestAnimationFrame for optimal performance
+            requestAnimationFrame(() => {
                 mainContent.innerHTML = '';
                 mainContent.appendChild(pageContent);
-            
-                // Attach page-specific logic
-                if (pageName === 'timer') {
-                    attachTimerLogic();
-                } else if (pageName === 'journal') {
-                    attachJournalLogic();
-                } else if (pageName === 'workout') {
-                    attachWorkoutLogic();
-                } else if (pageName === 'interview') {
-                    attachInterviewLogic();
-                } else if (pageName === 'glossary') {
-                    // Glossary page is now static HTML
-                } else if (pageName === 'category-meditation') {
-                    // Learning page is now static HTML
+                
+                // Lazy load page-specific logic
+                const pageLogicHandlers = {
+                    'timer': attachTimerLogic,
+                    'journal': attachJournalLogic,
+                    'workout': attachWorkoutLogic,
+                    'interview': attachInterviewLogic
+                };
+                
+                const handler = pageLogicHandlers[pageName];
+                if (handler) {
+                    handler();
                 }
-            }, 100); // Small delay for better UX
+            });
         }
         
         // Close mobile menu if open
@@ -6351,30 +6573,108 @@
         }
     }
 
-    // Initialize everything when DOM is loaded
+    // Performance optimized initialization
     document.addEventListener('DOMContentLoaded', () => {
+        const initStart = performance.now();
         console.log('DOM loaded, initializing...');
+        
         mainContent = document.getElementById('main-content');
         
-        // Initialize all functionality
+        // Initialize critical functionality first
         initDarkMode();
         initMobileMenu();
-        initSearch();
         
-        // Global click handler for navigation links
-        document.body.addEventListener('click', (e) => {
-            const link = e.target.closest('.main-nav-link');
-            if (link) {
-                e.preventDefault();
-                const page = link.dataset.page;
-                const id = link.dataset.articleId || link.dataset.pathId;
-                navigateToPage(page, id);
-            }
+        // Defer non-critical functionality
+        requestAnimationFrame(() => {
+            initSearch();
+            
+            // Throttled global click handler for navigation links
+            const throttledNavigation = throttle((e) => {
+                const link = e.target.closest('.main-nav-link');
+                if (link) {
+                    e.preventDefault();
+                    const page = link.dataset.page;
+                    const id = link.dataset.articleId || link.dataset.pathId;
+                    navigateToPage(page, id);
+                }
+            }, 100);
+            
+            document.body.addEventListener('click', throttledNavigation);
+            
+            // Load home page by default
+            navigateToPage('home');
         });
         
-        // Load home page by default
-        navigateToPage('home');
+        // Performance monitoring
+        const initEnd = performance.now();
+        console.log(`Initialization took ${(initEnd - initStart).toFixed(2)}ms`);
+        
+        if (typeof performance !== 'undefined') {
+            const perfEntries = performance.getEntriesByType('navigation');
+            if (perfEntries.length > 0) {
+                const navTiming = perfEntries[0];
+                console.log('Page load time:', navTiming.loadEventEnd - navTiming.loadEventStart, 'ms');
+                console.log('DOM content loaded:', navTiming.domContentLoadedEventEnd - navTiming.domContentLoadedEventStart, 'ms');
+            }
+        }
     });
+    
+    // Lightweight Analytics and Error Reporting
+    const analytics = {
+        // Simple analytics without external dependencies
+        track: (event, data = {}) => {
+            if (typeof performance !== 'undefined') {
+                console.log(`Analytics: ${event}`, data);
+                // In production, you would send this to your analytics service
+                // Example: fetch('/api/analytics', { method: 'POST', body: JSON.stringify({ event, data, timestamp: Date.now() }) });
+            }
+        },
+        
+        // Error reporting
+        reportError: (error, context = {}) => {
+            console.error('Error reported:', error, context);
+            // In production, you would send this to your error reporting service
+            // Example: fetch('/api/errors', { method: 'POST', body: JSON.stringify({ error: error.message, stack: error.stack, context, timestamp: Date.now() }) });
+        }
+    };
+    
+    // Global error handler
+    window.addEventListener('error', (event) => {
+        analytics.reportError(event.error, {
+            filename: event.filename,
+            lineno: event.lineno,
+            colno: event.colno
+        });
+    });
+    
+    // Unhandled promise rejection handler
+    window.addEventListener('unhandledrejection', (event) => {
+        analytics.reportError(new Error(event.reason), {
+            type: 'unhandledrejection'
+        });
+    });
+    
+    // Track page performance
+    window.addEventListener('load', () => {
+        if (typeof performance !== 'undefined') {
+            const perfEntries = performance.getEntriesByType('navigation');
+            if (perfEntries.length > 0) {
+                const navTiming = perfEntries[0];
+                analytics.track('page_load', {
+                    loadTime: navTiming.loadEventEnd - navTiming.loadEventStart,
+                    domContentLoaded: navTiming.domContentLoadedEventEnd - navTiming.domContentLoadedEventStart,
+                    firstPaint: performance.getEntriesByType('paint').find(entry => entry.name === 'first-paint')?.startTime || 0
+                });
+            }
+        }
+    });
+    
+    // Track navigation
+    const originalNavigateToPage = navigateToPage;
+    navigateToPage = (pageName, id = null) => {
+        analytics.track('page_navigation', { page: pageName, id });
+        return originalNavigateToPage(pageName, id);
+    };
     
     </script>
 </body>

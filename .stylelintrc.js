@@ -1,7 +1,5 @@
 module.exports = {
-  extends: [
-    'stylelint-config-standard',
-  ],
+  extends: ['stylelint-config-standard'],
   rules: {
     // Tailwind-specific rules
     'at-rule-no-unknown': [
@@ -31,8 +29,5 @@ module.exports = {
     'declaration-block-no-redundant-longhand-properties': null,
     'shorthand-property-no-redundant-values': null,
   },
-  ignoreFiles: [
-    '**/*.html',
-    '**/node_modules/**',
-  ],
+  ignoreFiles: ['**/*.html', '**/node_modules/**'],
 };

@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://thedhammapath.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow admin or private areas (if any)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*.xml$
+
+# Allow important pages
+Allow: /
+Allow: /timer
+Allow: /journal
+Allow: /workout
+Allow: /interview
+Allow: /about
+Allow: /glossary
