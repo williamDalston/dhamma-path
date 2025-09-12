@@ -5476,27 +5476,57 @@
     // Timer logic
     function attachTimerLogic() {
         console.log('Attaching enhanced timer logic...');
-        alert('Timer logic is being attached!');
         
-        const startBtn = document.getElementById('timer-start-btn');
-        const pauseBtn = document.getElementById('timer-pause-btn');
-        const resetBtn = document.getElementById('timer-reset-btn');
-        const display = document.getElementById('timer-display');
-        const status = document.getElementById('timer-status');
-        const durationSelect = document.getElementById('timer-duration');
-        const soundToggle = document.getElementById('timer-sound');
-        const progressRing = document.getElementById('progress-ring');
-        
-        console.log('Timer elements found:', {
-            startBtn: !!startBtn,
-            pauseBtn: !!pauseBtn,
-            resetBtn: !!resetBtn,
-            display: !!display,
-            status: !!status,
-            durationSelect: !!durationSelect,
-            soundToggle: !!soundToggle,
-            progressRing: !!progressRing
-        });
+        // Add a small delay to ensure DOM is fully rendered
+        setTimeout(() => {
+            console.log('Looking for timer elements after delay...');
+            
+            const startBtn = document.getElementById('timer-start-btn');
+            const pauseBtn = document.getElementById('timer-pause-btn');
+            const resetBtn = document.getElementById('timer-reset-btn');
+            const display = document.getElementById('timer-display');
+            const status = document.getElementById('timer-status');
+            const durationSelect = document.getElementById('timer-duration');
+            const soundToggle = document.getElementById('timer-sound');
+            const progressRing = document.getElementById('progress-ring');
+            
+            console.log('Timer elements found:', {
+                startBtn: !!startBtn,
+                pauseBtn: !!pauseBtn,
+                resetBtn: !!resetBtn,
+                display: !!display,
+                status: !!status,
+                durationSelect: !!durationSelect,
+                soundToggle: !!soundToggle,
+                progressRing: !!progressRing
+            });
+            
+            // If elements are not found, log the actual elements
+            if (!startBtn) {
+                console.error('Start button not found!');
+                console.log('Available buttons:', document.querySelectorAll('button[id*="timer"]'));
+            }
+            if (!pauseBtn) {
+                console.error('Pause button not found!');
+            }
+            if (!resetBtn) {
+                console.error('Reset button not found!');
+            }
+            
+            // Only proceed if we have the essential elements
+            if (!startBtn || !pauseBtn || !resetBtn) {
+                console.error('Essential timer buttons not found, cannot attach logic');
+                return;
+            }
+            
+            alert('Timer logic is being attached!');
+            
+            // Rest of the timer logic will go here
+            attachTimerEventListeners(startBtn, pauseBtn, resetBtn, display, status, durationSelect, soundToggle, progressRing);
+        }, 100);
+    }
+    
+    function attachTimerEventListeners(startBtn, pauseBtn, resetBtn, display, status, durationSelect, soundToggle, progressRing) {
         
         let timerInterval = null;
         let timeRemaining = 600; // 10 minutes default
