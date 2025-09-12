@@ -2633,16 +2633,137 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
+        /* Unified Button System */
+        .btn-unified {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            min-height: 52px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            touch-action: manipulation;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .btn-unified:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        
+        .btn-unified:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .btn-unified:not(:disabled):hover {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-unified:not(:disabled):active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        /* Button Variants */
+        .btn-primary {
+            background: linear-gradient(135deg, #2d5016, #4a6c55);
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #1a3009, #2d5016);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            color: white;
+        }
+        
+        .btn-danger:hover:not(:disabled) {
+            background: linear-gradient(135deg, #b91c1c, #dc2626);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #6b7280, #9ca3af);
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #4b5563, #6b7280);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: #2d5016;
+            border: 2px solid #2d5016;
+        }
+        
+        .btn-outline:hover:not(:disabled) {
+            background: #2d5016;
+            color: white;
+        }
+        
+        /* Loading State */
+        .btn-loading {
+            position: relative;
+            color: transparent;
+        }
+        
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin-left: -8px;
+            margin-top: -8px;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Recording Button Specific Styles */
         .recording-button {
-            transition: all 0.2s ease;
-        }
-        
-        .recording-button:hover {
-            transform: scale(1.05);
-        }
-        
-        .recording-button:active {
-            transform: scale(0.95);
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            min-height: 52px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            touch-action: manipulation;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
         
         .video-container {
@@ -2741,15 +2862,476 @@
             opacity: 0;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         #mobile-menu.show {
             transform: translateY(0);
             opacity: 1;
         }
-        
+
         #mobile-menu.hidden {
             transform: translateY(-100%);
             opacity: 0;
+        }
+
+        /* Learning Page Enhanced Styles */
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element.element-1 {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element.element-2 {
+            width: 80px;
+            height: 80px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-element.element-3 {
+            width: 40px;
+            height: 40px;
+            top: 30%;
+            right: 30%;
+            animation-delay: 4s;
+        }
+
+        .floating-element.element-4 {
+            width: 70px;
+            height: 70px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 1s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Learning Step Styles */
+        .learning-step {
+            position: relative;
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInFromLeft 0.8s ease-out forwards;
+        }
+
+        .learning-step:nth-child(1) { animation-delay: 0.2s; }
+        .learning-step:nth-child(2) { animation-delay: 0.4s; }
+        .learning-step:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes slideInFromLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Learning Module Card Styles */
+        .learning-module-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .learning-module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2d5016, #b8860b, #d4edda);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .learning-module-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .learning-module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .module-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .module-badge {
+            background: linear-gradient(135deg, #2d5016, #b8860b);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .module-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-tag {
+            background: rgba(45, 80, 22, 0.1);
+            color: #2d5016;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .module-action-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #2d5016, #4a6c55);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .module-action-btn:hover::before {
+            left: 100%;
+        }
+
+        .module-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 80, 22, 0.3);
+        }
+
+        /* Routine Card Styles */
+        .routine-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .routine-card.featured {
+            border: 2px solid #2d5016;
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(45, 80, 22, 0.2);
+        }
+
+        .routine-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .routine-card.featured:hover {
+            transform: scale(1.05) translateY(-8px);
+        }
+
+        .routine-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .routine-icon {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2d5016, #4a6c55);
+            border-radius: 16px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(45, 80, 22, 0.3);
+        }
+
+        .routine-duration {
+            background: rgba(45, 80, 22, 0.1);
+            color: #2d5016;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .routine-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #b8860b, #d4af37);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.3);
+        }
+
+        .routine-steps {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .routine-steps li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        .routine-steps li:last-child {
+            border-bottom: none;
+        }
+
+        .routine-start-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #2d5016, #4a6c55);
+            color: white;
+            border: none;
+            padding: 0.875rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .routine-start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .routine-start-btn:hover::before {
+            left: 100%;
+        }
+
+        .routine-start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 80, 22, 0.3);
+        }
+
+        /* Learning Module Styles */
+        .learning-module {
+            padding: 1rem;
+            background: rgba(45, 80, 22, 0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(45, 80, 22, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .learning-module:hover {
+            background: rgba(45, 80, 22, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Progress Animation */
+        .learning-progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .learning-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffffff, #f0f0f0);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        /* Learning Step Completion States */
+        .learning-step.completed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .learning-step.completed .flex-shrink-0 {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .learning-step.completed .flex-shrink-0::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .learning-step.unlocked {
+            opacity: 1;
+            transform: translateX(0);
+            animation: pulse 2s infinite;
+        }
+
+        .learning-step.unlocked .flex-shrink-0 {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Loading Animation */
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Enhanced Hover Effects */
+        .learning-module-card:hover .module-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .routine-card:hover .routine-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        /* Progress Bar Animation */
+        .learning-progress-fill {
+            background: linear-gradient(90deg, #10b981, #059669, #047857);
+            background-size: 200% 100%;
+            animation: progressShimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes progressShimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Wisdom Quote Animation */
+        blockquote {
+            transition: all 0.5s ease;
+        }
+
+        blockquote:hover {
+            transform: scale(1.02);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .learning-step {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .learning-step .flex-shrink-0 {
+                margin-bottom: 1rem;
+            }
+
+            .routine-card.featured {
+                transform: none;
+            }
+
+            .routine-card.featured:hover {
+                transform: translateY(-8px);
+            }
+
+            .floating-element {
+                display: none; /* Hide on mobile for performance */
+            }
+
+            .learning-module-card {
+                padding: 1.5rem;
+            }
+
+            .routine-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Dark Mode Support */
+        html.dark .learning-module-card {
+            background: #1f2937;
+            border-color: #374151;
+        }
+
+        html.dark .routine-card {
+            background: #1f2937;
+            border-color: #374151;
+        }
+
+        html.dark .learning-module {
+            background: rgba(45, 80, 22, 0.1);
+            border-color: rgba(45, 80, 22, 0.3);
+        }
+
+        html.dark .feature-tag {
+            background: rgba(45, 80, 22, 0.2);
+            color: #86b596;
         }
         
         /* Mobile menu button animations */
@@ -2952,6 +3534,66 @@
         
         .btn-enhanced:hover::before {
             left: 100%;
+        }
+        
+        /* Delightful Micro-interactions */
+        .gentle-bounce {
+            animation: gentleBounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes gentleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        
+        .ripple-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+        }
+        
+        .ripple-effect:active::after {
+            width: 200px;
+            height: 200px;
+        }
+        
+        .floating-hover {
+            transition: transform 0.3s ease;
+        }
+        
+        .floating-hover:hover {
+            transform: translateY(-2px);
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(45, 80, 22, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(45, 80, 22, 0); }
+        }
+        
+        .success-celebration {
+            animation: successCelebration 0.6s ease-out;
+        }
+        
+        @keyframes successCelebration {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
         
         /* Improved loading states */
@@ -3634,6 +4276,76 @@
         </div>
     </div>
 
+    <!-- Success Notification Toast -->
+    <div id="success-toast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="bg-white rounded-lg shadow-xl border border-forest-green/20 p-4 max-w-sm">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-forest-green rounded-full flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-semibold text-charcoal">Great job!</p>
+                    <p class="text-sm text-charcoal/70" id="success-message">You're making progress</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button for Mobile -->
+    <div id="mobile-fab" class="fixed bottom-6 right-6 z-40 md:hidden">
+        <button onclick="navigateTo('timer')" class="w-14 h-14 bg-gradient-to-r from-forest-green to-forest-green/90 text-white rounded-full shadow-xl hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group">
+            <svg class="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div id="keyboard-help-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-2xl p-8 max-w-2xl mx-4 max-h-[80vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-charcoal">Keyboard Shortcuts</h3>
+                <button onclick="closeKeyboardHelp()" class="text-charcoal/60 hover:text-charcoal transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                    <span class="text-charcoal">Start meditation timer</span>
+                    <kbd class="px-2 py-1 bg-gray-100 rounded text-sm font-mono">M</kbd>
+                </div>
+                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                    <span class="text-charcoal">Open journal</span>
+                    <kbd class="px-2 py-1 bg-gray-100 rounded text-sm font-mono">J</kbd>
+                </div>
+                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                    <span class="text-charcoal">Start workout</span>
+                    <kbd class="px-2 py-1 bg-gray-100 rounded text-sm font-mono">W</kbd>
+                </div>
+                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                    <span class="text-charcoal">Practice interview</span>
+                    <kbd class="px-2 py-1 bg-gray-100 rounded text-sm font-mono">I</kbd>
+                </div>
+                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                    <span class="text-charcoal">Go to home</span>
+                    <kbd class="px-2 py-1 bg-gray-100 rounded text-sm font-mono">H</kbd>
+                </div>
+                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                    <span class="text-charcoal">Toggle dark mode</span>
+                    <kbd class="px-2 py-1 bg-gray-100 rounded text-sm font-mono">D</kbd>
+                </div>
+                <div class="flex items-center justify-between py-2">
+                    <span class="text-charcoal">Show this help</span>
+                    <kbd class="px-2 py-1 bg-gray-100 rounded text-sm font-mono">?</kbd>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Enhanced Notification Toast -->
     <div id="notification" class="fixed top-6 right-6 z-50 transform translate-x-full transition-all duration-500 ease-out" role="alert" aria-live="assertive">
         <div class="bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl shadow-xl px-6 py-4 max-w-sm fade-in-scale">
@@ -3918,19 +4630,37 @@
                         </div>
                     </div>
 
-                    <!-- Primary CTA -->
+                    <!-- Primary CTA with Enhanced Micro-interactions -->
                     <div class="text-center slide-in-right">
-                        <button onclick="navigateTo('timer')" class="inline-flex items-center justify-center px-10 sm:px-12 md:px-16 py-5 sm:py-6 md:py-7 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl border-2 border-forest-green/20 focus:ring-4 focus:ring-forest-green/30 focus:outline-none min-h-[64px] w-full sm:w-auto cursor-pointer touch-manipulation select-none btn-enhanced gentle-glow group">
-                            <svg class="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 mr-3 sm:mr-4 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
-                            </svg>
-                            <span class="hidden sm:inline group-hover:tracking-wide transition-all duration-300">Start Your Morning Journey</span>
-                            <span class="sm:hidden group-hover:tracking-wide transition-all duration-300">Start Journey</span>
-                            <svg class="w-6 h-6 sm:w-7 sm:h-7 ml-2 sm:ml-3 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                            </svg>
+                        <button onclick="navigateTo('timer')" class="inline-flex items-center justify-center px-10 sm:px-12 md:px-16 py-5 sm:py-6 md:py-7 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl border-2 border-forest-green/20 focus:ring-4 focus:ring-forest-green/30 focus:outline-none min-h-[64px] w-full sm:w-auto cursor-pointer touch-manipulation select-none btn-enhanced gentle-glow group relative overflow-hidden">
+                            <!-- Ripple effect background -->
+                            <div class="absolute inset-0 bg-white/20 scale-0 group-hover:scale-100 group-active:scale-100 transition-transform duration-500 rounded-2xl"></div>
+                            <!-- Content -->
+                            <div class="relative z-10 flex items-center">
+                                <svg class="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 mr-3 sm:mr-4 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
+                                </svg>
+                                <span class="hidden sm:inline group-hover:tracking-wide transition-all duration-300">Start Your Morning Journey</span>
+                                <span class="sm:hidden group-hover:tracking-wide transition-all duration-300">Start Journey</span>
+                                <svg class="w-6 h-6 sm:w-7 sm:h-7 ml-2 sm:ml-3 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </div>
                         </button>
                         <p class="text-base sm:text-lg text-white/90 mt-6 sm:mt-7 font-medium px-4 animate-pulse">✨ Free forever • No signup required • Start in 30 seconds</p>
+                        
+                        <!-- Quick Start Options -->
+                        <div class="mt-6 flex flex-wrap justify-center gap-3">
+                            <button onclick="navigateTo('timer')" class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-all duration-300 text-sm font-medium text-white border border-white/30 hover:scale-105">
+                                🧘 Quick Meditate
+                            </button>
+                            <button onclick="navigateTo('journal')" class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-all duration-300 text-sm font-medium text-white border border-white/30 hover:scale-105">
+                                ✍️ Start Writing
+                            </button>
+                            <button onclick="navigateTo('workout')" class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-all duration-300 text-sm font-medium text-white border border-white/30 hover:scale-105">
+                                💪 Quick Workout
+                            </button>
+                        </div>
                     </div>
                     
                     <!-- Shimmer divider -->
@@ -4642,134 +5372,325 @@
     </template>
     
     <template id="template-category">
-        <div class="max-w-6xl mx-auto">
-            <!-- Hero Section -->
-            <div class="text-center mb-12">
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-forest-green font-lora mb-4">Learning Center</h1>
-                <p class="text-lg sm:text-xl text-charcoal/80 max-w-3xl mx-auto px-4">Deepen your understanding of mindfulness, meditation, and Buddhist wisdom</p>
-            </div>
-
-            <!-- Meditation Learning Section -->
-            <div class="mobile-learning-section bg-gradient-to-br from-forest-green/10 via-white to-light-green/20">
-                <div class="mobile-learning-section-header">
-                    <div class="mobile-learning-section-icon bg-forest-green/20">
-                        <span>🧘</span>
-                    </div>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-charcoal font-lora">Meditation Fundamentals</h2>
+        <div class="max-w-7xl mx-auto">
+            <!-- Enhanced Hero Section with Interactive Elements -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-forest-green via-forest-green/90 to-earthy-gold mb-16 p-12 sm:p-16 text-center">
+                <!-- Animated Background Elements -->
+                <div class="absolute inset-0 opacity-20">
+                    <div class="floating-element element-1"></div>
+                    <div class="floating-element element-2"></div>
+                    <div class="floating-element element-3"></div>
+                    <div class="floating-element element-4"></div>
                 </div>
                 
-                <div class="mobile-learning-grid grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="mobile-learning-card">
-                        <h3 class="text-xl font-semibold text-charcoal mb-3">Getting Started</h3>
-                        <p class="text-charcoal/70 mb-4">Learn the basics of meditation practice, from posture to breathing techniques.</p>
-                        <ul class="text-sm text-charcoal/60 space-y-2">
-                            <li>• Proper sitting posture</li>
-                            <li>• Breathing awareness</li>
-                            <li>• Dealing with distractions</li>
-                            <li>• Building consistency</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="mobile-learning-card">
-                        <h3 class="text-xl font-semibold text-charcoal mb-3">Types of Meditation</h3>
-                        <p class="text-charcoal/70 mb-4">Explore different meditation techniques and find what works for you.</p>
-                        <ul class="text-sm text-charcoal/60 space-y-2">
-                            <li>• Mindfulness meditation</li>
-                            <li>• Loving-kindness (Metta)</li>
-                            <li>• Body scan practice</li>
-                            <li>• Walking meditation</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Buddhist Wisdom Section -->
-            <div class="mobile-learning-section bg-gradient-to-br from-earthy-gold/10 via-white to-earthy-gold/5">
-                <div class="mobile-learning-section-header">
-                    <div class="mobile-learning-section-icon bg-earthy-gold/20">
-                        <span>📚</span>
-                    </div>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-charcoal font-lora">Buddhist Wisdom</h2>
+                <!-- Progress Indicator -->
+                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-sm text-white">
+                    <span id="learning-progress">0% Complete</span>
                 </div>
                 
-                <div class="mobile-learning-grid grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="mobile-learning-card">
-                        <h3 class="text-xl font-semibold text-charcoal mb-3">Core Teachings</h3>
-                        <p class="text-charcoal/70 mb-4">Essential Buddhist concepts for modern life and personal growth.</p>
-                        <ul class="text-sm text-charcoal/60 space-y-2">
-                            <li>• The Four Noble Truths</li>
-                            <li>• The Eightfold Path</li>
-                            <li>• Impermanence (Anicca)</li>
-                            <li>• Non-self (Anatta)</li>
-                        </ul>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full mb-6 animate-pulse">
+                        <span class="text-4xl">🧠</span>
                     </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white font-lora mb-6 leading-tight">
+                        Learning Center
+                    </h1>
+                    <p class="text-xl sm:text-2xl text-white/90 max-w-4xl mx-auto mb-8 leading-relaxed">
+                        Master mindfulness, meditation, and ancient wisdom through interactive learning experiences
+                    </p>
                     
-                    <div class="mobile-learning-card">
-                        <h3 class="text-xl font-semibold text-charcoal mb-3">Practical Applications</h3>
-                        <p class="text-charcoal/70 mb-4">How to apply ancient wisdom to modern challenges and daily life.</p>
-                        <ul class="text-sm text-charcoal/60 space-y-2">
-                            <li>• Managing stress and anxiety</li>
-                            <li>• Cultivating compassion</li>
-                            <li>• Building resilience</li>
-                            <li>• Finding inner peace</li>
-                        </ul>
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                            <div class="text-2xl font-bold text-white">12</div>
+                            <div class="text-white/80 text-sm">Learning Modules</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                            <div class="text-2xl font-bold text-white">45</div>
+                            <div class="text-white/80 text-sm">Minutes Content</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                            <div class="text-2xl font-bold text-white">4.9</div>
+                            <div class="text-white/80 text-sm">User Rating</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Morning Routine Guide -->
-            <div class="mobile-learning-section bg-gradient-to-br from-light-green/20 via-white to-forest-green/10">
-                <div class="mobile-learning-section-header">
-                    <div class="mobile-learning-section-icon bg-light-green/30">
-                        <span>🌅</span>
-                    </div>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-charcoal font-lora">Morning Routine Guide</h2>
+            <!-- Interactive Learning Path -->
+            <div class="mb-16">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-charcoal font-lora mb-4">Your Learning Journey</h2>
+                    <p class="text-lg text-charcoal/70 max-w-2xl mx-auto">Follow a structured path from beginner to advanced practitioner</p>
                 </div>
                 
-                <div class="mobile-learning-grid grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="mobile-learning-card">
-                        <h3 class="text-lg font-semibold text-charcoal mb-3">5-Minute Routine</h3>
-                        <p class="text-sm text-charcoal/70 mb-3">Perfect for busy mornings</p>
-                        <ul class="text-xs text-charcoal/60 space-y-1">
-                            <li>• 2 min: Deep breathing</li>
-                            <li>• 2 min: Gratitude journal</li>
-                            <li>• 1 min: Intention setting</li>
-                        </ul>
-                        <div class="mt-4">
-                            <a href="#" data-page="timer" class="mobile-learning-action-btn mobile-touch-target text-xs">
-                                Start 5-Min Practice
-                            </a>
+                <!-- Learning Path Steps -->
+                <div class="relative">
+                    <!-- Progress Line -->
+                    <div class="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-forest-green to-earthy-gold rounded-full hidden md:block"></div>
+                    
+                    <div class="space-y-8">
+                        <!-- Step 1: Foundation -->
+                        <div class="learning-step group" data-step="1">
+                            <div class="flex items-start space-x-6">
+                                <div class="flex-shrink-0 w-16 h-16 bg-forest-green rounded-full flex items-center justify-center text-white font-bold text-xl group-hover:scale-110 transition-transform duration-300">
+                                    1
+                                </div>
+                                <div class="flex-1 bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h3 class="text-2xl font-bold text-charcoal">Foundation</h3>
+                                        <span class="px-3 py-1 bg-forest-green/10 text-forest-green rounded-full text-sm font-semibold">Beginner</span>
+                                    </div>
+                                    <p class="text-charcoal/70 mb-6">Build your meditation foundation with essential techniques and understanding</p>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                        <div class="learning-module">
+                                            <div class="flex items-center space-x-3 mb-2">
+                                                <span class="text-2xl">🧘</span>
+                                                <h4 class="font-semibold text-charcoal">Basic Meditation</h4>
+                                            </div>
+                                            <p class="text-sm text-charcoal/60">Learn proper posture, breathing, and focus techniques</p>
+                                        </div>
+                                        <div class="learning-module">
+                                            <div class="flex items-center space-x-3 mb-2">
+                                                <span class="text-2xl">🌱</span>
+                                                <h4 class="font-semibold text-charcoal">Mindfulness Basics</h4>
+                                            </div>
+                                            <p class="text-sm text-charcoal/60">Develop present-moment awareness and attention</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="bg-forest-green text-white px-6 py-3 rounded-xl font-semibold hover:bg-forest-green/90 transition-colors">
+                                        Start Foundation Course
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Development -->
+                        <div class="learning-step group" data-step="2">
+                            <div class="flex items-start space-x-6">
+                                <div class="flex-shrink-0 w-16 h-16 bg-earthy-gold rounded-full flex items-center justify-center text-white font-bold text-xl group-hover:scale-110 transition-transform duration-300">
+                                    2
+                                </div>
+                                <div class="flex-1 bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h3 class="text-2xl font-bold text-charcoal">Development</h3>
+                                        <span class="px-3 py-1 bg-earthy-gold/10 text-earthy-gold rounded-full text-sm font-semibold">Intermediate</span>
+                                    </div>
+                                    <p class="text-charcoal/70 mb-6">Deepen your practice with advanced techniques and Buddhist wisdom</p>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                        <div class="learning-module">
+                                            <div class="flex items-center space-x-3 mb-2">
+                                                <span class="text-2xl">💝</span>
+                                                <h4 class="font-semibold text-charcoal">Loving-Kindness</h4>
+                                            </div>
+                                            <p class="text-sm text-charcoal/60">Cultivate compassion and loving-kindness meditation</p>
+                                        </div>
+                                        <div class="learning-module">
+                                            <div class="flex items-center space-x-3 mb-2">
+                                                <span class="text-2xl">📚</span>
+                                                <h4 class="font-semibold text-charcoal">Buddhist Wisdom</h4>
+                                            </div>
+                                            <p class="text-sm text-charcoal/60">Explore core teachings and their modern applications</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="bg-earthy-gold text-white px-6 py-3 rounded-xl font-semibold hover:bg-earthy-gold/90 transition-colors">
+                                        Continue Development
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Mastery -->
+                        <div class="learning-step group" data-step="3">
+                            <div class="flex items-start space-x-6">
+                                <div class="flex-shrink-0 w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl group-hover:scale-110 transition-transform duration-300">
+                                    3
+                                </div>
+                                <div class="flex-1 bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h3 class="text-2xl font-bold text-charcoal">Mastery</h3>
+                                        <span class="px-3 py-1 bg-purple-600/10 text-purple-600 rounded-full text-sm font-semibold">Advanced</span>
+                                    </div>
+                                    <p class="text-charcoal/70 mb-6">Integrate all practices into daily life and become a mindfulness teacher</p>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                        <div class="learning-module">
+                                            <div class="flex items-center space-x-3 mb-2">
+                                                <span class="text-2xl">🎯</span>
+                                                <h4 class="font-semibold text-charcoal">Advanced Techniques</h4>
+                                            </div>
+                                            <p class="text-sm text-charcoal/60">Master complex meditation practices and insights</p>
+                                        </div>
+                                        <div class="learning-module">
+                                            <div class="flex items-center space-x-3 mb-2">
+                                                <span class="text-2xl">👥</span>
+                                                <h4 class="font-semibold text-charcoal">Teaching Others</h4>
+                                            </div>
+                                            <p class="text-sm text-charcoal/60">Learn to guide and inspire others on their journey</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="bg-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-purple-700 transition-colors">
+                                        Begin Mastery Path
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="mobile-learning-card">
-                        <h3 class="text-lg font-semibold text-charcoal mb-3">15-Minute Routine</h3>
-                        <p class="text-sm text-charcoal/70 mb-3">Balanced and comprehensive</p>
-                        <ul class="text-xs text-charcoal/60 space-y-1">
-                            <li>• 5 min: Meditation</li>
-                            <li>• 5 min: Journaling</li>
-                            <li>• 5 min: Light exercise</li>
-                        </ul>
-                        <div class="mt-4">
-                            <a href="#" data-page="timer" class="mobile-learning-action-btn mobile-touch-target text-xs">
-                                Start 15-Min Practice
-                            </a>
+                </div>
+            </div>
+
+            <!-- Interactive Learning Modules -->
+            <div class="mb-16">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-charcoal font-lora mb-4">Interactive Modules</h2>
+                    <p class="text-lg text-charcoal/70 max-w-2xl mx-auto">Engage with hands-on learning experiences</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Meditation Lab -->
+                    <div class="learning-module-card group">
+                        <div class="module-header">
+                            <div class="module-icon bg-gradient-to-br from-forest-green to-light-green">
+                                <span class="text-3xl">🧘</span>
+                            </div>
+                            <div class="module-badge">Interactive</div>
                         </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-3">Meditation Lab</h3>
+                        <p class="text-charcoal/70 mb-4">Experiment with different meditation techniques and find what works for you</p>
+                        <div class="module-features">
+                            <span class="feature-tag">Guided Sessions</span>
+                            <span class="feature-tag">Progress Tracking</span>
+                            <span class="feature-tag">Custom Timers</span>
+                        </div>
+                        <button class="module-action-btn">
+                            Enter Lab
+                        </button>
                     </div>
-                    
-                    <div class="mobile-learning-card">
-                        <h3 class="text-lg font-semibold text-charcoal mb-3">30-Minute Routine</h3>
-                        <p class="text-sm text-charcoal/70 mb-3">Complete morning practice</p>
-                        <ul class="text-xs text-charcoal/60 space-y-1">
-                            <li>• 10 min: Meditation</li>
-                            <li>• 10 min: Journaling</li>
-                            <li>• 10 min: Exercise</li>
-                        </ul>
-                        <div class="mt-4">
-                            <a href="#" data-page="timer" class="mobile-learning-action-btn mobile-touch-target text-xs">
-                                Start 30-Min Practice
-                            </a>
+
+                    <!-- Wisdom Library -->
+                    <div class="learning-module-card group">
+                        <div class="module-header">
+                            <div class="module-icon bg-gradient-to-br from-earthy-gold to-yellow-400">
+                                <span class="text-3xl">📚</span>
+                            </div>
+                            <div class="module-badge">Library</div>
                         </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-3">Wisdom Library</h3>
+                        <p class="text-charcoal/70 mb-4">Explore ancient teachings and modern interpretations</p>
+                        <div class="module-features">
+                            <span class="feature-tag">Audio Readings</span>
+                            <span class="feature-tag">Interactive Quizzes</span>
+                            <span class="feature-tag">Bookmarks</span>
+                        </div>
+                        <button class="module-action-btn">
+                            Browse Library
+                        </button>
+                    </div>
+
+                    <!-- Practice Challenges -->
+                    <div class="learning-module-card group">
+                        <div class="module-header">
+                            <div class="module-icon bg-gradient-to-br from-purple-600 to-pink-500">
+                                <span class="text-3xl">🏆</span>
+                            </div>
+                            <div class="module-badge">Challenges</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-3">Practice Challenges</h3>
+                        <p class="text-charcoal/70 mb-4">Test your skills with daily and weekly challenges</p>
+                        <div class="module-features">
+                            <span class="feature-tag">Daily Goals</span>
+                            <span class="feature-tag">Achievements</span>
+                            <span class="feature-tag">Leaderboard</span>
+                        </div>
+                        <button class="module-action-btn">
+                            Start Challenge
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Start Routines -->
+            <div class="mb-16">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-charcoal font-lora mb-4">Quick Start Routines</h2>
+                    <p class="text-lg text-charcoal/70 max-w-2xl mx-auto">Jump right into practice with these guided routines</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- 5-Minute Quick Start -->
+                    <div class="routine-card">
+                        <div class="routine-header">
+                            <div class="routine-icon">⚡</div>
+                            <div class="routine-duration">5 min</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-3">Quick Start</h3>
+                        <p class="text-charcoal/70 mb-4">Perfect for busy mornings or quick stress relief</p>
+                        <ul class="routine-steps">
+                            <li>1 min: Deep breathing</li>
+                            <li>2 min: Body scan</li>
+                            <li>2 min: Gratitude practice</li>
+                        </ul>
+                        <button class="routine-start-btn" data-duration="5">
+                            Start Now
+                        </button>
+                    </div>
+
+                    <!-- 15-Minute Balanced -->
+                    <div class="routine-card featured">
+                        <div class="routine-header">
+                            <div class="routine-icon">⚖️</div>
+                            <div class="routine-duration">15 min</div>
+                            <div class="routine-badge">Popular</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-3">Balanced Practice</h3>
+                        <p class="text-charcoal/70 mb-4">A well-rounded session for daily practice</p>
+                        <ul class="routine-steps">
+                            <li>5 min: Meditation</li>
+                            <li>5 min: Journaling</li>
+                            <li>5 min: Light movement</li>
+                        </ul>
+                        <button class="routine-start-btn" data-duration="15">
+                            Start Now
+                        </button>
+                    </div>
+
+                    <!-- 30-Minute Deep Dive -->
+                    <div class="routine-card">
+                        <div class="routine-header">
+                            <div class="routine-icon">🌊</div>
+                            <div class="routine-duration">30 min</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-3">Deep Dive</h3>
+                        <p class="text-charcoal/70 mb-4">Comprehensive practice for deeper transformation</p>
+                        <ul class="routine-steps">
+                            <li>10 min: Meditation</li>
+                            <li>10 min: Journaling</li>
+                            <li>10 min: Exercise</li>
+                        </ul>
+                        <button class="routine-start-btn" data-duration="30">
+                            Start Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Wisdom Quote -->
+            <div class="bg-gradient-to-r from-forest-green/10 via-earthy-gold/10 to-light-green/10 rounded-2xl p-8 text-center">
+                <div class="max-w-3xl mx-auto">
+                    <div class="text-6xl mb-4">💭</div>
+                    <blockquote class="text-xl sm:text-2xl font-medium text-charcoal mb-4 italic">
+                        "The mind is everything. What you think you become."
+                    </blockquote>
+                    <cite class="text-earthy-gold font-semibold">— Buddha</cite>
+                    <div class="mt-6">
+                        <button class="bg-forest-green text-white px-6 py-3 rounded-xl font-semibold hover:bg-forest-green/90 transition-colors">
+                            Get Daily Wisdom
+                        </button>
                     </div>
                 </div>
             </div>
@@ -5515,9 +6436,9 @@
                             <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-charcoal font-lora mb-3 sm:mb-4 md:mb-6">Your Meditation Timer</h2>
                             
                             <!-- Timer Display with Progress Ring - Mobile Optimized -->
-                            <div class="relative w-48 h-48 xs:w-56 xs:h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 mx-auto mb-4 sm:mb-6 md:mb-8">
+                            <div class="relative w-48 h-48 xs:w-56 xs:h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 mx-auto mb-4 sm:mb-6 md:mb-8 group">
                                 <!-- Progress Ring -->
-                                <svg class="w-full h-full transform -rotate-90 drop-shadow-lg" viewBox="0 0 100 100">
+                                <svg class="w-full h-full transform -rotate-90 drop-shadow-lg transition-all duration-500 group-hover:scale-105" viewBox="0 0 100 100">
                                     <!-- Background Circle -->
                                     <circle cx="50" cy="50" r="45" stroke="#e5e7eb" stroke-width="6" fill="none" opacity="0.3"/>
                                     <!-- Progress Circle -->
@@ -5525,18 +6446,32 @@
                                             stroke-dasharray="283" stroke-dashoffset="283" 
                                             class="transition-all duration-1000 ease-linear drop-shadow-lg"
                                             stroke-linecap="round"/>
+                                    <!-- Glow effect for active state -->
+                                    <circle id="progress-glow" cx="50" cy="50" r="45" stroke="#4A6C55" stroke-width="8" fill="none" 
+                                            stroke-dasharray="283" stroke-dashoffset="283" 
+                                            class="transition-all duration-1000 ease-linear opacity-0 blur-sm"
+                                            stroke-linecap="round"/>
                                 </svg>
                                 
                                 <!-- Timer Content -->
                                 <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                    <div id="timer-display" class="text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-lora text-forest-green font-bold mb-4 sm:mb-5 drop-shadow-lg leading-none meditation-pulse">10:00</div>
-                                    <div id="timer-status" class="text-lg sm:text-xl md:text-2xl text-charcoal/90 font-semibold mb-4 sm:mb-5 px-4 wisdom-fade">Ready to begin</div>
-                                    <div class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl drop-shadow-lg lotus-bloom">🧘‍♀️</div>
-                    </div>
+                                    <div id="timer-display" class="text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-lora text-forest-green font-bold mb-4 sm:mb-5 drop-shadow-lg leading-none meditation-pulse transition-all duration-300 group-hover:scale-105">10:00</div>
+                                    <div id="timer-status" class="text-lg sm:text-xl md:text-2xl text-charcoal/90 font-semibold mb-4 sm:mb-5 px-4 wisdom-fade transition-all duration-300">Ready to begin</div>
+                                    <div class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl drop-shadow-lg lotus-bloom transition-all duration-500 group-hover:scale-110">🧘‍♀️</div>
+                                </div>
                                 
                                 <!-- Pulsing effect when running -->
-                                <div id="timer-pulse" class="absolute inset-0 rounded-full border-4 border-forest-green/30 opacity-0"></div>
-            </div>
+                                <div id="timer-pulse" class="absolute inset-0 rounded-full border-4 border-forest-green/30 opacity-0 animate-ping"></div>
+                                
+                                <!-- Breathing guide dots -->
+                                <div id="breathing-dots" class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500">
+                                    <div class="flex space-x-2">
+                                        <div class="w-2 h-2 bg-forest-green/60 rounded-full animate-pulse" style="animation-delay: 0s;"></div>
+                                        <div class="w-2 h-2 bg-forest-green/60 rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
+                                        <div class="w-2 h-2 bg-forest-green/60 rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
+                                    </div>
+                                </div>
+                            </div>
                             
                             <!-- Timer Controls - Mobile First Layout -->
                             <div class="flex flex-col space-y-3 sm:space-y-4 mb-6 sm:mb-8">
@@ -6207,8 +7142,8 @@
                     
                     <!-- Video Container -->
                     <div class="video-container mb-4 sm:mb-6">
-                        <video id="live-video" class="bg-gray-100 rounded-xl hidden" playsinline muted preload="none" webkit-playsinline></video>
-                        <video id="playback-video" class="bg-gray-100 rounded-xl hidden" playsinline controls webkit-playsinline></video>
+                        <video id="live-video" class="bg-gray-100 rounded-xl hidden w-full h-full object-cover" playsinline muted preload="none" webkit-playsinline autoplay></video>
+                        <video id="playback-video" class="bg-gray-100 rounded-xl hidden w-full h-full object-cover" playsinline controls webkit-playsinline></video>
                         <div id="video-placeholder" class="absolute inset-0 bg-gradient-to-br from-forest-green/10 to-forest-green/5 rounded-xl flex items-center justify-center border-2 border-dashed border-forest-green/30">
                             <div class="text-center p-4">
                                 <svg class="w-12 h-12 text-forest-green mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -6223,31 +7158,23 @@
                     
                     <!-- Recording Controls -->
                     <div id="recorder-controls" class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                        <button id="start-camera-btn" class="recording-button flex-1 px-4 sm:px-6 py-4 sm:py-4 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 active:bg-forest-green/80 transition-all duration-200 text-sm sm:text-base min-h-[52px] touch-manipulation select-none shadow-lg hover:shadow-xl active:scale-95">
-                            <div class="flex items-center justify-center space-x-2">
-                                <span class="text-lg">📹</span>
-                                <span>Start Camera</span>
-                            </div>
-                            </button>
-                        <button id="start-recording-btn" class="recording-button flex-1 px-4 sm:px-6 py-4 sm:py-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 active:bg-red-700 transition-all duration-200 text-sm sm:text-base min-h-[52px] touch-manipulation select-none shadow-lg hover:shadow-xl active:scale-95 hidden">
-                            <div class="flex items-center justify-center space-x-2">
-                                <span class="text-lg">🔴</span>
-                                <span>Start Recording</span>
-                                    </div>
+                        <button id="start-camera-btn" class="btn-unified btn-primary flex-1" aria-label="Start camera for recording">
+                            <span class="text-lg" aria-hidden="true">📹</span>
+                            <span>Start Camera</span>
                         </button>
-                        <button id="stop-recording-btn" class="recording-button flex-1 px-4 sm:px-6 py-4 sm:py-4 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 active:bg-gray-800 transition-all duration-200 text-sm sm:text-base min-h-[52px] touch-manipulation select-none shadow-lg hover:shadow-xl active:scale-95 hidden">
-                            <div class="flex items-center justify-center space-x-2">
-                                <span class="text-lg">⏹️</span>
-                                <span>Stop Recording</span>
-                                </div>
+                        <button id="start-recording-btn" class="btn-unified btn-danger flex-1 hidden" aria-label="Start recording video">
+                            <span class="text-lg" aria-hidden="true">🔴</span>
+                            <span>Start Recording</span>
                         </button>
-                        <button id="stop-camera-btn" class="recording-button flex-1 px-4 sm:px-6 py-4 sm:py-4 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 active:bg-gray-700 transition-all duration-200 text-sm sm:text-base min-h-[52px] touch-manipulation select-none shadow-lg hover:shadow-xl active:scale-95 hidden">
-                            <div class="flex items-center justify-center space-x-2">
-                                <span class="text-lg">📹</span>
-                                <span>Stop Camera</span>
-                            </div>
+                        <button id="stop-recording-btn" class="btn-unified btn-secondary flex-1 hidden" aria-label="Stop recording video">
+                            <span class="text-lg" aria-hidden="true">⏹️</span>
+                            <span>Stop Recording</span>
                         </button>
-                         </div>
+                        <button id="stop-camera-btn" class="btn-unified btn-outline flex-1 hidden" aria-label="Stop camera">
+                            <span class="text-lg" aria-hidden="true">📹</span>
+                            <span>Stop Camera</span>
+                        </button>
+                    </div>
                     </div>
             </div>
 
@@ -6688,16 +7615,18 @@
                         setupEnhancedJournalFeatures();
                     },
                     'workout': () => {
-                        attachWorkoutLogic();
-                        // Call enhanced features after a short delay to ensure DOM is ready
+                        // Only use enhanced workout features
                         setTimeout(() => {
                             setupEnhancedWorkoutFeatures();
                         }, 100);
                     },
-                    'interview': () => {
-                        attachInterviewLogic();
-                        setupEnhancedInterviewFeatures();
-                    },
+                     'interview': () => {
+                         attachInterviewLogic();
+                         setupEnhancedInterviewFeatures();
+                     },
+                     'category-meditation': () => {
+                         setupEnhancedLearningFeatures();
+                     },
                     'about': attachDataManagementLogic
                 };
                 
@@ -7660,7 +8589,7 @@
         
         const saveBtn = document.getElementById('journal-save-btn');
         const entryText = document.getElementById('journal-entry');
-        const entriesList = document.getElementById('journal-entries');
+        const entriesList = document.getElementById('journal-history-list');
         
         console.log('📝 Journal elements found:', {
             saveBtn: !!saveBtn,
@@ -7687,6 +8616,12 @@
                 if (saveBtn) {
                     saveBtn.classList.add('hidden');
                 }
+                
+                // Reset timer for next entry
+                stopJournalTimer();
+                hasStartedTyping = false;
+                journalTimeRemaining = parseInt(journalTimerDuration.value);
+                updateJournalTimerDisplay();
                 
                 displayEntries();
                 
@@ -7725,6 +8660,68 @@
             displayEntries();
         }
         
+        // Journal Timer Functionality
+        const journalTimer = document.getElementById('journal-timer');
+        const journalTimerDuration = document.getElementById('journal-timer-duration');
+        const journalStartBtn = document.getElementById('journal-start-btn');
+        
+        let journalTimerInterval = null;
+        let journalTimeRemaining = 0;
+        let journalIsRunning = false;
+        
+        function startJournalTimer() {
+            if (journalIsRunning) return;
+            
+            journalTimeRemaining = parseInt(journalTimerDuration.value);
+            journalIsRunning = true;
+            
+            journalStartBtn.innerHTML = '<span class="flex items-center space-x-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Timer Running</span></span>';
+            journalStartBtn.disabled = true;
+            journalStartBtn.classList.add('opacity-75');
+            
+            journalTimerInterval = setInterval(() => {
+                journalTimeRemaining--;
+                updateJournalTimerDisplay();
+                
+                if (journalTimeRemaining <= 0) {
+                    stopJournalTimer();
+                    showNotification('Time\'s up! Great writing session! ✍️', 'success');
+                }
+            }, 1000);
+        }
+        
+        function stopJournalTimer() {
+            if (journalTimerInterval) {
+                clearInterval(journalTimerInterval);
+                journalTimerInterval = null;
+            }
+            
+            journalIsRunning = false;
+            journalStartBtn.innerHTML = '<span class="flex items-center space-x-2"><svg class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg><span class="group-hover:tracking-wide transition-all duration-300">Begin Writing</span></span>';
+            journalStartBtn.disabled = false;
+            journalStartBtn.classList.remove('opacity-75');
+        }
+        
+        function updateJournalTimerDisplay() {
+            const minutes = Math.floor(journalTimeRemaining / 60);
+            const seconds = journalTimeRemaining % 60;
+            journalTimer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Timer event listeners
+        if (journalStartBtn) {
+            journalStartBtn.addEventListener('click', startJournalTimer);
+        }
+        
+        if (journalTimerDuration) {
+            journalTimerDuration.addEventListener('change', () => {
+                if (!journalIsRunning) {
+                    journalTimeRemaining = parseInt(journalTimerDuration.value);
+                    updateJournalTimerDisplay();
+                }
+            });
+        }
+        
         // Quick preset button functionality
         const quickPresetBtns = document.querySelectorAll('.quick-preset-btn');
         const durationSelect = document.getElementById('timer-duration');
@@ -7738,6 +8735,11 @@
             btn.addEventListener('click', () => {
                 const duration = parseInt(btn.dataset.duration);
                 console.log('🎯 Quick preset clicked:', duration);
+                if (journalTimerDuration) {
+                    journalTimerDuration.value = duration;
+                    journalTimeRemaining = duration;
+                    updateJournalTimerDisplay();
+                }
                 if (durationSelect) {
                     durationSelect.value = duration;
                 }
@@ -8160,6 +9162,11 @@
                     aspectRatio: { ideal: 16/9 }
                 };
                 
+                // Show loading state
+                startCameraBtn.innerHTML = '<span class="text-lg" aria-hidden="true">⏳</span><span>Starting Camera...</span>';
+                startCameraBtn.classList.add('btn-loading');
+                startCameraBtn.disabled = true;
+                
                 stream = await navigator.mediaDevices.getUserMedia({ 
                     video: videoConstraints,
                     audio: { 
@@ -8169,31 +9176,46 @@
                     }
                 });
                 
-                    // Optimize video for mobile performance
-                    liveVideo.srcObject = stream;
-                    liveVideo.style.display = 'block';
-                    liveVideo.muted = true; // Mute to prevent feedback
-                    liveVideo.playsInline = true; // Important for iOS
-                    liveVideo.setAttribute('playsinline', 'true'); // iOS compatibility
-                    liveVideo.setAttribute('webkit-playsinline', 'true'); // Older iOS compatibility
-                    
-                    // Ensure video is visible and playing
-                    liveVideo.play().catch(e => console.log('Video play failed:', e));
+                // Set up video element BEFORE setting srcObject
+                liveVideo.muted = true; // Mute to prevent feedback
+                liveVideo.playsInline = true; // Important for iOS
+                liveVideo.setAttribute('playsinline', 'true'); // iOS compatibility
+                liveVideo.setAttribute('webkit-playsinline', 'true'); // Older iOS compatibility
                 
-                videoPlaceholder.style.display = 'none';
-                playbackVideo.style.display = 'none';
-                
-                // Show loading state
-                startCameraBtn.innerHTML = '⏳ Starting Camera...';
-                startCameraBtn.disabled = true;
-                
-                // Wait for video to load
+                // Set up event handlers BEFORE setting srcObject
                 liveVideo.onloadedmetadata = () => {
-                    startCameraBtn.style.display = 'none';
-                    startRecordingBtn.style.display = 'block';
-                    stopCameraBtn.style.display = 'block';
-                    console.log('Camera started successfully');
+                    console.log('Video metadata loaded, starting playback...');
+                    liveVideo.play().then(() => {
+                        console.log('Video playing successfully');
+                        // Reset button state
+                        startCameraBtn.classList.remove('btn-loading');
+                        startCameraBtn.innerHTML = '<span class="text-lg" aria-hidden="true">📹</span><span>Start Camera</span>';
+                        
+                        // Show recording controls
+                        startCameraBtn.classList.add('hidden');
+                        startRecordingBtn.classList.remove('hidden');
+                        stopCameraBtn.classList.remove('hidden');
+                        videoPlaceholder.classList.add('hidden');
+                        playbackVideo.classList.add('hidden');
+                        liveVideo.classList.remove('hidden');
+                    }).catch(e => {
+                        console.error('Video play failed:', e);
+                        // Reset button state
+                        startCameraBtn.classList.remove('btn-loading');
+                        startCameraBtn.innerHTML = '<span class="text-lg" aria-hidden="true">📹</span><span>Start Camera</span>';
+                        
+                        // Still show the video even if play fails
+                        startCameraBtn.classList.add('hidden');
+                        startRecordingBtn.classList.remove('hidden');
+                        stopCameraBtn.classList.remove('hidden');
+                        videoPlaceholder.classList.add('hidden');
+                        playbackVideo.classList.add('hidden');
+                        liveVideo.classList.remove('hidden');
+                    });
                 };
+                
+                // Set the video source
+                liveVideo.srcObject = stream;
                 
                 // Fallback timeout
                 setTimeout(() => {
@@ -8875,6 +9897,8 @@
     
      // Enhanced Workout Features
      function setupEnhancedWorkoutFeatures() {
+         console.log('Setting up enhanced workout features...');
+         
          // Workout state
          let workoutTimer = null;
          let currentTime = 30; // 30 seconds per exercise
@@ -8989,14 +10013,29 @@
         const exerciseName = document.getElementById('current-exercise-name');
         const exerciseDescription = document.getElementById('current-exercise-description');
         const exerciseInstructions = document.getElementById('exercise-instructions');
-        const exerciseEmoji = document.getElementById('exercise-emoji');
+        const exerciseEmoji = document.getElementById('current-exercise-emoji');
+        
+        // Debug: Check if elements are found
+        console.log('Workout elements found:', {
+            startBtn: !!startBtn,
+            pauseBtn: !!pauseBtn,
+            resetBtn: !!resetBtn,
+            timerDisplay: !!timerDisplay,
+            progressBar: !!progressBar
+        });
         
         // Initialize workout
         initializeWorkout();
         
          function initializeWorkout() {
+             console.log('Initializing workout...');
              // Set up event listeners
-             if (startBtn) startBtn.addEventListener('click', startWorkout);
+             if (startBtn) {
+                 console.log('Adding start button event listener');
+                 startBtn.addEventListener('click', startWorkout);
+             } else {
+                 console.log('Start button not found for event listener');
+             }
              if (pauseBtn) pauseBtn.addEventListener('click', pauseWorkout);
              if (resetBtn) resetBtn.addEventListener('click', resetWorkout);
              if (doubleModeCheckbox) doubleModeCheckbox.addEventListener('change', toggleDoubleMode);
@@ -9021,15 +10060,27 @@
          }
         
          function startWorkout() {
+             console.log('startWorkout called, isWorkoutRunning:', isWorkoutRunning);
              if (!isWorkoutRunning) {
+                 console.log('Starting workout...');
                  isWorkoutRunning = true;
                  isWorkoutPaused = false;
                  isRestPeriod = false;
                  workoutStartTime = new Date();
                  
                  // Update button states
-                 if (startBtn) startBtn.classList.add('hidden');
-                 if (pauseBtn) pauseBtn.classList.remove('hidden');
+                 if (startBtn) {
+                     console.log('Hiding start button');
+                     startBtn.classList.add('hidden');
+                 } else {
+                     console.log('Start button not found!');
+                 }
+                 if (pauseBtn) {
+                     console.log('Showing pause button');
+                     pauseBtn.classList.remove('hidden');
+                 } else {
+                     console.log('Pause button not found!');
+                 }
                  
                  // Start the workout timer
                  startWorkoutTimer();
@@ -9042,6 +10093,8 @@
                  
                  // Update exercise display
                  updateCurrentExerciseDisplay();
+             } else {
+                 console.log('Workout already running');
              }
          }
         
@@ -9352,6 +10405,115 @@
         
         // Initialize display
         updateWorkoutDisplay();
+    }
+
+    // Enhanced Learning Page Features
+    function setupEnhancedLearningFeatures() {
+        // Learning progress tracking
+        let learningProgress = 0;
+        const progressElement = document.getElementById('learning-progress');
+        
+        // Update progress display
+        function updateProgress() {
+            if (progressElement) {
+                progressElement.textContent = `${learningProgress}% Complete`;
+            }
+        }
+        
+        // Learning step interactions
+        const learningSteps = document.querySelectorAll('.learning-step');
+        learningSteps.forEach((step, index) => {
+            const button = step.querySelector('button');
+            if (button) {
+                button.addEventListener('click', () => {
+                    // Simulate progress increase
+                    learningProgress = Math.min(100, learningProgress + 33);
+                    updateProgress();
+                    
+                    // Add completion effect
+                    step.classList.add('completed');
+                    
+                    // Show success notification
+                    showNotification(`Great! You've completed step ${index + 1}`, 'success');
+                    
+                    // Enable next step if available
+                    if (index < learningSteps.length - 1) {
+                        const nextStep = learningSteps[index + 1];
+                        nextStep.classList.add('unlocked');
+                    }
+                });
+            }
+        });
+        
+        // Module card interactions
+        const moduleCards = document.querySelectorAll('.learning-module-card');
+        moduleCards.forEach(card => {
+            const button = card.querySelector('.module-action-btn');
+            if (button) {
+                button.addEventListener('click', () => {
+                    const moduleName = card.querySelector('h3').textContent;
+                    showNotification(`Opening ${moduleName}...`, 'info');
+                    
+                    // Add loading state
+                    button.innerHTML = '<span class="animate-spin">⏳</span> Loading...';
+                    button.disabled = true;
+                    
+                    // Simulate loading
+                    setTimeout(() => {
+                        button.innerHTML = 'Enter Lab';
+                        button.disabled = false;
+                        showNotification(`${moduleName} is ready!`, 'success');
+                    }, 2000);
+                });
+            }
+        });
+        
+        // Routine start buttons
+        const routineButtons = document.querySelectorAll('.routine-start-btn');
+        routineButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const duration = button.dataset.duration;
+                const routineName = button.closest('.routine-card').querySelector('h3').textContent;
+                
+                showNotification(`Starting ${routineName} (${duration} min)`, 'success');
+                
+                // Navigate to timer with duration
+                setTimeout(() => {
+                    navigateToPage('timer');
+                    // Set timer duration (this would be implemented in timer logic)
+                    if (window.setTimerDuration) {
+                        window.setTimerDuration(parseInt(duration) * 60);
+                    }
+                }, 1000);
+            });
+        });
+        
+        // Daily wisdom button
+        const wisdomButton = document.querySelector('.bg-forest-green.text-white.px-6.py-3.rounded-xl');
+        if (wisdomButton && wisdomButton.textContent.includes('Get Daily Wisdom')) {
+            wisdomButton.addEventListener('click', () => {
+                const quotes = [
+                    "The mind is everything. What you think you become.",
+                    "Peace comes from within. Do not seek it without.",
+                    "You will not be punished for your anger, you will be punished by your anger.",
+                    "Three things cannot be long hidden: the sun, the moon, and the truth.",
+                    "Holding on to anger is like grasping a hot coal with the intent of throwing it at someone else; you are the one who gets burned.",
+                    "The only way to do great work is to love what you do.",
+                    "In the end, only three things matter: how much you loved, how gently you lived, and how gracefully you let go of things not meant for you."
+                ];
+                
+                const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                const quoteElement = document.querySelector('blockquote');
+                if (quoteElement) {
+                    quoteElement.textContent = `"${randomQuote}"`;
+                }
+                
+                showNotification('New wisdom loaded!', 'success');
+            });
+        }
+        
+        // Initialize progress
+        updateProgress();
     }
 
     // Enhanced Interview Features
@@ -9787,31 +10949,6 @@
             }
         }
         
-        async function startCamera() {
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: true, 
-                    audio: true 
-                });
-                
-                if (liveVideo) {
-                    liveVideo.srcObject = stream;
-                    liveVideo.classList.remove('hidden');
-                    videoPlaceholder.classList.add('hidden');
-                }
-                
-                // Update buttons
-                if (startCameraBtn) startCameraBtn.classList.add('hidden');
-                if (startRecordingBtn) startRecordingBtn.classList.remove('hidden');
-                if (stopCameraBtn) stopCameraBtn.classList.remove('hidden');
-                
-                showNotification('Camera started! Ready to record. 📹', 'success');
-            } catch (error) {
-                console.error('Error accessing camera:', error);
-                showNotification('Unable to access camera. Please check permissions.', 'error');
-            }
-        }
-        
         function startRecording() {
             if (stream && !isRecording) {
                 recordedChunks = [];
@@ -9927,7 +11064,7 @@
                                     <div class="text-sm font-semibold text-charcoal">${recording.date}</div>
                                     <div class="text-xs text-charcoal/60">${recording.category} • ${recording.difficulty}</div>
                                 </div>
-                                <button onclick="deleteInterviewRecording(${recording.id})" class="text-charcoal/40 hover:text-red-500 transition-colors p-1">
+                                <button onclick="deleteInterviewRecording('${recording.id}')" class="text-charcoal/40 hover:text-red-500 transition-colors p-1">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                     </svg>
@@ -9935,10 +11072,10 @@
                             </div>
                             <div class="text-charcoal text-sm mb-3">${recording.question}</div>
                             <div class="flex items-center space-x-2">
-                                <button onclick="playRecording(${recording.id})" class="px-3 py-1 bg-forest-green text-white text-xs rounded-lg hover:bg-forest-green/90 transition-colors">
+                                <button onclick="playRecording('${recording.id}')" class="px-3 py-1 bg-forest-green text-white text-xs rounded-lg hover:bg-forest-green/90 transition-colors">
                                     ▶️ Play
                                 </button>
-                                <button onclick="downloadRecording(${recording.id})" class="px-3 py-1 bg-earthy-gold text-white text-xs rounded-lg hover:bg-earthy-gold/90 transition-colors">
+                                <button onclick="downloadRecording('${recording.id}')" class="px-3 py-1 bg-earthy-gold text-white text-xs rounded-lg hover:bg-earthy-gold/90 transition-colors">
                                     💾 Download
                                 </button>
                             </div>
@@ -10200,7 +11337,731 @@
                                     <div class="text-xs text-charcoal/60">${entry.wordCount || entry.text.split(/\s+/).length} words</div>
                                 </div>
                             </div>
-                            <button onclick="deleteJournalEntry(${entry.id})" class="text-charcoal/40 hover:text-red-500 transition-colors p-1">
+                            <button onclick="deleteJournalEntry('${entry.id}')" class="text-charcoal/40 hover:text-red-500 transition-colors p-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="text-charcoal whitespace-pre-wrap leading-relaxed">${entry.text}</div>
+                    </div>
+                `).join('');
+            }
+        }
+    }
+
+    // Enhanced Journal Features
+    function setupEnhancedJournalFeatures() {
+        // Mood selection functionality
+        const moodBtns = document.querySelectorAll('.mood-btn');
+        moodBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove selected class from all buttons
+                moodBtns.forEach(b => b.classList.remove('selected', 'border-forest-green', 'bg-forest-green/10'));
+                // Add selected class to clicked button
+                btn.classList.add('selected', 'border-forest-green', 'bg-forest-green/10');
+            });
+        });
+        
+        // Auto-save functionality
+        const entryText = document.getElementById('journal-entry');
+        if (entryText) {
+            // Auto-save every 30 seconds
+            setInterval(() => {
+                if (entryText.value.trim()) {
+                    localStorage.setItem('journal-draft', entryText.value);
+                }
+            }, 30000);
+            
+            // Auto-save on input
+            entryText.addEventListener('input', () => {
+                localStorage.setItem('journal-draft', entryText.value);
+            });
+        }
+        
+        // Enhanced save functionality
+        const saveBtn = document.getElementById('journal-save-btn');
+        if (saveBtn) {
+            saveBtn.addEventListener('click', () => {
+                const entryText = document.getElementById('journal-entry');
+                if (entryText && entryText.value.trim()) {
+                    const selectedMood = document.querySelector('.mood-btn.selected');
+                    const mood = selectedMood ? selectedMood.dataset.mood : '😊';
+                    
+                    const entry = {
+                        id: Date.now(),
+                        text: entryText.value.trim(),
+                        date: new Date().toLocaleString(),
+                        timestamp: new Date().getTime(),
+                        mood: mood,
+                        wordCount: entryText.value.trim().split(/\s+/).length
+                    };
+                    
+                    let entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+                    entries.unshift(entry);
+                    localStorage.setItem('journalEntries', JSON.stringify(entries));
+                    
+                    // Clear textarea and draft
+                    entryText.value = '';
+                    localStorage.removeItem('journal-draft');
+                    
+                    // Clear mood selection
+                    moodBtns.forEach(b => b.classList.remove('selected', 'border-forest-green', 'bg-forest-green/10'));
+                    
+                    // Hide save button
+                    saveBtn.classList.add('hidden');
+                    
+                    // Show success message
+                    showNotification('Entry saved successfully! ✍️', 'success');
+                    
+                    // Reload entries
+                    loadJournalEntries();
+                }
+            });
+        }
+    }
+    
+    </script>
+</body>
+</html>
+
+                    tips: "Demonstrate empathy, coaching skills, and ability to provide support.",
+                    category: "leadership"
+                },
+                {
+                    question: "Tell me about a time you had to make an unpopular decision",
+                    difficulty: "advanced",
+                    tips: "Show your decision-making process and how you communicated the decision.",
+                    category: "leadership"
+                },
+                {
+                    question: "How do you develop and mentor others?",
+                    difficulty: "intermediate",
+                    tips: "Provide specific examples of how you've helped others grow professionally.",
+                    category: "leadership"
+                }
+            ],
+            technical: [
+                {
+                    question: "Walk me through your approach to debugging a complex issue",
+                    difficulty: "intermediate",
+                    tips: "Show systematic thinking and problem-solving methodology.",
+                    category: "technical"
+                },
+                {
+                    question: "How do you stay current with new technologies?",
+                    difficulty: "beginner",
+                    tips: "Mention specific resources, projects, or learning methods you use.",
+                    category: "technical"
+                },
+                {
+                    question: "Describe a challenging technical project you worked on",
+                    difficulty: "intermediate",
+                    tips: "Explain the technical details while keeping it accessible to non-technical interviewers.",
+                    category: "technical"
+                },
+                {
+                    question: "How do you ensure code quality in your projects?",
+                    difficulty: "intermediate",
+                    tips: "Mention specific practices like code reviews, testing, and documentation.",
+                    category: "technical"
+                }
+            ]
+        };
+        
+        // DOM elements
+        const categoryBtns = document.querySelectorAll('[data-category]');
+        const difficultySelect = document.getElementById('interview-difficulty');
+        const timerSelect = document.getElementById('interview-timer');
+        const questionBox = document.getElementById('interview-question-box');
+        const currentQuestion = document.getElementById('current-question');
+        const questionInfo = document.getElementById('question-info');
+        const questionCategory = document.getElementById('question-category');
+        const questionDifficulty = document.getElementById('question-difficulty');
+        const questionTips = document.getElementById('question-tips');
+        const practiceTimerDiv = document.getElementById('practice-timer');
+        const timerDisplay = document.getElementById('timer-display');
+        const timerProgress = document.getElementById('timer-progress');
+        const randomQuestionBtn = document.getElementById('random-question-btn');
+        const previousQuestionBtn = document.getElementById('previous-question-btn');
+        const nextQuestionBtn = document.getElementById('next-question-btn');
+        const startPracticeBtn = document.getElementById('start-practice-btn');
+        const stopPracticeBtn = document.getElementById('stop-practice-btn');
+        const startCameraBtn = document.getElementById('start-camera-btn');
+        const startRecordingBtn = document.getElementById('start-recording-btn');
+        const stopRecordingBtn = document.getElementById('stop-recording-btn');
+        const stopCameraBtn = document.getElementById('stop-camera-btn');
+        const liveVideo = document.getElementById('live-video');
+        const playbackVideo = document.getElementById('playback-video');
+        const videoPlaceholder = document.getElementById('video-placeholder');
+        const recordingsSection = document.getElementById('recordings-section');
+        const recordingsList = document.getElementById('recordings-list');
+        
+        // Initialize interview
+        initializeInterview();
+        
+        function initializeInterview() {
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Load interview history
+            loadInterviewHistory();
+            
+            // Show random question
+            showRandomQuestion();
+        }
+        
+        function setupEventListeners() {
+            // Category selection
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentCategory = btn.dataset.category;
+                    updateCategorySelection();
+                    showRandomQuestion();
+                });
+            });
+            
+            // Difficulty change
+            if (difficultySelect) {
+                difficultySelect.addEventListener('change', () => {
+                    currentDifficulty = difficultySelect.value;
+                    showRandomQuestion();
+                });
+            }
+            
+            // Timer change
+            if (timerSelect) {
+                timerSelect.addEventListener('change', () => {
+                    practiceTimeRemaining = parseInt(timerSelect.value) * 60;
+                    updateTimerDisplay();
+                });
+            }
+            
+            // Question navigation
+            if (randomQuestionBtn) randomQuestionBtn.addEventListener('click', showRandomQuestion);
+            if (previousQuestionBtn) previousQuestionBtn.addEventListener('click', showPreviousQuestion);
+            if (nextQuestionBtn) nextQuestionBtn.addEventListener('click', showNextQuestion);
+            
+            // Practice controls
+            if (startPracticeBtn) startPracticeBtn.addEventListener('click', startPractice);
+            if (stopPracticeBtn) stopPracticeBtn.addEventListener('click', stopPractice);
+            
+            // Recording controls
+            if (startCameraBtn) startCameraBtn.addEventListener('click', startCamera);
+            if (startRecordingBtn) startRecordingBtn.addEventListener('click', startRecording);
+            if (stopRecordingBtn) stopRecordingBtn.addEventListener('click', stopRecording);
+            if (stopCameraBtn) stopCameraBtn.addEventListener('click', stopCamera);
+        }
+        
+        function updateCategorySelection() {
+            categoryBtns.forEach(btn => {
+                if (btn.dataset.category === currentCategory) {
+                    btn.classList.add('ring-2', 'ring-forest-green', 'ring-offset-2');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-forest-green', 'ring-offset-2');
+                }
+            });
+        }
+        
+        function showRandomQuestion() {
+            const questions = interviewQuestions[currentCategory] || interviewQuestions.general;
+            const filteredQuestions = questions.filter(q => q.difficulty === currentDifficulty);
+            
+            if (filteredQuestions.length > 0) {
+                const randomIndex = Math.floor(Math.random() * filteredQuestions.length);
+                const question = filteredQuestions[randomIndex];
+                currentQuestionIndex = questions.indexOf(question);
+                displayQuestion(question);
+            } else {
+                // Fallback to any difficulty
+                const randomIndex = Math.floor(Math.random() * questions.length);
+                const question = questions[randomIndex];
+                currentQuestionIndex = randomIndex;
+                displayQuestion(question);
+            }
+        }
+        
+        function showPreviousQuestion() {
+            const questions = interviewQuestions[currentCategory] || interviewQuestions.general;
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion(questions[currentQuestionIndex]);
+            }
+        }
+        
+        function showNextQuestion() {
+            const questions = interviewQuestions[currentCategory] || interviewQuestions.general;
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion(questions[currentQuestionIndex]);
+            }
+        }
+        
+        function displayQuestion(question) {
+            if (currentQuestion) currentQuestion.textContent = question.question;
+            if (questionCategory) questionCategory.textContent = `Category: ${question.category}`;
+            if (questionDifficulty) questionDifficulty.textContent = `Difficulty: ${question.difficulty}`;
+            if (questionTips) questionTips.textContent = `💡 Tip: ${question.tips}`;
+            
+            // Show question info
+            if (questionInfo) questionInfo.classList.remove('hidden');
+            
+            // Show practice button
+            if (startPracticeBtn) startPracticeBtn.classList.remove('hidden');
+        }
+        
+        function startPractice() {
+            if (!isPracticeRunning) {
+                isPracticeRunning = true;
+                practiceTimeRemaining = parseInt(timerSelect.value) * 60;
+                
+                // Update UI
+                if (startPracticeBtn) startPracticeBtn.classList.add('hidden');
+                if (stopPracticeBtn) stopPracticeBtn.classList.remove('hidden');
+                if (practiceTimerDiv) practiceTimerDiv.classList.remove('hidden');
+                
+                // Start timer
+                practiceTimer = setInterval(() => {
+                    if (practiceTimeRemaining > 0) {
+                        practiceTimeRemaining--;
+                        updateTimerDisplay();
+                    } else {
+                        stopPractice();
+                    }
+                }, 1000);
+                
+                // Show notification
+                showNotification('Practice started! Speak clearly and confidently. 🎤', 'success');
+            }
+        }
+        
+        function stopPractice() {
+            if (isPracticeRunning) {
+                isPracticeRunning = false;
+                
+                // Clear timer
+                if (practiceTimer) {
+                    clearInterval(practiceTimer);
+                    practiceTimer = null;
+                }
+                
+                // Update UI
+                if (startPracticeBtn) startPracticeBtn.classList.remove('hidden');
+                if (stopPracticeBtn) stopPracticeBtn.classList.add('hidden');
+                if (practiceTimerDiv) practiceTimerDiv.classList.add('hidden');
+                
+                // Show completion message
+                showNotification('Practice completed! Great job! 🎉', 'success');
+                
+                // Reset timer
+                practiceTimeRemaining = parseInt(timerSelect.value) * 60;
+                updateTimerDisplay();
+            }
+        }
+        
+        function updateTimerDisplay() {
+            if (timerDisplay) {
+                const minutes = Math.floor(practiceTimeRemaining / 60);
+                const seconds = practiceTimeRemaining % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            if (timerProgress) {
+                const totalTime = parseInt(timerSelect.value) * 60;
+                const progress = ((totalTime - practiceTimeRemaining) / totalTime) * 100;
+                timerProgress.style.width = `${progress}%`;
+            }
+        }
+        
+        function startRecording() {
+            if (stream && !isRecording) {
+                recordedChunks = [];
+                mediaRecorder = new MediaRecorder(stream);
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        recordedChunks.push(event.data);
+                    }
+                };
+                
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    if (playbackVideo) {
+                        playbackVideo.src = url;
+                        playbackVideo.classList.remove('hidden');
+                        liveVideo.classList.add('hidden');
+                    }
+                    
+                    // Save recording
+                    saveRecording(blob);
+                };
+                
+                mediaRecorder.start();
+                isRecording = true;
+                
+                // Update buttons
+                if (startRecordingBtn) startRecordingBtn.classList.add('hidden');
+                if (stopRecordingBtn) stopRecordingBtn.classList.remove('hidden');
+                
+                showNotification('Recording started! 🔴', 'success');
+            }
+        }
+        
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+                
+                // Update buttons
+                if (stopRecordingBtn) stopRecordingBtn.classList.add('hidden');
+                if (startRecordingBtn) startRecordingBtn.classList.remove('hidden');
+                
+                showNotification('Recording stopped! Check your playback. ⏹️', 'success');
+            }
+        }
+        
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+            
+            if (liveVideo) {
+                liveVideo.classList.add('hidden');
+                videoPlaceholder.classList.remove('hidden');
+            }
+            
+            if (playbackVideo) {
+                playbackVideo.classList.add('hidden');
+            }
+            
+            // Update buttons
+            if (startCameraBtn) startCameraBtn.classList.remove('hidden');
+            if (startRecordingBtn) startRecordingBtn.classList.add('hidden');
+            if (stopRecordingBtn) stopRecordingBtn.classList.add('hidden');
+            if (stopCameraBtn) stopCameraBtn.classList.add('hidden');
+            
+            showNotification('Camera stopped', 'info');
+        }
+        
+        function saveRecording(blob) {
+            const recording = {
+                id: Date.now(),
+                date: new Date().toLocaleString(),
+                category: currentCategory,
+                difficulty: currentDifficulty,
+                question: currentQuestion.textContent,
+                duration: practiceTimeRemaining,
+                blob: blob
+            };
+            
+            interviewHistory.unshift(recording);
+            if (interviewHistory.length > 20) { // Keep only last 20 recordings
+                interviewHistory = interviewHistory.slice(0, 20);
+            }
+            
+            localStorage.setItem('interviewHistory', JSON.stringify(interviewHistory));
+            loadRecordings();
+        }
+        
+        function loadRecordings() {
+            if (recordingsList) {
+                if (interviewHistory.length === 0) {
+                    recordingsList.innerHTML = `
+                        <div class="text-center py-8">
+                            <div class="w-16 h-16 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-forest-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-semibold text-charcoal mb-2">No recordings yet</h3>
+                            <p class="text-charcoal/70">Start recording to see your practice sessions here</p>
+                        </div>
+                    `;
+                } else {
+                    recordingsList.innerHTML = interviewHistory.map(recording => `
+                        <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-gray-200">
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <div class="text-sm font-semibold text-charcoal">${recording.date}</div>
+                                    <div class="text-xs text-charcoal/60">${recording.category} • ${recording.difficulty}</div>
+                                </div>
+                                <button onclick="deleteInterviewRecording('${recording.id}')" class="text-charcoal/40 hover:text-red-500 transition-colors p-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="text-charcoal text-sm mb-3">${recording.question}</div>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="playRecording('${recording.id}')" class="px-3 py-1 bg-forest-green text-white text-xs rounded-lg hover:bg-forest-green/90 transition-colors">
+                                    ▶️ Play
+                                </button>
+                                <button onclick="downloadRecording('${recording.id}')" class="px-3 py-1 bg-earthy-gold text-white text-xs rounded-lg hover:bg-earthy-gold/90 transition-colors">
+                                    💾 Download
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+        }
+        
+        function loadInterviewHistory() {
+            const saved = localStorage.getItem('interviewHistory');
+            if (saved) {
+                interviewHistory = JSON.parse(saved);
+            }
+            loadRecordings();
+        }
+        
+        // Global functions for recording management
+        window.deleteInterviewRecording = function(recordingId) {
+            interviewHistory = interviewHistory.filter(r => r.id !== recordingId);
+            localStorage.setItem('interviewHistory', JSON.stringify(interviewHistory));
+            loadRecordings();
+            showNotification('Recording deleted', 'info');
+        };
+        
+        window.playRecording = function(recordingId) {
+            const recording = interviewHistory.find(r => r.id === recordingId);
+            if (recording && playbackVideo) {
+                const url = URL.createObjectURL(recording.blob);
+                playbackVideo.src = url;
+                playbackVideo.classList.remove('hidden');
+                liveVideo.classList.add('hidden');
+            }
+        };
+        
+        window.downloadRecording = function(recordingId) {
+            const recording = interviewHistory.find(r => r.id === recordingId);
+            if (recording) {
+                const url = URL.createObjectURL(recording.blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `interview-practice-${recording.date}.webm`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        };
+        
+        // Show recordings section if there are recordings
+        if (interviewHistory.length > 0 && recordingsSection) {
+            recordingsSection.classList.remove('hidden');
+        }
+    }
+
+    // Data Management System
+    class DataManager {
+        static KEYS = {
+            JOURNAL_ENTRIES: 'dhamma_journal_entries',
+            JOURNAL_DRAFT: 'dhamma_journal_draft',
+            TIMER_SETTINGS: 'dhamma_timer_settings',
+            WORKOUT_PROGRESS: 'dhamma_workout_progress',
+            WORKOUT_HISTORY: 'dhamma_workout_history',
+            INTERVIEW_RECORDINGS: 'dhamma_interview_recordings',
+            INTERVIEW_HISTORY: 'dhamma_interview_history',
+            USER_PREFERENCES: 'dhamma_user_preferences'
+        };
+
+        static DEFAULTS = {
+            timerSettings: {
+                duration: 5,
+                soundEnabled: true,
+                autoStart: false
+            },
+            workoutProgress: {
+                currentDay: 1,
+                completedDays: [],
+                totalWorkouts: 0,
+                bestTime: null
+            },
+            userPreferences: {
+                theme: 'light',
+                notifications: true,
+                soundEnabled: true
+            }
+        };
+
+        static init() {
+            // Initialize with default values if not present
+            Object.keys(this.KEYS).forEach(key => {
+                if (!this.has(this.KEYS[key])) {
+                    const defaultValue = this.DEFAULTS[key.toLowerCase()] || null;
+                    if (defaultValue !== null) {
+                        this.set(this.KEYS[key], defaultValue);
+                    }
+                }
+            });
+        }
+
+        static set(key, value) {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+                return true;
+            } catch (error) {
+                console.error('Failed to save data:', error);
+                return false;
+            }
+        }
+
+        static get(key, defaultValue = null) {
+            try {
+                const item = localStorage.getItem(key);
+                return item ? JSON.parse(item) : defaultValue;
+            } catch (error) {
+                console.error('Failed to load data:', error);
+                return defaultValue;
+            }
+        }
+
+        static has(key) {
+            return localStorage.getItem(key) !== null;
+        }
+
+        static remove(key) {
+            try {
+                localStorage.removeItem(key);
+                return true;
+            } catch (error) {
+                console.error('Failed to remove data:', error);
+                return false;
+            }
+        }
+
+        static clearAll() {
+            try {
+                Object.values(this.KEYS).forEach(key => {
+                    localStorage.removeItem(key);
+                });
+                return true;
+            } catch (error) {
+                console.error('Failed to clear data:', error);
+                return false;
+            }
+        }
+
+        static exportData() {
+            const data = {};
+            Object.entries(this.KEYS).forEach(([name, key]) => {
+                data[name] = this.get(key);
+            });
+            return data;
+        }
+
+        static importData(data) {
+            try {
+                Object.entries(data).forEach(([name, value]) => {
+                    if (this.KEYS[name]) {
+                        this.set(this.KEYS[name], value);
+                    }
+                });
+                return { success: true, message: 'Data imported successfully' };
+            } catch (error) {
+                console.error('Failed to import data:', error);
+                return { success: false, message: 'Failed to import data' };
+            }
+        }
+
+        static getStorageInfo() {
+            const info = {
+                used: 0,
+                available: 0,
+                total: 0,
+                items: {}
+            };
+
+            try {
+                // Calculate used space
+                for (let key in localStorage) {
+                    if (localStorage.hasOwnProperty(key)) {
+                        const size = new Blob([localStorage[key]]).size;
+                        info.used += size;
+                        info.items[key] = size;
+                    }
+                }
+
+                // Estimate available space (most browsers have 5-10MB limit)
+                info.total = 5 * 1024 * 1024; // 5MB estimate
+                info.available = info.total - info.used;
+            } catch (error) {
+                console.error('Failed to get storage info:', error);
+            }
+
+            return info;
+        }
+    }
+
+    // Notification System
+    function showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full`;
+        
+        // Set colors based on type
+        const colors = {
+            success: 'bg-green-500 text-white',
+            error: 'bg-red-500 text-white',
+            warning: 'bg-yellow-500 text-black',
+            info: 'bg-blue-500 text-white'
+        };
+        
+        notification.className += ` ${colors[type] || colors.info}`;
+        notification.textContent = message;
+        
+        // Add to DOM
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.classList.remove('translate-x-full');
+        }, 100);
+        
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            notification.classList.add('translate-x-full');
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
+    }
+
+    // Journal Entry Management
+    function loadJournalEntries() {
+        const entriesList = document.getElementById('journal-history-list');
+        if (entriesList) {
+            const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+            
+            if (entries.length === 0) {
+                entriesList.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="w-16 h-16 bg-light-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-forest-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-charcoal mb-2">No entries yet</h3>
+                        <p class="text-charcoal/70">Start writing to see your entries here</p>
+                    </div>
+                `;
+            } else {
+                entriesList.innerHTML = entries.map(entry => `
+                    <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">${entry.mood || '😊'}</span>
+                                <div>
+                                    <div class="text-sm font-semibold text-charcoal">${entry.date}</div>
+                                    <div class="text-xs text-charcoal/60">${entry.wordCount || entry.text.split(/\s+/).length} words</div>
+                                </div>
+                            </div>
+                            <button onclick="deleteJournalEntry('${entry.id}')" class="text-charcoal/40 hover:text-red-500 transition-colors p-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                 </svg>
