@@ -2207,10 +2207,25 @@
         
         .video-container {
             transition: all 0.3s ease;
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            contain: layout style paint; /* CSS containment for better performance */
         }
         
         .video-container:hover {
             transform: scale(1.02);
+        }
+        
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            contain: layout style paint;
         }
         
         /* Meditation timer animations */
@@ -2272,30 +2287,25 @@
             
             .video-container {
                 margin-bottom: 1.5rem;
+                height: 200px; /* Fixed height for mobile */
+                padding-bottom: 0;
             }
             
             .video-container video {
                 border-radius: 0.75rem;
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+            
+            /* Mobile-specific video improvements */
+            .video-container {
+                background: #f3f4f6;
+                border: 2px dashed #d1d5db;
+                border-radius: 0.75rem;
             }
         }
         
-        /* Video containers with better performance */
-        .video-container {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            contain: layout style paint; /* CSS containment for better performance */
-        }
-        
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            contain: layout style paint;
-        }
         
         .recording-dot {
             animation: pulse 1.5s infinite;
@@ -2541,27 +2551,36 @@
                     
                     <!-- Key Benefits -->
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8 md:mb-12 slide-in-right">
-                        <div class="text-center p-4 sm:p-6 md:p-8 lg:p-10 bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-forest-green/20 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                        <a href="#" data-page="timer" class="main-nav-link text-center p-4 sm:p-6 md:p-8 lg:p-10 bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-forest-green/20 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer block">
                             <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg">
                                 <span class="text-2xl sm:text-3xl">🧘‍♂️</span>
                             </div>
                             <p class="text-sm sm:text-base md:text-lg font-bold text-charcoal mb-2 sm:mb-3">Find Inner Peace</p>
                             <p class="text-xs sm:text-sm md:text-base text-charcoal/80 mt-1 sm:mt-2 leading-relaxed">Daily meditation for clarity and calm</p>
-                        </div>
-                        <div class="text-center p-4 sm:p-6 md:p-8 lg:p-10 bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-earthy-gold/20 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                            <div class="mt-3 flex items-center justify-center">
+                                <span class="text-xs text-forest-green font-semibold">Start Meditating →</span>
+                            </div>
+                        </a>
+                        <a href="#" data-page="workout" class="main-nav-link text-center p-4 sm:p-6 md:p-8 lg:p-10 bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-earthy-gold/20 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer block">
                             <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg">
                                 <span class="text-2xl sm:text-3xl">⚡</span>
                             </div>
                             <p class="text-sm sm:text-base md:text-lg font-bold text-charcoal mb-2 sm:mb-3">Boost Energy</p>
                             <p class="text-xs sm:text-sm md:text-base text-charcoal/80 mt-1 sm:mt-2 leading-relaxed">7-minute workouts to start strong</p>
-                        </div>
-                        <div class="text-center p-4 sm:p-6 md:p-8 lg:p-10 bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-light-green/20 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                            <div class="mt-3 flex items-center justify-center">
+                                <span class="text-xs text-earthy-gold font-semibold">Start Workout →</span>
+                            </div>
+                        </a>
+                        <a href="#" data-page="interview" class="main-nav-link text-center p-4 sm:p-6 md:p-8 lg:p-10 bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-light-green/20 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer block">
                             <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-light-green to-light-green/80 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg">
                                 <span class="text-2xl sm:text-3xl">🎯</span>
                             </div>
                             <p class="text-sm sm:text-base md:text-lg font-bold text-charcoal mb-2 sm:mb-3">Build Confidence</p>
                             <p class="text-xs sm:text-sm md:text-base text-charcoal/80 mt-1 sm:mt-2 leading-relaxed">Practice speaking and storytelling</p>
-                        </div>
+                            <div class="mt-3 flex items-center justify-center">
+                                <span class="text-xs text-light-green font-semibold">Start Practice →</span>
+                            </div>
+                        </a>
                     </div>
                     
                     <!-- How It Works -->
@@ -4316,16 +4335,17 @@
                     <h3 class="text-lg sm:text-xl font-bold text-charcoal mb-4 sm:mb-6 text-center">Record Your Practice</h3>
                     
                     <!-- Video Container -->
-                    <div class="video-container relative mb-4 sm:mb-6">
-                        <video id="live-video" class="w-full h-48 sm:h-64 bg-gray-100 rounded-xl object-cover hidden" playsinline muted preload="none"></video>
-                        <video id="playback-video" class="w-full h-48 sm:h-64 bg-gray-100 rounded-xl object-cover hidden" playsinline controls></video>
-                        <div id="video-placeholder" class="w-full h-48 sm:h-64 bg-gradient-to-br from-forest-green/10 to-forest-green/5 rounded-xl flex items-center justify-center border-2 border-dashed border-forest-green/30">
+                    <div class="video-container mb-4 sm:mb-6">
+                        <video id="live-video" class="bg-gray-100 rounded-xl hidden" playsinline muted preload="none" webkit-playsinline></video>
+                        <video id="playback-video" class="bg-gray-100 rounded-xl hidden" playsinline controls webkit-playsinline></video>
+                        <div id="video-placeholder" class="absolute inset-0 bg-gradient-to-br from-forest-green/10 to-forest-green/5 rounded-xl flex items-center justify-center border-2 border-dashed border-forest-green/30">
                             <div class="text-center p-4">
                                 <svg class="w-12 h-12 text-forest-green mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                                 </svg>
                                 <p class="text-sm text-charcoal/70 mb-2">Click "Start Camera" to begin recording</p>
                                 <p class="text-xs text-charcoal/50">Optimized for mobile devices</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -5122,19 +5142,23 @@
         // Camera functionality
         startCameraBtn.addEventListener('click', async () => {
             try {
-                // Mobile-optimized video settings for better performance
+                // Enhanced mobile detection
                 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
                 
+                // Mobile-optimized video settings for better performance
                 const videoConstraints = isMobile ? {
                     width: { ideal: 640, max: 1280 },
                     height: { ideal: 480, max: 720 },
                     facingMode: 'user',
-                    frameRate: { ideal: 15, max: 30 }
+                    frameRate: { ideal: 15, max: 30 },
+                    aspectRatio: { ideal: 16/9 }
                 } : {
                     width: { ideal: 1280, max: 1920 },
                     height: { ideal: 720, max: 1080 },
                     facingMode: 'user',
-                    frameRate: { ideal: 30, max: 60 }
+                    frameRate: { ideal: 30, max: 60 },
+                    aspectRatio: { ideal: 16/9 }
                 };
                 
                 stream = await navigator.mediaDevices.getUserMedia({ 
@@ -5147,11 +5171,12 @@
                 });
                 
                 // Optimize video for mobile performance
-                    liveVideo.srcObject = stream;
+                liveVideo.srcObject = stream;
                 liveVideo.style.display = 'block';
                 liveVideo.muted = true; // Mute to prevent feedback
                 liveVideo.playsInline = true; // Important for iOS
                 liveVideo.setAttribute('playsinline', 'true'); // iOS compatibility
+                liveVideo.setAttribute('webkit-playsinline', 'true'); // Older iOS compatibility
                 
                 videoPlaceholder.style.display = 'none';
                 playbackVideo.style.display = 'none';
