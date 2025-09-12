@@ -333,6 +333,34 @@
         @media (min-width: 1024px) {
             .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
         }
+        /* Enhanced Mobile Touch Support */
+        button {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
+        }
+        
+        /* Prevent double-tap zoom on all interactive elements */
+        button, input, select, textarea, a {
+            touch-action: manipulation;
+        }
+        
+        /* Ensure buttons respond properly to touch events */
+        .btn-enhanced {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Better touch feedback */
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        /* Prevent text selection on buttons during touch */
+        button * {
+            pointer-events: none;
+        }
     </style>
 
     <!-- Custom Styles and Dark Mode Logic -->
@@ -6525,7 +6553,7 @@
                                         <span class="font-bold text-xl sm:text-2xl group-hover:tracking-wide transition-all duration-300">Start Meditation</span>
                                     </div>
                                 </button>
-                                <button id="timer-pause-btn" class="w-full sm:w-auto px-8 sm:px-10 md:px-12 py-5 sm:py-6 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-3xl hover:from-earthy-gold/90 hover:to-earthy-gold/80 hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 text-xl sm:text-2xl min-h-[64px] shadow-2xl touch-manipulation btn-enhanced group">
+                                <button id="timer-pause-btn" class="hidden w-full sm:w-auto px-8 sm:px-10 md:px-12 py-5 sm:py-6 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-3xl hover:from-earthy-gold/90 hover:to-earthy-gold/80 hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 text-xl sm:text-2xl min-h-[64px] shadow-2xl touch-manipulation btn-enhanced group">
                                     <div class="flex items-center justify-center space-x-4">
                                         <span class="text-3xl group-hover:scale-110 transition-transform duration-300">⏸️</span>
                                         <span class="font-bold text-xl sm:text-2xl group-hover:tracking-wide transition-all duration-300">Pause</span>
@@ -7666,16 +7694,53 @@
     window.navigateTo = navigateToPage;
     window.navigateToPage = navigateToPage;
 
+    // ===== UTILITY FUNCTIONS FOR BETTER MOBILE/DESKTOP SUPPORT =====
+    // Prevent double-triggering of events on touch devices
+    function addClickAndTouch(element, handler) {
+        if (!element) return;
+        
+        let touchHandled = false;
+        
+        // Handle touch events
+        element.addEventListener('touchstart', function(e) {
+            touchHandled = true;
+            // Reset flag after a short delay
+            setTimeout(() => { touchHandled = false; }, 500);
+        }, { passive: true });
+        
+        element.addEventListener('touchend', function(e) {
+            if (touchHandled) {
+                e.preventDefault();
+                handler(e);
+                touchHandled = false;
+            }
+        }, { passive: false });
+        
+        // Handle click events (for desktop and as fallback)
+        element.addEventListener('click', function(e) {
+            if (!touchHandled) {
+                e.preventDefault();
+                handler(e);
+            }
+        });
+    }
+    
     // ===== GLOBAL TIMER FUNCTIONS =====
     // These are defined at the top so they're available everywhere
     window.startTimer = function() {
-        // Start timer called
+        console.log('startTimer called, isRunning:', window.isRunning, 'isPaused:', window.isPaused);
         if (!window.isRunning) {
             window.isRunning = true;
             window.isPaused = false;
             
-            if (window.startBtn) window.startBtn.classList.add('hidden');
-            if (window.pauseBtn) window.pauseBtn.classList.remove('hidden');
+            if (window.startBtn) {
+                window.startBtn.classList.add('hidden');
+                console.log('Start button hidden');
+            }
+            if (window.pauseBtn) {
+                window.pauseBtn.classList.remove('hidden');
+                console.log('Pause button shown');
+            }
                 
             window.timerInterval = setInterval(() => {
                 if (window.timeRemaining > 0) {
@@ -7690,23 +7755,67 @@
                         window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
                     }
                     if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+                    // Vibrate on completion for mobile
+                    if ('vibrate' in navigator) {
+                        navigator.vibrate([200, 100, 200]);
+                    }
+                }
+            }, 1000);
+        } else if (window.isPaused) {
+            // Resume from pause
+            window.isRunning = true;
+            window.isPaused = false;
+            
+            if (window.startBtn) window.startBtn.classList.add('hidden');
+            if (window.pauseBtn) window.pauseBtn.classList.remove('hidden');
+            
+            window.timerInterval = setInterval(() => {
+                if (window.timeRemaining > 0) {
+                    window.timeRemaining--;
+                    window.updateDisplay();
+                } else {
+                    clearInterval(window.timerInterval);
+                    window.isRunning = false;
+                    if (window.status) window.status.textContent = 'Session complete! 🎉';
+                    if (window.startBtn) {
+                        window.startBtn.classList.remove('hidden');
+                        window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+                    }
+                    if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+                    // Vibrate on completion for mobile
+                    if ('vibrate' in navigator) {
+                        navigator.vibrate([200, 100, 200]);
+                    }
                 }
             }, 1000);
         }
     };
 
     window.pauseTimer = function() {
+        console.log('pauseTimer called, isRunning:', window.isRunning);
         if (window.isRunning) {
             window.isRunning = false;
             window.isPaused = true;
             clearInterval(window.timerInterval);
-            if (window.startBtn) window.startBtn.classList.remove('hidden');
-            if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+            if (window.startBtn) {
+                window.startBtn.classList.remove('hidden');
+                window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Resume</span></div>';
+                console.log('Start button shown with Resume text');
+            }
+            if (window.pauseBtn) {
+                window.pauseBtn.classList.add('hidden');
+                console.log('Pause button hidden');
+            }
             window.updateDisplay();
+            // Haptic feedback for mobile
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
         }
     };
 
     window.resetTimer = function() {
+        console.log('resetTimer called');
         clearInterval(window.timerInterval);
         window.isRunning = false;
         window.isPaused = false;
@@ -7721,8 +7830,19 @@
         if (window.startBtn) {
             window.startBtn.classList.remove('hidden');
             window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+            console.log('Start button shown with Start text');
         }
-        if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+        if (window.pauseBtn) {
+            window.pauseBtn.classList.add('hidden');
+            console.log('Pause button hidden');
+        }
+        if (window.status) {
+            window.status.textContent = 'Ready to begin';
+        }
+        // Haptic feedback for mobile
+        if ('vibrate' in navigator) {
+            navigator.vibrate(30);
+        }
     };
 
     window.updateDisplay = function() {
@@ -7884,10 +8004,12 @@
     // Timer logic
     function attachTimerLogic() {
         // Attaching enhanced timer logic
+        console.log('Attaching timer logic...');
         
         // Add a small delay to ensure DOM is fully rendered
         setTimeout(() => {
             // Looking for timer elements after delay
+            console.log('Setting up timer controls...');
             
             const startBtn = document.getElementById('timer-start-btn');
             const pauseBtn = document.getElementById('timer-pause-btn');
@@ -7911,16 +8033,46 @@
             // Initialize timer state
             window.timeRemaining = parseInt(durationSelect ? durationSelect.value : 600);
             window.totalTime = window.timeRemaining;
+            window.isRunning = false;
+            window.isPaused = false;
             
-            // Event listeners
+            // Initialize button visibility
+            if (pauseBtn) {
+                pauseBtn.classList.add('hidden');
+                console.log('Pause button hidden initially');
+            }
             if (startBtn) {
-                startBtn.addEventListener('click', window.startTimer);
+                startBtn.classList.remove('hidden');
+                console.log('Start button visible initially');
+            }
+            
+            // Remove any existing event listeners first and use unified click/touch handler
+            if (startBtn) {
+                const newStartBtn = startBtn.cloneNode(true);
+                startBtn.parentNode.replaceChild(newStartBtn, startBtn);
+                window.startBtn = newStartBtn;
+                addClickAndTouch(newStartBtn, function(e) {
+                    console.log('Start button activated');
+                    window.startTimer();
+                });
             }
             if (pauseBtn) {
-                pauseBtn.addEventListener('click', window.pauseTimer);
+                const newPauseBtn = pauseBtn.cloneNode(true);
+                pauseBtn.parentNode.replaceChild(newPauseBtn, pauseBtn);
+                window.pauseBtn = newPauseBtn;
+                addClickAndTouch(newPauseBtn, function(e) {
+                    console.log('Pause button activated');
+                    window.pauseTimer();
+                });
             }
             if (resetBtn) {
-                resetBtn.addEventListener('click', window.resetTimer);
+                const newResetBtn = resetBtn.cloneNode(true);
+                resetBtn.parentNode.replaceChild(newResetBtn, resetBtn);
+                window.resetBtn = newResetBtn;
+                addClickAndTouch(newResetBtn, function(e) {
+                    console.log('Reset button activated');
+                    window.resetTimer();
+                });
             }
             
             // Duration change
@@ -10365,19 +10517,75 @@
         
          function initializeWorkout() {
              console.log('Initializing workout...');
-             // Set up event listeners
+             // Set up event listeners with proper cleanup and mobile support
               if (elements.startBtn) {
                   console.log('Adding start button event listener');
-                  elements.startBtn.addEventListener('click', startWorkout);
+                  // Remove any existing listeners by cloning
+                  const newStartBtn = elements.startBtn.cloneNode(true);
+                  elements.startBtn.parentNode.replaceChild(newStartBtn, elements.startBtn);
+                  elements.startBtn = newStartBtn;
+                  
+                  addClickAndTouch(newStartBtn, function(e) {
+                      console.log('Workout start button activated');
+                      startWorkout();
+                  });
               } else {
                   console.log('Start button not found for event listener');
               }
-              if (elements.pauseBtn) elements.pauseBtn.addEventListener('click', pauseWorkout);
-              if (elements.resetBtn) elements.resetBtn.addEventListener('click', resetWorkout);
-             if (elements.doubleModeCheckbox) elements.doubleModeCheckbox.addEventListener('change', toggleDoubleMode);
-             if (elements.soundSelect) elements.soundSelect.addEventListener('change', toggleSound);
-             if (elements.prevBtn) elements.prevBtn.addEventListener('click', previousExercise);
-             if (elements.nextBtn) elements.nextBtn.addEventListener('click', nextExercise);
+              
+              if (elements.pauseBtn) {
+                  const newPauseBtn = elements.pauseBtn.cloneNode(true);
+                  elements.pauseBtn.parentNode.replaceChild(newPauseBtn, elements.pauseBtn);
+                  elements.pauseBtn = newPauseBtn;
+                  
+                  addClickAndTouch(newPauseBtn, function(e) {
+                      console.log('Workout pause button activated');
+                      pauseWorkout();
+                  });
+              }
+              
+              if (elements.resetBtn) {
+                  const newResetBtn = elements.resetBtn.cloneNode(true);
+                  elements.resetBtn.parentNode.replaceChild(newResetBtn, elements.resetBtn);
+                  elements.resetBtn = newResetBtn;
+                  
+                  addClickAndTouch(newResetBtn, function(e) {
+                      console.log('Workout reset button activated');
+                      resetWorkout();
+                  });
+              }
+              
+             if (elements.doubleModeCheckbox) {
+                 elements.doubleModeCheckbox.addEventListener('change', toggleDoubleMode);
+             }
+             
+             if (elements.soundSelect) {
+                 elements.soundSelect.addEventListener('change', toggleSound);
+             }
+             
+             if (elements.prevBtn) {
+                 console.log('Adding previous button event listener');
+                 const newPrevBtn = elements.prevBtn.cloneNode(true);
+                 elements.prevBtn.parentNode.replaceChild(newPrevBtn, elements.prevBtn);
+                 elements.prevBtn = newPrevBtn;
+                 
+                 addClickAndTouch(newPrevBtn, function(e) {
+                     console.log('Previous button activated');
+                     previousExercise();
+                 });
+             }
+             
+             if (elements.nextBtn) {
+                 console.log('Adding next button event listener');
+                 const newNextBtn = elements.nextBtn.cloneNode(true);
+                 elements.nextBtn.parentNode.replaceChild(newNextBtn, elements.nextBtn);
+                 elements.nextBtn = newNextBtn;
+                 
+                 addClickAndTouch(newNextBtn, function(e) {
+                     console.log('Next button activated');
+                     nextExercise();
+                 });
+             }
              
               // Set up exercise card click listeners
               const exerciseCards = document.querySelectorAll('.exercise-card');
@@ -10495,26 +10703,42 @@
         }
         
         function previousExercise() {
+            console.log('previousExercise called, currentExercise:', currentExercise);
             if (currentExercise > 0) {
                 currentExercise--;
                 currentTime = isDoubleMode ? 60 : 30;
                 updateCurrentExerciseDisplay();
                 updateWorkoutDisplay();
                 showNotification(`Moved to exercise ${currentExercise + 1}: ${exercises[currentExercise].name}`, 'info');
+                // Haptic feedback for mobile
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(30);
+                }
             } else {
                 showNotification('Already at first exercise', 'warning');
+                if ('vibrate' in navigator) {
+                    navigator.vibrate([20, 10, 20]);
+                }
             }
         }
         
         function nextExercise() {
+            console.log('nextExercise called, currentExercise:', currentExercise);
             if (currentExercise < exercises.length - 1) {
                 currentExercise++;
                 currentTime = isDoubleMode ? 60 : 30;
                 updateCurrentExerciseDisplay();
                 updateWorkoutDisplay();
                 showNotification(`Moved to exercise ${currentExercise + 1}: ${exercises[currentExercise].name}`, 'info');
+                // Haptic feedback for mobile
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(30);
+                }
             } else {
                 showNotification('Already at last exercise', 'warning');
+                if ('vibrate' in navigator) {
+                    navigator.vibrate([20, 10, 20]);
+                }
             }
         }
         
