@@ -4619,17 +4619,22 @@
                             
                             <!-- Control Buttons - Mobile First with Better Touch Targets -->
                             <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+                                <!-- Simple test button first -->
+                                <button onclick="alert('SIMPLE BUTTON WORKS!')" style="background: red; color: white; padding: 20px; font-size: 20px; border: none; cursor: pointer; margin: 10px;">
+                                    SIMPLE TEST BUTTON
+                    </button>
+                                
                                 <button id="timer-start-btn" onclick="testButtonClick()" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-base sm:text-lg min-h-[56px] shadow-lg touch-manipulation">
                                     <div class="flex items-center justify-center space-x-2">
                                         <span class="text-xl">▶️</span>
                                         <span>Start Meditation</span>
-                                    </div>
+                </div>
                                 </button>
                                 <button id="timer-pause-btn" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-2xl hover:from-earthy-gold/90 hover:to-earthy-gold/80 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-base sm:text-lg min-h-[56px] shadow-lg hidden touch-manipulation">
                                     <div class="flex items-center justify-center space-x-2">
                                         <span class="text-xl">⏸️</span>
                                         <span>Pause</span>
-                                    </div>
+            </div>
                                 </button>
                                 <button id="timer-reset-btn" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold rounded-2xl hover:from-gray-600 hover:to-gray-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-base sm:text-lg min-h-[56px] shadow-lg touch-manipulation">
                                     <div class="flex items-center justify-center space-x-2">
@@ -5342,8 +5347,38 @@
         alert('Button click is working! JavaScript is functioning properly.');
     }
     
-    // Make test function globally accessible
+    // Check for overlays or blocking elements
+    function checkForBlockingElements() {
+        console.log('Checking for blocking elements...');
+        const timerButtons = document.querySelectorAll('button[id*="timer"]');
+        console.log('Found timer buttons:', timerButtons.length);
+        
+        timerButtons.forEach((btn, index) => {
+            const rect = btn.getBoundingClientRect();
+            const computedStyle = window.getComputedStyle(btn);
+            console.log(`Button ${index}:`, {
+                element: btn,
+                rect: rect,
+                pointerEvents: computedStyle.pointerEvents,
+                zIndex: computedStyle.zIndex,
+                position: computedStyle.position,
+                display: computedStyle.display,
+                visibility: computedStyle.visibility,
+                opacity: computedStyle.opacity
+            });
+            
+            // Check if there's an element covering this button
+            const elementAtCenter = document.elementFromPoint(
+                rect.left + rect.width / 2,
+                rect.top + rect.height / 2
+            );
+            console.log(`Element at button ${index} center:`, elementAtCenter);
+        });
+    }
+    
+    // Make test functions globally accessible
     window.testButtonClick = testButtonClick;
+    window.checkForBlockingElements = checkForBlockingElements;
     
     // Global variables
     let mainContent;
@@ -5531,8 +5566,11 @@
                 console.error('Essential timer buttons not found, cannot attach logic');
                 return;
             }
-            
+
             alert('Timer logic is being attached!');
+            
+            // Check for blocking elements
+            checkForBlockingElements();
             
             // Test if buttons are clickable
             console.log('Testing button clickability...');
