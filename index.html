@@ -3813,17 +3813,18 @@
                                 <p class="text-sm text-center">Could not access camera and microphone. Please check your browser permissions and try again.</p>
                             </div>
                         </div>
-                        <div id="recorder-controls" class="mt-8 flex items-center justify-center space-x-6">
-                            <button id="start-recording-btn" class="px-12 py-6 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-xl shadow-xl border-2 border-forest-green" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
-                                <span class="flex items-center space-x-3">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div id="recorder-controls" class="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                            <button id="start-recording-btn" class="px-8 sm:px-12 py-4 sm:py-6 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg sm:text-xl shadow-xl border-2 border-forest-green min-h-[48px] w-full sm:w-auto" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
+                                <span class="flex items-center justify-center space-x-2 sm:space-x-3">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                                     </svg>
-                                    <span>Start Morning Practice</span>
+                                    <span class="hidden sm:inline">Start Morning Practice</span>
+                                    <span class="sm:hidden">Start Recording</span>
                                 </span>
                             </button>
-                            <button id="stop-recording-btn" class="px-10 py-5 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg hidden shadow-lg border-2 border-red-600" style="background-color: #dc2626 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
-                                <span class="flex items-center space-x-2">
+                            <button id="stop-recording-btn" class="px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-base sm:text-lg hidden shadow-lg border-2 border-red-600 min-h-[48px] w-full sm:w-auto" style="background-color: #dc2626 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
+                                <span class="flex items-center justify-center space-x-2">
                                     <span class="w-3 h-3 bg-white rounded-full recording-dot"></span>
                                     <span>End Recording</span>
                                 </span>
@@ -4416,6 +4417,14 @@
         
         const questionEl = document.getElementById('interview-question');
         const nextBtn = document.getElementById('next-question-btn');
+        const startRecordingBtn = document.getElementById('start-recording-btn');
+        const stopRecordingBtn = document.getElementById('stop-recording-btn');
+        const liveVideo = document.getElementById('live-video');
+        const playbackVideo = document.getElementById('playback-video');
+        const cameraError = document.getElementById('camera-error');
+        const recordingsList = document.getElementById('recordings-list');
+        const noRecordingsMessage = document.getElementById('no-recordings-message');
+        const playbackSection = document.getElementById('playback-section');
         
         const questions = [
             "Tell me about yourself.",
@@ -4431,6 +4440,13 @@
         ];
         
         let currentQuestion = 0;
+        let mediaStream = null;
+        let mediaRecorder = null;
+        let recordedChunks = [];
+        let recordings = [];
+        
+        // Check for mobile device
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
         function updateQuestion() {
             if (questionEl) {
@@ -4443,11 +4459,184 @@
             updateQuestion();
         }
         
+        async function startCamera() {
+            try {
+                // Request camera and microphone access
+                const constraints = {
+                    video: {
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 },
+                        facingMode: isMobile ? 'user' : 'user' // Use front camera on mobile
+                    },
+                    audio: true
+                };
+                
+                mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+                
+                if (liveVideo) {
+                    liveVideo.srcObject = mediaStream;
+                    liveVideo.play();
+                }
+                
+                if (cameraError) {
+                    cameraError.classList.add('hidden');
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+                if (cameraError) {
+                    cameraError.classList.remove('hidden');
+                }
+                return false;
+            }
+        }
+        
+        function stopCamera() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
+            if (liveVideo) {
+                liveVideo.srcObject = null;
+            }
+        }
+        
+        function startRecording() {
+            if (!mediaStream) return;
+            
+            recordedChunks = [];
+            mediaRecorder = new MediaRecorder(mediaStream, {
+                mimeType: 'video/webm;codecs=vp9' // Better mobile support
+            });
+            
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                }
+            };
+            
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                const url = URL.createObjectURL(blob);
+                const timestamp = new Date().toLocaleString();
+                
+                // Store recording
+                recordings.push({
+                    url: url,
+                    timestamp: timestamp,
+                    question: questions[currentQuestion] || 'Practice Session'
+                });
+                
+                // Update UI
+                updateRecordingsList();
+                showPlayback(url);
+            };
+            
+            mediaRecorder.start();
+            
+            // Update UI
+            if (startRecordingBtn) startRecordingBtn.classList.add('hidden');
+            if (stopRecordingBtn) stopRecordingBtn.classList.remove('hidden');
+        }
+        
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+            }
+            
+            // Update UI
+            if (startRecordingBtn) startRecordingBtn.classList.remove('hidden');
+            if (stopRecordingBtn) stopRecordingBtn.classList.add('hidden');
+        }
+        
+        function updateRecordingsList() {
+            if (!recordingsList || !noRecordingsMessage) return;
+            
+            if (recordings.length === 0) {
+                noRecordingsMessage.classList.remove('hidden');
+                recordingsList.innerHTML = '';
+            } else {
+                noRecordingsMessage.classList.add('hidden');
+                recordingsList.innerHTML = recordings.map((recording, index) => `
+                    <div class="bg-white rounded-xl p-4 shadow-lg border border-gray-200 mb-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="font-semibold text-charcoal">Recording ${index + 1}</h4>
+                            <span class="text-sm text-charcoal/70">${recording.timestamp}</span>
+                        </div>
+                        <p class="text-sm text-charcoal/70 mb-3">${recording.question}</p>
+                        <div class="flex space-x-2">
+                            <button onclick="playRecording('${recording.url}')" class="px-4 py-2 bg-forest-green text-white rounded-lg hover:bg-forest-green/90 transition-colors text-sm">
+                                ▶️ Play
+                            </button>
+                            <button onclick="downloadRecording('${recording.url}', 'recording-${index + 1}.webm')" class="px-4 py-2 bg-earthy-gold text-white rounded-lg hover:bg-earthy-gold/90 transition-colors text-sm">
+                                💾 Download
+                            </button>
+                            <button onclick="deleteRecording(${index})" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm">
+                                🗑️ Delete
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        function showPlayback(url) {
+            if (playbackVideo && playbackSection) {
+                playbackVideo.src = url;
+                playbackSection.classList.remove('hidden');
+            }
+        }
+        
+        // Global functions for recording management
+        window.playRecording = (url) => {
+            if (playbackVideo && playbackSection) {
+                playbackVideo.src = url;
+                playbackSection.classList.remove('hidden');
+            }
+        };
+        
+        window.downloadRecording = (url, filename) => {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        };
+        
+        window.deleteRecording = (index) => {
+            if (recordings[index]) {
+                URL.revokeObjectURL(recordings[index].url);
+                recordings.splice(index, 1);
+                updateRecordingsList();
+            }
+        };
+        
+        // Event listeners
         if (nextBtn) {
             nextBtn.addEventListener('click', nextQuestion);
         }
         
+        if (startRecordingBtn) {
+            startRecordingBtn.addEventListener('click', async () => {
+                const cameraStarted = await startCamera();
+                if (cameraStarted) {
+                    startRecording();
+                }
+            });
+        }
+        
+        if (stopRecordingBtn) {
+            stopRecordingBtn.addEventListener('click', () => {
+                stopRecording();
+                stopCamera();
+            });
+        }
+        
+        // Initialize
         updateQuestion();
+        updateRecordingsList();
     }
 
     // Dark mode functionality
