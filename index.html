@@ -3758,44 +3758,115 @@
                 <p class="text-base sm:text-lg text-charcoal/80 max-w-2xl mx-auto px-4">Practice speaking skills and build self-assurance</p>
             </div>
             
-            <!-- Enhanced Practice Options -->
-            <div class="bg-gradient-to-br from-earthy-gold/15 via-white to-earthy-gold/5 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg border border-earthy-gold/20 mb-6 sm:mb-8 lg:mb-10 relative overflow-hidden">
-                <!-- Subtle background elements with floating animation -->
-                <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-earthy-gold/10 to-transparent rounded-full blur-2xl float-animation"></div>
-                <div class="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-forest-green/10 to-transparent rounded-full blur-xl float-animation"></div>
-                
-                <div class="text-center mb-6 sm:mb-8 relative">
-                    <h3 class="text-lg sm:text-xl font-bold text-charcoal mb-2 drop-shadow-sm">Choose Your Confidence Practice</h3>
-                    <p class="text-xs sm:text-sm text-charcoal/70">Select a category to practice different speaking skills</p>
+            <!-- Practice Question Sets -->
+            <div class="space-y-8">
+                <!-- General Questions -->
+                <div class="bg-gradient-to-br from-forest-green/10 to-forest-green/5 rounded-2xl p-6 sm:p-8 border border-forest-green/20">
+                    <h3 class="text-xl sm:text-2xl font-bold text-charcoal mb-6 text-center">General Interview Questions</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200">
+                            <h4 class="font-semibold text-charcoal mb-3">Classic Questions</h4>
+                            <ul class="space-y-2 text-sm text-charcoal/70">
+                                <li>• Tell me about yourself</li>
+                                <li>• What are your strengths?</li>
+                                <li>• What are your weaknesses?</li>
+                                <li>• Why do you want this job?</li>
+                                <li>• Where do you see yourself in 5 years?</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200">
+                            <h4 class="font-semibold text-charcoal mb-3">Behavioral Questions</h4>
+                            <ul class="space-y-2 text-sm text-charcoal/70">
+                                <li>• What's your greatest achievement?</li>
+                                <li>• How do you handle stress?</li>
+                                <li>• Describe a challenging situation</li>
+                                <li>• Why should we hire you?</li>
+                                <li>• What questions do you have for us?</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
-                    <button data-category="general" class="interview-cat-btn px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs sm:text-sm shadow-lg border-2 border-forest-green min-h-[48px]" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #2d5016 !important;">Daily Life</button>
-                    <button data-category="storytelling" class="interview-cat-btn px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs sm:text-sm shadow-lg border-2 border-earthy-gold min-h-[48px]" style="background-color: #b8860b !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #b8860b !important;">Storytelling</button>
-                    <button data-category="communication" class="interview-cat-btn px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-light-green to-light-green/80 text-forest-green font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs sm:text-sm shadow-lg border-2 border-forest-green min-h-[48px]" style="background-color: #d4edda !important; color: #2d5016 !important; display: inline-block !important; visibility: visible !important; border: 2px solid #2d5016 !important;">Communication</button>
-                    <button data-category="creativity" class="interview-cat-btn px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-forest-green to-forest-green/80 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs sm:text-sm shadow-lg border-2 border-forest-green min-h-[48px]" style="background-color: #4A6C55 !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #4A6C55 !important;">Creativity</button>
-                </div>
-                <div class="text-center">
-                    <button id="random-question-btn" class="px-8 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-earthy-gold to-earthy-gold/80 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg border-2 border-earthy-gold min-h-[48px]" style="background-color: #B98B4C !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #B98B4C !important;">
-                        <span class="text-sm sm:text-base">🎲 Random Question</span>
-                    </button>
-                </div>
-                
-                <!-- Practice Tips -->
-                <div class="mt-4 sm:mt-6 bg-earthy-gold/10 rounded-lg p-3 sm:p-4">
-                    <p class="text-xs sm:text-sm text-charcoal/70 text-center">
-                        💡 <strong>Practice Tip:</strong> Speak out loud for 2-3 minutes per question. Record yourself to track your progress and confidence growth.
-                    </p>
-                </div>
-            </div>
 
-            <!-- Enhanced Question Box -->
-            <div id="interview-question-box" class="p-10 bg-gradient-to-br from-earthy-gold/20 via-white to-earthy-gold/10 rounded-2xl text-center mb-10 shadow-xl border border-earthy-gold/20 relative overflow-hidden">
-                <!-- Subtle background elements -->
-                <div class="absolute inset-0 opacity-5">
-                    <div class="absolute top-0 left-0 w-32 h-32 bg-earthy-gold rounded-full blur-2xl"></div>
-                    <div class="absolute bottom-0 right-0 w-24 h-24 bg-forest-green rounded-full blur-xl"></div>
+                <!-- Storytelling Questions -->
+                <div class="bg-gradient-to-br from-earthy-gold/10 to-earthy-gold/5 rounded-2xl p-6 sm:p-8 border border-earthy-gold/20">
+                    <h3 class="text-xl sm:text-2xl font-bold text-charcoal mb-6 text-center">Storytelling Practice</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200">
+                            <h4 class="font-semibold text-charcoal mb-3">Success Stories</h4>
+                            <ul class="space-y-2 text-sm text-charcoal/70">
+                                <li>• Tell me about a time you failed and learned</li>
+                                <li>• Share a story about going above and beyond</li>
+                                <li>• Describe a project you're proud of</li>
+                                <li>• Tell me about a time you persuaded someone</li>
+                                <li>• Share when you helped a teammate succeed</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200">
+                            <h4 class="font-semibold text-charcoal mb-3">Challenge Stories</h4>
+                            <ul class="space-y-2 text-sm text-charcoal/70">
+                                <li>• Describe working with a difficult person</li>
+                                <li>• Tell me about a tough decision you made</li>
+                                <li>• Share a time you learned something quickly</li>
+                                <li>• Describe adapting to change</li>
+                                <li>• Tell me about dealing with conflict</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <h2 id="interview-question" class="text-3xl font-lora text-earthy-gold relative drop-shadow-sm">Tell me about yourself.</h2>
+
+                <!-- Communication Questions -->
+                <div class="bg-gradient-to-br from-light-green/10 to-light-green/5 rounded-2xl p-6 sm:p-8 border border-light-green/20">
+                    <h3 class="text-xl sm:text-2xl font-bold text-charcoal mb-6 text-center">Communication Skills</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200">
+                            <h4 class="font-semibold text-charcoal mb-3">Feedback & Criticism</h4>
+                            <ul class="space-y-2 text-sm text-charcoal/70">
+                                <li>• How do you handle constructive criticism?</li>
+                                <li>• Describe your communication style</li>
+                                <li>• How do you give difficult feedback?</li>
+                                <li>• How do you build rapport with colleagues?</li>
+                                <li>• Tell me about a recent presentation</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200">
+                            <h4 class="font-semibold text-charcoal mb-3">Team Communication</h4>
+                            <ul class="space-y-2 text-sm text-charcoal/70">
+                                <li>• How do you ensure team understanding?</li>
+                                <li>• Tell me about explaining complex topics</li>
+                                <li>• How do you handle disagreements?</li>
+                                <li>• How do you ensure your message is understood?</li>
+                                <li>• Describe communicating bad news</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Creativity Questions -->
+                <div class="bg-gradient-to-br from-purple-500/10 to-purple-500/5 rounded-2xl p-6 sm:p-8 border border-purple-500/20">
+                    <h3 class="text-xl sm:text-2xl font-bold text-charcoal mb-6 text-center">Creativity & Innovation</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200">
+                            <h4 class="font-semibold text-charcoal mb-3">Problem Solving</h4>
+                            <ul class="space-y-2 text-sm text-charcoal/70">
+                                <li>• How do you approach problem-solving?</li>
+                                <li>• Tell me about a creative solution you implemented</li>
+                                <li>• How do you stay innovative in your work?</li>
+                                <li>• Describe thinking outside the box</li>
+                                <li>• How do you generate new ideas?</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200">
+                            <h4 class="font-semibold text-charcoal mb-3">Creative Leadership</h4>
+                            <ul class="space-y-2 text-sm text-charcoal/70">
+                                <li>• Tell me about a project with creative freedom</li>
+                                <li>• How do you balance creativity with practicality?</li>
+                                <li>• Describe finding a creative workaround</li>
+                                <li>• How do you inspire creativity in others?</li>
+                                <li>• Tell me about an ahead-of-its-time idea</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <!-- Main Practice Area - Single Column -->
@@ -3803,79 +3874,220 @@
                 <!-- Recording Section - Centered -->
                 <div class="text-center">
                     <h3 class="text-2xl font-bold font-lora text-charcoal mb-6 drop-shadow-sm">Your Camera</h3>
-                    <div id="recorder-section">
-                        <div class="relative bg-gradient-to-br from-gray-200 to-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-200">
-                            <div class="video-container">
-                                <video id="live-video" class="w-full h-full" autoplay muted></video>
-                            </div>
-                            <div id="camera-error" class="hidden absolute inset-0 bg-black/70 text-white flex flex-col items-center justify-center p-6 rounded-2xl">
-                                <h4 class="font-bold text-xl mb-2">Camera Error</h4>
-                                <p class="text-sm text-center">Could not access camera and microphone. Please check your browser permissions and try again.</p>
+                    <!-- Video Practice Options -->
+                    <div class="space-y-6">
+                        <div class="bg-gradient-to-br from-light-green/20 to-light-green/10 rounded-2xl p-6 sm:p-8 border border-light-green/30">
+                            <h3 class="text-xl sm:text-2xl font-bold text-charcoal mb-4 text-center">Choose Your Practice Method</h3>
+                            <p class="text-charcoal/70 text-center mb-6">Select the best option for your video practice session</p>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                                <!-- Phone Camera Option -->
+                                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow">
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-forest-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                            </svg>
+                                        </div>
+                                        <h4 class="text-lg sm:text-xl font-semibold text-charcoal mb-2">Phone Camera</h4>
+                                        <p class="text-sm sm:text-base text-charcoal/70 mb-4">Use your phone's built-in camera app to record yourself</p>
+                                        <div class="space-y-2 text-xs sm:text-sm text-charcoal/60">
+                                            <p>• Open your camera app</p>
+                                            <p>• Switch to video mode</p>
+                                            <p>• Practice answering questions</p>
+                                            <p>• Review your recordings</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Mirror Practice Option -->
+                                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow">
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-earthy-gold/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-earthy-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                            </svg>
+                                        </div>
+                                        <h4 class="text-lg sm:text-xl font-semibold text-charcoal mb-2">Mirror Practice</h4>
+                                        <p class="text-sm sm:text-base text-charcoal/70 mb-4">Practice in front of a mirror for immediate feedback</p>
+                                        <div class="space-y-2 text-xs sm:text-sm text-charcoal/60">
+                                            <p>• Stand in front of a mirror</p>
+                                            <p>• Practice your answers</p>
+                                            <p>• Watch your body language</p>
+                                            <p>• Focus on eye contact</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Voice Recording Option -->
+                                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow">
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                                            </svg>
+                                        </div>
+                                        <h4 class="text-lg sm:text-xl font-semibold text-charcoal mb-2">Voice Recording</h4>
+                                        <p class="text-sm sm:text-base text-charcoal/70 mb-4">Use a voice recorder to practice your answers</p>
+                                        <div class="space-y-2 text-xs sm:text-sm text-charcoal/60">
+                                            <p>• Use phone voice recorder</p>
+                                            <p>• Focus on speaking clearly</p>
+                                            <p>• Practice pacing and tone</p>
+                                            <p>• Listen back for improvement</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Video Call Practice Option -->
+                                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow">
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                            </svg>
+                                        </div>
+                                        <h4 class="text-lg sm:text-xl font-semibold text-charcoal mb-2">Video Call Practice</h4>
+                                        <p class="text-sm sm:text-base text-charcoal/70 mb-4">Practice with a friend or family member</p>
+                                        <div class="space-y-2 text-xs sm:text-sm text-charcoal/60">
+                                            <p>• Schedule a practice call</p>
+                                            <p>• Use Zoom, Teams, or FaceTime</p>
+                                            <p>• Get real-time feedback</p>
+                                            <p>• Practice in realistic setting</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div id="recorder-controls" class="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                            <button id="start-recording-btn" class="px-8 sm:px-12 py-4 sm:py-6 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg sm:text-xl shadow-xl border-2 border-forest-green min-h-[48px] w-full sm:w-auto" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
-                                <span class="flex items-center justify-center space-x-2 sm:space-x-3">
-                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                    </svg>
-                                    <span class="hidden sm:inline">Start Morning Practice</span>
-                                    <span class="sm:hidden">Start Recording</span>
-                                </span>
-                            </button>
-                            <button id="stop-recording-btn" class="px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-base sm:text-lg hidden shadow-lg border-2 border-red-600 min-h-[48px] w-full sm:w-auto" style="background-color: #dc2626 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
-                                <span class="flex items-center justify-center space-x-2">
-                                    <span class="w-3 h-3 bg-white rounded-full recording-dot"></span>
-                                    <span>End Recording</span>
-                                </span>
-                            </button>
+
+                        <!-- Practice Tips -->
+                        <div class="bg-gradient-to-br from-earthy-gold/10 to-earthy-gold/5 rounded-2xl p-4 sm:p-6 border border-earthy-gold/20">
+                            <h4 class="text-lg sm:text-xl font-semibold text-charcoal mb-3 text-center">Practice Tips</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base text-charcoal/70">
+                                <div class="space-y-2">
+                                    <p><strong>Body Language:</strong> Sit up straight, maintain eye contact</p>
+                                    <p><strong>Speaking:</strong> Speak clearly and at a steady pace</p>
+                                </div>
+                                <div class="space-y-2">
+                                    <p><strong>Preparation:</strong> Practice common questions beforehand</p>
+                                    <p><strong>Confidence:</strong> Believe in your abilities and experience</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Playback Section - Centered -->
+                <!-- Practice Resources Section -->
                 <div class="text-center">
-                    <h3 class="text-2xl font-bold font-lora text-charcoal mb-6 drop-shadow-sm">Session Recordings</h3>
-                    <div id="playback-section" class="space-y-6">
-                         <div id="no-recordings-message" class="text-center p-10 bg-gradient-to-br from-light-green/30 to-light-green/10 rounded-2xl text-charcoal/70 shadow-lg border border-light-green/20">
-                             <div class="flex flex-col items-center space-y-3">
-                                 <svg class="w-12 h-12 text-light-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                 </svg>
-                                 <p class="text-lg font-medium">Your recordings for this session will appear here.</p>
-                             </div>
-                         </div>
-                         <div id="recordings-list"></div>
-                         <div class="relative bg-gradient-to-br from-gray-200 to-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden hidden shadow-xl border border-gray-200" id="playback-video-container">
-                             <div class="video-container">
-                                 <video id="playback-video" class="w-full h-full" controls></video>
-                             </div>
-                         </div>
-                         <div id="interview-feedback" class="hidden text-center p-4 bg-light-green rounded-lg text-charcoal/80 mt-4"></div>
+                    <h3 class="text-2xl font-bold font-lora text-charcoal mb-6 drop-shadow-sm">Practice Resources</h3>
+                    <div class="space-y-6">
+                        <!-- Recording Apps -->
+                        <div class="bg-gradient-to-br from-forest-green/10 to-forest-green/5 rounded-2xl p-6 sm:p-8 border border-forest-green/20">
+                            <h4 class="text-xl sm:text-2xl font-bold text-charcoal mb-4">Recommended Recording Apps</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200">
+                                    <h5 class="font-semibold text-charcoal mb-2">iPhone Camera</h5>
+                                    <p class="text-sm text-charcoal/70 mb-3">Built-in video recording with excellent quality</p>
+                                    <div class="text-xs text-charcoal/60 space-y-1">
+                                        <p>• High-quality video</p>
+                                        <p>• Easy to use</p>
+                                        <p>• Automatic cloud backup</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200">
+                                    <h5 class="font-semibold text-charcoal mb-2">Android Camera</h5>
+                                    <p class="text-sm text-charcoal/70 mb-3">Google Camera or Samsung Camera app</p>
+                                    <div class="text-xs text-charcoal/60 space-y-1">
+                                        <p>• Professional features</p>
+                                        <p>• Multiple recording modes</p>
+                                        <p>• Easy sharing</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-200">
+                                    <h5 class="font-semibold text-charcoal mb-2">Voice Memos</h5>
+                                    <p class="text-sm text-charcoal/70 mb-3">Audio-only practice for speaking skills</p>
+                                    <div class="text-xs text-charcoal/60 space-y-1">
+                                        <p>• Focus on speech</p>
+                                        <p>• Easy playback</p>
+                                        <p>• Small file sizes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Practice Schedule -->
+                        <div class="bg-gradient-to-br from-earthy-gold/10 to-earthy-gold/5 rounded-2xl p-6 sm:p-8 border border-earthy-gold/20">
+                            <h4 class="text-xl sm:text-2xl font-bold text-charcoal mb-4">Practice Schedule</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <h5 class="font-semibold text-charcoal mb-3">Daily Practice (10-15 minutes)</h5>
+                                    <div class="space-y-2 text-sm text-charcoal/70">
+                                        <p>• Choose 2-3 questions</p>
+                                        <p>• Record your answers</p>
+                                        <p>• Review and improve</p>
+                                        <p>• Focus on one skill area</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-charcoal mb-3">Weekly Review (30 minutes)</h5>
+                                    <div class="space-y-2 text-sm text-charcoal/70">
+                                        <p>• Watch all recordings</p>
+                                        <p>• Note improvements</p>
+                                        <p>• Identify areas to work on</p>
+                                        <p>• Plan next week's focus</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Success Tips -->
+                        <div class="bg-gradient-to-br from-light-green/10 to-light-green/5 rounded-2xl p-6 sm:p-8 border border-light-green/20">
+                            <h4 class="text-xl sm:text-2xl font-bold text-charcoal mb-4">Success Tips</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                                <div class="text-center">
+                                    <div class="w-12 h-12 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                        <span class="text-forest-green font-bold text-lg">1</span>
+                                    </div>
+                                    <h5 class="font-semibold text-charcoal mb-2">Consistency</h5>
+                                    <p class="text-sm text-charcoal/70">Practice daily, even if just for 5 minutes</p>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <div class="w-12 h-12 bg-earthy-gold/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                        <span class="text-earthy-gold font-bold text-lg">2</span>
+                                    </div>
+                                    <h5 class="font-semibold text-charcoal mb-2">Self-Reflection</h5>
+                                    <p class="text-sm text-charcoal/70">Watch your recordings and identify improvements</p>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                        <span class="text-blue-500 font-bold text-lg">3</span>
+                                    </div>
+                                    <h5 class="font-semibold text-charcoal mb-2">Progress Tracking</h5>
+                                    <p class="text-sm text-charcoal/70">Keep a journal of your practice sessions</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Enhanced Question Navigation -->
-            <div class="text-center mt-12 space-y-6">
-                <div class="flex justify-center space-x-6">
-                    <button id="next-question-btn" class="px-10 py-5 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg shadow-xl border-2 border-earthy-gold" style="background-color: #b8860b !important; color: white !important; display: inline-block !important; visibility: visible !important;">
-                        <span class="flex items-center space-x-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 4l1.5 1.5A9 9 0 0120.5 15M20 20l-1.5-1.5A9 9 0 003.5 9"></path>
-                            </svg>
-                            <span>Next Question</span>
-                        </span>
-                    </button>
-                    <button id="previous-question-btn" class="px-10 py-5 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg shadow-xl border-2 border-gray-600" style="background-color: #4b5563 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
-                        <span class="flex items-center space-x-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                            </svg>
-                            <span>Previous</span>
-                        </span>
-                    </button>
+            <!-- Practice Instructions -->
+            <div class="text-center mt-8 sm:mt-12">
+                <div class="bg-gradient-to-br from-earthy-gold/10 to-earthy-gold/5 rounded-2xl p-6 sm:p-8 border border-earthy-gold/20">
+                    <h3 class="text-xl sm:text-2xl font-bold text-charcoal mb-4">How to Practice</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm sm:text-base text-charcoal/70">
+                        <div class="space-y-3">
+                            <h4 class="font-semibold text-charcoal">Choose Your Questions</h4>
+                            <p>Select questions from any category above that interest you or challenge you the most.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <h4 class="font-semibold text-charcoal">Practice Speaking</h4>
+                            <p>Speak your answers out loud for 2-3 minutes per question to build confidence.</p>
+                        </div>
+                    </div>
                 </div>
-                <p class="text-sm text-charcoal/70 font-medium">Click to change your practice prompt</p>
             </div>
         </div>
     </template>
@@ -4413,230 +4625,7 @@
 
     // Interview logic
     function attachInterviewLogic() {
-        console.log('Attaching interview logic...');
-        
-        const questionEl = document.getElementById('interview-question');
-        const nextBtn = document.getElementById('next-question-btn');
-        const startRecordingBtn = document.getElementById('start-recording-btn');
-        const stopRecordingBtn = document.getElementById('stop-recording-btn');
-        const liveVideo = document.getElementById('live-video');
-        const playbackVideo = document.getElementById('playback-video');
-        const cameraError = document.getElementById('camera-error');
-        const recordingsList = document.getElementById('recordings-list');
-        const noRecordingsMessage = document.getElementById('no-recordings-message');
-        const playbackSection = document.getElementById('playback-section');
-        
-        const questions = [
-            "Tell me about yourself.",
-            "What are your strengths?",
-            "What are your weaknesses?",
-            "Why do you want this job?",
-            "Where do you see yourself in 5 years?",
-            "Why should we hire you?",
-            "What's your greatest achievement?",
-            "How do you handle stress?",
-            "Describe a challenging situation you overcame.",
-            "What questions do you have for us?"
-        ];
-        
-        let currentQuestion = 0;
-        let mediaStream = null;
-        let mediaRecorder = null;
-        let recordedChunks = [];
-        let recordings = [];
-        
-        // Check for mobile device
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        function updateQuestion() {
-            if (questionEl) {
-                questionEl.textContent = questions[currentQuestion] || "No more questions";
-            }
-        }
-        
-        function nextQuestion() {
-            currentQuestion = (currentQuestion + 1) % questions.length;
-            updateQuestion();
-        }
-        
-        async function startCamera() {
-            try {
-                // Request camera and microphone access
-                const constraints = {
-                    video: {
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 },
-                        facingMode: isMobile ? 'user' : 'user' // Use front camera on mobile
-                    },
-                    audio: true
-                };
-                
-                mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
-                
-                if (liveVideo) {
-                    liveVideo.srcObject = mediaStream;
-                    liveVideo.play();
-                }
-                
-                if (cameraError) {
-                    cameraError.classList.add('hidden');
-                }
-                
-                return true;
-            } catch (error) {
-                console.error('Error accessing camera:', error);
-                if (cameraError) {
-                    cameraError.classList.remove('hidden');
-                }
-                return false;
-            }
-        }
-        
-        function stopCamera() {
-            if (mediaStream) {
-                mediaStream.getTracks().forEach(track => track.stop());
-                mediaStream = null;
-            }
-            if (liveVideo) {
-                liveVideo.srcObject = null;
-            }
-        }
-        
-        function startRecording() {
-            if (!mediaStream) return;
-            
-            recordedChunks = [];
-            mediaRecorder = new MediaRecorder(mediaStream, {
-                mimeType: 'video/webm;codecs=vp9' // Better mobile support
-            });
-            
-            mediaRecorder.ondataavailable = (event) => {
-                if (event.data.size > 0) {
-                    recordedChunks.push(event.data);
-                }
-            };
-            
-            mediaRecorder.onstop = () => {
-                const blob = new Blob(recordedChunks, { type: 'video/webm' });
-                const url = URL.createObjectURL(blob);
-                const timestamp = new Date().toLocaleString();
-                
-                // Store recording
-                recordings.push({
-                    url: url,
-                    timestamp: timestamp,
-                    question: questions[currentQuestion] || 'Practice Session'
-                });
-                
-                // Update UI
-                updateRecordingsList();
-                showPlayback(url);
-            };
-            
-            mediaRecorder.start();
-            
-            // Update UI
-            if (startRecordingBtn) startRecordingBtn.classList.add('hidden');
-            if (stopRecordingBtn) stopRecordingBtn.classList.remove('hidden');
-        }
-        
-        function stopRecording() {
-            if (mediaRecorder && mediaRecorder.state === 'recording') {
-                mediaRecorder.stop();
-            }
-            
-            // Update UI
-            if (startRecordingBtn) startRecordingBtn.classList.remove('hidden');
-            if (stopRecordingBtn) stopRecordingBtn.classList.add('hidden');
-        }
-        
-        function updateRecordingsList() {
-            if (!recordingsList || !noRecordingsMessage) return;
-            
-            if (recordings.length === 0) {
-                noRecordingsMessage.classList.remove('hidden');
-                recordingsList.innerHTML = '';
-            } else {
-                noRecordingsMessage.classList.add('hidden');
-                recordingsList.innerHTML = recordings.map((recording, index) => `
-                    <div class="bg-white rounded-xl p-4 shadow-lg border border-gray-200 mb-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <h4 class="font-semibold text-charcoal">Recording ${index + 1}</h4>
-                            <span class="text-sm text-charcoal/70">${recording.timestamp}</span>
-                        </div>
-                        <p class="text-sm text-charcoal/70 mb-3">${recording.question}</p>
-                        <div class="flex space-x-2">
-                            <button onclick="playRecording('${recording.url}')" class="px-4 py-2 bg-forest-green text-white rounded-lg hover:bg-forest-green/90 transition-colors text-sm">
-                                ▶️ Play
-                            </button>
-                            <button onclick="downloadRecording('${recording.url}', 'recording-${index + 1}.webm')" class="px-4 py-2 bg-earthy-gold text-white rounded-lg hover:bg-earthy-gold/90 transition-colors text-sm">
-                                💾 Download
-                            </button>
-                            <button onclick="deleteRecording(${index})" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm">
-                                🗑️ Delete
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-        
-        function showPlayback(url) {
-            if (playbackVideo && playbackSection) {
-                playbackVideo.src = url;
-                playbackSection.classList.remove('hidden');
-            }
-        }
-        
-        // Global functions for recording management
-        window.playRecording = (url) => {
-            if (playbackVideo && playbackSection) {
-                playbackVideo.src = url;
-                playbackSection.classList.remove('hidden');
-            }
-        };
-        
-        window.downloadRecording = (url, filename) => {
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        };
-        
-        window.deleteRecording = (index) => {
-            if (recordings[index]) {
-                URL.revokeObjectURL(recordings[index].url);
-                recordings.splice(index, 1);
-                updateRecordingsList();
-            }
-        };
-        
-        // Event listeners
-        if (nextBtn) {
-            nextBtn.addEventListener('click', nextQuestion);
-        }
-        
-        if (startRecordingBtn) {
-            startRecordingBtn.addEventListener('click', async () => {
-                const cameraStarted = await startCamera();
-                if (cameraStarted) {
-                    startRecording();
-                }
-            });
-        }
-        
-        if (stopRecordingBtn) {
-            stopRecordingBtn.addEventListener('click', () => {
-                stopRecording();
-                stopCamera();
-            });
-        }
-        
-        // Initialize
-        updateQuestion();
-        updateRecordingsList();
+        console.log('Interview page is now HTML-only - no JavaScript functionality needed');
     }
 
     // Dark mode functionality
