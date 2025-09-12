@@ -7659,8 +7659,8 @@
             window.isRunning = true;
             window.isPaused = false;
             
-            if (window.startBtn) window.startBtn.classList.add('hidden');
-            if (window.pauseBtn) window.pauseBtn.classList.remove('hidden');
+            if (window.startBtn) window.elements.startBtn.classList.add('hidden');
+            if (window.pauseBtn) window.elements.pauseBtn.classList.remove('hidden');
                 
             window.timerInterval = setInterval(() => {
                 if (window.timeRemaining > 0) {
@@ -7671,10 +7671,10 @@
                     window.isRunning = false;
                     if (window.status) window.status.textContent = 'Session complete! 🎉';
                     if (window.startBtn) {
-                        window.startBtn.classList.remove('hidden');
-                        window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+                        window.elements.startBtn.classList.remove('hidden');
+                        window.elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
                     }
-                    if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+                    if (window.pauseBtn) window.elements.pauseBtn.classList.add('hidden');
                 }
             }, 1000);
         }
@@ -7685,8 +7685,8 @@
             window.isRunning = false;
             window.isPaused = true;
             clearInterval(window.timerInterval);
-            if (window.startBtn) window.startBtn.classList.remove('hidden');
-            if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+            if (window.startBtn) window.elements.startBtn.classList.remove('hidden');
+            if (window.pauseBtn) window.elements.pauseBtn.classList.add('hidden');
             window.updateDisplay();
         }
     };
@@ -7704,10 +7704,10 @@
         }
         window.updateDisplay();
         if (window.startBtn) {
-            window.startBtn.classList.remove('hidden');
-            window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+            window.elements.startBtn.classList.remove('hidden');
+            window.elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
         }
-        if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+        if (window.pauseBtn) window.elements.pauseBtn.classList.add('hidden');
     };
 
     window.updateDisplay = function() {
@@ -7899,13 +7899,13 @@
             
             // Event listeners
             if (startBtn) {
-                startBtn.addEventListener('click', window.startTimer);
+                elements.startBtn.addEventListener('click', window.startTimer);
             }
             if (pauseBtn) {
-                pauseBtn.addEventListener('click', window.pauseTimer);
+                elements.pauseBtn.addEventListener('click', window.pauseTimer);
             }
             if (resetBtn) {
-                resetBtn.addEventListener('click', window.resetTimer);
+                elements.resetBtn.addEventListener('click', window.resetTimer);
             }
             
             // Duration change
@@ -8092,8 +8092,8 @@
                 }, 1500);
             }
             
-            if (startBtn) startBtn.classList.add('hidden');
-            if (pauseBtn) pauseBtn.classList.remove('hidden');
+            if (startBtn) elements.startBtn.classList.add('hidden');
+            if (pauseBtn) elements.pauseBtn.classList.remove('hidden');
                 
             console.log('Setting up setInterval...');
             timerInterval = setInterval(() => {
@@ -8167,10 +8167,10 @@
                     }, 500);
                     
                     if (startBtn) {
-                        startBtn.classList.remove('hidden');
-                        startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+                        elements.startBtn.classList.remove('hidden');
+                        elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
                     }
-                    if (pauseBtn) pauseBtn.classList.add('hidden');
+                    if (pauseBtn) elements.pauseBtn.classList.add('hidden');
                 }
             }, 1000);
         }
@@ -8192,10 +8192,10 @@
             }
             
             if (startBtn) {
-                startBtn.classList.remove('hidden');
-                startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Resume</span></div>';
+                elements.startBtn.classList.remove('hidden');
+                elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Resume</span></div>';
             }
-            if (pauseBtn) pauseBtn.classList.add('hidden');
+            if (pauseBtn) elements.pauseBtn.classList.add('hidden');
         }
     }
 
@@ -8225,10 +8225,10 @@
         updateDisplay();
         
         if (startBtn) {
-            startBtn.classList.remove('hidden');
-            startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+            elements.startBtn.classList.remove('hidden');
+            elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
         }
-        if (pauseBtn) pauseBtn.classList.add('hidden');
+        if (pauseBtn) elements.pauseBtn.classList.add('hidden');
     }
 
     function attachTimerEventListeners(startBtnParam, pauseBtnParam, resetBtnParam, displayParam, statusParam, durationSelectParam, soundToggleParam, progressRingParam) {
@@ -8244,17 +8244,17 @@
         
         // Event listeners
         if (startBtn) {
-            startBtn.addEventListener('click', () => {
+            elements.startBtn.addEventListener('click', () => {
                 startTimer();
             });
         }
         if (pauseBtn) {
-            pauseBtn.addEventListener('click', () => {
+            elements.pauseBtn.addEventListener('click', () => {
                 pauseTimer();
             });
         }
         if (resetBtn) {
-            resetBtn.addEventListener('click', () => {
+            elements.resetBtn.addEventListener('click', () => {
                 resetTimer();
             });
         }
@@ -8326,7 +8326,7 @@
         // Workout timer functions
         function updateTimerDisplay() {
             if (timerDisplay) {
-                timerDisplay.textContent = currentTime;
+                elements.timerDisplay.textContent = currentTime;
             }
             if (timerLabel) {
                 timerLabel.textContent = currentTime === 1 ? 'second remaining' : 'seconds remaining';
@@ -8336,20 +8336,20 @@
         function updateExerciseDisplay() {
             const exercise = exercises[currentExercise - 1];
             if (exercise) {
-                if (exerciseName) exerciseName.textContent = exercise.name;
-                if (exerciseDescription) exerciseDescription.textContent = `Exercise ${currentExercise} of ${totalExercises}`;
-                if (exerciseEmoji) exerciseEmoji.textContent = exercise.emoji;
-                if (exerciseInstructions) exerciseInstructions.textContent = exercise.description;
+                if (exerciseName) elements.exerciseName.textContent = exercise.name;
+                if (exerciseDescription) elements.exerciseDescription.textContent = `Exercise ${currentExercise} of ${totalExercises}`;
+                if (exerciseEmoji) elements.exerciseEmoji.textContent = exercise.emoji;
+                if (exerciseInstructions) elements.exerciseInstructions.textContent = exercise.description;
             }
         }
         
         function updateProgress() {
             if (progressText) {
-                progressText.textContent = `Exercise ${currentExercise} of ${totalExercises}`;
+                elements.progressText.textContent = `Exercise ${currentExercise} of ${totalExercises}`;
             }
             if (progressBar) {
                 const progress = ((currentExercise - 1) / totalExercises) * 100;
-                progressBar.style.width = `${progress}%`;
+                elements.progressBar.style.width = `${progress}%`;
             }
         }
 
@@ -8361,8 +8361,8 @@
                 currentTime = 30;
                 currentExercise = 1;
                 
-                if (startBtn) startBtn.classList.add('hidden');
-                if (pauseBtn) pauseBtn.classList.remove('hidden');
+                if (startBtn) elements.startBtn.classList.add('hidden');
+                if (pauseBtn) elements.pauseBtn.classList.remove('hidden');
                 
                 updateTimerDisplay();
                 updateProgress();
@@ -8381,14 +8381,14 @@
                             clearInterval(workoutTimer);
                             isWorkoutRunning = false;
                             
-                            if (timerDisplay) timerDisplay.textContent = 'Complete!';
+                            if (timerDisplay) elements.timerDisplay.textContent = 'Complete!';
                             if (timerLabel) timerLabel.textContent = 'Workout finished';
                             
                             if (startBtn) {
-                                startBtn.classList.remove('hidden');
-                                startBtn.textContent = 'Start Again';
+                                elements.startBtn.classList.remove('hidden');
+                                elements.startBtn.textContent = 'Start Again';
                             }
-                            if (pauseBtn) pauseBtn.classList.add('hidden');
+                            if (pauseBtn) elements.pauseBtn.classList.add('hidden');
                             
                             // Remove pulsing effect
                             const timerContainerMobile = document.querySelector('.relative.w-56');
@@ -8401,10 +8401,10 @@
                             
                             // Show start button again
                             if (startBtn) {
-                                startBtn.classList.remove('hidden');
-                                startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+                                elements.startBtn.classList.remove('hidden');
+                                elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
                             }
-                            if (pauseBtn) pauseBtn.classList.add('hidden');
+                            if (pauseBtn) elements.pauseBtn.classList.add('hidden');
                             
                             // Removed alert for production - using notification instead
                         } else {
@@ -8620,8 +8620,10 @@
                 // Reset timer for next entry
                 stopJournalTimer();
                 hasStartedTyping = false;
-                journalTimeRemaining = parseInt(journalTimerDuration.value);
-                updateJournalTimerDisplay();
+                if (journalTimerDuration) {
+                    journalTimeRemaining = parseInt(journalTimerDuration.value);
+                    updateJournalTimerDisplay();
+                }
                 
                 displayEntries();
                 
@@ -8768,11 +8770,16 @@
                 entryText.value = draft;
             }
             
-            // Show save button when there's content
+            // Show save button when there's content and auto-start timer
             entryText.addEventListener('input', () => {
                 if (saveBtn) {
                     if (entryText.value.trim()) {
                         saveBtn.classList.remove('hidden');
+                        // Auto-start timer when user starts typing
+                        if (!hasStartedTyping && !journalIsRunning) {
+                            hasStartedTyping = true;
+                            startJournalTimer();
+                        }
                     } else {
                         saveBtn.classList.add('hidden');
                     }
@@ -8839,7 +8846,7 @@
             // Workout timer functions
             function updateTimerDisplay() {
                 if (timerDisplay) {
-                    timerDisplay.textContent = currentTime;
+                    elements.timerDisplay.textContent = currentTime;
                 }
                 if (timerLabel) {
                     timerLabel.textContent = currentTime === 1 ? 'second remaining' : 'seconds remaining';
@@ -8849,20 +8856,20 @@
             function updateExerciseDisplay() {
                 const exercise = exercises[currentExercise - 1];
                 if (exercise) {
-                    if (exerciseName) exerciseName.textContent = exercise.name;
-                    if (exerciseDescription) exerciseDescription.textContent = `Exercise ${currentExercise} of ${totalExercises}`;
-                    if (exerciseEmoji) exerciseEmoji.textContent = exercise.emoji;
-                    if (exerciseInstructions) exerciseInstructions.textContent = exercise.description;
+                    if (exerciseName) elements.exerciseName.textContent = exercise.name;
+                    if (exerciseDescription) elements.exerciseDescription.textContent = `Exercise ${currentExercise} of ${totalExercises}`;
+                    if (exerciseEmoji) elements.exerciseEmoji.textContent = exercise.emoji;
+                    if (exerciseInstructions) elements.exerciseInstructions.textContent = exercise.description;
                 }
             }
             
             function updateProgress() {
                 if (progressText) {
-                    progressText.textContent = `Exercise ${currentExercise} of ${totalExercises}`;
+                    elements.progressText.textContent = `Exercise ${currentExercise} of ${totalExercises}`;
                 }
                 if (progressBar) {
                     const progress = ((currentExercise - 1) / totalExercises) * 100;
-                    progressBar.style.width = `${progress}%`;
+                    elements.progressBar.style.width = `${progress}%`;
                 }
             }
 
@@ -8874,10 +8881,10 @@
                     isWorkoutPaused = true;
                     
                     if (startBtn) {
-                        startBtn.classList.remove('hidden');
-                startBtn.textContent = 'Resume';
+                        elements.startBtn.classList.remove('hidden');
+                elements.startBtn.textContent = 'Resume';
                     }
-                    if (pauseBtn) pauseBtn.classList.add('hidden');
+                    if (pauseBtn) elements.pauseBtn.classList.add('hidden');
                 }
             }
             
@@ -8889,10 +8896,10 @@
                 currentExercise = 1;
                 
                 if (startBtn) {
-                startBtn.classList.remove('hidden');
-                    startBtn.textContent = 'Start Workout';
+                elements.startBtn.classList.remove('hidden');
+                    elements.startBtn.textContent = 'Start Workout';
                 }
-                if (pauseBtn) pauseBtn.classList.add('hidden');
+                if (pauseBtn) elements.pauseBtn.classList.add('hidden');
                 
                 updateTimerDisplay();
                 updateProgress();
@@ -8901,19 +8908,19 @@
             // Event listeners
             if (startBtn) {
                 console.log('Adding start button event listener');
-                startBtn.addEventListener('click', startWorkout);
+                elements.startBtn.addEventListener('click', startWorkout);
             } else {
                 console.error('Start button not found!');
             }
             if (pauseBtn) {
                 console.log('Adding pause button event listener');
-                pauseBtn.addEventListener('click', pauseWorkout);
+                elements.pauseBtn.addEventListener('click', pauseWorkout);
             } else {
                 console.error('Pause button not found!');
             }
             if (resetBtn) {
                 console.log('Adding reset button event listener');
-                resetBtn.addEventListener('click', resetWorkout);
+                elements.resetBtn.addEventListener('click', resetWorkout);
             } else {
                 console.error('Reset button not found!');
             }
@@ -9182,40 +9189,65 @@
                 liveVideo.setAttribute('playsinline', 'true'); // iOS compatibility
                 liveVideo.setAttribute('webkit-playsinline', 'true'); // Older iOS compatibility
                 
-                // Set up event handlers BEFORE setting srcObject
-                liveVideo.onloadedmetadata = () => {
-                    console.log('Video metadata loaded, starting playback...');
-                    liveVideo.play().then(() => {
-                        console.log('Video playing successfully');
-                        // Reset button state
-                        startCameraBtn.classList.remove('btn-loading');
-                        startCameraBtn.innerHTML = '<span class="text-lg" aria-hidden="true">📹</span><span>Start Camera</span>';
-                        
-                        // Show recording controls
-                        startCameraBtn.classList.add('hidden');
-                        startRecordingBtn.classList.remove('hidden');
-                        stopCameraBtn.classList.remove('hidden');
-                        videoPlaceholder.classList.add('hidden');
-                        playbackVideo.classList.add('hidden');
-                        liveVideo.classList.remove('hidden');
-                    }).catch(e => {
-                        console.error('Video play failed:', e);
-                        // Reset button state
-                        startCameraBtn.classList.remove('btn-loading');
-                        startCameraBtn.innerHTML = '<span class="text-lg" aria-hidden="true">📹</span><span>Start Camera</span>';
-                        
-                        // Still show the video even if play fails
-                        startCameraBtn.classList.add('hidden');
-                        startRecordingBtn.classList.remove('hidden');
-                        stopCameraBtn.classList.remove('hidden');
-                        videoPlaceholder.classList.add('hidden');
-                        playbackVideo.classList.add('hidden');
-                        liveVideo.classList.remove('hidden');
-                    });
-                };
-                
-                // Set the video source
-                liveVideo.srcObject = stream;
+                 // Set the video source first
+                 liveVideo.srcObject = stream;
+                 
+                 // Show the video immediately - don't wait for metadata
+                 console.log('Showing video element...');
+                 videoPlaceholder.style.display = 'none';
+                 playbackVideo.style.display = 'none';
+                 liveVideo.style.display = 'block';
+                 liveVideo.classList.remove('hidden');
+                 
+                 // Force video to be visible
+                 liveVideo.style.visibility = 'visible';
+                 liveVideo.style.opacity = '1';
+                 
+                 // Set up event handlers AFTER setting srcObject
+                 liveVideo.onloadedmetadata = () => {
+                     console.log('Video metadata loaded, starting playback...');
+                     
+                     // Try to play the video
+                     liveVideo.play().then(() => {
+                         console.log('Video playing successfully');
+                         
+                         // Show recording controls
+                         startCameraBtn.style.display = 'none';
+                         startRecordingBtn.style.display = 'block';
+                         stopCameraBtn.style.display = 'block';
+                         
+                         showNotification('Camera started! Ready to record. 📹', 'success');
+                     }).catch(e => {
+                         console.error('Video play failed:', e);
+                         
+                         // Still show the video even if play fails
+                         startCameraBtn.style.display = 'none';
+                         startRecordingBtn.style.display = 'block';
+                         stopCameraBtn.style.display = 'block';
+                         
+                         showNotification('Camera started! (Video may not autoplay)', 'info');
+                     });
+                 };
+                 
+                 // Also show controls immediately after a short delay
+                 setTimeout(() => {
+                     startCameraBtn.classList.remove('btn-loading');
+                     startCameraBtn.innerHTML = '<span class="text-lg" aria-hidden="true">📹</span><span>Start Camera</span>';
+                     startCameraBtn.disabled = false;
+                     
+                     startCameraBtn.style.display = 'none';
+                     startRecordingBtn.style.display = 'block';
+                     stopCameraBtn.style.display = 'block';
+                 }, 1000);
+                 
+                 // Handle video errors
+                 liveVideo.onerror = (e) => {
+                     console.error('Video error:', e);
+                     startCameraBtn.classList.remove('btn-loading');
+                     startCameraBtn.innerHTML = '<span class="text-lg" aria-hidden="true">📹</span><span>Start Camera</span>';
+                     startCameraBtn.disabled = false;
+                     showNotification('Error starting camera. Please try again.', 'error');
+                 };
                 
                 // Fallback timeout
                 setTimeout(() => {
@@ -9271,9 +9303,15 @@
         
         // Recording functionality
         startRecordingBtn.addEventListener('click', () => {
-            if (!stream) return;
+            console.log('Start recording button clicked');
+            if (!stream) {
+                console.error('No stream available for recording');
+                showNotification('Camera not started. Please start camera first.', 'error');
+                return;
+            }
             
-                        recordedChunks = [];
+            console.log('Starting recording...');
+            recordedChunks = [];
             
             // Mobile-optimized recording settings
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -9294,12 +9332,14 @@
             });
             
             mediaRecorder.ondataavailable = (event) => {
+                console.log('Recording data available:', event.data.size, 'bytes');
                 if (event.data.size > 0) {
                     recordedChunks.push(event.data);
                 }
             };
             
             mediaRecorder.onstop = () => {
+                console.log('Recording stopped, creating blob...');
                 const blob = new Blob(recordedChunks, { type: 'video/webm' });
                 const url = URL.createObjectURL(blob);
                 
@@ -9314,9 +9354,19 @@
                 console.log('Recording saved');
             };
             
-            mediaRecorder.start();
+            mediaRecorder.onerror = (event) => {
+                console.error('MediaRecorder error:', event.error);
+                showNotification('Recording error occurred', 'error');
+                isRecording = false;
+            };
+            
+            mediaRecorder.start(1000); // Record in 1-second chunks
+            isRecording = true;
             startRecordingBtn.style.display = 'none';
             stopRecordingBtn.style.display = 'block';
+            
+            console.log('Recording started successfully');
+            showNotification('Recording started! 🎥', 'success');
             
             console.log('Recording started');
         });
@@ -9480,11 +9530,11 @@
                 const startBtn = document.getElementById('timer-start-btn');
                 const pauseBtn = document.getElementById('timer-pause-btn');
                 
-                if (startBtn && !startBtn.classList.contains('hidden')) {
-                    startBtn.click();
+                if (startBtn && !elements.startBtn.classList.contains('hidden')) {
+                    elements.startBtn.click();
                     showToast('Timer started! ⏰', 'success', 1500);
-                } else if (pauseBtn && !pauseBtn.classList.contains('hidden')) {
-                    pauseBtn.click();
+                } else if (pauseBtn && !elements.pauseBtn.classList.contains('hidden')) {
+                    elements.pauseBtn.click();
                     showToast('Timer paused ⏸️', 'info', 1500);
                 }
             }
@@ -9899,6 +9949,15 @@
      function setupEnhancedWorkoutFeatures() {
          console.log('Setting up enhanced workout features...');
          
+         // Wait for DOM to be ready
+         setTimeout(() => {
+             initializeWorkoutFeatures();
+         }, 200);
+     }
+     
+     function initializeWorkoutFeatures() {
+         console.log('Initializing workout features...');
+         
          // Workout state
          let workoutTimer = null;
          let currentTime = 30; // 30 seconds per exercise
@@ -10000,29 +10059,50 @@
             }
         ];
         
-        // DOM elements
-        const timerDisplay = document.getElementById('workout-timer-display');
-        const timerLabel = document.getElementById('workout-timer-label');
-        const progressText = document.getElementById('workout-progress-text');
-        const progressBar = document.getElementById('workout-progress-bar');
-        const startBtn = document.getElementById('workout-start-btn');
-        const pauseBtn = document.getElementById('workout-pause-btn');
-        const resetBtn = document.getElementById('workout-reset-btn');
-        const doubleModeCheckbox = document.getElementById('workout-double-mode');
-        const soundSelect = document.getElementById('workout-sound');
-        const exerciseName = document.getElementById('current-exercise-name');
-        const exerciseDescription = document.getElementById('current-exercise-description');
-        const exerciseInstructions = document.getElementById('exercise-instructions');
-        const exerciseEmoji = document.getElementById('current-exercise-emoji');
+        // DOM elements with retry logic
+        function getWorkoutElements() {
+            return {
+                timerDisplay: document.getElementById('workout-timer-display'),
+                timerLabel: document.getElementById('workout-timer-label'),
+                progressText: document.getElementById('workout-progress-text'),
+                progressBar: document.getElementById('workout-progress-bar'),
+                startBtn: document.getElementById('workout-start-btn'),
+                pauseBtn: document.getElementById('workout-pause-btn'),
+                resetBtn: document.getElementById('workout-reset-btn'),
+                doubleModeCheckbox: document.getElementById('workout-double-mode'),
+                soundSelect: document.getElementById('workout-sound'),
+                exerciseName: document.getElementById('current-exercise-name'),
+                exerciseDescription: document.getElementById('current-exercise-description'),
+                exerciseInstructions: document.getElementById('exercise-instructions'),
+                exerciseEmoji: document.getElementById('current-exercise-emoji')
+            };
+        }
+        
+        let elements = getWorkoutElements();
         
         // Debug: Check if elements are found
         console.log('Workout elements found:', {
-            startBtn: !!startBtn,
-            pauseBtn: !!pauseBtn,
-            resetBtn: !!resetBtn,
-            timerDisplay: !!timerDisplay,
-            progressBar: !!progressBar
+            startBtn: !!elements.startBtn,
+            pauseBtn: !!elements.pauseBtn,
+            resetBtn: !!elements.resetBtn,
+            timerDisplay: !!elements.timerDisplay,
+            progressBar: !!elements.progressBar
         });
+        
+        // If elements not found, try again after a short delay
+        if (!elements.startBtn) {
+            console.log('Workout elements not found, retrying...');
+            setTimeout(() => {
+                elements = getWorkoutElements();
+                if (elements.startBtn) {
+                    console.log('Workout elements found on retry');
+                    initializeWorkout();
+                } else {
+                    console.error('Workout elements still not found after retry');
+                }
+            }, 100);
+            return;
+        }
         
         // Initialize workout
         initializeWorkout();
@@ -10030,16 +10110,16 @@
          function initializeWorkout() {
              console.log('Initializing workout...');
              // Set up event listeners
-             if (startBtn) {
-                 console.log('Adding start button event listener');
-                 startBtn.addEventListener('click', startWorkout);
-             } else {
-                 console.log('Start button not found for event listener');
-             }
-             if (pauseBtn) pauseBtn.addEventListener('click', pauseWorkout);
-             if (resetBtn) resetBtn.addEventListener('click', resetWorkout);
-             if (doubleModeCheckbox) doubleModeCheckbox.addEventListener('change', toggleDoubleMode);
-             if (soundSelect) soundSelect.addEventListener('change', toggleSound);
+              if (elements.startBtn) {
+                  console.log('Adding start button event listener');
+                  elements.startBtn.addEventListener('click', startWorkout);
+              } else {
+                  console.log('Start button not found for event listener');
+              }
+              if (elements.pauseBtn) elements.pauseBtn.addEventListener('click', pauseWorkout);
+              if (elements.resetBtn) elements.resetBtn.addEventListener('click', resetWorkout);
+             if (elements.doubleModeCheckbox) elements.doubleModeCheckbox.addEventListener('change', toggleDoubleMode);
+             if (elements.soundSelect) elements.soundSelect.addEventListener('change', toggleSound);
              
               // Set up exercise card click listeners
               const exerciseCards = document.querySelectorAll('.exercise-card');
@@ -10069,18 +10149,18 @@
                  workoutStartTime = new Date();
                  
                  // Update button states
-                 if (startBtn) {
-                     console.log('Hiding start button');
-                     startBtn.classList.add('hidden');
-                 } else {
-                     console.log('Start button not found!');
-                 }
-                 if (pauseBtn) {
-                     console.log('Showing pause button');
-                     pauseBtn.classList.remove('hidden');
-                 } else {
-                     console.log('Pause button not found!');
-                 }
+                  if (elements.startBtn) {
+                      console.log('Hiding start button');
+                      elements.startBtn.classList.add('hidden');
+                  } else {
+                      console.log('Start button not found!');
+                  }
+                  if (elements.pauseBtn) {
+                      console.log('Showing pause button');
+                      elements.pauseBtn.classList.remove('hidden');
+                  } else {
+                      console.log('Pause button not found!');
+                  }
                  
                  // Start the workout timer
                  startWorkoutTimer();
@@ -10104,7 +10184,7 @@
                 clearInterval(workoutTimer);
                 
                 // Update button states
-                if (pauseBtn) pauseBtn.innerHTML = '<span class="flex items-center space-x-3"><span class="text-2xl">▶️</span><span>Resume</span></span>';
+                if (pauseBtn) elements.pauseBtn.innerHTML = '<span class="flex items-center space-x-3"><span class="text-2xl">▶️</span><span>Resume</span></span>';
                 
                 showNotification('Workout paused', 'info');
             } else if (isWorkoutPaused) {
@@ -10112,7 +10192,7 @@
                 startWorkoutTimer();
                 
                 // Update button states
-                if (pauseBtn) pauseBtn.innerHTML = '<span class="flex items-center space-x-3"><span class="text-2xl">⏸️</span><span>Pause</span></span>';
+                if (pauseBtn) elements.pauseBtn.innerHTML = '<span class="flex items-center space-x-3"><span class="text-2xl">⏸️</span><span>Pause</span></span>';
                 
                 showNotification('Workout resumed', 'success');
             }
@@ -10133,8 +10213,8 @@
             currentTime = 30;
             
             // Update button states
-            if (startBtn) startBtn.classList.remove('hidden');
-            if (pauseBtn) pauseBtn.classList.add('hidden');
+            if (startBtn) elements.startBtn.classList.remove('hidden');
+            if (pauseBtn) elements.pauseBtn.classList.add('hidden');
             
             // Hide rest period display
             const restDisplay = document.getElementById('rest-period-display');
@@ -10245,8 +10325,8 @@
             saveWorkoutToHistory(workoutDuration);
             
             // Update button states
-            if (startBtn) startBtn.classList.remove('hidden');
-            if (pauseBtn) pauseBtn.classList.add('hidden');
+            if (startBtn) elements.startBtn.classList.remove('hidden');
+            if (pauseBtn) elements.pauseBtn.classList.add('hidden');
             
             // Hide rest period display
             const restDisplay = document.getElementById('rest-period-display');
@@ -10264,13 +10344,13 @@
         
          function updateWorkoutDisplay() {
              // Update timer
-             if (timerDisplay) timerDisplay.textContent = currentTime;
+             if (timerDisplay) elements.timerDisplay.textContent = currentTime;
              
              // Update progress
              const progress = ((currentExercise + 1) / totalExercises) * 100;
              
-             if (progressBar) progressBar.style.width = `${progress}%`;
-             if (progressText) progressText.textContent = `Exercise ${currentExercise + 1} of ${totalExercises}`;
+             if (progressBar) elements.progressBar.style.width = `${progress}%`;
+             if (progressText) elements.progressText.textContent = `Exercise ${currentExercise + 1} of ${totalExercises}`;
              
              // Update exercise cards highlighting
              updateExerciseCardHighlighting();
@@ -10286,20 +10366,20 @@
                  const exerciseInstructions = document.getElementById('exercise-instructions');
                  const exerciseEmoji = document.getElementById('current-exercise-emoji');
                  
-                 if (exerciseName) exerciseName.textContent = exercise.name;
-                 if (exerciseDescription) exerciseDescription.textContent = exercise.description;
-                 if (exerciseInstructions) exerciseInstructions.textContent = exercise.instructions;
-                 if (exerciseEmoji) exerciseEmoji.textContent = exercise.emoji;
+                 if (exerciseName) elements.exerciseName.textContent = exercise.name;
+                 if (exerciseDescription) elements.exerciseDescription.textContent = exercise.description;
+                 if (exerciseInstructions) elements.exerciseInstructions.textContent = exercise.instructions;
+                 if (exerciseEmoji) elements.exerciseEmoji.textContent = exercise.emoji;
              } else {
                  const exerciseName = document.getElementById('current-exercise-name');
                  const exerciseDescription = document.getElementById('current-exercise-description');
                  const exerciseInstructions = document.getElementById('exercise-instructions');
                  const exerciseEmoji = document.getElementById('current-exercise-emoji');
                  
-                 if (exerciseName) exerciseName.textContent = 'Workout Complete!';
-                 if (exerciseDescription) exerciseDescription.textContent = 'Congratulations! You\'ve completed the workout.';
-                 if (exerciseInstructions) exerciseInstructions.textContent = 'Take a moment to cool down and hydrate. Great work!';
-                 if (exerciseEmoji) exerciseEmoji.textContent = '🎉';
+                 if (exerciseName) elements.exerciseName.textContent = 'Workout Complete!';
+                 if (exerciseDescription) elements.exerciseDescription.textContent = 'Congratulations! You\'ve completed the workout.';
+                 if (exerciseInstructions) elements.exerciseInstructions.textContent = 'Take a moment to cool down and hydrate. Great work!';
+                 if (exerciseEmoji) elements.exerciseEmoji.textContent = '🎉';
              }
          }
          
@@ -10939,7 +11019,7 @@
             if (timerDisplay) {
                 const minutes = Math.floor(practiceTimeRemaining / 60);
                 const seconds = practiceTimeRemaining % 60;
-                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                elements.timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
             
             if (timerProgress) {
@@ -11663,7 +11743,7 @@
             if (timerDisplay) {
                 const minutes = Math.floor(practiceTimeRemaining / 60);
                 const seconds = practiceTimeRemaining % 60;
-                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                elements.timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
             
             if (timerProgress) {
