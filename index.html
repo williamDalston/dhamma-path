@@ -6582,59 +6582,59 @@
     // These are defined at the top so they're available everywhere
     window.startTimer = function() {
         console.log('=== START TIMER CALLED ===');
-        if (!window.isRunning) {
-            window.isRunning = true;
-            window.isPaused = false;
+        if (!isRunning) {
+            isRunning = true;
+            isPaused = false;
             
-            if (window.startBtn) window.startBtn.classList.add('hidden');
-            if (window.pauseBtn) window.pauseBtn.classList.remove('hidden');
+            if (startBtn) startBtn.classList.add('hidden');
+            if (pauseBtn) pauseBtn.classList.remove('hidden');
                 
-            window.timerInterval = setInterval(() => {
-                if (window.timeRemaining > 0) {
-                    window.timeRemaining--;
+            timerInterval = setInterval(() => {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
                     window.updateDisplay();
                 } else {
-                    clearInterval(window.timerInterval);
-                    window.isRunning = false;
-                    if (window.status) window.status.textContent = 'Session complete! 🎉';
-                    if (window.startBtn) {
-                        window.startBtn.classList.remove('hidden');
-                        window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    if (status) status.textContent = 'Session complete! 🎉';
+                    if (startBtn) {
+                        startBtn.classList.remove('hidden');
+                        startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
                     }
-                    if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+                    if (pauseBtn) pauseBtn.classList.add('hidden');
                 }
             }, 1000);
         }
     };
 
     window.pauseTimer = function() {
-        if (window.isRunning) {
-            window.isRunning = false;
-            window.isPaused = true;
-            clearInterval(window.timerInterval);
-            if (window.startBtn) window.startBtn.classList.remove('hidden');
-            if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
-            window.updateDisplay();
+        if (isRunning) {
+            isRunning = false;
+            isPaused = true;
+            clearInterval(timerInterval);
+            if (startBtn) startBtn.classList.remove('hidden');
+            if (pauseBtn) pauseBtn.classList.add('hidden');
+            updateDisplay();
         }
     };
 
     window.resetTimer = function() {
-        clearInterval(window.timerInterval);
-        window.isRunning = false;
-        window.isPaused = false;
-        if (window.durationSelect) {
-            window.timeRemaining = parseInt(window.durationSelect.value);
-            window.totalTime = window.timeRemaining;
+        clearInterval(timerInterval);
+        isRunning = false;
+        isPaused = false;
+        if (durationSelect) {
+            timeRemaining = parseInt(durationSelect.value);
+            totalTime = timeRemaining;
         } else {
-            window.timeRemaining = 600;
-            window.totalTime = 600;
+            timeRemaining = 600;
+            totalTime = 600;
         }
-        window.updateDisplay();
-        if (window.startBtn) {
-            window.startBtn.classList.remove('hidden');
-            window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+        updateDisplay();
+        if (startBtn) {
+            startBtn.classList.remove('hidden');
+            startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
         }
-        if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+        if (pauseBtn) pauseBtn.classList.add('hidden');
     };
 
     window.updateDisplay = function() {
@@ -6688,10 +6688,6 @@
             window.soundToggle = soundToggle;
             window.progressRing = progressRing;
             
-            // Initialize timer state
-            window.timeRemaining = parseInt(durationSelect ? durationSelect.value : 600);
-            window.totalTime = window.timeRemaining;
-            
             // Event listeners
             if (startBtn) {
                 startBtn.addEventListener('click', window.startTimer);
@@ -6706,9 +6702,9 @@
             // Duration change
             if (durationSelect) {
                 durationSelect.addEventListener('change', () => {
-                    if (!window.isRunning) {
-                        window.timeRemaining = parseInt(durationSelect.value);
-                        window.totalTime = window.timeRemaining;
+                    if (!isRunning) {
+                        timeRemaining = parseInt(durationSelect.value);
+                        totalTime = timeRemaining;
                         window.updateDisplay();
                     }
                 });
@@ -6884,20 +6880,20 @@
     };
 
     
-    // Timer variables - made global so they can be accessed by timer functions
-    window.timerInterval = null;
-    window.timeRemaining = 600; // 10 minutes default
-    window.totalTime = 600;
-    window.isRunning = false;
-    window.isPaused = false;
-    window.display = null;
-    window.status = null;
-    window.progressRing = null;
-    window.startBtn = null;
-    window.pauseBtn = null;
-    window.resetBtn = null;
-    window.durationSelect = null;
-    window.soundToggle = null;
+    // Timer variables - moved outside function scope
+    let timerInterval = null;
+    let timeRemaining = 600; // 10 minutes default
+    let totalTime = 600;
+    let isRunning = false;
+    let isPaused = false;
+    let display = null;
+    let status = null;
+    let progressRing = null;
+    let startBtn = null;
+    let pauseBtn = null;
+    let resetBtn = null;
+    let durationSelect = null;
+    let soundToggle = null;
 
     // Timer functions - defined globally so they can be accessed by event listeners
     function updateDisplay() {
