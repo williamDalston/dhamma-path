@@ -2429,7 +2429,7 @@
                             <span>Privacy Protected</span>
                         </div>
                     </div>
-                </div>
+                 </div>
             </section>
 
             <!-- Daily Morning Routine -->
@@ -3309,7 +3309,7 @@
                     </div>
                     
                     <!-- Sound Selection -->
-                    <div>
+                     <div>
                         <label for="sound-select" class="text-sm uppercase tracking-wider text-charcoal/70 font-semibold mb-4 block">Meditation Bell</label>
                         <select id="sound-select" class="w-full max-w-xs mx-auto p-4 border-2 border-gray-200 rounded-xl bg-white dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-earthy-gold focus:border-earthy-gold focus:outline-none transition-all duration-300 shadow-sm" aria-label="Select meditation bell sound">
                             <option value="chime">🔔 Gentle Chime</option>
@@ -3345,8 +3345,8 @@
                                 </svg>
                                 <span>Reset</span>
                             </span>
-                        </button>
-                    </div>
+                    </button>
+                </div>
 
                     <!-- Session Status -->
                     <div id="session-status" class="hidden">
@@ -3355,7 +3355,7 @@
                                 <span class="font-semibold">Session Active:</span> 
                                 <span id="session-time-remaining">10:00</span> remaining
                             </p>
-                        </div>
+            </div>
                     </div>
                 </div>
                 
@@ -3509,8 +3509,8 @@
                             <div class="absolute top-4 right-4 w-24 h-24 bg-forest-green rounded-full blur-2xl"></div>
                             <div class="absolute bottom-4 left-4 w-20 h-20 bg-earthy-gold rounded-full blur-xl"></div>
                         </div>
-                        <!-- SVG Animation will be injected here -->
-                    </div>
+                    <!-- SVG Animation will be injected here -->
+                </div>
                     
                     <!-- Exercise Instructions -->
                     <div id="workout-instructions" class="mt-6 p-6 bg-gradient-to-br from-white to-gray-50/50 rounded-2xl shadow-lg border border-gray-100 max-w-2xl mx-auto">
@@ -3522,7 +3522,7 @@
                         </h3>
                         <p id="workout-instruction-text" class="text-charcoal/80 leading-relaxed text-lg text-center">Get ready to start with jumping jacks. Stand with feet together and arms at your sides.</p>
                     </div>
-                </div>
+                    </div>
 
                 <!-- Workout Controls - Centered -->
                 <div class="text-center">
@@ -4711,7 +4711,6 @@
         
         // Make navigateTo globally accessible
         window.navigateTo = function(pageName, id = null) {
-            console.log('navigateTo called with:', pageName, id);
             // Cleanup previous page resources
             cleanupPageResources();
             
@@ -5252,8 +5251,8 @@
                 display.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
                 if (progressRing) {
-                    const offset = ringCircumference - (secondsRemaining / totalSeconds) * ringCircumference;
-                    progressRing.style.strokeDashoffset = offset;
+                const offset = ringCircumference - (secondsRemaining / totalSeconds) * ringCircumference;
+                progressRing.style.strokeDashoffset = offset;
                 }
 
                 // Update progress bar and percentage
@@ -5308,11 +5307,11 @@
                 if (isPaused) {
                     isPaused = false;
                     if (startBtn) {
-                        startBtn.classList.add('hidden');
+                    startBtn.classList.add('hidden');
                         startBtn.setAttribute('aria-pressed', 'false');
                     }
                     if (pauseBtn) {
-                        pauseBtn.classList.remove('hidden');
+                    pauseBtn.classList.remove('hidden');
                         pauseBtn.setAttribute('aria-pressed', 'true');
                     }
                     if (durationButtons) durationButtons.style.pointerEvents = 'none';
@@ -5332,7 +5331,7 @@
                         if (secondsRemaining <= 0) {
                             clearInterval(timerInterval);
                             if (soundSelect && sounds && sounds[soundSelect.value]) {
-                                sounds[soundSelect.value].play();
+                            sounds[soundSelect.value].play();
                             }
                             logSession();
                             resetTimer();
@@ -5352,12 +5351,12 @@
                 isPaused = true;
                 clearInterval(timerInterval);
                 if (startBtn) {
-                    startBtn.textContent = 'Resume';
-                    startBtn.classList.remove('hidden');
+                startBtn.textContent = 'Resume';
+                startBtn.classList.remove('hidden');
                     startBtn.setAttribute('aria-pressed', 'false');
                 }
                 if (pauseBtn) {
-                    pauseBtn.classList.add('hidden');
+                pauseBtn.classList.add('hidden');
                     pauseBtn.setAttribute('aria-pressed', 'false');
                 }
                 if (ringContainer) ringContainer.classList.remove('timer-active');
@@ -5370,12 +5369,12 @@
                 secondsRemaining = totalSeconds;
                 updateDisplay();
                 if (startBtn) {
-                    startBtn.textContent = 'Start';
-                    startBtn.classList.remove('hidden');
+                startBtn.textContent = 'Start';
+                startBtn.classList.remove('hidden');
                     startBtn.setAttribute('aria-pressed', 'false');
                 }
                 if (pauseBtn) {
-                    pauseBtn.classList.add('hidden');
+                pauseBtn.classList.add('hidden');
                     pauseBtn.setAttribute('aria-pressed', 'false');
                 }
                 if (durationButtons) durationButtons.style.pointerEvents = 'auto';
@@ -5515,8 +5514,8 @@
             }
 
             if (durationButtons) {
-                durationButtons.addEventListener('click', e => {
-                    if (e.target.classList.contains('timer-duration-btn')) {
+            durationButtons.addEventListener('click', e => {
+                if (e.target.classList.contains('timer-duration-btn')) {
                         const duration = parseInt(e.target.dataset.duration);
                         // Duration button clicked
                         setDuration(duration);
@@ -6133,7 +6132,7 @@
                     item.innerHTML = `
                         <div class="flex justify-between items-start">
                             <div class="flex-1">
-                                <p class="font-semibold text-earthy-gold">${date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        <p class="font-semibold text-earthy-gold">${date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
                                 <p class="mt-2 text-charcoal/80 whitespace-pre-wrap leading-relaxed">${entry.content}</p>
                             </div>
                             <button class="delete-entry-btn ml-4 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200" data-index="${index}" title="Delete this entry">
