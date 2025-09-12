@@ -3298,7 +3298,7 @@
 
                     <!-- Duration Selection -->
                     <div>
-                        <label for="duration-buttons" class="text-sm uppercase tracking-wider text-charcoal/70 font-semibold mb-4 block">Meditation Duration</label>
+                        <div class="text-sm uppercase tracking-wider text-charcoal/70 font-semibold mb-4 block">Meditation Duration</div>
                         <div id="duration-buttons" class="flex flex-wrap justify-center gap-3" role="group" aria-label="Select meditation duration">
                             <button data-duration="5" class="timer-duration-btn px-6 py-3 rounded-full bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 border-2 border-forest-green shadow-md focus:ring-4 focus:ring-earthy-gold focus:outline-none" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;" aria-pressed="false" tabindex="0">5 min</button>
                             <button data-duration="10" class="timer-duration-btn px-6 py-3 rounded-full bg-gradient-to-r from-light-green to-light-green/80 text-forest-green transition-all duration-300 hover:shadow-lg hover:scale-105 border-2 border-forest-green shadow-md focus:ring-4 focus:ring-earthy-gold focus:outline-none" style="background-color: #d4edda !important; color: #2d5016 !important; display: inline-block !important; visibility: visible !important;" aria-pressed="false" tabindex="0">10 min</button>
@@ -5177,7 +5177,8 @@
             
             // Attach read-aloud logic
             const readAloudBtn = document.getElementById('read-aloud-btn');
-            readAloudBtn.addEventListener('click', () => {
+            if (readAloudBtn) {
+                readAloudBtn.addEventListener('click', () => {
                 const articleContent = document.getElementById('article-content');
                 const text = articleContent.innerText;
                 if(speechSynthesis.speaking) {
@@ -5191,7 +5192,8 @@
                         readAloudBtn.querySelector('span').textContent = 'Read Aloud';
                     };
                 }
-            });
+                });
+            }
         }
         
         function attachAudioPlayerLogic() {
@@ -5202,6 +5204,11 @@
             const playIcon = player.querySelector('.play-icon');
             const pauseIcon = player.querySelector('.pause-icon');
             const progress = player.querySelector('.audio-progress');
+            
+            // Check if all required elements exist
+            if (!playBtn || !playIcon || !pauseIcon || !progress) {
+                return;
+            }
             
             let isPlaying = false;
             let progressInterval;
