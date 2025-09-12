@@ -2647,8 +2647,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-forest-green/10 hover:border-forest-green/30 group">
                         <div class="w-16 h-16 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-8 h-8 text-white drop-shadow-lg" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            <svg class="w-10 h-10 text-white drop-shadow-xl" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24" style="filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4)); color: white !important;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
                         </div>
                         <h3 class="text-xl font-bold text-charcoal mb-4 group-hover:text-forest-green transition-colors duration-300">Energy & Focus</h3>
@@ -2657,8 +2657,8 @@
                     
                     <div class="text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-earthy-gold/10 hover:border-earthy-gold/30 group">
                         <div class="w-16 h-16 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-8 h-8 text-white drop-shadow-lg" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            <svg class="w-10 h-10 text-white drop-shadow-xl" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24" style="filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4)); color: white !important;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
                         <h3 class="text-xl font-bold text-charcoal mb-4 group-hover:text-earthy-gold transition-colors duration-300">Habit Formation</h3>
@@ -2667,8 +2667,8 @@
                     
                     <div class="text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-light-green/10 hover:border-light-green/30 group">
                         <div class="w-16 h-16 bg-gradient-to-br from-light-green to-light-green/80 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-8 h-8 text-forest-green drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            <svg class="w-10 h-10 text-forest-green drop-shadow-xl" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24" style="filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3)); color: #2d5016 !important;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                             </svg>
                         </div>
                         <h3 class="text-xl font-bold text-charcoal mb-4 group-hover:text-light-green transition-colors duration-300">Mental Wellbeing</h3>
@@ -4748,7 +4748,12 @@
                 hideLoading();
             }, 100);
 
-            if (pageName === 'timer') attachTimerLogic();
+            if (pageName === 'timer') {
+                // Small delay to ensure DOM is fully rendered
+                setTimeout(() => {
+                    attachTimerLogic();
+                }, 100);
+            }
             if (pageName === 'article') attachArticlePageLogic(id);
             if (pageName === 'workout') attachWorkoutLogic();
             if (pageName === 'interview') attachInterviewLogic();
@@ -5225,34 +5230,54 @@
         }
         
         function attachTimerLogic() {
-            const display = document.getElementById('timer-display');
-            const ringContainer = document.getElementById('timer-ring-container');
-            const progressRing = document.getElementById('timer-progress-ring');
-            const startBtn = document.getElementById('timer-start-btn');
-            const pauseBtn = document.getElementById('timer-pause-btn');
-            const resetBtn = document.getElementById('timer-reset-btn');
-            const durationButtons = document.getElementById('duration-buttons');
-            const soundSelect = document.getElementById('sound-select');
+            // Comprehensive element validation
+            const elements = {
+                display: document.getElementById('timer-display'),
+                ringContainer: document.getElementById('timer-ring-container'),
+                progressRing: document.getElementById('timer-progress-ring'),
+                startBtn: document.getElementById('timer-start-btn'),
+                pauseBtn: document.getElementById('timer-pause-btn'),
+                resetBtn: document.getElementById('timer-reset-btn'),
+                durationButtons: document.getElementById('duration-buttons'),
+                soundSelect: document.getElementById('sound-select')
+            };
 
-            let totalSeconds = 600; // default 10 mins
-            let secondsRemaining = totalSeconds;
-            let isPaused = true;
-            let timerInterval = null;
+            // Validate all critical elements exist
+            const criticalElements = ['display', 'startBtn', 'pauseBtn', 'durationButtons'];
+            const missingElements = criticalElements.filter(key => !elements[key]);
+            
+            if (missingElements.length > 0) {
+                showUserError('Timer not properly loaded', `Missing elements: ${missingElements.join(', ')}. Please refresh the page.`);
+                return;
+            }
+
+            // Timer state with validation
+            let timerState = {
+                totalSeconds: 600, // default 10 mins
+                secondsRemaining: 600,
+                isPaused: true,
+                isRunning: false,
+                timerInterval: null,
+                isInitialized: false
+            };
+            
             const ringCircumference = 2 * Math.PI * 45; // 2 * PI * r
+            const validDurations = [5, 10, 15, 20, 30]; // Valid duration options
             
             // Timer elements initialized
             
             function updateDisplay() {
-                if (!display) {
+                if (!elements.display || !timerState.isInitialized) {
                     return;
                 }
-                const minutes = Math.floor(secondsRemaining / 60);
-                const seconds = secondsRemaining % 60;
-                display.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                const minutes = Math.floor(timerState.secondsRemaining / 60);
+                const seconds = timerState.secondsRemaining % 60;
+                elements.display.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
-                if (progressRing) {
-                const offset = ringCircumference - (secondsRemaining / totalSeconds) * ringCircumference;
-                progressRing.style.strokeDashoffset = offset;
+                if (elements.progressRing) {
+                    const offset = ringCircumference - (timerState.secondsRemaining / timerState.totalSeconds) * ringCircumference;
+                    elements.progressRing.style.strokeDashoffset = offset;
                 }
 
                 // Update progress bar and percentage
@@ -5260,8 +5285,6 @@
 
                 // Update session status
                 updateSessionStatus();
-
-                // Timer display updated
             }
 
             function updateProgressIndicator() {
@@ -5270,13 +5293,13 @@
                 const sessionProgress = document.getElementById('session-progress');
                 
                 if (progressBar && progressPercentage) {
-                    const progress = ((totalSeconds - secondsRemaining) / totalSeconds) * 100;
-                    progressBar.style.width = `${progress}%`;
-                    progressPercentage.textContent = `${Math.round(progress)}%`;
+                    const progress = ((timerState.totalSeconds - timerState.secondsRemaining) / timerState.totalSeconds) * 100;
+                    progressBar.style.width = `${Math.max(0, Math.min(100, progress))}%`;
+                    progressPercentage.textContent = `${Math.round(Math.max(0, Math.min(100, progress)))}%`;
                     
                     // Show progress indicator when session is active
                     if (sessionProgress) {
-                        if (!isPaused && secondsRemaining < totalSeconds) {
+                        if (!timerState.isPaused && timerState.secondsRemaining < timerState.totalSeconds) {
                             sessionProgress.classList.remove('hidden');
                         } else {
                             sessionProgress.classList.add('hidden');
@@ -5290,11 +5313,11 @@
                 const sessionTimeRemaining = document.getElementById('session-time-remaining');
                 
                 if (sessionStatus && sessionTimeRemaining) {
-                    const minutes = Math.floor(secondsRemaining / 60);
-                    const seconds = secondsRemaining % 60;
+                    const minutes = Math.floor(timerState.secondsRemaining / 60);
+                    const seconds = timerState.secondsRemaining % 60;
                     sessionTimeRemaining.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
                     
-                    if (!isPaused && secondsRemaining < totalSeconds) {
+                    if (!timerState.isPaused && timerState.secondsRemaining < timerState.totalSeconds) {
                         sessionStatus.classList.remove('hidden');
                     } else {
                         sessionStatus.classList.add('hidden');
@@ -5303,119 +5326,218 @@
             }
 
             function startTimer() {
-                // Timer start clicked
-                if (isPaused) {
-                    isPaused = false;
-                    if (startBtn) {
-                    startBtn.classList.add('hidden');
-                        startBtn.setAttribute('aria-pressed', 'false');
-                    }
-                    if (pauseBtn) {
-                    pauseBtn.classList.remove('hidden');
-                        pauseBtn.setAttribute('aria-pressed', 'true');
-                    }
-                    if (durationButtons) durationButtons.style.pointerEvents = 'none';
-                    if (soundSelect) soundSelect.disabled = true;
-                    if (ringContainer) ringContainer.classList.add('timer-active');
+                // Prevent multiple starts or invalid states
+                if (!timerState.isPaused || timerState.isRunning || timerState.secondsRemaining <= 0) {
+                    return;
+                }
+
+                try {
+                    timerState.isPaused = false;
+                    timerState.isRunning = true;
                     
-                    // Play sound if available
-                    if (secondsRemaining === totalSeconds && soundSelect && sounds && sounds[soundSelect.value]) {
-                        sounds[soundSelect.value].play();
+                    // Update UI elements with null checks
+                    if (elements.startBtn) {
+                        elements.startBtn.classList.add('hidden');
+                        elements.startBtn.setAttribute('aria-pressed', 'false');
+                    }
+                    if (elements.pauseBtn) {
+                        elements.pauseBtn.classList.remove('hidden');
+                        elements.pauseBtn.setAttribute('aria-pressed', 'true');
+                    }
+                    if (elements.durationButtons) {
+                        elements.durationButtons.style.pointerEvents = 'none';
+                    }
+                    if (elements.soundSelect) {
+                        elements.soundSelect.disabled = true;
+                    }
+                    if (elements.ringContainer) {
+                        elements.ringContainer.classList.add('timer-active');
                     }
                     
-                    timerInterval = setInterval(() => {
-                        secondsRemaining--;
+                    // Play start sound if available
+                    if (timerState.secondsRemaining === timerState.totalSeconds && elements.soundSelect && sounds && sounds[elements.soundSelect.value]) {
+                        try {
+                            sounds[elements.soundSelect.value].play();
+                        } catch (e) {
+                            // Sound play failed, continue anyway
+                        }
+                    }
+                    
+                    // Clear any existing interval
+                    if (timerState.timerInterval) {
+                        clearInterval(timerState.timerInterval);
+                    }
+                    
+                    // Start the timer
+                    timerState.timerInterval = setInterval(() => {
+                        timerState.secondsRemaining--;
                         updateDisplay();
-                        saveSessionState(); // Save state every second
+                        saveSessionState();
                         
-                        if (secondsRemaining <= 0) {
-                            clearInterval(timerInterval);
-                            if (soundSelect && sounds && sounds[soundSelect.value]) {
-                            sounds[soundSelect.value].play();
+                        if (timerState.secondsRemaining <= 0) {
+                            clearInterval(timerState.timerInterval);
+                            timerState.isRunning = false;
+                            
+                            // Play completion sound
+                            if (elements.soundSelect && sounds && sounds[elements.soundSelect.value]) {
+                                try {
+                                    sounds[elements.soundSelect.value].play();
+                                } catch (e) {
+                                    // Sound play failed, continue anyway
+                                }
                             }
+                            
                             logSession();
                             resetTimer();
+                            
                             // Mark meditation as complete
                             if (typeof ProgressTracker !== 'undefined') {
                                 ProgressTracker.markComplete('meditation');
                             }
                             showUserSuccess('Meditation session completed! Great work!');
+                            
                             // Clear saved session on completion
                             localStorage.removeItem('meditationSession');
                         }
                     }, 1000);
+                } catch (error) {
+                    showUserError('Timer start failed', 'Please try again or refresh the page.');
+                    timerState.isPaused = true;
+                    timerState.isRunning = false;
                 }
             }
 
             function pauseTimer() {
-                isPaused = true;
-                clearInterval(timerInterval);
-                if (startBtn) {
-                startBtn.textContent = 'Resume';
-                startBtn.classList.remove('hidden');
-                    startBtn.setAttribute('aria-pressed', 'false');
+                if (!timerState.isRunning || timerState.isPaused) {
+                    return;
                 }
-                if (pauseBtn) {
-                pauseBtn.classList.add('hidden');
-                    pauseBtn.setAttribute('aria-pressed', 'false');
+
+                try {
+                    timerState.isPaused = true;
+                    timerState.isRunning = false;
+                    
+                    if (timerState.timerInterval) {
+                        clearInterval(timerState.timerInterval);
+                        timerState.timerInterval = null;
+                    }
+                    
+                    if (elements.startBtn) {
+                        elements.startBtn.textContent = 'Resume';
+                        elements.startBtn.classList.remove('hidden');
+                        elements.startBtn.setAttribute('aria-pressed', 'false');
+                    }
+                    if (elements.pauseBtn) {
+                        elements.pauseBtn.classList.add('hidden');
+                        elements.pauseBtn.setAttribute('aria-pressed', 'false');
+                    }
+                    if (elements.ringContainer) {
+                        elements.ringContainer.classList.remove('timer-active');
+                    }
+                    
+                    saveSessionState();
+                } catch (error) {
+                    showUserError('Timer pause failed', 'Please try again.');
                 }
-                if (ringContainer) ringContainer.classList.remove('timer-active');
-                saveSessionState(); // Save state when paused
             }
 
             function resetTimer() {
-                clearInterval(timerInterval);
-                isPaused = true;
-                secondsRemaining = totalSeconds;
-                updateDisplay();
-                if (startBtn) {
-                startBtn.textContent = 'Start';
-                startBtn.classList.remove('hidden');
-                    startBtn.setAttribute('aria-pressed', 'false');
+                try {
+                    // Clear any running timer
+                    if (timerState.timerInterval) {
+                        clearInterval(timerState.timerInterval);
+                        timerState.timerInterval = null;
+                    }
+                    
+                    // Reset state
+                    timerState.isPaused = true;
+                    timerState.isRunning = false;
+                    timerState.secondsRemaining = timerState.totalSeconds;
+                    
+                    // Update display
+                    updateDisplay();
+                    
+                    // Reset UI elements
+                    if (elements.startBtn) {
+                        elements.startBtn.textContent = 'Start';
+                        elements.startBtn.classList.remove('hidden');
+                        elements.startBtn.setAttribute('aria-pressed', 'false');
+                    }
+                    if (elements.pauseBtn) {
+                        elements.pauseBtn.classList.add('hidden');
+                        elements.pauseBtn.setAttribute('aria-pressed', 'false');
+                    }
+                    if (elements.durationButtons) {
+                        elements.durationButtons.style.pointerEvents = 'auto';
+                    }
+                    if (elements.soundSelect) {
+                        elements.soundSelect.disabled = false;
+                    }
+                    if (elements.ringContainer) {
+                        elements.ringContainer.classList.remove('timer-active');
+                    }
+                    
+                    // Clear saved session on reset
+                    localStorage.removeItem('meditationSession');
+                    
+                    // Hide progress indicators
+                    const sessionProgress = document.getElementById('session-progress');
+                    const sessionStatus = document.getElementById('session-status');
+                    if (sessionProgress) sessionProgress.classList.add('hidden');
+                    if (sessionStatus) sessionStatus.classList.add('hidden');
+                } catch (error) {
+                    showUserError('Timer reset failed', 'Please refresh the page.');
                 }
-                if (pauseBtn) {
-                pauseBtn.classList.add('hidden');
-                    pauseBtn.setAttribute('aria-pressed', 'false');
-                }
-                if (durationButtons) durationButtons.style.pointerEvents = 'auto';
-                if (soundSelect) soundSelect.disabled = false;
-                if (ringContainer) ringContainer.classList.remove('timer-active');
-                
-                // Clear saved session on reset
-                localStorage.removeItem('meditationSession');
-                
-                // Hide progress indicators
-                const sessionProgress = document.getElementById('session-progress');
-                const sessionStatus = document.getElementById('session-status');
-                if (sessionProgress) sessionProgress.classList.add('hidden');
-                if (sessionStatus) sessionStatus.classList.add('hidden');
             }
             
             function setDuration(minutes) {
-                totalSeconds = minutes * 60;
-                resetTimer();
-                
-                // Visual feedback - highlight selected duration
-                if (durationButtons) {
-                    const buttons = durationButtons.querySelectorAll('.timer-duration-btn');
-                    buttons.forEach(btn => {
-                        btn.classList.remove('ring-4', 'ring-earthy-gold', 'ring-opacity-50');
-                        btn.setAttribute('aria-pressed', 'false');
-                        if (parseInt(btn.dataset.duration) === minutes) {
-                            btn.classList.add('ring-4', 'ring-earthy-gold', 'ring-opacity-50');
-                            btn.setAttribute('aria-pressed', 'true');
-                        }
-                    });
+                // Validate duration
+                if (!minutes || !validDurations.includes(minutes) || minutes < 1 || minutes > 60) {
+                    showUserError('Invalid duration', 'Please select a valid meditation duration.');
+                    return;
                 }
-                
-                // Announce duration change to screen readers
-                const announcement = document.createElement('div');
-                announcement.setAttribute('aria-live', 'polite');
-                announcement.setAttribute('aria-atomic', 'true');
-                announcement.className = 'sr-only';
-                announcement.textContent = `Meditation duration set to ${minutes} minutes`;
-                document.body.appendChild(announcement);
-                setTimeout(() => document.body.removeChild(announcement), 1000);
+
+                try {
+                    // Update timer state
+                    timerState.totalSeconds = minutes * 60;
+                    timerState.secondsRemaining = timerState.totalSeconds;
+                    
+                    // Reset timer to apply new duration
+                    resetTimer();
+                    
+                    // Visual feedback - highlight selected duration
+                    if (elements.durationButtons) {
+                        const buttons = elements.durationButtons.querySelectorAll('.timer-duration-btn');
+                        buttons.forEach(btn => {
+                            const btnDuration = parseInt(btn.dataset.duration);
+                            if (isNaN(btnDuration)) return;
+                            
+                            btn.classList.remove('ring-4', 'ring-earthy-gold', 'ring-opacity-50');
+                            btn.setAttribute('aria-pressed', 'false');
+                            
+                            if (btnDuration === minutes) {
+                                btn.classList.add('ring-4', 'ring-earthy-gold', 'ring-opacity-50');
+                                btn.setAttribute('aria-pressed', 'true');
+                            }
+                        });
+                    }
+                    
+                    // Announce duration change to screen readers
+                    const announcement = document.createElement('div');
+                    announcement.setAttribute('aria-live', 'polite');
+                    announcement.setAttribute('aria-atomic', 'true');
+                    announcement.className = 'sr-only';
+                    announcement.textContent = `Meditation duration set to ${minutes} minutes`;
+                    document.body.appendChild(announcement);
+                    setTimeout(() => {
+                        if (document.body.contains(announcement)) {
+                            document.body.removeChild(announcement);
+                        }
+                    }, 1000);
+                    
+                    showUserSuccess(`Timer set to ${minutes} minutes`);
+                } catch (error) {
+                    showUserError('Duration change failed', 'Please try again.');
+                }
             }
 
             function logSession() {
@@ -5513,30 +5635,44 @@
                 }
             }
 
-            if (durationButtons) {
-            durationButtons.addEventListener('click', e => {
-                if (e.target.classList.contains('timer-duration-btn')) {
-                        const duration = parseInt(e.target.dataset.duration);
-                        // Duration button clicked
+            // Enhanced event listener with comprehensive error handling
+            if (elements.durationButtons) {
+                elements.durationButtons.addEventListener('click', e => {
+                    try {
+                        // Use event delegation for better reliability
+                        const button = e.target.closest('.timer-duration-btn');
+                        if (!button) return;
+                        
+                        const duration = parseInt(button.dataset.duration);
+                        if (isNaN(duration) || !validDurations.includes(duration)) {
+                            showUserError('Invalid duration selected', 'Please try a different duration.');
+                            return;
+                        }
+                        
                         setDuration(duration);
-                        showUserSuccess(`Timer set to ${duration} minutes`);
+                    } catch (error) {
+                        showUserError('Duration selection failed', 'Please try again.');
                     }
                 });
             } else {
-                // Debug: Check if duration buttons exist
-                const debugButtons = document.querySelectorAll('.timer-duration-btn');
-                if (debugButtons.length === 0) {
-                    showUserError('Duration buttons not found', 'Please refresh the page and try again.');
-                }
+                showUserError('Timer controls not found', 'Please refresh the page and try again.');
+                return;
             }
             
-            // Debug button visibility
-            // Timer start button initialized
-            
-            if (startBtn) startBtn.addEventListener('click', startTimer);
-            if (pauseBtn) pauseBtn.addEventListener('click', pauseTimer);
-            if (resetBtn) resetBtn.addEventListener('click', resetTimer);
+            // Add event listeners with error handling
+            if (elements.startBtn) {
+                elements.startBtn.addEventListener('click', startTimer);
+            }
+            if (elements.pauseBtn) {
+                elements.pauseBtn.addEventListener('click', pauseTimer);
+            }
+            if (elements.resetBtn) {
+                elements.resetBtn.addEventListener('click', resetTimer);
+            }
 
+            // Initialize timer state
+            timerState.isInitialized = true;
+            
             // Initialize display and practice log
             updateDisplay();
             displayPracticeLog();
@@ -5550,15 +5686,14 @@
             // Add session persistence
             loadSessionState();
             
-            // Make sure the timer display is visible
-            if (display) {
-                display.style.display = 'flex';
-                display.style.visibility = 'visible';
-                // Timer display initialized
+            // Ensure timer display is visible
+            if (elements.display) {
+                elements.display.style.display = 'flex';
+                elements.display.style.visibility = 'visible';
             }
             
-            // Highlight default 10-minute duration
-            setDuration(10);
+            // Mark timer as ready
+            showUserSuccess('Meditation timer ready!');
 
             function addKeyboardNavigation() {
                 // Space bar to start/pause
