@@ -3061,6 +3061,11 @@
 
                     <!-- Primary CTA -->
                     <div class="text-center slide-in-right">
+                        <!-- Simple test button first -->
+                        <button onclick="alert('HOME BUTTON WORKS!'); navigateTo('timer');" style="background: blue; color: white; padding: 20px; font-size: 20px; border: none; cursor: pointer; margin: 10px; display: block;">
+                            SIMPLE HOME TEST BUTTON
+                        </button>
+                        
                         <button onclick="navigateTo('timer')" class="inline-flex items-center justify-center px-10 sm:px-12 md:px-16 py-5 sm:py-6 md:py-7 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl border-2 border-forest-green/20 focus:ring-4 focus:ring-forest-green/30 focus:outline-none min-h-[64px] w-full sm:w-auto cursor-pointer touch-manipulation select-none">
                             <svg class="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 mr-3 sm:mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
@@ -5376,9 +5381,63 @@
         });
     }
     
+    // Add missing functions that buttons are calling
+    function testWorkoutSound() {
+        console.log('Testing workout sound...');
+        alert('Workout sound test - this function now exists!');
+        
+        // Create audio context for sound
+        let audioContext = null;
+        
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+        
+        function playBell() {
+            initAudio();
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            
+            // Create a simple bell sound using Web Audio API
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.5);
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+        
+        playBell();
+    }
+    
+    function playRecording(url) {
+        console.log('Playing recording:', url);
+        alert('Playing recording: ' + url);
+        
+        // Create audio element and play
+        const audio = new Audio(url);
+        audio.play().catch(e => {
+            console.error('Error playing audio:', e);
+            alert('Error playing audio: ' + e.message);
+        });
+    }
+    
     // Make test functions globally accessible
     window.testButtonClick = testButtonClick;
     window.checkForBlockingElements = checkForBlockingElements;
+    window.testWorkoutSound = testWorkoutSound;
+    window.playRecording = playRecording;
     
     // Global variables
     let mainContent;
@@ -5520,6 +5579,7 @@
 
     // Make navigation globally accessible
     window.navigateTo = navigateToPage;
+    window.navigateToPage = navigateToPage;
 
     // Timer logic
     function attachTimerLogic() {
