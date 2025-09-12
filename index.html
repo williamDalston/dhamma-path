@@ -4623,19 +4623,19 @@
                                     <div class="flex items-center justify-center space-x-2">
                                         <span class="text-xl">▶️</span>
                                         <span>Start Meditation</span>
-                    </div>
-                    </button>
+                                    </div>
+                                </button>
                                 <button id="timer-pause-btn" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-2xl hover:from-earthy-gold/90 hover:to-earthy-gold/80 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-base sm:text-lg min-h-[56px] shadow-lg hidden touch-manipulation">
                                     <div class="flex items-center justify-center space-x-2">
                                         <span class="text-xl">⏸️</span>
                                         <span>Pause</span>
-                </div>
+                                    </div>
                                 </button>
                                 <button id="timer-reset-btn" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold rounded-2xl hover:from-gray-600 hover:to-gray-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-base sm:text-lg min-h-[56px] shadow-lg touch-manipulation">
                                     <div class="flex items-center justify-center space-x-2">
                                         <span class="text-xl">🔄</span>
                                         <span>Reset</span>
-            </div>
+                                    </div>
                                 </button>
                             </div>
                             
@@ -5523,6 +5523,12 @@
             
             // Test if buttons are clickable
             console.log('Testing button clickability...');
+            console.log('Start button element:', startBtn);
+            console.log('Start button position:', startBtn.getBoundingClientRect());
+            console.log('Start button computed styles:', window.getComputedStyle(startBtn));
+            console.log('Start button pointer events:', window.getComputedStyle(startBtn).pointerEvents);
+            console.log('Start button z-index:', window.getComputedStyle(startBtn).zIndex);
+            
             startBtn.addEventListener('click', () => {
                 console.log('Start button clicked - event listener working!');
                 alert('Start button clicked!');
