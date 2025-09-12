@@ -6802,6 +6802,22 @@
                                 </span>
                             </button>
                         </div>
+                        
+                        <!-- Navigation Buttons (shown during workout) -->
+                        <div id="workout-navigation" class="flex justify-center gap-4 mt-4 hidden">
+                            <button id="workout-prev-btn" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                                <span class="flex items-center space-x-2">
+                                    <span class="text-xl">⬅️</span>
+                                    <span>Previous</span>
+                                </span>
+                            </button>
+                            <button id="workout-next-btn" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                                <span class="flex items-center space-x-2">
+                                    <span>Next</span>
+                                    <span class="text-xl">➡️</span>
+                                </span>
+                            </button>
+                        </div>
                     </div>
                     
                     <!-- Settings Row -->
@@ -7265,7 +7281,7 @@
                     <!-- Controls Group - Better Organization -->
                     <div class="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">
                         <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3">
-                            <label for="timer-duration" class="text-sm font-semibold text-charcoal">Duration:</label>
+                            <label for="journal-timer-duration" class="text-sm font-semibold text-charcoal">Duration:</label>
                             <select id="journal-timer-duration" class="px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-earthy-gold focus:border-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600 bg-white shadow-sm transition-all duration-300 text-sm min-h-[44px]">
                                 <option value="300">5 minutes</option>
                                 <option value="600" selected>10 minutes</option>
@@ -9144,11 +9160,58 @@
         }, { once: true });
         
         console.log('Mobile-friendly sound functionality added. Touch or click to initialize audio.');
+        
+        // Load interview history function
+        function loadInterviewHistory() {
+            const saved = localStorage.getItem('interviewHistory');
+            if (saved) {
+                interviewHistory = JSON.parse(saved);
+            }
+            loadRecordings();
+        }
+        
+        // Load recordings function
+        function loadRecordings() {
+            if (!recordingsList) return;
+            
+            recordingsList.innerHTML = '';
+            
+            if (interviewHistory.length === 0) {
+                recordingsList.innerHTML = '<p class="text-gray-500 text-center py-4">No recordings yet. Start practicing!</p>';
+                if (recordingsSection) recordingsSection.classList.add('hidden');
+                return;
+            }
+            
+            if (recordingsSection) recordingsSection.classList.remove('hidden');
+            
+            interviewHistory.forEach(recording => {
+                const recordingItem = document.createElement('div');
+                recordingItem.className = 'bg-white rounded-lg p-4 shadow-sm border border-gray-200 mb-3';
+                recordingItem.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-charcoal">${recording.question}</h4>
+                            <p class="text-sm text-gray-500">${recording.date}</p>
+                            <p class="text-sm text-gray-500">Duration: ${recording.duration}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="playRecording('${recording.url}')" class="px-3 py-1 bg-forest-green text-white rounded text-sm hover:bg-forest-green/90">
+                                Play
+                            </button>
+                            <button onclick="deleteInterviewRecording('${recording.id}')" class="px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-500/90">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+                recordingsList.appendChild(recordingItem);
+            });
+        }
     }
 
     // Interview logic
-        function attachInterviewLogic() {
-            console.log('Attaching interview logic...');
+    function attachInterviewLogic() {
+        console.log('Attaching interview logic...');
         console.log('Interview page - adding dynamic functionality with video recording');
         
         // Interview questions by category
@@ -10257,7 +10320,10 @@
                 exerciseName: document.getElementById('current-exercise-name'),
                 exerciseDescription: document.getElementById('current-exercise-description'),
                 exerciseInstructions: document.getElementById('exercise-instructions'),
-                exerciseEmoji: document.getElementById('current-exercise-emoji')
+                exerciseEmoji: document.getElementById('current-exercise-emoji'),
+                navigation: document.getElementById('workout-navigation'),
+                prevBtn: document.getElementById('workout-prev-btn'),
+                nextBtn: document.getElementById('workout-next-btn')
             };
         }
         
@@ -10303,6 +10369,8 @@
               if (elements.resetBtn) elements.resetBtn.addEventListener('click', resetWorkout);
              if (elements.doubleModeCheckbox) elements.doubleModeCheckbox.addEventListener('change', toggleDoubleMode);
              if (elements.soundSelect) elements.soundSelect.addEventListener('change', toggleSound);
+             if (elements.prevBtn) elements.prevBtn.addEventListener('click', previousExercise);
+             if (elements.nextBtn) elements.nextBtn.addEventListener('click', nextExercise);
              
               // Set up exercise card click listeners
               const exerciseCards = document.querySelectorAll('.exercise-card');
@@ -10332,18 +10400,22 @@
                  workoutStartTime = new Date();
                  
                  // Update button states
-                  if (elements.startBtn) {
-                      console.log('Hiding start button');
-                      elements.startBtn.classList.add('hidden');
-                  } else {
-                      console.log('Start button not found!');
-                  }
-                  if (elements.pauseBtn) {
-                      console.log('Showing pause button');
-                      elements.pauseBtn.classList.remove('hidden');
-                  } else {
-                      console.log('Pause button not found!');
-                  }
+                 if (elements.startBtn) {
+                     console.log('Hiding start button');
+                     elements.startBtn.classList.add('hidden');
+                 } else {
+                     console.log('Start button not found!');
+                 }
+                 if (elements.pauseBtn) {
+                     console.log('Showing pause button');
+                     elements.pauseBtn.classList.remove('hidden');
+                 } else {
+                     console.log('Pause button not found!');
+                 }
+                 if (elements.navigation) {
+                     console.log('Showing navigation buttons');
+                     elements.navigation.classList.remove('hidden');
+                 }
                  
                  // Start the workout timer
                  startWorkoutTimer();
@@ -10367,7 +10439,7 @@
                 clearInterval(workoutTimer);
                 
                 // Update button states
-                if (pauseBtn) elements.pauseBtn.innerHTML = '<span class="flex items-center space-x-3"><span class="text-2xl">▶️</span><span>Resume</span></span>';
+                if (elements.pauseBtn) elements.pauseBtn.innerHTML = '<span class="flex items-center space-x-3"><span class="text-2xl">▶️</span><span>Resume</span></span>';
                 
                 showNotification('Workout paused', 'info');
             } else if (isWorkoutPaused) {
@@ -10375,7 +10447,7 @@
                 startWorkoutTimer();
                 
                 // Update button states
-                if (pauseBtn) elements.pauseBtn.innerHTML = '<span class="flex items-center space-x-3"><span class="text-2xl">⏸️</span><span>Pause</span></span>';
+                if (elements.pauseBtn) elements.pauseBtn.innerHTML = '<span class="flex items-center space-x-3"><span class="text-2xl">⏸️</span><span>Pause</span></span>';
                 
                 showNotification('Workout resumed', 'success');
             }
@@ -10398,6 +10470,7 @@
             // Update button states
             if (startBtn) elements.startBtn.classList.remove('hidden');
             if (pauseBtn) elements.pauseBtn.classList.add('hidden');
+            if (elements.navigation) elements.navigation.classList.add('hidden');
             
             // Hide rest period display
             const restDisplay = document.getElementById('rest-period-display');
@@ -10412,6 +10485,30 @@
             updateCurrentExerciseDisplay();
             
             showNotification('Workout reset', 'info');
+        }
+        
+        function previousExercise() {
+            if (currentExercise > 0) {
+                currentExercise--;
+                currentTime = isDoubleMode ? 60 : 30;
+                updateCurrentExerciseDisplay();
+                updateWorkoutDisplay();
+                showNotification(`Moved to exercise ${currentExercise + 1}: ${exercises[currentExercise].name}`, 'info');
+            } else {
+                showNotification('Already at first exercise', 'warning');
+            }
+        }
+        
+        function nextExercise() {
+            if (currentExercise < exercises.length - 1) {
+                currentExercise++;
+                currentTime = isDoubleMode ? 60 : 30;
+                updateCurrentExerciseDisplay();
+                updateWorkoutDisplay();
+                showNotification(`Moved to exercise ${currentExercise + 1}: ${exercises[currentExercise].name}`, 'info');
+            } else {
+                showNotification('Already at last exercise', 'warning');
+            }
         }
         
          function startWorkoutTimer() {
@@ -10609,12 +10706,12 @@
         }
         
         function toggleSound() {
-            const soundEnabled = soundSelect.value === 'on';
+            const soundEnabled = elements.soundSelect ? elements.soundSelect.value === 'on' : true;
             showNotification(soundEnabled ? 'Sound enabled' : 'Sound disabled', 'info');
         }
         
         function playWorkoutSound(type) {
-            const soundEnabled = soundSelect ? soundSelect.value === 'on' : true;
+            const soundEnabled = elements.soundSelect ? elements.soundSelect.value === 'on' : true;
             if (!soundEnabled) return;
             
             // Simple sound feedback using Web Audio API
