@@ -5401,7 +5401,7 @@
 
     // Simple navigation function
     function navigateToPage(pageName, id = null) {
-        console.log('Navigating to:', pageName);
+        console.log('Navigating to:', pageName, 'with id:', id);
         
         if (!mainContent) {
             mainContent = document.getElementById('main-content');
@@ -6604,6 +6604,8 @@
     document.addEventListener('DOMContentLoaded', () => {
         const initStart = performance.now();
         console.log('DOM loaded, initializing...');
+        console.log('Throttle function available:', typeof throttle);
+        console.log('Main content element:', document.getElementById('main-content'));
         
         mainContent = document.getElementById('main-content');
         
@@ -6617,12 +6619,16 @@
             
             // Throttled global click handler for navigation links
             const throttledNavigation = throttle((e) => {
+                console.log('Click detected on:', e.target);
                 const link = e.target.closest('.main-nav-link');
                 if (link) {
+                    console.log('Navigation link clicked:', link.dataset.page);
                     e.preventDefault();
                     const page = link.dataset.page;
                     const id = link.dataset.articleId || link.dataset.pathId;
                     navigateToPage(page, id);
+                } else {
+                    console.log('No navigation link found');
                 }
             }, 100);
             
