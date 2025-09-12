@@ -2307,21 +2307,24 @@
                     </div>
                     
                     <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-gradient font-lora text-glow-strong slide-in-left text-center">Transform Your Mornings, Transform Your Life</h1>
-                    <p class="text-base sm:text-lg lg:text-xl text-charcoal/80 text-smooth-transition max-w-4xl mx-auto text-center slide-in-right mb-6 sm:mb-8 px-4">Master the art of mindful mornings with our integrated toolkit: meditation, journaling, exercise, and confidence practice. Discover how just <strong class="text-forest-green">30 minutes each morning</strong> can revolutionize your entire day.</p>
+                    <p class="text-base sm:text-lg lg:text-xl text-charcoal/80 text-smooth-transition max-w-4xl mx-auto text-center slide-in-right mb-6 sm:mb-8 px-4">Master the art of mindful mornings with our integrated toolkit: meditation, journaling, exercise, and confidence practice. Discover how just <strong class="text-forest-green">30 minutes each morning</strong> can revolutionize your entire day and build lasting habits that stick.</p>
                     
                     <!-- Key Benefits -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12 slide-in-right">
                         <div class="text-center p-4 sm:p-6 lg:p-8 bg-white/90 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg">
                             <div class="text-3xl mb-3">🧘‍♂️</div>
-                            <p class="text-base font-semibold text-charcoal">Find Inner Peace</p>
+                            <p class="text-sm sm:text-base font-semibold text-charcoal">Find Inner Peace</p>
+                            <p class="text-xs sm:text-sm text-charcoal/70 mt-2">Daily meditation for clarity and calm</p>
                         </div>
-                        <div class="text-center p-8 bg-white/90 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg">
+                        <div class="text-center p-4 sm:p-6 lg:p-8 bg-white/90 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg">
                             <div class="text-3xl mb-3">⚡</div>
-                            <p class="text-base font-semibold text-charcoal">Boost Energy</p>
+                            <p class="text-sm sm:text-base font-semibold text-charcoal">Boost Energy</p>
+                            <p class="text-xs sm:text-sm text-charcoal/70 mt-2">7-minute workouts to start strong</p>
                         </div>
-                        <div class="text-center p-8 bg-white/90 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg">
+                        <div class="text-center p-4 sm:p-6 lg:p-8 bg-white/90 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg">
                             <div class="text-3xl mb-3">🎯</div>
-                            <p class="text-base font-semibold text-charcoal">Build Confidence</p>
+                            <p class="text-sm sm:text-base font-semibold text-charcoal">Build Confidence</p>
+                            <p class="text-xs sm:text-sm text-charcoal/70 mt-2">Practice speaking and storytelling</p>
                         </div>
                     </div>
                     
@@ -3403,18 +3406,18 @@
     
     <template id="template-timer">
         <div class="max-w-4xl mx-auto">
-            <!-- Compact Header -->
-            <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold text-gradient font-lora mb-4">Meditation Timer</h1>
-                <p class="text-lg text-charcoal/80 max-w-2xl mx-auto">Find your center with gentle guidance and peaceful timing</p>
+            <!-- Enhanced Header with Mobile Optimization -->
+            <div class="text-center mb-6 sm:mb-8">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gradient font-lora mb-3 sm:mb-4">Meditation Timer</h1>
+                <p class="text-base sm:text-lg text-charcoal/80 max-w-2xl mx-auto px-4">Find your center with our fully functional timer featuring progress tracking, gentle sounds, and customizable durations</p>
             </div>
             
             <!-- Main Timer Section - Centered and Prominent -->
             <div class="max-w-4xl mx-auto">
                 <div class="space-y-8">
             
-                    <!-- Enhanced timer ring container with breathing animation -->
-                    <div class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-8 shadow-xl border border-gray-100 relative overflow-hidden">
+                    <!-- Functional Meditation Timer -->
+                    <div class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100 relative overflow-hidden">
                         <!-- Subtle floating background elements -->
                         <div class="absolute inset-0 opacity-5">
                             <div class="absolute top-0 right-0 w-32 h-32 bg-forest-green rounded-full blur-2xl float-animation"></div>
@@ -3422,78 +3425,96 @@
                         </div>
                         
                         <div class="text-center relative z-10">
-                            <h2 class="text-2xl font-bold text-charcoal font-lora mb-6">Your Meditation Timer</h2>
+                            <h2 class="text-xl sm:text-2xl font-bold text-charcoal font-lora mb-4 sm:mb-6">Your Meditation Timer</h2>
                             
-                            <!-- Simple Timer Display -->
-                            <div class="relative w-64 h-64 sm:w-80 sm:h-80 mx-auto mb-6 sm:mb-8">
-                                <div class="w-full h-full bg-gradient-to-br from-forest-green/10 to-light-green/20 rounded-full flex items-center justify-center border-4 border-forest-green/30 shadow-xl">
-                                    <div class="text-center">
-                                        <div class="text-6xl sm:text-8xl mb-3 sm:mb-4">🧘‍♀️</div>
-                                        <div class="text-2xl sm:text-3xl font-lora text-forest-green font-bold mb-2">Meditation</div>
-                                        <div class="text-base sm:text-lg text-charcoal/70">Choose Your Method Below</div>
-                                    </div>
+                            <!-- Timer Display with Progress Ring -->
+                            <div class="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 mx-auto mb-6 sm:mb-8">
+                                <!-- Progress Ring -->
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                    <!-- Background Circle -->
+                                    <circle cx="50" cy="50" r="45" stroke="#e5e7eb" stroke-width="4" fill="none"/>
+                                    <!-- Progress Circle -->
+                                    <circle id="progress-ring" cx="50" cy="50" r="45" stroke="#4A6C55" stroke-width="4" fill="none" 
+                                            stroke-dasharray="283" stroke-dashoffset="283" 
+                                            class="transition-all duration-1000 ease-linear"/>
+                                </svg>
+                                
+                                <!-- Timer Content -->
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <div id="timer-display" class="text-3xl sm:text-4xl lg:text-5xl font-lora text-forest-green font-bold mb-2">10:00</div>
+                                    <div id="timer-status" class="text-sm sm:text-base text-charcoal/70">Ready to begin</div>
+                                    <div class="text-2xl sm:text-3xl lg:text-4xl mt-2">🧘‍♀️</div>
                                 </div>
+                            </div>
+                            
+                            <!-- Timer Controls -->
+                            <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-6">
+                                <!-- Duration Selection -->
+                                <div class="flex items-center space-x-2">
+                                    <label for="timer-duration" class="text-sm font-semibold text-charcoal">Duration:</label>
+                                    <select id="timer-duration" class="px-3 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-forest-green focus:border-forest-green focus:outline-none bg-white text-sm">
+                                        <option value="300">5 minutes</option>
+                                        <option value="600" selected>10 minutes</option>
+                                        <option value="900">15 minutes</option>
+                                        <option value="1200">20 minutes</option>
+                                        <option value="1800">30 minutes</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- Sound Toggle -->
+                                <div class="flex items-center space-x-2">
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="checkbox" id="timer-sound" class="h-4 w-4 rounded text-forest-green focus:ring-forest-green focus:ring-2" checked>
+                                        <span class="text-sm font-semibold text-charcoal">🔔 Sound</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Control Buttons -->
+                            <div class="flex justify-center space-x-4">
+                                <button id="timer-start-btn" class="px-6 sm:px-8 py-3 sm:py-4 bg-forest-green text-white font-bold rounded-xl hover:bg-forest-green/90 hover:shadow-lg transition-all duration-300 text-sm sm:text-base min-h-[48px]">
+                                    ▶️ Start
+                                </button>
+                                <button id="timer-pause-btn" class="px-6 sm:px-8 py-3 sm:py-4 bg-earthy-gold text-white font-bold rounded-xl hover:bg-earthy-gold/90 hover:shadow-lg transition-all duration-300 text-sm sm:text-base min-h-[48px] hidden">
+                                    ⏸️ Pause
+                                </button>
+                                <button id="timer-reset-btn" class="px-6 sm:px-8 py-3 sm:py-4 bg-gray-500 text-white font-bold rounded-xl hover:bg-gray-600 hover:shadow-lg transition-all duration-300 text-sm sm:text-base min-h-[48px]">
+                                    🔄 Reset
+                                </button>
+                            </div>
+                            
+                            <!-- Quick Tips -->
+                            <div class="mt-6 bg-light-green/20 rounded-xl p-3 sm:p-4 max-w-md mx-auto">
+                                <p class="text-xs sm:text-sm text-charcoal/70">
+                                    💡 <strong>Pro Tip:</strong> Find a quiet space, sit comfortably, and focus on your breath. The timer will guide you through your meditation.
+                                </p>
                             </div>
                         </div>
                     </div>
-                    <!-- Simple Timer Options -->
-                    <div class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-4 sm:p-8 shadow-xl border border-gray-100">
-                        <div class="text-center space-y-6 sm:space-y-8">
-                            <h3 class="text-lg sm:text-xl font-bold text-charcoal mb-4 sm:mb-6">Choose Your Timer Method</h3>
-
-                            <!-- Option 1: Phone Timer -->
-                            <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-forest-green/20 hover:shadow-xl transition-all duration-300">
-                                <div class="flex items-center justify-center mb-3 sm:mb-4">
-                                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-forest-green/10 rounded-full flex items-center justify-center">
-                                        <span class="text-2xl sm:text-3xl">📱</span>
-                                    </div>
+                    <!-- Meditation Guide -->
+                    <div class="bg-gradient-to-br from-light-green/20 to-forest-green/10 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-xl border border-light-green/30">
+                        <h3 class="text-lg sm:text-xl font-bold text-charcoal mb-4 sm:mb-6 text-center">Meditation Guide</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-center">
+                            <div class="bg-white/50 rounded-xl p-4 sm:p-6">
+                                <div class="w-12 h-12 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <span class="text-2xl">🏠</span>
                                 </div>
-                                <h4 class="text-base sm:text-lg font-semibold text-charcoal mb-2 sm:mb-3">Use Your Phone Timer</h4>
-                                <p class="text-sm sm:text-base text-charcoal/70 mb-3 sm:mb-4">The simplest and most reliable method</p>
-                                <div class="text-xs sm:text-sm text-charcoal/60 space-y-1">
-                                    <p>1. Open your phone's timer app</p>
-                                    <p>2. Set for 10 minutes (or your preferred duration)</p>
-                                    <p>3. Start your meditation</p>
-                                </div>
+                                <h4 class="text-sm sm:text-base font-semibold text-charcoal mb-2">Find a Quiet Space</h4>
+                                <p class="text-xs sm:text-sm text-charcoal/70">Choose a peaceful spot where you won't be disturbed</p>
                             </div>
-                    
-                            <!-- Option 2: External Timer Apps -->
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                                <a href="https://insighttimer.com" target="_blank" class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-forest-green/20 hover:shadow-xl transition-all duration-300 group min-h-[120px] flex flex-col justify-center">
-                                    <div class="flex items-center justify-center mb-3 sm:mb-4">
-                                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-forest-green/10 rounded-full flex items-center justify-center">
-                                            <span class="text-xl sm:text-2xl">🧘</span>
-                                        </div>
-                                    </div>
-                                    <h4 class="text-base sm:text-lg font-semibold text-charcoal mb-1 sm:mb-2 group-hover:text-forest-green">Insight Timer</h4>
-                                    <p class="text-xs sm:text-sm text-charcoal/70">Free meditation app with timers</p>
-                                </a>
-                                
-                                <a href="https://www.headspace.com" target="_blank" class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-forest-green/20 hover:shadow-xl transition-all duration-300 group min-h-[120px] flex flex-col justify-center">
-                                    <div class="flex items-center justify-center mb-3 sm:mb-4">
-                                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-forest-green/10 rounded-full flex items-center justify-center">
-                                            <span class="text-xl sm:text-2xl">🌱</span>
-                                        </div>
-                                    </div>
-                                    <h4 class="text-base sm:text-lg font-semibold text-charcoal mb-1 sm:mb-2 group-hover:text-forest-green">Headspace</h4>
-                                    <p class="text-xs sm:text-sm text-charcoal/70">Guided meditation with timers</p>
-                                </a>
+                            <div class="bg-white/50 rounded-xl p-4 sm:p-6">
+                                <div class="w-12 h-12 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <span class="text-2xl">🧘</span>
+                                </div>
+                                <h4 class="text-sm sm:text-base font-semibold text-charcoal mb-2">Sit Comfortably</h4>
+                                <p class="text-xs sm:text-sm text-charcoal/70">Keep your back straight but relaxed, hands on your lap</p>
                             </div>
-                            
-                            <!-- Option 3: YouTube Timers -->
-                            <div class="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-forest-green/20">
-                                <div class="flex items-center justify-center mb-3 sm:mb-4">
-                                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-forest-green/10 rounded-full flex items-center justify-center">
-                                        <span class="text-2xl sm:text-3xl">🎵</span>
-                                    </div>
+                            <div class="bg-white/50 rounded-xl p-4 sm:p-6">
+                                <div class="w-12 h-12 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <span class="text-2xl">🌬️</span>
                                 </div>
-                                <h4 class="text-base sm:text-lg font-semibold text-charcoal mb-2 sm:mb-3">YouTube Meditation Timers</h4>
-                                <p class="text-sm sm:text-base text-charcoal/70 mb-3 sm:mb-4">Search for "meditation timer" on YouTube</p>
-                                <div class="text-xs sm:text-sm text-charcoal/60">
-                                    <p>• 10-minute meditation timer</p>
-                                    <p>• 15-minute guided meditation</p>
-                                    <p>• 20-minute mindfulness timer</p>
-                                </div>
+                                <h4 class="text-sm sm:text-base font-semibold text-charcoal mb-2">Focus on Your Breath</h4>
+                                <p class="text-xs sm:text-sm text-charcoal/70">Breathe naturally and observe each inhale and exhale</p>
                             </div>
                         </div>
                     </div>
@@ -3604,17 +3625,17 @@
                 <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-forest-green/10 to-transparent rounded-full blur-2xl float-animation"></div>
                 <div class="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-earthy-gold/10 to-transparent rounded-full blur-xl float-animation"></div>
                 
-                <div class="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0 relative">
-                    <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8">
+                <div class="flex flex-col lg:flex-row justify-between items-center space-y-4 sm:space-y-6 lg:space-y-0 relative">
+                    <div class="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-6 lg:space-x-8">
                         <div class="flex items-center space-x-3">
-                            <label class="flex items-center space-x-3 cursor-pointer p-3 rounded-xl hover:bg-white/50 transition-all duration-300">
-                                <input type="checkbox" id="workout-double-mode" class="h-5 w-5 rounded text-forest-green focus:ring-forest-green focus:ring-2">
-                                <span class="font-semibold text-charcoal">14-Minute Mode</span>
-                 </label>
-            </div>
-                        <div class="flex items-center space-x-4">
-                            <label for="workout-sound" class="text-sm font-semibold text-charcoal">Sound:</label>
-                            <select id="workout-sound" class="px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-earthy-gold focus:border-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600 bg-white shadow-sm transition-all duration-300">
+                            <label class="flex items-center space-x-3 cursor-pointer p-2 sm:p-3 rounded-xl hover:bg-white/50 transition-all duration-300">
+                                <input type="checkbox" id="workout-double-mode" class="h-4 w-4 sm:h-5 sm:w-5 rounded text-forest-green focus:ring-forest-green focus:ring-2">
+                                <span class="text-sm sm:text-base font-semibold text-charcoal">14-Minute Mode</span>
+                            </label>
+                        </div>
+                        <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                            <label for="workout-sound" class="text-xs sm:text-sm font-semibold text-charcoal">Sound:</label>
+                            <select id="workout-sound" class="px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-earthy-gold focus:border-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600 bg-white shadow-sm transition-all duration-300 text-sm">
                                 <option value="on">🔊 On</option>
                                 <option value="off">🔇 Off</option>
                             </select>
@@ -3743,18 +3764,27 @@
                 <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-earthy-gold/10 to-transparent rounded-full blur-2xl float-animation"></div>
                 <div class="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-forest-green/10 to-transparent rounded-full blur-xl float-animation"></div>
                 
-                <div class="text-center mb-8 relative">
-                    <h3 class="text-xl font-bold text-charcoal mb-2 drop-shadow-sm">Choose Your Confidence Practice</h3>
-                    <p class="text-sm text-charcoal/70">Select a category to practice different speaking skills</p>
+                <div class="text-center mb-6 sm:mb-8 relative">
+                    <h3 class="text-lg sm:text-xl font-bold text-charcoal mb-2 drop-shadow-sm">Choose Your Confidence Practice</h3>
+                    <p class="text-xs sm:text-sm text-charcoal/70">Select a category to practice different speaking skills</p>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <button data-category="general" class="interview-cat-btn px-6 py-4 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm shadow-lg border-2 border-forest-green" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #2d5016 !important;">Daily Life</button>
-                    <button data-category="storytelling" class="interview-cat-btn px-6 py-4 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm shadow-lg border-2 border-earthy-gold" style="background-color: #b8860b !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #b8860b !important;">Storytelling</button>
-                    <button data-category="communication" class="interview-cat-btn px-6 py-4 bg-gradient-to-r from-light-green to-light-green/80 text-forest-green font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm shadow-lg border-2 border-forest-green" style="background-color: #d4edda !important; color: #2d5016 !important; display: inline-block !important; visibility: visible !important; border: 2px solid #2d5016 !important;">Communication</button>
-                    <button data-category="creativity" class="interview-cat-btn px-6 py-4 bg-gradient-to-r from-forest-green to-forest-green/80 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm shadow-lg border-2 border-forest-green" style="background-color: #4A6C55 !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #4A6C55 !important;">Creativity</button>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
+                    <button data-category="general" class="interview-cat-btn px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs sm:text-sm shadow-lg border-2 border-forest-green min-h-[48px]" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #2d5016 !important;">Daily Life</button>
+                    <button data-category="storytelling" class="interview-cat-btn px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs sm:text-sm shadow-lg border-2 border-earthy-gold min-h-[48px]" style="background-color: #b8860b !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #b8860b !important;">Storytelling</button>
+                    <button data-category="communication" class="interview-cat-btn px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-light-green to-light-green/80 text-forest-green font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs sm:text-sm shadow-lg border-2 border-forest-green min-h-[48px]" style="background-color: #d4edda !important; color: #2d5016 !important; display: inline-block !important; visibility: visible !important; border: 2px solid #2d5016 !important;">Communication</button>
+                    <button data-category="creativity" class="interview-cat-btn px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-forest-green to-forest-green/80 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs sm:text-sm shadow-lg border-2 border-forest-green min-h-[48px]" style="background-color: #4A6C55 !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #4A6C55 !important;">Creativity</button>
                 </div>
                 <div class="text-center">
-                    <button id="random-question-btn" class="px-10 py-4 bg-gradient-to-r from-earthy-gold to-earthy-gold/80 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg border-2 border-earthy-gold" style="background-color: #B98B4C !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #B98B4C !important;">🎲 Random Question</button>
+                    <button id="random-question-btn" class="px-8 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-earthy-gold to-earthy-gold/80 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg border-2 border-earthy-gold min-h-[48px]" style="background-color: #B98B4C !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #B98B4C !important;">
+                        <span class="text-sm sm:text-base">🎲 Random Question</span>
+                    </button>
+                </div>
+                
+                <!-- Practice Tips -->
+                <div class="mt-4 sm:mt-6 bg-earthy-gold/10 rounded-lg p-3 sm:p-4">
+                    <p class="text-xs sm:text-sm text-charcoal/70 text-center">
+                        💡 <strong>Practice Tip:</strong> Speak out loud for 2-3 minutes per question. Record yourself to track your progress and confidence growth.
+                    </p>
                 </div>
             </div>
 
@@ -3875,21 +3905,21 @@
             </div>
 
             <!-- Enhanced timer and controls -->
-            <div class="bg-gradient-to-br from-light-green/40 via-white to-light-green/20 rounded-2xl p-8 shadow-xl border border-light-green/20 mb-8 relative overflow-hidden">
+            <div class="bg-gradient-to-br from-light-green/40 via-white to-light-green/20 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-xl border border-light-green/20 mb-6 sm:mb-8 relative overflow-hidden">
                 <!-- Subtle background elements -->
                 <div class="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-forest-green/10 to-transparent rounded-full blur-2xl"></div>
                 <div class="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-earthy-gold/10 to-transparent rounded-full blur-xl"></div>
                 
-                <div class="flex flex-col lg:flex-row justify-between items-center mb-8 space-y-6 lg:space-y-0 relative">
-                    <div class="flex items-center space-x-6">
+                <div class="flex flex-col lg:flex-row justify-between items-center mb-6 sm:mb-8 space-y-4 sm:space-y-6 lg:space-y-0 relative">
+                    <div class="flex items-center space-x-4 sm:space-x-6">
                         <div class="text-center">
-                            <div id="journal-timer" class="text-5xl font-lora text-forest-green font-bold drop-shadow-sm">10:00</div>
-                            <div class="text-sm text-charcoal/70 font-medium">remaining</div>
+                            <div id="journal-timer" class="text-3xl sm:text-4xl lg:text-5xl font-lora text-forest-green font-bold drop-shadow-sm">10:00</div>
+                            <div class="text-xs sm:text-sm text-charcoal/70 font-medium">remaining</div>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-4">
-                        <label for="timer-duration" class="text-sm font-semibold text-charcoal">Custom Duration:</label>
-                        <select id="timer-duration" class="px-6 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-earthy-gold focus:border-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600 bg-white shadow-sm transition-all duration-300">
+                    <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                        <label for="timer-duration" class="text-xs sm:text-sm font-semibold text-charcoal">Custom Duration:</label>
+                        <select id="timer-duration" class="px-3 sm:px-6 py-2 sm:py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-earthy-gold focus:border-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600 bg-white shadow-sm transition-all duration-300 text-sm">
                             <option value="300">5 minutes</option>
                             <option value="600" selected>10 minutes</option>
                             <option value="900">15 minutes</option>
@@ -3898,16 +3928,24 @@
                             <option value="3600">1 hour</option>
                         </select>
                     </div>
-                    <button id="journal-start-btn" class="ripple hover-soft px-12 py-5 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-xl shadow-xl border-2 border-forest-green w-full lg:w-auto" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
-                        <span class="flex items-center justify-center space-x-3">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button id="journal-start-btn" class="ripple hover-soft px-8 sm:px-12 py-3 sm:py-5 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg sm:text-xl shadow-xl border-2 border-forest-green w-full sm:w-auto min-h-[48px]" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
+                        <span class="flex items-center justify-center space-x-2 sm:space-x-3">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
                             </svg>
-                            <span>Begin Freewriting</span>
+                            <span class="hidden sm:inline">Begin Freewriting</span>
+                            <span class="sm:hidden">Begin</span>
                         </span>
                     </button>
                 </div>
                 <textarea id="journal-entry" placeholder="Let your thoughts flow freely... the timer will begin as soon as you start typing." class="w-full h-64 sm:h-80 p-4 sm:p-6 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-earthy-gold focus:border-earthy-gold focus:outline-none dark:bg-gray-800 dark:border-gray-600 shadow-sm transition-all duration-300" style="font-family: 'Lora', serif; font-size: 1rem; line-height: 1.6;"></textarea>
+                
+                <!-- Writing Tips -->
+                <div class="mt-3 sm:mt-4 bg-light-green/20 rounded-lg p-3 sm:p-4">
+                    <p class="text-xs sm:text-sm text-charcoal/70 text-center">
+                        💡 <strong>Writing Tips:</strong> Don't worry about grammar or structure. Just let your thoughts flow naturally. This is your private space for self-reflection.
+                    </p>
+                </div>
                 
                 <!-- Save Button -->
                 <div class="mt-4 sm:mt-6 flex justify-center">
@@ -4055,24 +4093,81 @@
 
     // Timer logic
     function attachTimerLogic() {
-        console.log('Attaching timer logic...');
+        console.log('Attaching enhanced timer logic...');
         
         const startBtn = document.getElementById('timer-start-btn');
         const pauseBtn = document.getElementById('timer-pause-btn');
         const resetBtn = document.getElementById('timer-reset-btn');
         const display = document.getElementById('timer-display');
-        const durationButtons = document.querySelectorAll('.timer-duration-btn');
+        const status = document.getElementById('timer-status');
+        const durationSelect = document.getElementById('timer-duration');
+        const soundToggle = document.getElementById('timer-sound');
+        const progressRing = document.getElementById('progress-ring');
         
         let timerInterval = null;
         let timeRemaining = 600; // 10 minutes default
+        let totalTime = 600;
         let isRunning = false;
         let isPaused = false;
+        
+        // Create audio context for sound
+        let audioContext = null;
+        
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+        
+        function playBell() {
+            if (!soundToggle || !soundToggle.checked) return;
+            
+            initAudio();
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            
+            // Create a simple bell sound using Web Audio API
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.5);
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
         
         function updateDisplay() {
             if (display) {
                 const minutes = Math.floor(timeRemaining / 60);
                 const seconds = timeRemaining % 60;
-                display.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            // Update progress ring
+            if (progressRing) {
+                const circumference = 2 * Math.PI * 45; // radius = 45
+                const progress = (totalTime - timeRemaining) / totalTime;
+                const offset = circumference - (progress * circumference);
+                progressRing.style.strokeDashoffset = offset;
+            }
+            
+            // Update status
+            if (status) {
+                if (isRunning) {
+                    status.textContent = 'Meditating...';
+                } else if (isPaused) {
+                    status.textContent = 'Paused';
+                } else {
+                    status.textContent = 'Ready to begin';
+                }
             }
         }
         
@@ -4081,19 +4176,35 @@
                 isRunning = true;
                 isPaused = false;
                 
-                // Update button visibility
                 if (startBtn) startBtn.classList.add('hidden');
                 if (pauseBtn) pauseBtn.classList.remove('hidden');
                 
                 timerInterval = setInterval(() => {
-                    timeRemaining--;
-                    updateDisplay();
-                    if (timeRemaining <= 0) {
+                    if (timeRemaining > 0) {
+                        timeRemaining--;
+                        updateDisplay();
+                        
+                        // Play bell at specific intervals
+                        if (timeRemaining === 0) {
+                            playBell(); // Final bell
+                        } else if (timeRemaining === 60 && totalTime > 120) {
+                            playBell(); // 1 minute warning
+                        } else if (timeRemaining === 300 && totalTime > 600) {
+                            playBell(); // 5 minute warning
+                        }
+                    } else {
                         clearInterval(timerInterval);
                         isRunning = false;
-                        alert('Meditation complete!');
                         
-                        // Reset button visibility
+                        // Session complete
+                        if (status) status.textContent = 'Session complete! 🎉';
+                        playBell(); // Final completion bell
+                        
+                        // Show completion message
+                        setTimeout(() => {
+                            alert('Meditation session complete! 🧘‍♀️\n\nTake a moment to notice how you feel. Well done!');
+                        }, 500);
+                        
                         if (startBtn) startBtn.classList.remove('hidden');
                         if (pauseBtn) pauseBtn.classList.add('hidden');
                     }
@@ -4107,10 +4218,9 @@
                 isRunning = false;
                 isPaused = true;
                 
-                // Update button visibility
                 if (startBtn) {
                     startBtn.classList.remove('hidden');
-                    startBtn.textContent = 'Resume';
+                    startBtn.textContent = '▶️ Resume';
                 }
                 if (pauseBtn) pauseBtn.classList.add('hidden');
             }
@@ -4120,56 +4230,43 @@
             clearInterval(timerInterval);
             isRunning = false;
             isPaused = false;
-            timeRemaining = 600;
             
-            // Reset button visibility
+            // Reset to selected duration
+            if (durationSelect) {
+                timeRemaining = parseInt(durationSelect.value);
+                totalTime = timeRemaining;
+            } else {
+                timeRemaining = 600;
+                totalTime = 600;
+            }
+            
+            updateDisplay();
+            
             if (startBtn) {
                 startBtn.classList.remove('hidden');
-                startBtn.textContent = 'Start';
+                startBtn.textContent = '▶️ Start';
             }
             if (pauseBtn) pauseBtn.classList.add('hidden');
-            
-            updateDisplay();
         }
         
-        function setDuration(minutes) {
-            timeRemaining = minutes * 60;
-            updateDisplay();
-            
-            // Update button states
-            durationButtons.forEach(btn => {
-                btn.classList.remove('bg-forest-green', 'text-white');
-                btn.classList.add('bg-light-green', 'text-charcoal');
+        // Event listeners
+        if (startBtn) startBtn.addEventListener('click', startTimer);
+        if (pauseBtn) pauseBtn.addEventListener('click', pauseTimer);
+        if (resetBtn) resetBtn.addEventListener('click', resetTimer);
+        
+        // Duration change
+        if (durationSelect) {
+            durationSelect.addEventListener('change', () => {
+                if (!isRunning) {
+                    timeRemaining = parseInt(durationSelect.value);
+                    totalTime = timeRemaining;
+                    updateDisplay();
+                }
             });
-            
-            const selectedBtn = document.querySelector(`[data-duration="${minutes}"]`);
-            if (selectedBtn) {
-                selectedBtn.classList.remove('bg-light-green', 'text-charcoal');
-                selectedBtn.classList.add('bg-forest-green', 'text-white');
-            }
         }
         
-        // Attach event listeners
-        if (startBtn) {
-            startBtn.addEventListener('click', startTimer);
-        }
-        if (pauseBtn) {
-            pauseBtn.addEventListener('click', pauseTimer);
-        }
-        if (resetBtn) {
-            resetBtn.addEventListener('click', resetTimer);
-        }
-        
-        durationButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const duration = parseInt(btn.dataset.duration);
-                setDuration(duration);
-            });
-        });
-        
-        // Initialize
+        // Initialize display
         updateDisplay();
-        setDuration(10);
     }
 
     // Journal logic
