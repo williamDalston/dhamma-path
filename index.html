@@ -5174,7 +5174,8 @@
 
 
         // Pāli Term Tooltips
-        mainContent.addEventListener('mouseover', (e) => {
+        if (mainContent) {
+            mainContent.addEventListener('mouseover', (e) => {
             if (e.target.classList.contains('pali-term')) {
                 const term = e.target.dataset.term;
                 const definition = db.glossary[term];
@@ -5186,9 +5187,11 @@
                 }
             }
         });
+        }
         
         function attachArticlePageLogic(articleId) {
              // Attach audio player if it exists
+            if (!mainContent) return;
             const player = mainContent.querySelector('#audio-player-container');
             if (player) {
                 attachAudioPlayerLogic();
@@ -5216,6 +5219,7 @@
         }
         
         function attachAudioPlayerLogic() {
+            if (!mainContent) return;
             const player = mainContent.querySelector('#audio-player-container');
             if (!player) return;
 
