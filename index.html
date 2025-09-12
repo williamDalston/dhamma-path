@@ -6517,6 +6517,22 @@
                 </div>
                             </div>
                             
+                            <!-- Segment Navigator - Mobile Optimized -->
+                            <div class="mt-4 mb-6 bg-white/50 rounded-2xl p-4 max-w-md mx-auto">
+                                <div class="flex items-center justify-center space-x-4">
+                                    <button id="timer-prev-btn" class="px-4 py-3 bg-forest-green/20 text-forest-green rounded-xl hover:bg-forest-green/30 active:scale-95 transition-all duration-300 touch-manipulation">
+                                        <span class="text-2xl">⬅️</span>
+                                    </button>
+                                    <div class="text-center px-4">
+                                        <div id="timer-segment-display" class="text-lg font-bold text-charcoal">10 minutes</div>
+                                        <div class="text-sm text-charcoal/60">Duration</div>
+                                    </div>
+                                    <button id="timer-next-btn" class="px-4 py-3 bg-forest-green/20 text-forest-green rounded-xl hover:bg-forest-green/30 active:scale-95 transition-all duration-300 touch-manipulation">
+                                        <span class="text-2xl">➡️</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
                             <!-- Control Buttons - Enhanced Mobile First with Better Touch Targets -->
                             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
                                 <button id="timer-start-btn" class="w-full sm:w-auto px-8 sm:px-10 md:px-12 py-5 sm:py-6 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-3xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 text-xl sm:text-2xl min-h-[64px] shadow-2xl touch-manipulation mobile-touch-feedback mobile-button-hover btn-enhanced group">
@@ -7666,79 +7682,261 @@
     window.navigateTo = navigateToPage;
     window.navigateToPage = navigateToPage;
 
-    // ===== GLOBAL TIMER FUNCTIONS =====
-    // These are defined at the top so they're available everywhere
+    // ===== GLOBAL TIMER SYSTEM =====
+    // Unified timer implementation with segment support
+    
+    // Timer state variables
+    window.timerState = {
+        interval: null,
+        timeRemaining: 600,
+        totalTime: 600,
+        isRunning: false,
+        isPaused: false,
+        currentSegmentIndex: 1, // Default to 10 minutes (index 1)
+        segments: [
+            { name: "5 minutes", duration: 300 },
+            { name: "10 minutes", duration: 600 },
+            { name: "15 minutes", duration: 900 },
+            { name: "20 minutes", duration: 1200 },
+            { name: "30 minutes", duration: 1800 },
+            { name: "45 minutes", duration: 2700 },
+            { name: "60 minutes", duration: 3600 }
+        ]
+    };
+    
+    // Timer DOM elements (will be set when timer page loads)
+    window.timerElements = {
+        startBtn: null,
+        pauseBtn: null,
+        resetBtn: null,
+        prevBtn: null,
+        nextBtn: null,
+        display: null,
+        status: null,
+        progressRing: null,
+        durationSelect: null,
+        soundToggle: null,
+        segmentDisplay: null
+    };
+    
+    // Update timer display
+    window.updateTimerDisplay = function() {
+        const { timeRemaining, totalTime, isRunning, isPaused } = window.timerState;
+        const elements = window.timerElements;
+        
+        if (elements.display) {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            elements.display.textContent = displayText;
+        }
+        
+        if (elements.progressRing) {
+            const circumference = 2 * Math.PI * 45;
+            const progress = (totalTime - timeRemaining) / totalTime;
+            const offset = circumference - (progress * circumference);
+            elements.progressRing.style.strokeDashoffset = offset;
+        }
+        
+        if (elements.status) {
+            if (isRunning) {
+                elements.status.textContent = 'Meditating...';
+            } else if (isPaused) {
+                elements.status.textContent = 'Paused';
+            } else if (timeRemaining === 0) {
+                elements.status.textContent = 'Session complete! 🎉';
+            } else {
+                elements.status.textContent = 'Ready to begin';
+            }
+        }
+        
+        if (elements.segmentDisplay) {
+            const segment = window.timerState.segments[window.timerState.currentSegmentIndex];
+            elements.segmentDisplay.textContent = segment.name;
+        }
+    };
+    
+    // Start timer
     window.startTimer = function() {
-        // Start timer called
-        if (!window.isRunning) {
-            window.isRunning = true;
-            window.isPaused = false;
+        const state = window.timerState;
+        const elements = window.timerElements;
+        
+        if (!state.isRunning) {
+            state.isRunning = true;
+            state.isPaused = false;
             
-            if (window.startBtn) window.startBtn.classList.add('hidden');
-            if (window.pauseBtn) window.pauseBtn.classList.remove('hidden');
-                
-            window.timerInterval = setInterval(() => {
-                if (window.timeRemaining > 0) {
-                    window.timeRemaining--;
-                    window.updateDisplay();
-                } else {
-                    clearInterval(window.timerInterval);
-                    window.isRunning = false;
-                    if (window.status) window.status.textContent = 'Session complete! 🎉';
-                    if (window.startBtn) {
-                        window.startBtn.classList.remove('hidden');
-                        window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+            // Haptic feedback for mobile
+            if (typeof triggerHapticFeedback !== 'undefined') {
+                triggerHapticFeedback('light');
+            }
+            
+            // Update button visibility
+            if (elements.startBtn) elements.startBtn.classList.add('hidden');
+            if (elements.pauseBtn) elements.pauseBtn.classList.remove('hidden');
+            
+            // Add pulsing effect to timer
+            const timerContainer = document.querySelector('.relative.w-48, .relative.w-56, .relative.w-64, .relative.w-72, .relative.w-80');
+            if (timerContainer) {
+                timerContainer.classList.add('timer-running');
+            }
+            
+            // Start the interval
+            state.interval = setInterval(() => {
+                if (state.timeRemaining > 0) {
+                    state.timeRemaining--;
+                    window.updateTimerDisplay();
+                    
+                    // Play sound notifications at specific times
+                    if (elements.soundToggle && elements.soundToggle.checked) {
+                        if (state.timeRemaining === 60 && state.totalTime > 120) {
+                            console.log('Playing 1 minute warning');
+                            // Play sound here
+                        } else if (state.timeRemaining === 300 && state.totalTime > 600) {
+                            console.log('Playing 5 minute warning');
+                            // Play sound here
+                        }
                     }
-                    if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+                } else {
+                    // Timer complete
+                    clearInterval(state.interval);
+                    state.isRunning = false;
+                    window.updateTimerDisplay();
+                    
+                    // Remove pulsing effect
+                    if (timerContainer) {
+                        timerContainer.classList.remove('timer-running');
+                    }
+                    
+                    // Haptic feedback for completion
+                    if (typeof triggerHapticFeedback !== 'undefined') {
+                        triggerHapticFeedback('success');
+                    }
+                    
+                    if (elements.startBtn) {
+                        elements.startBtn.classList.remove('hidden');
+                        elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-4"><span class="text-3xl">▶️</span><span class="font-bold text-xl sm:text-2xl">Start Meditation</span></div>';
+                    }
+                    if (elements.pauseBtn) elements.pauseBtn.classList.add('hidden');
+                    
+                    // Play completion sound
+                    if (elements.soundToggle && elements.soundToggle.checked) {
+                        console.log('Playing completion sound');
+                        // Play sound here
+                    }
                 }
             }, 1000);
         }
     };
-
+    
+    // Pause timer
     window.pauseTimer = function() {
-        if (window.isRunning) {
-            window.isRunning = false;
-            window.isPaused = true;
-            clearInterval(window.timerInterval);
-            if (window.startBtn) window.startBtn.classList.remove('hidden');
-            if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
-            window.updateDisplay();
+        const state = window.timerState;
+        const elements = window.timerElements;
+        
+        if (state.isRunning) {
+            clearInterval(state.interval);
+            state.isRunning = false;
+            state.isPaused = true;
+            
+            // Haptic feedback for mobile
+            if (typeof triggerHapticFeedback !== 'undefined') {
+                triggerHapticFeedback('medium');
+            }
+            
+            // Remove pulsing effect
+            const timerContainer = document.querySelector('.relative.w-48, .relative.w-56, .relative.w-64, .relative.w-72, .relative.w-80');
+            if (timerContainer) {
+                timerContainer.classList.remove('timer-running');
+            }
+            
+            // Update button visibility
+            if (elements.startBtn) {
+                elements.startBtn.classList.remove('hidden');
+                elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-4"><span class="text-3xl">▶️</span><span class="font-bold text-xl sm:text-2xl">Resume</span></div>';
+            }
+            if (elements.pauseBtn) elements.pauseBtn.classList.add('hidden');
+            
+            window.updateTimerDisplay();
         }
     };
-
+    
+    // Reset timer
     window.resetTimer = function() {
-        clearInterval(window.timerInterval);
-        window.isRunning = false;
-        window.isPaused = false;
-        if (window.durationSelect) {
-            window.timeRemaining = parseInt(window.durationSelect.value);
-            window.totalTime = window.timeRemaining;
-        } else {
-            window.timeRemaining = 600;
-            window.totalTime = 600;
+        const state = window.timerState;
+        const elements = window.timerElements;
+        
+        clearInterval(state.interval);
+        state.isRunning = false;
+        state.isPaused = false;
+        
+        // Haptic feedback for mobile
+        if (typeof triggerHapticFeedback !== 'undefined') {
+            triggerHapticFeedback('light');
         }
-        window.updateDisplay();
-        if (window.startBtn) {
-            window.startBtn.classList.remove('hidden');
-            window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+        
+        // Remove pulsing effect
+        const timerContainer = document.querySelector('.relative.w-48, .relative.w-56, .relative.w-64, .relative.w-72, .relative.w-80');
+        if (timerContainer) {
+            timerContainer.classList.remove('timer-running');
         }
-        if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+        
+        // Reset to current segment duration
+        const segment = state.segments[state.currentSegmentIndex];
+        state.timeRemaining = segment.duration;
+        state.totalTime = segment.duration;
+        
+        // Update button visibility
+        if (elements.startBtn) {
+            elements.startBtn.classList.remove('hidden');
+            elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-4"><span class="text-3xl">▶️</span><span class="font-bold text-xl sm:text-2xl">Start Meditation</span></div>';
+        }
+        if (elements.pauseBtn) elements.pauseBtn.classList.add('hidden');
+        
+        window.updateTimerDisplay();
     };
-
-    window.updateDisplay = function() {
-        if (window.display) {
-            const minutes = Math.floor(window.timeRemaining / 60);
-            const seconds = window.timeRemaining % 60;
-            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            window.display.textContent = displayText;
+    
+    // Previous segment
+    window.previousSegment = function() {
+        const state = window.timerState;
+        
+        if (state.currentSegmentIndex > 0 && !state.isRunning) {
+            state.currentSegmentIndex--;
+            const segment = state.segments[state.currentSegmentIndex];
+            state.timeRemaining = segment.duration;
+            state.totalTime = segment.duration;
+            window.updateTimerDisplay();
+            
+            // Haptic feedback
+            if (typeof triggerHapticFeedback !== 'undefined') {
+                triggerHapticFeedback('light');
+            }
+            
+            // Update duration select if it exists
+            if (window.timerElements.durationSelect) {
+                window.timerElements.durationSelect.value = segment.duration;
+            }
         }
-        if (window.status) {
-            if (window.isRunning) {
-                window.status.textContent = 'Meditating...';
-            } else if (window.isPaused) {
-                window.status.textContent = 'Paused';
-            } else {
-                window.status.textContent = 'Ready to begin';
+    };
+    
+    // Next segment
+    window.nextSegment = function() {
+        const state = window.timerState;
+        
+        if (state.currentSegmentIndex < state.segments.length - 1 && !state.isRunning) {
+            state.currentSegmentIndex++;
+            const segment = state.segments[state.currentSegmentIndex];
+            state.timeRemaining = segment.duration;
+            state.totalTime = segment.duration;
+            window.updateTimerDisplay();
+            
+            // Haptic feedback
+            if (typeof triggerHapticFeedback !== 'undefined') {
+                triggerHapticFeedback('light');
+            }
+            
+            // Update duration select if it exists
+            if (window.timerElements.durationSelect) {
+                window.timerElements.durationSelect.value = segment.duration;
             }
         }
     };
@@ -7883,59 +8081,100 @@
 
     // Timer logic
     function attachTimerLogic() {
-        // Attaching enhanced timer logic
+        // Attaching enhanced timer logic with unified system
         
         // Add a small delay to ensure DOM is fully rendered
         setTimeout(() => {
-            // Looking for timer elements after delay
+            // Get all timer elements
+            const elements = {
+                startBtn: document.getElementById('timer-start-btn'),
+                pauseBtn: document.getElementById('timer-pause-btn'),
+                resetBtn: document.getElementById('timer-reset-btn'),
+                prevBtn: document.getElementById('timer-prev-btn'),
+                nextBtn: document.getElementById('timer-next-btn'),
+                display: document.getElementById('timer-display'),
+                status: document.getElementById('timer-status'),
+                durationSelect: document.getElementById('timer-duration'),
+                soundToggle: document.getElementById('timer-sound'),
+                progressRing: document.getElementById('progress-ring'),
+                segmentDisplay: document.getElementById('timer-segment-display')
+            };
             
-            const startBtn = document.getElementById('timer-start-btn');
-            const pauseBtn = document.getElementById('timer-pause-btn');
-            const resetBtn = document.getElementById('timer-reset-btn');
-            const display = document.getElementById('timer-display');
-            const status = document.getElementById('timer-status');
-            const durationSelect = document.getElementById('timer-duration');
-            const soundToggle = document.getElementById('timer-sound');
-            const progressRing = document.getElementById('progress-ring');
+            // Store elements globally
+            window.timerElements = elements;
             
-            // Set global variables
-            window.startBtn = startBtn;
-            window.pauseBtn = pauseBtn;
-            window.resetBtn = resetBtn;
-            window.display = display;
-            window.status = status;
-            window.durationSelect = durationSelect;
-            window.soundToggle = soundToggle;
-            window.progressRing = progressRing;
-            
-            // Initialize timer state
-            window.timeRemaining = parseInt(durationSelect ? durationSelect.value : 600);
-            window.totalTime = window.timeRemaining;
-            
-            // Event listeners
-            if (startBtn) {
-                startBtn.addEventListener('click', window.startTimer);
-            }
-            if (pauseBtn) {
-                pauseBtn.addEventListener('click', window.pauseTimer);
-            }
-            if (resetBtn) {
-                resetBtn.addEventListener('click', window.resetTimer);
+            // Initialize timer state based on duration select
+            if (elements.durationSelect) {
+                const duration = parseInt(elements.durationSelect.value);
+                window.timerState.timeRemaining = duration;
+                window.timerState.totalTime = duration;
+                
+                // Find matching segment index
+                const segmentIndex = window.timerState.segments.findIndex(s => s.duration === duration);
+                if (segmentIndex !== -1) {
+                    window.timerState.currentSegmentIndex = segmentIndex;
+                }
             }
             
-            // Duration change
-            if (durationSelect) {
-                durationSelect.addEventListener('change', () => {
-                    if (!window.isRunning) {
-                        window.timeRemaining = parseInt(durationSelect.value);
-                        window.totalTime = window.timeRemaining;
-                        window.updateDisplay();
+            // Event listeners - click events work on both mobile and desktop
+            if (elements.startBtn) {
+                elements.startBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.startTimer();
+                });
+            }
+            
+            if (elements.pauseBtn) {
+                elements.pauseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.pauseTimer();
+                });
+            }
+            
+            if (elements.resetBtn) {
+                elements.resetBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.resetTimer();
+                });
+            }
+            
+            if (elements.prevBtn) {
+                elements.prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.previousSegment();
+                });
+            }
+            
+            if (elements.nextBtn) {
+                elements.nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.nextSegment();
+                });
+            }
+            
+            // Duration change handler
+            if (elements.durationSelect) {
+                elements.durationSelect.addEventListener('change', () => {
+                    if (!window.timerState.isRunning) {
+                        const duration = parseInt(elements.durationSelect.value);
+                        window.timerState.timeRemaining = duration;
+                        window.timerState.totalTime = duration;
+                        
+                        // Update segment index
+                        const segmentIndex = window.timerState.segments.findIndex(s => s.duration === duration);
+                        if (segmentIndex !== -1) {
+                            window.timerState.currentSegmentIndex = segmentIndex;
+                        }
+                        
+                        window.updateTimerDisplay();
                     }
                 });
             }
             
             // Initialize display
-            window.updateDisplay();
+            window.updateTimerDisplay();
+            
+            console.log('Timer initialized with unified system');
         }, 100);
     }
 
@@ -8016,280 +8255,27 @@
         }
     };
 
-    
-    // Timer variables - made global so they can be accessed by timer functions
-    window.timerInterval = null;
-    window.timeRemaining = 600; // 10 minutes default
-    window.totalTime = 600;
-    window.isRunning = false;
-    window.isPaused = false;
-    window.display = null;
-    window.status = null;
-    window.progressRing = null;
-    window.startBtn = null;
-    window.pauseBtn = null;
-    window.resetBtn = null;
-    window.durationSelect = null;
-    window.soundToggle = null;
+    // Timer variables are now managed in window.timerState and window.timerElements
 
-    // Timer functions - defined globally so they can be accessed by event listeners
-    function updateDisplay() {
-        console.log('=== UPDATE DISPLAY CALLED ===');
-        console.log('timeRemaining:', timeRemaining);
-        console.log('display element:', display);
-        console.log('display element found:', !!display);
-        
-        if (display) {
-            const minutes = Math.floor(timeRemaining / 60);
-            const seconds = timeRemaining % 60;
-            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            console.log('Setting display to:', displayText);
-            console.log('Display element before update:', display.textContent);
-            display.textContent = displayText;
-            console.log('Display element after update:', display.textContent);
-        } else {
-            console.error('Display element not found!');
-            console.log('Trying to find display element again...');
-            const displayElement = document.getElementById('timer-display');
-            console.log('Found display element:', displayElement);
-            if (displayElement) {
-                display = displayElement;
-                console.log('Set display element to:', display);
-                // Try updating again
-                const minutes = Math.floor(timeRemaining / 60);
-                const seconds = timeRemaining % 60;
-                const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                display.textContent = displayText;
-                console.log('Updated display after finding element:', display.textContent);
+    // Timer functions now use the unified window.updateTimerDisplay()
+
+    // Haptic feedback helper function
+    function triggerHapticFeedback(intensity) {
+        if ('vibrate' in navigator) {
+            switch(intensity) {
+                case 'light':
+                    navigator.vibrate(10);
+                    break;
+                case 'medium':
+                    navigator.vibrate(20);
+                    break;
+                case 'success':
+                    navigator.vibrate([50, 100, 50]);
+                    break;
+                default:
+                    navigator.vibrate(15);
             }
         }
-        
-        // Update progress ring
-        if (progressRing) {
-            const circumference = 2 * Math.PI * 45; // radius = 45
-            const progress = (totalTime - timeRemaining) / totalTime;
-            const offset = circumference - (progress * circumference);
-            progressRing.style.strokeDashoffset = offset;
-        }
-        
-        // Update status
-        if (status) {
-            if (isRunning) {
-                status.textContent = 'Meditating...';
-            } else if (isPaused) {
-                status.textContent = 'Paused';
-            } else {
-                status.textContent = 'Ready to begin';
-            }
-        }
-    }
-
-    function startTimer() {
-        // Start timer called
-        console.log('Current state:', { isRunning, isPaused, timeRemaining, totalTime });
-        if (!isRunning) {
-            console.log('Starting timer...');
-            isRunning = true;
-            isPaused = false;
-            
-            // Haptic feedback for mobile
-            triggerHapticFeedback('light');
-            
-            // Add pulsing effect to timer container
-            const timerContainer = document.querySelector('.relative.w-48, .relative.w-56, .relative.w-64, .relative.w-72, .relative.w-80');
-            if (timerContainer) {
-                timerContainer.classList.add('timer-running');
-                // Add start signal animation
-                timerContainer.classList.add('timer-start-signal');
-                // Remove animation class after animation completes
-                setTimeout(() => {
-                    timerContainer.classList.remove('timer-start-signal');
-                }, 1500);
-            }
-            
-            if (startBtn) elements.startBtn.classList.add('hidden');
-            if (pauseBtn) elements.pauseBtn.classList.remove('hidden');
-                
-            console.log('Setting up setInterval...');
-            timerInterval = setInterval(() => {
-                console.log('=== SETINTERVAL TICK ===');
-                console.log('timeRemaining before decrement:', timeRemaining);
-                console.log('isRunning:', isRunning);
-                console.log('timerInterval:', timerInterval);
-                if (timeRemaining > 0) {
-                    timeRemaining--;
-                    console.log('timeRemaining after decrement:', timeRemaining);
-                    console.log('About to call updateDisplay...');
-                    updateDisplay();
-                    console.log('updateDisplay called');
-                    
-                    // Play bell at specific intervals
-                    if (timeRemaining === 0) {
-                        // Final bell - play sound if enabled
-                        if (soundToggle && soundToggle.checked) {
-                            console.log('Playing final bell');
-                        }
-                    } else if (timeRemaining === 60 && totalTime > 120) {
-                        // 1 minute warning
-                        if (soundToggle && soundToggle.checked) {
-                            console.log('Playing 1 minute warning');
-                        }
-                    } else if (timeRemaining === 300 && totalTime > 600) {
-                        // 5 minute warning
-                        if (soundToggle && soundToggle.checked) {
-                            console.log('Playing 5 minute warning');
-                        }
-                    }
-                } else {
-                    clearInterval(timerInterval);
-                    isRunning = false;
-                    
-                    // Remove pulsing effect
-                    const timerContainerStop = document.querySelector('.relative.w-56');
-                    if (timerContainerStop) {
-                        timerContainerStop.classList.remove('timer-running');
-                    }
-                    
-                    // Session complete
-                    if (status) status.textContent = 'Session complete! 🎉';
-                    
-                    // Enhanced completion feedback
-                    triggerHapticFeedback('success');
-                    showToast('Meditation complete! Well done! 🧘‍♀️', 'success', 4000);
-                    
-                    // Add completion animation
-                    const timerContainerComplete = document.querySelector('.relative.w-48, .relative.w-56, .relative.w-64, .relative.w-72, .relative.w-80');
-                    if (timerContainerComplete) {
-                        timerContainerComplete.classList.add('gentle-glow');
-                        setTimeout(() => {
-                            timerContainerComplete.classList.remove('gentle-glow');
-                        }, 3000);
-                    }
-                    
-                    // Show completion message with mobile-friendly approach
-                    setTimeout(() => {
-                        if (isMobile) {
-                            // Use a more mobile-friendly notification
-                            const notification = document.createElement('div');
-                            notification.className = 'fixed top-4 left-4 right-4 bg-forest-green text-white p-4 rounded-lg shadow-lg z-50 text-center';
-                            notification.innerHTML = '🧘‍♀️ Meditation Complete!<br><small>Take a moment to notice how you feel.</small>';
-                            document.body.appendChild(notification);
-                            
-                            setTimeout(() => {
-                                notification.remove();
-                            }, 4000);
-                        }
-                    }, 500);
-                    
-                    if (startBtn) {
-                        elements.startBtn.classList.remove('hidden');
-                        elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
-                    }
-                    if (pauseBtn) elements.pauseBtn.classList.add('hidden');
-                }
-            }, 1000);
-        }
-    }
-
-    function pauseTimer() {
-        if (isRunning) {
-            clearInterval(timerInterval);
-            isRunning = false;
-            isPaused = true;
-            
-            // Haptic feedback for mobile
-            triggerHapticFeedback('medium');
-            
-            // Remove pulsing effect
-            const timerContainerReset = document.querySelector('.relative.w-48, .relative.w-56, .relative.w-64, .relative.w-72, .relative.w-80');
-            if (timerContainerReset) {
-                timerContainerReset.classList.remove('timer-running');
-            }
-            
-            if (startBtn) {
-                elements.startBtn.classList.remove('hidden');
-                elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Resume</span></div>';
-            }
-            if (pauseBtn) elements.pauseBtn.classList.add('hidden');
-        }
-    }
-
-    function resetTimer() {
-        clearInterval(timerInterval);
-        isRunning = false;
-        isPaused = false;
-        
-        // Haptic feedback for mobile
-        triggerHapticFeedback('light');
-        
-        // Remove pulsing effect
-        const timerContainerStop = document.querySelector('.relative.w-48, .relative.w-56, .relative.w-64, .relative.w-72, .relative.w-80');
-        if (timerContainerStop) {
-            timerContainerStop.classList.remove('timer-running');
-        }
-        
-        // Reset to selected duration
-        if (durationSelect) {
-            timeRemaining = parseInt(durationSelect.value);
-            totalTime = timeRemaining;
-        } else {
-            timeRemaining = 600;
-            totalTime = 600;
-        }
-        
-        updateDisplay();
-        
-        if (startBtn) {
-            elements.startBtn.classList.remove('hidden');
-            elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
-        }
-        if (pauseBtn) elements.pauseBtn.classList.add('hidden');
-    }
-
-    function attachTimerEventListeners(startBtnParam, pauseBtnParam, resetBtnParam, displayParam, statusParam, durationSelectParam, soundToggleParam, progressRingParam) {
-        // Set global variables
-        startBtn = startBtnParam;
-        pauseBtn = pauseBtnParam;
-        resetBtn = resetBtnParam;
-        display = displayParam;
-        status = statusParam;
-        durationSelect = durationSelectParam;
-        soundToggle = soundToggleParam;
-        progressRing = progressRingParam;
-        
-        // Event listeners
-        if (startBtn) {
-            elements.startBtn.addEventListener('click', () => {
-                startTimer();
-            });
-        }
-        if (pauseBtn) {
-            elements.pauseBtn.addEventListener('click', () => {
-                pauseTimer();
-            });
-        }
-        if (resetBtn) {
-            elements.resetBtn.addEventListener('click', () => {
-                resetTimer();
-            });
-        }
-        
-        // Duration change
-        if (durationSelect) {
-            durationSelect.addEventListener('change', () => {
-                if (!isRunning) {
-                    timeRemaining = parseInt(durationSelect.value);
-                    totalTime = timeRemaining;
-                    updateDisplay();
-                }
-            });
-        }
-        
-        // Initialize display
-        console.log('=== INITIALIZING DISPLAY ===');
-        console.log('timeRemaining:', timeRemaining);
-        console.log('display element:', display);
-        updateDisplay();
     }
 
     // Workout logic
