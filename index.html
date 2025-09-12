@@ -43,7 +43,7 @@
     <meta name="apple-mobile-web-app-title" content="The Dhamma Path">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; media-src 'self' blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://fonts.googleapis.com; style-src-elem 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; media-src 'self' blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
@@ -8715,9 +8715,6 @@
         // Attaching journal logic
         console.log('🔧 Initializing journal logic...');
         
-        // Journal state variables
-        let hasStartedTyping = false;
-        
         const saveBtn = document.getElementById('journal-save-btn');
         const entryText = document.getElementById('journal-entry');
         const entriesList = document.getElementById('journal-history-list');
@@ -9915,19 +9912,21 @@
         const welcomeExplore = document.getElementById('welcome-explore');
         
         if (welcomeOverlay) {
-            // Hide overlay after 3 seconds automatically
+            // Hide overlay after 2 seconds automatically
             setTimeout(() => {
                 welcomeOverlay.style.opacity = '0';
                 welcomeOverlay.style.transition = 'opacity 0.5s ease-out';
                 setTimeout(() => {
                     welcomeOverlay.style.display = 'none';
+                    welcomeOverlay.style.pointerEvents = 'none';
                 }, 500);
-            }, 3000);
+            }, 2000);
             
             // Handle button clicks
             if (welcomeTryDemo) {
                 welcomeTryDemo.addEventListener('click', () => {
                     welcomeOverlay.style.display = 'none';
+                    welcomeOverlay.style.pointerEvents = 'none';
                     navigateToPage('timer');
                 });
             }
@@ -9935,6 +9934,7 @@
             if (welcomeExplore) {
                 welcomeExplore.addEventListener('click', () => {
                     welcomeOverlay.style.display = 'none';
+                    welcomeOverlay.style.pointerEvents = 'none';
                     // Stay on home page to explore
                 });
             }
@@ -9943,6 +9943,7 @@
             welcomeOverlay.addEventListener('click', (e) => {
                 if (e.target === welcomeOverlay) {
                     welcomeOverlay.style.display = 'none';
+                    welcomeOverlay.style.pointerEvents = 'none';
                 }
             });
         }
@@ -10131,8 +10132,11 @@
          }, 200);
      }
      
-     // Global elements variable for workout features
-     let elements = {};
+    // Global elements variable for workout features
+    let elements = {};
+    
+    // Global journal state variables
+    let hasStartedTyping = false;
      
      function initializeWorkoutFeatures() {
          console.log('Initializing workout features...');
