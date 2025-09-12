@@ -4202,2188 +4202,516 @@
     };
 
     // --- APP LOGIC --- //
-    let mainContent; // Declare globally
+    let mainContent;
+    let currentPage = 'home';
+    
+    // Simple, bulletproof navigation function
+    function navigateToPage(pageName, id = null) {
+        console.log('Navigating to:', pageName);
+        
+        // Get main content container
+        if (!mainContent) {
+            mainContent = document.getElementById('main-content');
+            if (!mainContent) {
+                console.error('Main content not found');
+                return;
+            }
+        }
+        
+        // Clear current content
+        mainContent.innerHTML = '';
+        
+        // Set current page
+        currentPage = pageName;
+        
+        // Render new page using templates
+        let pageContent;
+        switch(pageName) {
+            case 'home':
+                pageContent = document.getElementById('template-home').content.cloneNode(true);
+                break;
+            case 'timer':
+                pageContent = document.getElementById('template-timer').content.cloneNode(true);
+                break;
+            case 'journal':
+                pageContent = document.getElementById('template-journal').content.cloneNode(true);
+                break;
+            case 'workout':
+                pageContent = document.getElementById('template-workout').content.cloneNode(true);
+                break;
+            case 'interview':
+                pageContent = document.getElementById('template-interview').content.cloneNode(true);
+                break;
+            case 'about':
+                pageContent = document.getElementById('template-about').content.cloneNode(true);
+                break;
+            case 'glossary':
+                pageContent = document.getElementById('template-glossary').content.cloneNode(true);
+                break;
+            case 'category-meditation':
+                pageContent = document.getElementById('template-category').content.cloneNode(true);
+                break;
+            case 'searchResults':
+                pageContent = document.getElementById('template-search-results').content.cloneNode(true);
+                break;
+            default:
+                pageContent = document.getElementById('template-home').content.cloneNode(true);
+        }
+        
+        if (pageContent) {
+            mainContent.appendChild(pageContent);
+            
+            // Attach page-specific logic
+            if (pageName === 'timer') {
+                attachTimerLogic();
+            } else if (pageName === 'journal') {
+                attachJournalLogic();
+            } else if (pageName === 'workout') {
+                attachWorkoutLogic();
+            } else if (pageName === 'interview') {
+                attachInterviewLogic();
+            }
+        }
+        
+        // Close mobile menu if open
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu) {
+            mobileMenu.classList.add('hidden');
+        }
+    }
+    
+    // Make navigation globally accessible
+    window.navigateTo = navigateToPage;
     
     document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM loaded, initializing...');
         mainContent = document.getElementById('main-content');
         
         // --- Dark Mode --- //
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-        const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
-        const sunIcon = document.getElementById('sun-icon');
-        const moonIcon = document.getElementById('moon-icon');
-        
-        const applyTheme = (isDark) => {
-            if (isDark) {
-                document.documentElement.classList.add('dark');
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-            } else {
-                document.documentElement.classList.remove('dark');
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
+        function initDarkMode() {
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            
+            function toggleDarkMode() {
+                const isDark = !document.documentElement.classList.contains('dark');
+                document.documentElement.classList.toggle('dark', isDark);
+                localStorage.setItem('darkMode', isDark);
+                
+                if (sunIcon && moonIcon) {
+                    sunIcon.style.display = isDark ? 'none' : 'block';
+                    moonIcon.style.display = isDark ? 'block' : 'none';
+                }
             }
-        };
-
-        const toggleDarkMode = () => {
-            const isDark = !document.documentElement.classList.contains('dark');
-            localStorage.setItem('darkMode', isDark);
-            applyTheme(isDark);
-        };
-
-        if (darkModeToggle) {
-            darkModeToggle.addEventListener('click', toggleDarkMode);
+            
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', toggleDarkMode);
+            }
+            if (darkModeToggleMobile) {
+                darkModeToggleMobile.addEventListener('click', toggleDarkMode);
+            }
+            
+            // Apply saved preference
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') {
+                document.documentElement.classList.add('dark');
+                if (sunIcon && moonIcon) {
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                }
+            }
         }
-        if (darkModeToggleMobile) {
-            darkModeToggleMobile.addEventListener('click', toggleDarkMode);
-        }
-
-        // Check for saved preference
-        if (localStorage.getItem('darkMode') === 'true' || 
-           (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('darkMode'))) {
-            applyTheme(true);
-        } else {
-            applyTheme(false);
-        }
+        
+        initDarkMode();
 
         // --- Mobile Menu --- //
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
-
-        // --- Scroll Progress Bar --- //
-        const progressBar = document.getElementById('progress-bar');
-        const updateProgressBar = () => {
-            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-            if (scrollHeight > clientHeight) {
-                const scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
-                progressBar.style.width = `${scrollPercent}%`;
-            } else {
-                progressBar.style.width = '0%';
-            }
-        };
-        
-        // Reading Progress Indicator
-        const updateReadingProgress = () => {
-            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-            if (scrollHeight > clientHeight) {
-                const scrollPercent = Math.min((scrollTop / (scrollHeight - clientHeight)) * 100, 100);
-                const readingProgress = document.getElementById('reading-progress');
-                if (readingProgress) {
-                    readingProgress.style.width = `${scrollPercent}%`;
-                }
-            }
-        };
-        // --- Performance Utilities --- //
-        const debounce = (func, wait) => {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        };
-
-        const throttle = (func, limit) => {
-            let inThrottle;
-            return function() {
-                const args = arguments;
-                const context = this;
-                if (!inThrottle) {
-                    func.apply(context, args);
-                    inThrottle = true;
-                    setTimeout(() => inThrottle = false, limit);
-                }
-            };
-        };
-
-        window.addEventListener('scroll', throttle(() => {
-            updateProgressBar();
-            updateReadingProgress();
-        }, 16)); // 60fps
-
-        const cleanupPageResources = () => {
-            // Clear all intervals
-            clearInterval(timerInterval); 
-            clearInterval(workoutInterval);
-            clearInterval(journalInterval);
+        function initMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
             
-            // Reset page state
-            document.body.classList.remove('fullscreen-active', 'journal-focus');
-            
-            // Stop media recording
-            if (mediaRecorder && mediaRecorder.state === "recording") {
-                mediaRecorder.stop();
-            }
-            
-            // Stop speech synthesis
-            if(window.speechSynthesis.speaking) {
-                window.speechSynthesis.cancel();
-            }
-            
-            // Clear main content
-            if (mainContent) {
-                mainContent.innerHTML = '';
-            }
-        };
-        
-        // --- Templating & Routing --- //
-        const templates = {
-            home: document.getElementById('template-home').content.cloneNode(true),
-            category: document.getElementById('template-category').content.cloneNode(true),
-            article: document.getElementById('template-article').content.cloneNode(true),
-            about: document.getElementById('template-about').content.cloneNode(true),
-            privacy: document.getElementById('template-privacy').content.cloneNode(true),
-            terms: document.getElementById('template-terms').content.cloneNode(true),
-            glossary: document.getElementById('template-glossary').content.cloneNode(true),
-            searchResults: document.getElementById('template-search-results').content.cloneNode(true),
-            timer: document.getElementById('template-timer').content.cloneNode(true),
-            path: document.getElementById('template-path').content.cloneNode(true),
-            workout: document.getElementById('template-workout').content.cloneNode(true),
-            interview: document.getElementById('template-interview').content.cloneNode(true),
-            journal: document.getElementById('template-journal').content.cloneNode(true),
-        };
-
-        const renderArticleCard = (articleId, article, fullWidth = false, delay = 0) => {
-            const description = article.content.match(/<p>(.*?)<\/p>/)[1].replace(/<[^>]+>/g, '').substring(0, 100);
-            return `
-                <a href="#" data-page="article" data-article-id="${articleId}" class="main-nav-link card-link group block ${fullWidth ? '' : 'p-6 bg-light-green rounded-lg shadow-sm border border-black/5'}" style="animation-delay: ${delay}s">
-                    <div class="space-y-2">
-                         <p class="text-sm font-semibold uppercase tracking-wider text-earthy-gold">${article.category}</p>
-                         <h3 class="text-2xl font-bold text-charcoal font-lora group-hover:text-forest-green transition-colors">${article.title}</h3>
-                         <p class="text-charcoal/70">${description}...</p>
-                         <span class="text-sm text-forest-green font-semibold">Read more &rarr;</span>
-                    </div>
-                </a>
-            `;
-        };
-        
-        const renderHomePage = () => {
-            const page = templates.home.cloneNode(true);
-            const latestArticlesGrid = page.getElementById('latest-articles-grid');
-            
-            // Add stagger animation to cards
-            Object.entries(db.articles).slice(0, 4).forEach(([id, article], index) => {
-                const card = document.createElement('div');
-                card.className = 'stagger-in';
-                card.style.animationDelay = `${index * 0.1}s`;
-                card.innerHTML = renderArticleCard(id, article, true, index * 0.1);
-                latestArticlesGrid.appendChild(card);
-            });
-            
-            // Quick access toolbar was removed - no longer needed
-            
-            return page;
-        };
-        
-        const renderAboutPage = () => {
-            const page = templates.about.cloneNode(true);
-            // Add stagger animation to header
-            const header = page.querySelector('header');
-            if (header) {
-                header.className += ' stagger-in';
-            }
-            return page;
-        };
-
-        const renderGlossaryPage = () => {
-            const page = templates.glossary.cloneNode(true);
-            const list = page.getElementById('glossary-list');
-            
-            // Add stagger animation to header
-            const header = page.querySelector('header');
-            if (header) {
-                header.className += ' stagger-in';
-            }
-            
-            Object.entries(db.glossary).sort().forEach(([term, def], index) => {
-                const item = document.createElement('div');
-                item.className = 'p-6 bg-light-green rounded-lg stagger-in';
-                item.style.animationDelay = `${index * 0.05}s`;
-                item.innerHTML = `
-                    <h3 class="text-2xl font-bold text-forest-green font-lora">${term.charAt(0).toUpperCase() + term.slice(1)}</h3>
-                    <p class="mt-2 text-charcoal/80">${def}</p>
-                `;
-                list.appendChild(item);
-            });
-            return page;
-        };
-
-        const renderCategoryPage = (categoryId) => {
-            const page = templates.category.cloneNode(true);
-            const category = db.categories[categoryId];
-            if (!category) return renderHomePage();
-
-            page.getElementById('category-title').textContent = category.title;
-            page.getElementById('category-description').textContent = category.description;
-            const grid = page.getElementById('category-articles-grid');
-            
-            // Add stagger animation to category header
-            const header = page.querySelector('header');
-            if (header) {
-                header.className += ' stagger-in';
-            }
-            
-            // Add paths section if it's the meditation category
-            if (categoryId === 'meditation') {
-                const pathsSection = page.getElementById('category-paths-section');
-                let pathsHtml = '<h2 class="text-3xl font-bold text-center text-charcoal font-lora mb-10">Guided Paths</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-8 stagger-in">';
-                Object.entries(db.paths).forEach(([id, path], index) => {
-                    pathsHtml += `
-                    <a href="#" data-page="path" data-path-id="${id}" class="main-nav-link card-link block p-8 bg-light-gold rounded-lg shadow-sm duration-300 border border-black/5" style="animation-delay: ${index * 0.1}s">
-                        <h3 class="text-2xl font-bold text-earthy-gold font-lora">${path.title}</h3>
-                        <p class="mt-2 text-charcoal/80">${path.description}</p>
-                    </a>
-                    `;
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
                 });
-                pathsHtml += '</div><hr class="my-16 border-gray-300/70 dark:border-gray-600">';
-                pathsSection.innerHTML = pathsHtml;
             }
-
-            Object.entries(db.articles)
-                .filter(([id, article]) => article.categoryId === categoryId)
-                .forEach(([id, article], index) => {
-                    const card = document.createElement('div');
-                    card.className = 'stagger-in';
-                    card.style.animationDelay = `${index * 0.1}s`;
-                    card.innerHTML = renderArticleCard(id, article, false, index * 0.1);
-                    grid.appendChild(card);
-                });
-            return page;
-        };
-        
-        const renderArticlePage = (articleId) => {
-            const page = templates.article.cloneNode(true);
-            const article = db.articles[articleId];
-            if (!article) return renderHomePage();
-
-            const categoryLink = page.getElementById('article-category-link');
-            categoryLink.textContent = article.category;
-            categoryLink.dataset.page = `category-${article.categoryId}`;
-
-            page.getElementById('article-title').textContent = article.title;
-            page.getElementById('article-date').textContent = article.date;
-            page.getElementById('article-read-time').textContent = article.readTime;
-            const articleContentDiv = page.getElementById('article-content');
-            articleContentDiv.innerHTML = article.content;
-
-            // Audio Player
-            if (article.audioSrc) {
-                const audioPlayerContainer = page.getElementById('audio-player-container');
-                audioPlayerContainer.innerHTML = `
-                    <div class="bg-light-green p-6 rounded-lg">
-                         <h3 class="text-xl font-bold font-lora text-forest-green mb-4">Guided Meditation</h3>
-                         <div class="flex items-center space-x-4">
-                            <button class="audio-play-btn w-14 h-14 bg-forest-green text-white rounded-full flex items-center justify-center hover:bg-forest-green/90 transition">
-                                <svg class="play-icon h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
-                                <svg class="pause-icon h-8 w-8 hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
-                            </button>
-                            <div class="flex-grow">
-                                <p class="font-semibold text-charcoal">${article.readTime}-Minute Guided Practice</p>
-                                <div class="relative pt-1">
-                                    <div class="overflow-hidden h-2 mt-2 text-xs flex rounded bg-gray-300">
-                                        <div style="width:0%" class="audio-progress shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-earthy-gold"></div>
-                                    </div>
-                                </div>
-                            </div>
-                         </div>
-                    </div>
-                `;
-            }
-
-            // Generate TOC
-            const tocList = page.getElementById('toc-list');
-            const headings = articleContentDiv.querySelectorAll('h2');
-            if(headings.length > 0){
-                headings.forEach(h => {
-                    const id = h.textContent.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
-                    h.id = id;
-                    const li = document.createElement('li');
-                    li.innerHTML = `<a href="#${id}" class="hover:text-forest-green">${h.textContent}</a>`;
-                    tocList.appendChild(li);
-                });
-            } else {
-                page.getElementById('article-toc').style.display = 'none';
-            }
-
-            // Author Bio
-            const author = db.authors[article.author];
-            if (author) {
-                const authorBioDiv = page.getElementById('author-bio');
-                authorBioDiv.innerHTML = `
-                    <img src="${author.avatar}" alt="${author.name}" class="w-20 h-20 rounded-full">
-                    <div>
-                        <p class="text-sm text-charcoal/70 uppercase tracking-wider">Written by</p>
-                        <h4 class="text-xl font-bold font-lora text-charcoal">${author.name}</h4>
-                        <p class="mt-1 text-charcoal/80">${author.bio}</p>
-                    </div>
-                `;
-            }
-
-            // Related Articles
-            const relatedArticlesDiv = page.getElementById('related-articles');
-            const relatedArticles = Object.entries(db.articles)
-                .filter(([id, a]) => id !== articleId && (a.categoryId === article.categoryId || a.tags.some(t => article.tags.includes(t))))
-                .slice(0, 3);
-            
-            if (relatedArticles.length > 0) {
-                relatedArticlesDiv.innerHTML = `<h3 class="text-3xl font-bold font-lora text-center mb-8">Related Articles</h3>`;
-                const grid = document.createElement('div');
-                grid.className = 'grid grid-cols-1 md:grid-cols-3 gap-8 stagger-in';
-                relatedArticles.forEach(([id, a], index) => {
-                    const card = document.createElement('div');
-                    card.innerHTML = renderArticleCard(id, a, false, index * 0.1);
-                    grid.appendChild(card);
-                });
-                relatedArticlesDiv.appendChild(grid);
-            }
-
-            // Comments
-            const commentsDiv = page.getElementById('comments-section');
-            commentsDiv.innerHTML = `
-                <h3 class="text-3xl font-bold font-lora mb-6">Leave a Comment</h3>
-                <form class="space-y-4">
-                    <textarea placeholder="Your comment..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-700 dark:border-gray-600" rows="4"></textarea>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-700 dark:border-gray-600">
-                        <input type="email" placeholder="Your Email (not published)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-earthy-gold focus:outline-none dark:bg-gray-700 dark:border-gray-600">
-                    </div>
-                    <button type="submit" class="px-6 py-3 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition">Post Comment</button>
-                </form>
-                <div class="mt-12 space-y-8">
-                    <h4 class="text-2xl font-bold font-lora">2 Comments</h4>
-                    <div class="flex space-x-4">
-                        <div class="w-12 h-12 rounded-full bg-earthy-gold flex items-center justify-center text-white font-bold text-lg">M</div>
-                        <div>
-                            <p class="font-bold text-charcoal">Maria S.</p>
-                            <p class="text-sm text-charcoal/60 mb-2">September 9, 2025</p>
-                            <p class="text-charcoal/90">Thank you for this wonderful guide. The instructions for mindfulness of breath are the clearest I've ever read.</p>
-                        </div>
-                    </div>
-                    <div class="flex space-x-4">
-                        <div class="w-12 h-12 rounded-full bg-light-green flex items-center justify-center text-forest-green font-bold text-lg">D</div>
-                        <div>
-                            <p class="font-bold text-charcoal">David L.</p>
-                            <p class="text-sm text-charcoal/60 mb-2">September 11, 2025</p>
-                            <p class="text-charcoal/90">Really appreciate the breakdown of the body scan. It's a part of the practice I've always struggled with.</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-            return page;
-        };
-        
-        const renderSearchResultsPage = (query) => {
-            const page = templates.searchResults.cloneNode(true);
-            const resultsList = page.getElementById('search-results-list');
-            const queryText = page.getElementById('search-results-query');
-
-            // Add stagger animation to header
-            const header = page.querySelector('header');
-            if (header) {
-                header.className += ' stagger-in';
-            }
-
-            const lowerQuery = query.toLowerCase();
-            const results = Object.entries(db.articles).filter(([id, article]) => {
-                return article.title.toLowerCase().includes(lowerQuery) || article.content.toLowerCase().includes(lowerQuery);
-            });
-
-            if (results.length > 0) {
-                queryText.textContent = `Found ${results.length} result(s) for "${query}"`;
-                results.forEach(([id, article], index) => {
-                     const card = document.createElement('div');
-                     card.className = 'border-b border-gray-200 dark:border-gray-700 pb-6 stagger-in';
-                     card.style.animationDelay = `${index * 0.1}s`;
-                     card.innerHTML = renderArticleCard(id, article, true);
-                     resultsList.appendChild(card);
-                });
-            } else {
-                queryText.textContent = `No results found for "${query}"`;
-            }
-            return page;
-        };
-        
-        const renderTimerPage = () => {
-            const page = templates.timer.cloneNode(true);
-            // Add stagger animation to header
-            const header = page.querySelector('header');
-            if (header) {
-                header.className += ' stagger-in';
-            }
-            return page;
-        };
-        
-        const renderWorkoutPage = () => {
-            const page = templates.workout.cloneNode(true);
-            // Add stagger animation to header
-            const header = page.querySelector('header');
-            if (header) {
-                header.className += ' stagger-in';
-            }
-            return page;
-        };
-        
-        const renderInterviewPage = () => {
-            const page = templates.interview.cloneNode(true);
-            // Add stagger animation to header
-            const header = page.querySelector('header');
-            if (header) {
-                header.className += ' stagger-in';
-            }
-            return page;
-        };
-        
-        const renderJournalPage = () => {
-            const page = templates.journal.cloneNode(true);
-            // Add stagger animation to header
-            const header = page.querySelector('header');
-            if (header) {
-                header.className += ' stagger-in';
-            }
-            return page;
-        };
-
-        const renderPathPage = (pathId) => {
-            const page = templates.path.cloneNode(true);
-            const path = db.paths[pathId];
-            if (!path) return renderHomePage();
-
-            // Add stagger animation to header
-            const header = page.querySelector('header');
-            if (header) {
-                header.className += ' stagger-in';
-            }
-
-            page.getElementById('path-title').textContent = path.title;
-            page.getElementById('path-description').textContent = path.description;
-            const list = page.getElementById('path-steps-list');
-            path.steps.forEach((step, index) => {
-                const item = document.createElement('a');
-                item.href = '#';
-                item.dataset.page = 'article';
-                item.dataset.articleId = step.articleId;
-                item.className = 'main-nav-link card-link block p-6 bg-light-green rounded-lg shadow-sm hover:shadow-md transition-shadow flex items-center space-x-6 stagger-in';
-                item.style.animationDelay = `${index * 0.1}s`;
-                item.innerHTML = `
-                    <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-forest-green text-white rounded-full font-lora text-2xl">${step.day}</div>
-                    <div>
-                        <h3 class="text-xl font-bold text-charcoal font-lora">${step.title}</h3>
-                        <p class="text-charcoal/80">Focus: ${step.focus}</p>
-                    </div>
-                    <div class="ml-auto text-forest-green">&rarr;</div>
-                `;
-                list.appendChild(item);
-            });
-            return page;
-        };
-        
-        let timerInterval = null;
-        let workoutInterval = null;
-        let journalInterval = null;
-        let mediaRecorder = null;
-        let recordedChunks = [];
-        let sessionRecordings = [];
-
-        const sounds = {
-            chime: new Audio("data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YV8vT19IA38JfweLCPsI/wklDSAKNA04DhsPMg8ADBwPGA8kEI4Q8xAhEWgSChPWFBoU4BUkFWQWahd6F4EX7xgdGG4YzxkPG8wbKBwSHRseHR8ZICQjJCwmKSgqKiwqLCoqKCQjICAfIBwYGRUQEg8ODAsJCAgHBwUEAwIBAD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8APwA/AD8A"),
-            bowl: new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAIARKwAABCxAgAEABAAZGF0YQAAAAA="),
-            wood: new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=")
-        };
-        
-        const showLoading = () => {
-            const loadingIndicator = document.getElementById('loading-indicator');
-            if (loadingIndicator) {
-                loadingIndicator.classList.remove('hidden');
-            }
-        };
-        
-        const hideLoading = () => {
-            const loadingIndicator = document.getElementById('loading-indicator');
-            if (loadingIndicator) {
-                loadingIndicator.classList.add('hidden');
-            }
-        };
-
-        const showNotification = (message) => {
-            const notification = document.getElementById('notification');
-            const text = document.getElementById('notification-text');
-            text.textContent = message;
-            notification.classList.remove('translate-x-full');
-            setTimeout(() => {
-                notification.classList.add('translate-x-full');
-            }, 3000);
-        };
-        
-        // Make navigateTo globally accessible
-        window.navigateTo = function(pageName, id = null) {
-            // Ensure mainContent is available
-            if (!mainContent) {
-                mainContent = document.getElementById('main-content');
-                if (!mainContent) {
-                    console.error('Main content container not found');
-                    return;
-                }
-            }
-            
-            // Cleanup previous page resources
-            cleanupPageResources();
-            
-            // Show loading for non-instant transitions
-            if (pageName !== 'home') {
-                showLoading();
-            }
-            
-            // Quick access toolbar was removed - no longer needed
-            
-            let pageContent;
-
-            switch(pageName) {
-                case 'category-introduction': pageContent = renderCategoryPage('introduction'); break;
-                case 'category-teachings': pageContent = renderCategoryPage('teachings'); break;
-                case 'category-meditation': pageContent = renderCategoryPage('meditation'); break;
-                case 'article': pageContent = renderArticlePage(id); break;
-                case 'about': pageContent = renderAboutPage(); break;
-                case 'privacy': pageContent = templates.privacy.cloneNode(true); break;
-                case 'terms': pageContent = templates.terms.cloneNode(true); break;
-                case 'glossary': pageContent = renderGlossaryPage(); break;
-                case 'searchResults': pageContent = renderSearchResultsPage(id); break;
-                case 'timer': pageContent = renderTimerPage(); break;
-                case 'path': pageContent = renderPathPage(id); break;
-                case 'workout': pageContent = renderWorkoutPage(); break;
-                case 'interview': pageContent = renderInterviewPage(); break;
-                case 'journal': pageContent = renderJournalPage(); break;
-                case 'home': default: pageContent = renderHomePage();
-            }
-            
-            mainContent.appendChild(pageContent);
-            
-            // Hide loading indicator after content is rendered
-            setTimeout(() => {
-                hideLoading();
-            }, 100);
-
-            if (pageName === 'timer') {
-                // Small delay to ensure DOM is fully rendered
-                setTimeout(() => {
-                    attachTimerLogic();
-                }, 100);
-            }
-            if (pageName === 'article') attachArticlePageLogic(id);
-            if (pageName === 'workout') attachWorkoutLogic();
-            if (pageName === 'interview') attachInterviewLogic();
-            if (pageName === 'journal') attachJournalLogic();
-
-            mainContent.classList.add('fade-in');
-            setTimeout(() => mainContent.classList.remove('fade-in'), 500);
-            window.scrollTo(0, 0);
-            mobileMenu.classList.add('hidden'); // Close mobile menu on nav
-            updateProgressBar(); // Recalculate progress for new page
-            updateActiveNavLink(pageName);
-        };
-        
-        function updateActiveNavLink(currentPage) {
-            document.querySelectorAll('#desktop-nav-links a, #mobile-nav-links a').forEach(link => {
-                const linkPage = link.dataset.page;
-                // Handle category pages as a special case
-                const isActive = (linkPage === currentPage) || 
-                               (linkPage.startsWith('category-') && currentPage === linkPage) ||
-                               (currentPage.startsWith('path') && linkPage === 'category-meditation');
-
-                if (isActive) {
-                     link.classList.add('active');
-                } else {
-                     link.classList.remove('active');
-                }
-            });
         }
         
-        // --- Onboarding Logic --- //
-        const onboardingModal = document.getElementById('onboarding-modal');
-        if (!localStorage.getItem('dhammaPathVisited')) {
-            onboardingModal.classList.remove('hidden');
-        }
-        onboardingModal.addEventListener('click', (e) => {
-            if (e.target.closest('.onboarding-choice') || e.target.id === 'close-onboarding') {
-                onboardingModal.classList.add('hidden');
-                localStorage.setItem('dhammaPathVisited', 'true');
-            }
-        });
-
-        // Error Handling and Resilience
-        function showUserError(message, details = '') {
-            const errorToast = document.createElement('div');
-            errorToast.className = 'fixed top-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg z-50 max-w-sm';
-            errorToast.innerHTML = `
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
-                    </svg>
-                    <div>
-                        <p class="font-semibold">${message}</p>
-                        ${details ? `<p class="text-sm opacity-75">${details}</p>` : ''}
-                    </div>
-                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-red-500 hover:text-red-700">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                </div>
-            `;
-            document.body.appendChild(errorToast);
-            setTimeout(() => errorToast.remove(), 5000);
-        }
-
-        function showUserSuccess(message) {
-            const successToast = document.createElement('div');
-            successToast.className = 'fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg z-50 max-w-sm';
-            successToast.innerHTML = `
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    <div>
-                        <p class="font-semibold">${message}</p>
-                    </div>
-                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-green-500 hover:text-green-700">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                </div>
-            `;
-            document.body.appendChild(successToast);
-            setTimeout(() => successToast.remove(), 3000);
-        }
-
-        window.addEventListener('error', (e) => {
-            showUserError('Something went wrong', 'Please refresh the page if the problem persists.');
-        });
-
-        window.addEventListener('unhandledrejection', (e) => {
-            showUserError('An unexpected error occurred', 'Please try again or refresh the page.');
-            e.preventDefault();
-        });
-
-        // Service Worker Registration for Caching
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        // Service worker registered successfully
-                    })
-                    .catch(registrationError => {
-                        // Service worker registration failed
-                    });
-            });
-        }
-
-        // --- SCROLL-BASED ANIMATIONS & INTERACTIVE ELEMENTS --- //
+        initMobileMenu();
         
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all elements with scroll animation classes
-        document.querySelectorAll('.observe-fade-in, .observe-slide-left, .observe-slide-right, .observe-scale').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Parallax scrolling effect
-        let ticking = false;
-        function updateParallax() {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.parallax-slow, .parallax-medium, .parallax-fast');
-            
-            parallaxElements.forEach(el => {
-                const speed = el.classList.contains('parallax-slow') ? 0.5 : 
-                             el.classList.contains('parallax-medium') ? 0.3 : 0.1;
-                const yPos = -(scrolled * speed);
-                el.style.transform = `translateY(${yPos}px)`;
-            });
-            
-            ticking = false;
-        }
-
-        function requestParallaxUpdate() {
-            if (!ticking) {
-                requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', requestParallaxUpdate);
-
-        // Scroll progress indicator
-        function updateScrollProgress() {
-            const scrollTop = window.pageYOffset;
-            const docHeight = document.body.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            const progressBar = document.getElementById('scroll-progress');
-            if (progressBar) {
-                progressBar.style.width = scrollPercent + '%';
-            }
-        }
-
-        window.addEventListener('scroll', throttle(updateScrollProgress, 16));
-
-        // Sticky elements
-        function handleStickyElements() {
-            const stickyElements = document.querySelectorAll('.sticky-element');
-            const scrollTop = window.pageYOffset;
-            
-            stickyElements.forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (scrollTop > 20) {
-                    el.classList.add('sticky');
-                } else {
-                    el.classList.remove('sticky');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', throttle(handleStickyElements, 16));
-
-        // Enhanced ripple effects
-        function addRippleEffect(element) {
-            element.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.classList.add('ripple-effect');
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
-        }
-
-        // Apply ripple effects to buttons
-        document.querySelectorAll('.btn-press, .ripple-enhanced').forEach(addRippleEffect);
-
-
-        // Lazy loading for images
-        function lazyLoadImages() {
-            const images = document.querySelectorAll('img[data-src]');
-            const imageObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.classList.remove('lazy-load');
-                        img.classList.add('loaded');
-                        imageObserver.unobserve(img);
-                    }
-                });
-            });
-
-            images.forEach(img => imageObserver.observe(img));
-        }
-
-        // Initialize lazy loading
-        lazyLoadImages();
-
-        // Error boundary functionality
-        function showErrorBoundary(message, error) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error-boundary';
-            errorDiv.innerHTML = `
-                <h3>Something went wrong</h3>
-                <p>${message}</p>
-                <button onclick="this.parentElement.remove()">Dismiss</button>
-            `;
-            document.body.appendChild(errorDiv);
-            // Error boundary caught error
-        }
-
-        // Global error handler
-        window.addEventListener('error', (e) => {
-            showErrorBoundary('An unexpected error occurred. Please refresh the page.', e.error);
-        });
-
-        // Toast notification system
-        function showToast(message, type = 'info', duration = 3000) {
-            const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            toast.textContent = message;
-            
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.transform = 'translateX(100%)';
-                setTimeout(() => toast.remove(), 300);
-            }, duration);
-        }
-
-        // Make toast function globally available
-        window.showToast = showToast;
-
-        // Performance optimization: Preload critical resources
-        function preloadCriticalResources() {
-            const criticalImages = [
-                // Add any critical image paths here
-            ];
-            
-            criticalImages.forEach(src => {
-                const link = document.createElement('link');
-                link.rel = 'preload';
-                link.as = 'image';
-                link.href = src;
-                document.head.appendChild(link);
-            });
-            
-            // Preload critical fonts
-            if ('fonts' in document) {
-                document.fonts.load('400 16px Inter');
-                document.fonts.load('400 16px Lora');
-            }
-        }
-
-        preloadCriticalResources();
-
-        // Performance Monitoring
-        if ('performance' in window) {
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    const perfData = performance.getEntriesByType('navigation')[0];
-                    const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
-                    const domContentLoaded = perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart;
-                    
-                    // Log performance metrics for optimization
-                    if (loadTime > 3000) {
-                        showUserError('Slow loading detected', 'The page is loading slowly. Please check your connection.');
-                    }
-                }, 0);
-            });
-        }
-
-        // Initial page load
-        navigateTo('home');
-
-        // Navigation event listener
+        // Initialize progress tracking
+        ProgressTracker.init();
+        
+        // Load home page by default
+        navigateToPage('home');
+        
+        // Global click handler for navigation links
         document.body.addEventListener('click', (e) => {
             const link = e.target.closest('.main-nav-link');
             if (link) {
                 e.preventDefault();
                 const page = link.dataset.page;
                 const id = link.dataset.articleId || link.dataset.pathId;
-                navigateTo(page, id);
+                navigateToPage(page, id);
             }
         });
         
-        // --- Keyboard Shortcuts --- //
-        document.addEventListener('keydown', (e) => {
-            // Only trigger if not typing in input fields
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-            
-            switch(e.key) {
-                case 'h':
-                case 'H':
-                    if (e.ctrlKey || e.metaKey) {
-                        e.preventDefault();
-                        navigateTo('home');
-                    }
-                    break;
-                case 't':
-                case 'T':
-                    if (e.ctrlKey || e.metaKey) {
-                        e.preventDefault();
-                        navigateTo('timer');
-                    }
-                    break;
-                case 'j':
-                case 'J':
-                    if (e.ctrlKey || e.metaKey) {
-                        e.preventDefault();
-                        navigateTo('journal');
-                    }
-                    break;
-                case '/':
-                    e.preventDefault();
-                    document.getElementById('search-input').focus();
-                    break;
-                case 'Escape':
-                    document.getElementById('search-input').blur();
-                    const autocompleteResults = document.getElementById('autocomplete-results');
-                    if (autocompleteResults) {
-                        autocompleteResults.classList.add('hidden');
-                    }
-                    break;
-            }
-        });
-        
-        // --- Search with Autocomplete --- //
+        // Search functionality
         const searchInput = document.getElementById('search-input');
         const autocompleteResults = document.getElementById('autocomplete-results');
         
-        searchInput.addEventListener('keyup', debounce((e) => {
-            const query = searchInput.value.toLowerCase();
-            if (e.key === 'Enter' && query.trim() !== '') {
-                navigateTo('searchResults', query.trim());
-                autocompleteResults.classList.add('hidden');
-                searchInput.blur();
-                return;
-            }
-
-            if (query.length < 2) {
-                autocompleteResults.classList.add('hidden');
-                return;
-            }
-
-            const results = Object.entries(db.articles)
-                .filter(([id, article]) => article.title.toLowerCase().includes(query))
-                .slice(0, 5);
-
-            if (results.length > 0) {
-                autocompleteResults.innerHTML = results.map(([id, article]) => 
-                    `<a href="#" data-page="article" data-article-id="${id}" class="main-nav-link block px-4 py-2 hover:bg-light-green dark:hover:bg-gray-700">${article.title}</a>`
-                ).join('');
-                autocompleteResults.classList.remove('hidden');
-            } else {
-                autocompleteResults.classList.add('hidden');
-            }
-        }, 300)); // 300ms debounce
-
-        document.addEventListener('click', (e) => {
-            if (!searchInput.contains(e.target)) {
-                autocompleteResults.classList.add('hidden');
-            }
-        });
-
-
-        // Pāli Term Tooltips
-        if (mainContent) {
-            mainContent.addEventListener('mouseover', (e) => {
-            if (e.target.classList.contains('pali-term')) {
-                const term = e.target.dataset.term;
-                const definition = db.glossary[term];
-                if (definition && !e.target.querySelector('.pali-tooltip')) {
-                    const tooltip = document.createElement('span');
-                    tooltip.className = 'pali-tooltip';
-                    tooltip.textContent = definition;
-                    e.target.appendChild(tooltip);
-                }
-            }
-        });
-        }
-        
-        function attachArticlePageLogic(articleId) {
-             // Attach audio player if it exists
-            if (!mainContent) return;
-            const player = mainContent.querySelector('#audio-player-container');
-            if (player) {
-                attachAudioPlayerLogic();
-            }
-            
-            // Attach read-aloud logic
-            const readAloudBtn = document.getElementById('read-aloud-btn');
-            if (readAloudBtn) {
-                readAloudBtn.addEventListener('click', () => {
-                const articleContent = document.getElementById('article-content');
-                const text = articleContent.innerText;
-                if(speechSynthesis.speaking) {
-                    speechSynthesis.cancel();
-                    readAloudBtn.querySelector('span').textContent = 'Read Aloud';
-                } else {
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    speechSynthesis.speak(utterance);
-                    readAloudBtn.querySelector('span').textContent = 'Stop Reading';
-                    utterance.onend = () => {
-                        readAloudBtn.querySelector('span').textContent = 'Read Aloud';
-                    };
-                }
-                });
-            }
-        }
-        
-        function attachAudioPlayerLogic() {
-            if (!mainContent) return;
-            const player = mainContent.querySelector('#audio-player-container');
-            if (!player) return;
-
-            const playBtn = player.querySelector('.audio-play-btn');
-            const playIcon = player.querySelector('.play-icon');
-            const pauseIcon = player.querySelector('.pause-icon');
-            const progress = player.querySelector('.audio-progress');
-            
-            // Check if all required elements exist
-            if (!playBtn || !playIcon || !pauseIcon || !progress) {
-                return;
-            }
-            
-            let isPlaying = false;
-            let progressInterval;
-
-            playBtn.addEventListener('click', () => {
-                isPlaying = !isPlaying;
-                if(isPlaying) {
-                    playIcon.classList.add('hidden');
-                    pauseIcon.classList.remove('hidden');
-                    let width = 0;
-                    progressInterval = setInterval(() => {
-                        width += 1;
-                        progress.style.width = `${width}%`;
-                        if (width >= 100) {
-                            clearInterval(progressInterval);
-                            playIcon.classList.remove('hidden');
-                            pauseIcon.classList.add('hidden');
-                        }
-                    }, 1000); // Fakes 100 second audio
-                } else {
-                    playIcon.classList.remove('hidden');
-                    pauseIcon.classList.add('hidden');
-                    clearInterval(progressInterval);
-                }
-            });
-        }
-        
-        function addKeyboardNavigation(startTimer, pauseTimer, resetTimer, setDuration, timerState) {
-            // Space bar to start/pause
-            document.addEventListener('keydown', (e) => {
-                if (e.code === 'Space' && !e.target.matches('input, textarea, select')) {
-                    e.preventDefault();
-                    if (timerState.isPaused) {
-                        startTimer();
-                    } else {
-                        pauseTimer();
-                    }
-                }
+        if (searchInput && autocompleteResults) {
+            searchInput.addEventListener('keyup', (e) => {
+                const query = searchInput.value.toLowerCase().trim();
                 
-                // Escape to reset
-                if (e.code === 'Escape') {
-                    resetTimer();
-                }
-                
-                // Number keys for duration selection
-                if (e.code >= 'Digit1' && e.code <= 'Digit5') {
-                    const durations = [5, 10, 15, 20, 30];
-                    const index = parseInt(e.code.replace('Digit', '')) - 1;
-                    if (durations[index]) {
-                        setDuration(durations[index]);
-                    }
-                }
-            });
-        }
-        
-        function attachTimerLogic() {
-            // Comprehensive element validation
-            const elements = {
-                display: document.getElementById('timer-display'),
-                ringContainer: document.getElementById('timer-ring-container'),
-                progressRing: document.getElementById('timer-progress-ring'),
-                startBtn: document.getElementById('timer-start-btn'),
-                pauseBtn: document.getElementById('timer-pause-btn'),
-                resetBtn: document.getElementById('timer-reset-btn'),
-                durationButtons: document.getElementById('duration-buttons'),
-                soundSelect: document.getElementById('sound-select')
-            };
-
-            // Validate all critical elements exist
-            const criticalElements = ['display', 'startBtn', 'pauseBtn', 'durationButtons'];
-            const missingElements = criticalElements.filter(key => !elements[key]);
-            
-            if (missingElements.length > 0) {
-                showUserError('Timer not properly loaded', `Missing elements: ${missingElements.join(', ')}. Please refresh the page.`);
-                return;
-            }
-
-            // Timer state with validation
-            let timerState = {
-                totalSeconds: 600, // default 10 mins
-                secondsRemaining: 600,
-                isPaused: true,
-                isRunning: false,
-                timerInterval: null,
-                isInitialized: false
-            };
-            
-            const ringCircumference = 2 * Math.PI * 45; // 2 * PI * r
-            const validDurations = [5, 10, 15, 20, 30]; // Valid duration options
-            
-            // Timer elements initialized
-            
-            function updateDisplay() {
-                if (!elements.display || !timerState.isInitialized) {
+                if (e.key === 'Enter' && query) {
+                    // Navigate to search results
+                    navigateToPage('searchResults', query);
+                    autocompleteResults.classList.add('hidden');
+                    searchInput.blur();
                     return;
                 }
                 
-                const minutes = Math.floor(timerState.secondsRemaining / 60);
-                const seconds = timerState.secondsRemaining % 60;
-                elements.display.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
-                if (elements.progressRing) {
-                    const offset = ringCircumference - (timerState.secondsRemaining / timerState.totalSeconds) * ringCircumference;
-                    elements.progressRing.style.strokeDashoffset = offset;
-                }
-
-                // Update progress bar and percentage
-                updateProgressIndicator();
-
-                // Update session status
-                updateSessionStatus();
-            }
-
-            function updateProgressIndicator() {
-                const progressBar = document.getElementById('progress-bar');
-                const progressPercentage = document.getElementById('progress-percentage');
-                const sessionProgress = document.getElementById('session-progress');
-                
-                if (progressBar && progressPercentage) {
-                    const progress = ((timerState.totalSeconds - timerState.secondsRemaining) / timerState.totalSeconds) * 100;
-                    progressBar.style.width = `${Math.max(0, Math.min(100, progress))}%`;
-                    progressPercentage.textContent = `${Math.round(Math.max(0, Math.min(100, progress)))}%`;
-                    
-                    // Show progress indicator when session is active
-                    if (sessionProgress) {
-                        if (!timerState.isPaused && timerState.secondsRemaining < timerState.totalSeconds) {
-                            sessionProgress.classList.remove('hidden');
-                        } else {
-                            sessionProgress.classList.add('hidden');
-                        }
-                    }
-                }
-            }
-
-            function updateSessionStatus() {
-                const sessionStatus = document.getElementById('session-status');
-                const sessionTimeRemaining = document.getElementById('session-time-remaining');
-                
-                if (sessionStatus && sessionTimeRemaining) {
-                    const minutes = Math.floor(timerState.secondsRemaining / 60);
-                    const seconds = timerState.secondsRemaining % 60;
-                    sessionTimeRemaining.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                    
-                    if (!timerState.isPaused && timerState.secondsRemaining < timerState.totalSeconds) {
-                        sessionStatus.classList.remove('hidden');
-                    } else {
-                        sessionStatus.classList.add('hidden');
-                    }
-                }
-            }
-
-            function startTimer() {
-                // Prevent multiple starts or invalid states
-                if (!timerState.isPaused || timerState.isRunning || timerState.secondsRemaining <= 0) {
+                if (query.length < 2) {
+                    autocompleteResults.classList.add('hidden');
                     return;
                 }
-
-                try {
-                    timerState.isPaused = false;
-                    timerState.isRunning = true;
-                    
-                    // Update UI elements with null checks
-                    if (elements.startBtn) {
-                        elements.startBtn.classList.add('hidden');
-                        elements.startBtn.setAttribute('aria-pressed', 'false');
-                    }
-                    if (elements.pauseBtn) {
-                        elements.pauseBtn.classList.remove('hidden');
-                        elements.pauseBtn.setAttribute('aria-pressed', 'true');
-                    }
-                    if (elements.durationButtons) {
-                        elements.durationButtons.style.pointerEvents = 'none';
-                    }
-                    if (elements.soundSelect) {
-                        elements.soundSelect.disabled = true;
-                    }
-                    if (elements.ringContainer) {
-                        elements.ringContainer.classList.add('timer-active');
-                    }
-                    
-                    // Play start sound if available
-                    if (timerState.secondsRemaining === timerState.totalSeconds && elements.soundSelect && sounds && sounds[elements.soundSelect.value]) {
-                        try {
-                            sounds[elements.soundSelect.value].play();
-                        } catch (e) {
-                            // Sound play failed, continue anyway
-                        }
-                    }
-                    
-                    // Clear any existing interval
-                    if (timerState.timerInterval) {
-                        clearInterval(timerState.timerInterval);
-                    }
-                    
-                    // Start the timer
-                    timerState.timerInterval = setInterval(() => {
-                        timerState.secondsRemaining--;
-                        updateDisplay();
-                        saveSessionState();
-                        
-                        if (timerState.secondsRemaining <= 0) {
-                            clearInterval(timerState.timerInterval);
-                            timerState.isRunning = false;
-                            
-                            // Play completion sound
-                            if (elements.soundSelect && sounds && sounds[elements.soundSelect.value]) {
-                                try {
-                                    sounds[elements.soundSelect.value].play();
-                                } catch (e) {
-                                    // Sound play failed, continue anyway
-                                }
-                            }
-                            
-                            logSession();
-                            resetTimer();
-                            
-                            // Mark meditation as complete
-                            if (typeof ProgressTracker !== 'undefined') {
-                                ProgressTracker.markComplete('meditation');
-                            }
-                            showUserSuccess('Meditation session completed! Great work!');
-                            
-                            // Clear saved session on completion
-                            localStorage.removeItem('meditationSession');
-                        }
-                    }, 1000);
-                } catch (error) {
-                    showUserError('Timer start failed', 'Please try again or refresh the page.');
-                    timerState.isPaused = true;
-                    timerState.isRunning = false;
-                }
-            }
-
-            function pauseTimer() {
-                if (!timerState.isRunning || timerState.isPaused) {
-                    return;
-                }
-
-                try {
-                    timerState.isPaused = true;
-                    timerState.isRunning = false;
-                    
-                    if (timerState.timerInterval) {
-                        clearInterval(timerState.timerInterval);
-                        timerState.timerInterval = null;
-                    }
-                    
-                    if (elements.startBtn) {
-                        elements.startBtn.textContent = 'Resume';
-                        elements.startBtn.classList.remove('hidden');
-                        elements.startBtn.setAttribute('aria-pressed', 'false');
-                    }
-                    if (elements.pauseBtn) {
-                        elements.pauseBtn.classList.add('hidden');
-                        elements.pauseBtn.setAttribute('aria-pressed', 'false');
-                    }
-                    if (elements.ringContainer) {
-                        elements.ringContainer.classList.remove('timer-active');
-                    }
-                    
-                    saveSessionState();
-                } catch (error) {
-                    showUserError('Timer pause failed', 'Please try again.');
-                }
-            }
-
-            function resetTimer() {
-                try {
-                    // Clear any running timer
-                    if (timerState.timerInterval) {
-                        clearInterval(timerState.timerInterval);
-                        timerState.timerInterval = null;
-                    }
-                    
-                    // Reset state
-                    timerState.isPaused = true;
-                    timerState.isRunning = false;
-                    timerState.secondsRemaining = timerState.totalSeconds;
-                    
-                    // Update display
-                    updateDisplay();
-                    
-                    // Reset UI elements
-                    if (elements.startBtn) {
-                        elements.startBtn.textContent = 'Start';
-                        elements.startBtn.classList.remove('hidden');
-                        elements.startBtn.setAttribute('aria-pressed', 'false');
-                    }
-                    if (elements.pauseBtn) {
-                        elements.pauseBtn.classList.add('hidden');
-                        elements.pauseBtn.setAttribute('aria-pressed', 'false');
-                    }
-                    if (elements.durationButtons) {
-                        elements.durationButtons.style.pointerEvents = 'auto';
-                    }
-                    if (elements.soundSelect) {
-                        elements.soundSelect.disabled = false;
-                    }
-                    if (elements.ringContainer) {
-                        elements.ringContainer.classList.remove('timer-active');
-                    }
-                    
-                    // Clear saved session on reset
-                    localStorage.removeItem('meditationSession');
-                    
-                    // Hide progress indicators
-                    const sessionProgress = document.getElementById('session-progress');
-                    const sessionStatus = document.getElementById('session-status');
-                    if (sessionProgress) sessionProgress.classList.add('hidden');
-                    if (sessionStatus) sessionStatus.classList.add('hidden');
-                } catch (error) {
-                    showUserError('Timer reset failed', 'Please refresh the page.');
-                }
-            }
-            
-            function setDuration(minutes) {
-                // Validate duration
-                if (!minutes || !validDurations.includes(minutes) || minutes < 1 || minutes > 60) {
-                    showUserError('Invalid duration', 'Please select a valid meditation duration.');
-                    return;
-                }
-
-                try {
-                    // Update timer state
-                    timerState.totalSeconds = minutes * 60;
-                    timerState.secondsRemaining = timerState.totalSeconds;
-                    
-                    // Reset timer to apply new duration
-                    resetTimer();
-                    
-                    // Visual feedback - highlight selected duration
-                    if (elements.durationButtons) {
-                        const buttons = elements.durationButtons.querySelectorAll('.timer-duration-btn');
-                        buttons.forEach(btn => {
-                            const btnDuration = parseInt(btn.dataset.duration);
-                            if (isNaN(btnDuration)) return;
-                            
-                            btn.classList.remove('ring-4', 'ring-earthy-gold', 'ring-opacity-50');
-                            btn.setAttribute('aria-pressed', 'false');
-                            
-                            if (btnDuration === minutes) {
-                                btn.classList.add('ring-4', 'ring-earthy-gold', 'ring-opacity-50');
-                                btn.setAttribute('aria-pressed', 'true');
-                            }
-                        });
-                    }
-                    
-                    // Announce duration change to screen readers
-                    const announcement = document.createElement('div');
-                    announcement.setAttribute('aria-live', 'polite');
-                    announcement.setAttribute('aria-atomic', 'true');
-                    announcement.className = 'sr-only';
-                    announcement.textContent = `Meditation duration set to ${minutes} minutes`;
-                    document.body.appendChild(announcement);
-                    setTimeout(() => {
-                        if (document.body.contains(announcement)) {
-                            document.body.removeChild(announcement);
-                        }
-                    }, 1000);
-                    
-                    // Duration set successfully
-                } catch (error) {
-                    showUserError('Duration change failed', 'Please try again.');
-                }
-            }
-
-            function logSession() {
-                try {
-                    const log = JSON.parse(localStorage.getItem('practiceLog')) || [];
-                    const today = new Date().toISOString().split('T')[0];
-                    log.push({ date: today, duration: totalSeconds / 60 });
-                    localStorage.setItem('practiceLog', JSON.stringify(log));
-                } catch (e) {
-                    // Could not save practice log
-                }
-                displayPracticeLog();
-            }
-
-            function displayPracticeLog() {
-                let log = [];
-                try {
-                    log = JSON.parse(localStorage.getItem('practiceLog')) || [];
-                } catch(e) {
-                    // Could not read practice log
-                }
-                const logContainer = document.getElementById('practice-log');
-                if (log.length > 0) {
-                    const totalMinutes = log.reduce((sum, entry) => sum + entry.duration, 0);
-                    let streak = 0;
-                    if(log.length > 0) {
-                        const uniqueDates = [...new Set(log.map(l => l.date))].sort().reverse();
-                        let today = new Date();
-                        if(new Date(uniqueDates[0]).toDateString() === today.toDateString()) {
-                            streak = 1;
-                        } else {
-                            today.setDate(today.getDate() -1);
-                             if(uniqueDates[0] && new Date(uniqueDates[0]).toDateString() === today.toDateString()) {
-                                streak = 1;
-                             }
-                        }
-                        
-                        if (streak > 0) {
-                             for(let i=0; i < uniqueDates.length -1; i++){
-                                let d1 = new Date(uniqueDates[i]);
-                                d1.setDate(d1.getDate() - 1);
-                                let d2 = new Date(uniqueDates[i+1]);
-                                if(d1.toDateString() === d2.toDateString()) {
-                                    streak++;
-                                } else {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    logContainer.innerHTML = `
-                        <h3 class="text-2xl font-bold font-lora mb-4">Practice Log</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                           <div><p class="text-charcoal/80">Total Minutes</p><strong class="text-2xl font-lora text-forest-green">${totalMinutes}</strong></div>
-                           <div><p class="text-charcoal/80">Total Sessions</p><strong class="text-2xl font-lora text-forest-green">${log.length}</strong></div>
-                           <div><p class="text-charcoal/80">Current Streak</p><strong class="text-2xl font-lora text-forest-green">${streak} days</strong></div>
-                        </div>
-                        <canvas id="practice-chart" class="mt-4 h-40 w-full"></canvas>
-                    `;
-                    
-                    const canvas = document.getElementById('practice-chart');
-                    const ctx = canvas.getContext('2d');
-                    const last7DaysData = {};
-                    for(let i = 6; i >= 0; i--) {
-                        const d = new Date();
-                        d.setDate(d.getDate() - i);
-                        const key = d.toISOString().split('T')[0].slice(5);
-                        last7DaysData[key] = 0;
-                    }
-                    log.forEach(entry => {
-                        const key = entry.date.slice(5);
-                        if(last7DaysData[key] !== undefined) {
-                            last7DaysData[key] += entry.duration;
-                        }
-                    });
-                     // Basic chart drawing - no external libs
-                    const maxValue = Math.max(...Object.values(last7DaysData), 10);
-                    const barWidth = canvas.width / 7;
-                    let i = 0;
-                    const isDark = document.documentElement.classList.contains('dark');
-                    ctx.font = '12px Inter';
-                    for(const [day, minutes] of Object.entries(last7DaysData)) {
-                        const barHeight = (minutes / maxValue) * (canvas.height - 20);
-                        ctx.fillStyle = isDark ? '#86b596' : 'var(--forest-green)';
-                        ctx.fillRect(i * barWidth + 5, canvas.height - barHeight - 15, barWidth - 10, barHeight);
-                        ctx.fillStyle = isDark ? '#d1d1d1' : 'var(--charcoal)';
-                        ctx.fillText(day, i * barWidth + 10, canvas.height - 2);
-                        i++;
-                    }
-
-
+                
+                // Simple search results (you can expand this with actual content)
+                const searchResults = [
+                    { title: 'Meditation Timer', page: 'timer' },
+                    { title: 'Mindful Journal', page: 'journal' },
+                    { title: '7-Minute Workout', page: 'workout' },
+                    { title: 'Interview Practice', page: 'interview' },
+                    { title: 'Learning Center', page: 'category-meditation' },
+                    { title: 'Pāli Glossary', page: 'glossary' },
+                    { title: 'About Us', page: 'about' }
+                ];
+                
+                const filteredResults = searchResults.filter(item => 
+                    item.title.toLowerCase().includes(query)
+                );
+                
+                if (filteredResults.length > 0) {
+                    autocompleteResults.innerHTML = filteredResults.map(item => 
+                        `<a href="#" data-page="${item.page}" class="main-nav-link block px-4 py-2 hover:bg-light-green dark:hover:bg-gray-700 text-charcoal dark:text-white">${item.title}</a>`
+                    ).join('');
+                    autocompleteResults.classList.remove('hidden');
                 } else {
-                     logContainer.innerHTML = `<p class="text-center text-charcoal/70">Your practice log will appear here once you complete a session.</p>`;
-                }
-            }
-
-            // Enhanced event listener with comprehensive error handling
-            if (elements.durationButtons) {
-                elements.durationButtons.addEventListener('click', e => {
-                    try {
-                        // Use event delegation for better reliability
-                        const button = e.target.closest('.timer-duration-btn');
-                        if (!button) {
-                            return;
-                        }
-                        
-                        const duration = parseInt(button.dataset.duration);
-                        
-                        if (isNaN(duration) || !validDurations.includes(duration)) {
-                            showUserError('Invalid duration selected', 'Please try a different duration.');
-                            return;
-                        }
-                        
-                        setDuration(duration);
-                    } catch (error) {
-                        console.error('Duration selection error:', error);
-                        showUserError('Duration selection failed', 'Please try again.');
-                    }
-                });
-            } else {
-                showUserError('Timer controls not found', 'Please refresh the page and try again.');
-                return;
-            }
-            
-            // Add event listeners with error handling
-            if (elements.startBtn) {
-                elements.startBtn.addEventListener('click', startTimer);
-            }
-            if (elements.pauseBtn) {
-                elements.pauseBtn.addEventListener('click', pauseTimer);
-            }
-            if (elements.resetBtn) {
-                elements.resetBtn.addEventListener('click', resetTimer);
-            }
-
-            // Initialize timer state
-            timerState.isInitialized = true;
-            
-            // Initialize display and practice log
-            updateDisplay();
-            displayPracticeLog();
-            
-            // Highlight default duration (10 minutes)
-            setDuration(10);
-            
-            // Add keyboard navigation
-            addKeyboardNavigation(startTimer, pauseTimer, resetTimer, setDuration, timerState);
-            
-            // Add session persistence
-            loadSessionState();
-            
-            // Ensure timer display is visible
-            if (elements.display) {
-                elements.display.style.display = 'flex';
-                elements.display.style.visibility = 'visible';
-            }
-            
-            // Timer initialized successfully
-
-            // Add keyboard navigation
-            addKeyboardNavigation(startTimer, pauseTimer, resetTimer, setDuration, timerState);
-
-            function loadSessionState() {
-                // Load saved session state from localStorage
-                const savedState = localStorage.getItem('meditationSession');
-                if (savedState) {
-                    try {
-                        const state = JSON.parse(savedState);
-                        if (state.totalSeconds && state.secondsRemaining) {
-                            totalSeconds = state.totalSeconds;
-                            secondsRemaining = state.secondsRemaining;
-                            isPaused = state.isPaused || true;
-                            updateDisplay();
-                            
-                            if (state.soundSelect) {
-                                if (soundSelect) soundSelect.value = state.soundSelect;
-                            }
-                        }
-                    } catch (e) {
-                        // Could not load session state
-                    }
-                }
-            }
-
-            function saveSessionState() {
-                // Save current session state
-                const state = {
-                    totalSeconds,
-                    secondsRemaining,
-                    isPaused,
-                    soundSelect: soundSelect ? soundSelect.value : 'chime',
-                    timestamp: Date.now()
-                };
-                localStorage.setItem('meditationSession', JSON.stringify(state));
-            }
-        }
-        
-        function attachWorkoutLogic() {
-            const statusEl = document.getElementById('workout-status');
-            const exerciseEl = document.getElementById('workout-exercise');
-            const timerEl = document.getElementById('workout-timer');
-            const nextEl = document.getElementById('workout-next-exercise');
-            const startBtn = document.getElementById('workout-start-btn');
-            const pauseBtn = document.getElementById('workout-pause-btn');
-            const forwardBtn = document.getElementById('workout-forward-btn');
-            const backBtn = document.getElementById('workout-back-btn');
-            const doubleModeCheckbox = document.getElementById('workout-double-mode');
-            const visualEl = document.getElementById('workout-visual');
-            const soundSelect = document.getElementById('workout-sound');
-            const instructionText = document.getElementById('workout-instruction-text');
-            const phaseEl = document.getElementById('workout-phase');
-            const progressText = document.getElementById('workout-progress-text');
-            const progressBar = document.getElementById('workout-progress-bar');
-            const totalTimeEl = document.getElementById('workout-total-time');
-            const caloriesEl = document.getElementById('workout-calories');
-            const completedEl = document.getElementById('workout-completed');
-
-            let workoutPlan = [...db.workout.exercises];
-            let currentExerciseIndex = 0;
-            let isResting = true;
-            let secondsRemaining = 10;
-            let isPaused = true;
-            let totalTime = 0;
-            let totalCalories = 0;
-            let completedExercises = 0;
-            
-            const bellSound = sounds.chime;
-
-            function speak(text) {
-                if (soundSelect.value === 'on' && 'speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.rate = 1.2;
-                    window.speechSynthesis.speak(utterance);
-                }
-            }
-            
-            function updateDisplay() {
-                timerEl.textContent = secondsRemaining;
-                const currentEx = workoutPlan[currentExerciseIndex];
-                visualEl.innerHTML = currentEx.visual;
-                
-                // Update instructions
-                if (currentEx.instructions) {
-                    instructionText.textContent = currentEx.instructions;
-                }
-                
-                // Update progress
-                const progress = ((currentExerciseIndex + (isResting ? 0 : 1)) / workoutPlan.length) * 100;
-                progressBar.style.width = `${progress}%`;
-                progressText.textContent = `Exercise ${currentExerciseIndex + 1} of ${workoutPlan.length}`;
-                
-                // Update stats
-                const minutes = Math.floor(totalTime / 60);
-                const seconds = totalTime % 60;
-                totalTimeEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                caloriesEl.textContent = totalCalories;
-                completedEl.textContent = `${completedExercises}/${workoutPlan.length}`;
-                
-                if (isResting) {
-                    statusEl.textContent = 'Get Ready!';
-                    exerciseEl.textContent = currentEx.name;
-                    phaseEl.textContent = 'Rest';
-                    nextEl.style.visibility = 'visible';
-                    
-                    // Add pulse animation during rest
-                    timerEl.classList.add('workout-pulse');
-                     if (secondsRemaining === 3 && isPaused === false) speak(`Next: ${currentEx.name}`);
-                } else {
-                    statusEl.textContent = `Workout #${currentExerciseIndex + 1}`;
-                    exerciseEl.textContent = currentEx.name;
-                    phaseEl.textContent = 'Exercise';
-                    nextEl.style.visibility = 'hidden';
-                    
-                    // Add bounce animation during exercise
-                    timerEl.classList.remove('workout-pulse');
-                    timerEl.classList.add('workout-bounce');
-                }
-                
-                const nextIndex = currentExerciseIndex + 1;
-                if(nextIndex < workoutPlan.length) {
-                   nextEl.textContent = workoutPlan[nextIndex].name;
-                } else {
-                   nextEl.textContent = 'Last one!';
-                }
-            }
-            
-            function tick() {
-                secondsRemaining--;
-                totalTime++;
-                
-                // Add calories during exercise
-                if (!isResting && workoutPlan[currentExerciseIndex].calories) {
-                    const caloriesPerSecond = workoutPlan[currentExerciseIndex].calories / workoutPlan[currentExerciseIndex].duration;
-                    totalCalories += caloriesPerSecond;
-                }
-                
-                if (secondsRemaining <= 3 && secondsRemaining > 0) speak(secondsRemaining);
-                if (secondsRemaining < 0) {
-                    if (soundSelect.value === 'on') bellSound.play();
-                    isResting = !isResting;
-                    if (!isResting) { // Finished rest, start exercise
-                        secondsRemaining = workoutPlan[currentExerciseIndex].duration;
-                        speak('Begin');
-                    } else { // Finished exercise, start rest
-                        completedExercises++;
-                        currentExerciseIndex++;
-                        if (currentExerciseIndex >= workoutPlan.length) {
-                            finishWorkout();
-                            return;
-                        }
-                        secondsRemaining = db.workout.restDuration;
-                    }
-                }
-                updateDisplay();
-            }
-
-            function startWorkout() {
-                if (isPaused) {
-                    isPaused = false;
-                    startBtn.classList.add('hidden');
-                    pauseBtn.classList.remove('hidden');
-                    if(secondsRemaining === 10 && currentExerciseIndex === 0) {
-                        speak(`Starting ${doubleModeCheckbox.checked ? '14' : '7'} minute workout.`);
-                    }
-                    workoutInterval = setInterval(tick, 1000);
-                }
-            }
-            
-            function pauseWorkout() {
-                isPaused = true;
-                clearInterval(workoutInterval);
-                startBtn.textContent = 'Resume';
-                startBtn.classList.remove('hidden');
-                pauseBtn.classList.add('hidden');
-            }
-
-            function changeExercise(direction) {
-                pauseWorkout();
-                currentExerciseIndex += direction;
-                if (currentExerciseIndex < 0) currentExerciseIndex = 0;
-                if (currentExerciseIndex >= workoutPlan.length) currentExerciseIndex = workoutPlan.length - 1;
-                isResting = true;
-                secondsRemaining = db.workout.restDuration;
-                updateDisplay();
-            }
-
-            function resetWorkout() {
-                if (doubleModeCheckbox.checked) {
-                    workoutPlan = [...db.workout.exercises, ...db.workout.exercises];
-                } else {
-                    workoutPlan = [...db.workout.exercises];
-                }
-                currentExerciseIndex = 0;
-                isResting = true;
-                secondsRemaining = 10;
-                isPaused = true;
-                totalTime = 0;
-                totalCalories = 0;
-                completedExercises = 0;
-                clearInterval(workoutInterval);
-                startBtn.textContent = 'Start Workout';
-                startBtn.classList.remove('hidden');
-                pauseBtn.classList.add('hidden');
-                updateDisplay();
-            }
-            
-            function finishWorkout() {
-                 clearInterval(workoutInterval);
-                 statusEl.textContent = 'Finished!';
-                 exerciseEl.textContent = 'Well Done!';
-                 timerEl.textContent = '🎉';
-                 phaseEl.textContent = 'Complete';
-                 nextEl.style.visibility = 'hidden';
-                 
-                 // Add celebration animation
-                 timerEl.classList.remove('workout-pulse', 'workout-bounce');
-                 timerEl.classList.add('workout-shake');
-                 
-                 // Update final stats
-                 totalCalories = Math.round(totalCalories);
-                 updateDisplay();
-                 
-                 speak('Workout complete. Well done!');
-                 showNotification(`Workout complete! You burned ${totalCalories} calories in ${Math.floor(totalTime/60)}:${(totalTime%60).toString().padStart(2, '0')}`);
-                 // Mark workout as complete
-                 ProgressTracker.markComplete('workout');
-            }
-
-            startBtn.addEventListener('click', startWorkout);
-            pauseBtn.addEventListener('click', pauseWorkout);
-            forwardBtn.addEventListener('click', () => changeExercise(1));
-            backBtn.addEventListener('click', () => changeExercise(-1));
-            doubleModeCheckbox.addEventListener('change', resetWorkout);
-
-            resetWorkout(); // Initialize display
-        }
-        
-        function attachInterviewLogic() {
-            const questionEl = document.getElementById('interview-question');
-            const liveVideo = document.getElementById('live-video');
-            const playbackVideo = document.getElementById('playback-video');
-            const playbackVideoContainer = document.getElementById('playback-video-container');
-            const startBtn = document.getElementById('start-recording-btn');
-            const stopBtn = document.getElementById('stop-recording-btn');
-            const nextBtn = document.getElementById('next-question-btn');
-            const playbackSection = document.getElementById('playback-section');
-            const recordingsList = document.getElementById('recordings-list');
-            const noRecordingsMsg = document.getElementById('no-recordings-message');
-            const catButtons = document.querySelectorAll('.interview-cat-btn');
-            const feedbackEl = document.getElementById('interview-feedback');
-            const cameraErrorEl = document.getElementById('camera-error');
-            
-            let currentCategory = 'general';
-            let currentQuestionIndex = 0;
-            sessionRecordings = [];
-
-            function setCategory(category) {
-                currentCategory = category;
-                currentQuestionIndex = 0;
-                updateQuestion();
-                catButtons.forEach(btn => {
-                    btn.classList.toggle('bg-earthy-gold', btn.dataset.category === category);
-                     btn.classList.toggle('text-white', btn.dataset.category === category);
-                });
-            }
-
-            function updateQuestion() {
-                questionEl.textContent = db.interviewQuestions[currentCategory][currentQuestionIndex];
-            }
-
-            async function setupCamera() {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-                    if (!stream.getAudioTracks().length > 0) {
-                        throw new Error("No audio track found. Please check microphone permissions.");
-                    }
-                    liveVideo.srcObject = stream;
-                    
-                    const options = { mimeType: 'video/webm;codecs=vp8,opus' };
-                    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                         // MIME type not supported, using default
-                         mediaRecorder = new MediaRecorder(stream);
-                    } else {
-                         mediaRecorder = new MediaRecorder(stream, options);
-                    }
-                   
-                    mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
-                    mediaRecorder.onstop = () => {
-                        const blob = new Blob(recordedChunks, { type: 'video/webm' });
-                        recordedChunks = [];
-                        const videoURL = URL.createObjectURL(blob);
-                        addRecordingToList({
-                            question: db.interviewQuestions[currentCategory][currentQuestionIndex],
-                            url: videoURL,
-                            timestamp: new Date()
-                        });
-                        
-                        // Mark confidence practice as complete
-                        ProgressTracker.markComplete('confidence');
-                        showUserSuccess('Recording saved! Great practice session!');
-                    };
-                } catch (err) {
-                    // Error accessing camera
-                    cameraErrorEl.classList.remove('hidden');
-                }
-            }
-            
-            function addRecordingToList(recording) {
-                sessionRecordings.push(recording);
-                noRecordingsMsg.classList.add('hidden');
-                
-                const item = document.createElement('div');
-                item.className = 'p-4 bg-light-green dark:bg-gray-700/50 rounded-lg flex items-center justify-between';
-                item.innerHTML = `
-                    <div class="flex-1">
-                        <p class="font-semibold text-charcoal">${recording.question}</p>
-                        <p class="text-sm text-charcoal/70">${recording.timestamp.toLocaleTimeString()}</p>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button class="play-recording-btn px-4 py-2 bg-forest-green text-white text-sm font-semibold rounded-lg hover:bg-forest-green/90 transition flex items-center space-x-2" data-url="${recording.url}">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z"/>
-                            </svg>
-                            <span>Play</span>
-                        </button>
-                        <button class="delete-recording-btn px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition" data-url="${recording.url}">🗑️ Delete</button>
-                    </div>
-                `;
-                recordingsList.appendChild(item);
-                
-                playbackVideo.src = recording.url;
-                playbackVideoContainer.classList.remove('hidden');
-                playbackVideo.onended = showFeedback;
-            }
-
-            function showFeedback() {
-                const feedbacks = ["Great pacing!", "Clear and confident delivery.", "Excellent example. Try to vary your tone slightly.", "Strong eye contact with the camera."];
-                const randomFeedback = feedbacks[Math.floor(Math.random() * feedbacks.length)];
-                feedbackEl.textContent = `💡 Feedback: ${randomFeedback}`;
-                feedbackEl.classList.remove('hidden');
-            }
-
-            function startRecording() {
-                if(mediaRecorder) {
-                    recordedChunks = [];
-                    mediaRecorder.start();
-                    startBtn.classList.add('hidden');
-                    stopBtn.classList.remove('hidden');
-                    playbackVideoContainer.classList.add('hidden');
-                    feedbackEl.classList.add('hidden');
-                }
-            }
-
-            function stopRecording() {
-                if(mediaRecorder) {
-                    mediaRecorder.stop();
-                    startBtn.classList.remove('hidden');
-                    stopBtn.classList.add('hidden');
-                }
-            }
-            
-            function nextQuestion() {
-                currentQuestionIndex = (currentQuestionIndex + 1) % db.interviewQuestions[currentCategory].length;
-                updateQuestion();
-                playbackVideo.classList.add('hidden');
-                feedbackEl.classList.add('hidden');
-            }
-            
-            function previousQuestion() {
-                currentQuestionIndex = currentQuestionIndex === 0 ? 
-                    db.interviewQuestions[currentCategory].length - 1 : 
-                    currentQuestionIndex - 1;
-                updateQuestion();
-                playbackVideo.classList.add('hidden');
-                feedbackEl.classList.add('hidden');
-            }
-            
-            // Debug interview button visibility
-            // Interview start button initialized
-            
-            startBtn.addEventListener('click', startRecording);
-            stopBtn.addEventListener('click', stopRecording);
-            nextBtn.addEventListener('click', nextQuestion);
-            
-            // Previous question button
-            const prevBtn = document.getElementById('previous-question-btn');
-            prevBtn.addEventListener('click', previousQuestion);
-            catButtons.forEach(btn => btn.addEventListener('click', () => setCategory(btn.dataset.category)));
-            
-            // Random question button
-            const randomBtn = document.getElementById('random-question-btn');
-            randomBtn.addEventListener('click', () => {
-                const allQuestions = Object.values(db.interviewQuestions).flat();
-                const randomIndex = Math.floor(Math.random() * allQuestions.length);
-                questionEl.textContent = allQuestions[randomIndex];
-                // Highlight the random button briefly
-                randomBtn.classList.add('bg-yellow-500');
-                setTimeout(() => randomBtn.classList.remove('bg-yellow-500'), 1000);
-            });
-            
-            recordingsList.addEventListener('click', (e) => {
-                if(e.target.classList.contains('play-recording-btn')) {
-                    playbackVideo.src = e.target.dataset.url;
-                    playbackVideoContainer.classList.remove('hidden');
-                    playbackVideo.play();
-                    feedbackEl.classList.add('hidden');
-                } else if(e.target.classList.contains('delete-recording-btn')) {
-                    const url = e.target.dataset.url;
-                    // Remove from session recordings array
-                    const index = sessionRecordings.findIndex(r => r.url === url);
-                    if (index > -1) {
-                        sessionRecordings.splice(index, 1);
-                    }
-                    // Remove from DOM
-                    e.target.closest('div').remove();
-                    // Revoke the URL to free memory
-                    URL.revokeObjectURL(url);
-                    // Show no recordings message if list is empty
-                    if (sessionRecordings.length === 0) {
-                        noRecordingsMsg.classList.remove('hidden');
-                        playbackVideoContainer.classList.add('hidden');
-                    }
+                    autocompleteResults.classList.add('hidden');
                 }
             });
             
-            setCategory('general');
-            setupCamera();
+            // Hide search results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !autocompleteResults.contains(e.target)) {
+                    autocompleteResults.classList.add('hidden');
+                }
+            });
+        }
+    });
+    
+    // Simplified timer logic
+    function attachTimerLogic() {
+        console.log('Attaching timer logic...');
+        
+        const startBtn = document.getElementById('timer-start-btn');
+        const pauseBtn = document.getElementById('pause-timer-btn');
+        const resetBtn = document.getElementById('reset-timer-btn');
+        const display = document.getElementById('timer-display');
+        const durationButtons = document.querySelectorAll('.timer-duration-btn');
+        
+        let timerInterval = null;
+        let timeRemaining = 600; // 10 minutes default
+        let isRunning = false;
+        let isPaused = false;
+        
+        function updateDisplay() {
+            if (display) {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                display.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
         }
         
-        function attachJournalLogic() {
-            const timerEl = document.getElementById('journal-timer');
-            const startBtn = document.getElementById('journal-start-btn');
-            const entryEl = document.getElementById('journal-entry');
-            const historyList = document.getElementById('journal-history-list');
-            const durationSelect = document.getElementById('timer-duration');
-            const saveBtn = document.getElementById('journal-save-btn');
-            
-            let secondsRemaining = 600;
-            let totalDuration = 600;
-            let isRunning = false;
-            
-            function updateDisplay() {
-                const minutes = Math.floor(secondsRemaining / 60);
-                const seconds = secondsRemaining % 60;
-                timerEl.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            }
-
-            function resetTimer() {
-                totalDuration = parseInt(durationSelect.value);
-                secondsRemaining = totalDuration;
-                updateDisplay();
-                // Journal timer reset
-            }
-
-            function startJournal() {
-                if(isRunning) return;
+        function startTimer() {
+            if (!isRunning) {
                 isRunning = true;
-                startBtn.disabled = true;
-                startBtn.textContent = 'Writing...';
-                startBtn.classList.add('opacity-50');
-                durationSelect.disabled = true;
-
-                journalInterval = setInterval(() => {
-                    secondsRemaining--;
+                isPaused = false;
+                
+                // Update button visibility
+                if (startBtn) startBtn.classList.add('hidden');
+                if (pauseBtn) pauseBtn.classList.remove('hidden');
+                
+                timerInterval = setInterval(() => {
+                    timeRemaining--;
                     updateDisplay();
-                    if(secondsRemaining <= 0) {
-                        finishJournal();
+                    if (timeRemaining <= 0) {
+                        clearInterval(timerInterval);
+                        isRunning = false;
+                        alert('Meditation complete!');
+                        
+                        // Reset button visibility
+                        if (startBtn) startBtn.classList.remove('hidden');
+                        if (pauseBtn) pauseBtn.classList.add('hidden');
                     }
                 }, 1000);
             }
-
-            function finishJournal() {
-                clearInterval(journalInterval);
-                sounds.chime.play();
-                entryEl.disabled = true;
-                startBtn.disabled = false;
-                startBtn.textContent = 'Start New Entry';
-                startBtn.classList.remove('opacity-50');
-                durationSelect.disabled = false;
-                saveEntry();
-                resetTimer();
+        }
+        
+        function pauseTimer() {
+            if (isRunning) {
+                clearInterval(timerInterval);
                 isRunning = false;
-            }
-            
-            function saveEntry() {
-                const content = entryEl.value.trim();
-                if (content === '') return;
+                isPaused = true;
                 
-                try {
-                    const entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
-                    const newEntry = {
-                        date: new Date().toISOString(),
-                        content: content
-                    };
-                    entries.unshift(newEntry);
-                    localStorage.setItem('journalEntries', JSON.stringify(entries));
-                    
-                    // Mark journal as complete
-                    ProgressTracker.markComplete('journal');
-                    showUserSuccess('Journal entry saved successfully!');
-                } catch(e) {
-                    // Failed to save journal entry
+                // Update button visibility
+                if (startBtn) {
+                    startBtn.classList.remove('hidden');
+                    startBtn.textContent = 'Resume';
                 }
+                if (pauseBtn) pauseBtn.classList.add('hidden');
+            }
+        }
+        
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            isPaused = false;
+            timeRemaining = 600;
+            
+            // Reset button visibility
+            if (startBtn) {
+                startBtn.classList.remove('hidden');
+                startBtn.textContent = 'Start';
+            }
+            if (pauseBtn) pauseBtn.classList.add('hidden');
+            
+            updateDisplay();
+        }
+        
+        function setDuration(minutes) {
+            timeRemaining = minutes * 60;
+            updateDisplay();
+            
+            // Update button states
+            durationButtons.forEach(btn => {
+                btn.classList.remove('bg-forest-green', 'text-white');
+                btn.classList.add('bg-light-green', 'text-charcoal');
+            });
+            
+            const selectedBtn = document.querySelector(`[data-duration="${minutes}"]`);
+            if (selectedBtn) {
+                selectedBtn.classList.remove('bg-light-green', 'text-charcoal');
+                selectedBtn.classList.add('bg-forest-green', 'text-white');
+            }
+        }
+        
+        // Attach event listeners
+        if (startBtn) {
+            startBtn.addEventListener('click', startTimer);
+        }
+        if (pauseBtn) {
+            pauseBtn.addEventListener('click', pauseTimer);
+        }
+        if (resetBtn) {
+            resetBtn.addEventListener('click', resetTimer);
+        }
+        
+        durationButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const duration = parseInt(btn.dataset.duration);
+                setDuration(duration);
+            });
+        });
+        
+        // Initialize
+        updateDisplay();
+        setDuration(10);
+    }
+    
+    // Simplified journal logic
+    function attachJournalLogic() {
+        console.log('Attaching journal logic...');
+        
+        const saveBtn = document.getElementById('save-journal-btn');
+        const entryText = document.getElementById('journal-entry');
+        const entriesList = document.getElementById('journal-entries');
+        
+        function saveEntry() {
+            if (entryText && entryText.value.trim()) {
+                const entry = {
+                    text: entryText.value.trim(),
+                    date: new Date().toLocaleString()
+                };
                 
-                entryEl.value = '';
+                let entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+                entries.unshift(entry);
+                localStorage.setItem('journalEntries', JSON.stringify(entries));
+                
+                entryText.value = '';
                 displayEntries();
             }
-
-            function deleteEntry(index) {
-                try {
-                    const entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
-                    if (index >= 0 && index < entries.length) {
-                        // Show confirmation dialog
-                        if (confirm('Are you sure you want to delete this journal entry? This action cannot be undone.')) {
-                            entries.splice(index, 1);
-                            localStorage.setItem('journalEntries', JSON.stringify(entries));
-                            showUserSuccess('Journal entry deleted successfully!');
-                            displayEntries(); // Refresh the display
-                        }
-                    }
-                } catch(e) {
-                    showUserError('Failed to delete journal entry', 'Please try again.');
-                }
-            }
-
-            function displayEntries() {
-                 let entries = [];
-                try {
-                    entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
-                } catch(e) {
-                    // Failed to load journal entries
-                }
-                historyList.innerHTML = '';
-                if(entries.length === 0) {
-                    historyList.innerHTML = `<p class="text-center text-charcoal/70">Your saved journal entries will appear here.</p>`;
-                    return;
-                }
-
-                entries.forEach((entry, index) => {
-                    const date = new Date(entry.date);
-                    const item = document.createElement('div');
-                    item.className = 'bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-black/5 hover:shadow-md transition-all duration-300';
-                    item.innerHTML = `
-                        <div class="flex justify-between items-start">
-                            <div class="flex-1">
-                        <p class="font-semibold text-earthy-gold">${date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                                <p class="mt-2 text-charcoal/80 whitespace-pre-wrap leading-relaxed">${entry.content}</p>
-                            </div>
-                            <button class="delete-entry-btn ml-4 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200" data-index="${index}" title="Delete this entry">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                </svg>
-                            </button>
+        }
+        
+        function displayEntries() {
+            if (entriesList) {
+                const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+                entriesList.innerHTML = entries.map((entry, index) => `
+                    <div class="p-4 bg-light-green rounded-lg mb-4">
+                        <p class="text-charcoal mb-2">${entry.text}</p>
+                        <div class="flex justify-between items-center text-sm text-charcoal/70">
+                            <span>${entry.date}</span>
+                            <button onclick="deleteEntry(${index})" class="text-red-600 hover:text-red-800">Delete</button>
                         </div>
-                    `;
-                    historyList.appendChild(item);
-                });
-
-                // Add event listeners to delete buttons
-                const deleteButtons = historyList.querySelectorAll('.delete-entry-btn');
-                deleteButtons.forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const index = parseInt(button.getAttribute('data-index'));
-                        deleteEntry(index);
-                    });
-                });
+                    </div>
+                `).join('');
             }
-            
-            // Duration selector change handler
-            durationSelect.addEventListener('change', () => {
-                if (!isRunning) {
-                    resetTimer();
-                }
-            });
-            
-            entryEl.addEventListener('input', () => {
-                if (!isRunning && entryEl.value.length > 0) {
-                     startJournal();
-                }
-                // Show save button when user starts typing
-                if (entryEl.value.length > 0) {
-                    saveBtn.classList.remove('hidden');
-                } else {
-                    saveBtn.classList.add('hidden');
-                }
-            });
-            
-            startBtn.addEventListener('click', () => {
-                // Journal start clicked
-                entryEl.disabled = false;
-                entryEl.value = '';
-                entryEl.focus();
-            });
-
-            saveBtn.addEventListener('click', () => {
-                if (entryEl.value.trim()) {
-                    saveEntry();
-                    showNotification('Entry saved successfully!');
-                }
-            });
-
-            // Quick preset buttons
-            document.querySelectorAll('.quick-preset-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const duration = parseInt(btn.dataset.duration);
-                    durationSelect.value = duration;
-                    resetTimer();
-                    // Visual feedback
-                    document.querySelectorAll('.quick-preset-btn').forEach(b => b.classList.remove('ring-2', 'ring-forest-green'));
-                    btn.classList.add('ring-2', 'ring-forest-green');
-                });
-            });
-
-            // Initialize timer display
-            resetTimer();
+        }
+        
+        function deleteEntry(index) {
+            let entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+            entries.splice(index, 1);
+            localStorage.setItem('journalEntries', JSON.stringify(entries));
             displayEntries();
         }
-
-        // Initialize progress tracking after all DOM elements are set up
-        ProgressTracker.init();
-    });
+        
+        if (saveBtn) {
+            saveBtn.addEventListener('click', saveEntry);
+        }
+        
+        // Make deleteEntry globally accessible
+        window.deleteEntry = deleteEntry;
+        
+        displayEntries();
+    }
+    
+    // Simplified workout logic
+    function attachWorkoutLogic() {
+        console.log('Attaching workout logic...');
+        
+        const startBtn = document.getElementById('workout-start-btn');
+        const pauseBtn = document.getElementById('workout-pause-btn');
+        const resetBtn = document.getElementById('workout-reset-btn');
+        const timerEl = document.getElementById('workout-timer');
+        const exerciseEl = document.getElementById('workout-exercise');
+        
+        let timeRemaining = 420; // 7 minutes
+        let isRunning = false;
+        let timerInterval = null;
+        let currentExercise = 0;
+        
+        const exercises = [
+            'Jumping Jacks',
+            'Wall Sit',
+            'Push-ups',
+            'Abdominal Crunches',
+            'Step-up onto Chair',
+            'Squats',
+            'Triceps Dips',
+            'Plank',
+            'High Knees',
+            'Lunges',
+            'Push-up and Rotation',
+            'Side Plank'
+        ];
+        
+        function updateDisplay() {
+            if (timerEl) {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+            if (exerciseEl) {
+                exerciseEl.textContent = exercises[currentExercise] || 'Rest';
+            }
+        }
+        
+        function startWorkout() {
+            if (!isRunning) {
+                isRunning = true;
+                timerInterval = setInterval(() => {
+                    timeRemaining--;
+                    updateDisplay();
+                    
+                    if (timeRemaining <= 0) {
+                        clearInterval(timerInterval);
+                        isRunning = false;
+                        alert('Workout complete!');
+                    }
+                }, 1000);
+            }
+        }
+        
+        function pauseWorkout() {
+            if (isRunning) {
+                clearInterval(timerInterval);
+                isRunning = false;
+            }
+        }
+        
+        function resetWorkout() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            timeRemaining = 420;
+            currentExercise = 0;
+            updateDisplay();
+        }
+        
+        if (startBtn) {
+            startBtn.addEventListener('click', startWorkout);
+        }
+        if (pauseBtn) {
+            pauseBtn.addEventListener('click', pauseWorkout);
+        }
+        if (resetBtn) {
+            resetBtn.addEventListener('click', resetWorkout);
+        }
+        
+        updateDisplay();
+    }
+    
+    // Simplified interview logic
+    function attachInterviewLogic() {
+        console.log('Attaching interview logic...');
+        
+        const questionEl = document.getElementById('interview-question');
+        const nextBtn = document.getElementById('next-question-btn');
+        
+        const questions = [
+            "Tell me about yourself.",
+            "What are your strengths?",
+            "What are your weaknesses?",
+            "Why do you want this job?",
+            "Where do you see yourself in 5 years?",
+            "Why should we hire you?",
+            "What's your greatest achievement?",
+            "How do you handle stress?",
+            "Describe a challenging situation you overcame.",
+            "What questions do you have for us?"
+        ];
+        
+        let currentQuestion = 0;
+        
+        function updateQuestion() {
+            if (questionEl) {
+                questionEl.textContent = questions[currentQuestion] || "No more questions";
+            }
+        }
+        
+        function nextQuestion() {
+            currentQuestion = (currentQuestion + 1) % questions.length;
+            updateQuestion();
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', nextQuestion);
+        }
+        
+        updateQuestion();
+    }
+    
     </script>
 </body>
 </html>
-
+  
