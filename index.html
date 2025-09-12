@@ -3803,6 +3803,7 @@
 
 
     <script>
+    console.log('Script starting...');
     // --- DATABASE --- //
     const db = {
         articles: {
@@ -4199,10 +4200,8 @@
     let mainContent; // Declare globally
     
     document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOMContentLoaded fired');
         mainContent = document.getElementById('main-content');
-            
-            // Initialize progress tracking
-            ProgressTracker.init();
         
         // --- Dark Mode --- //
         const darkModeToggle = document.getElementById('dark-mode-toggle');
@@ -4721,6 +4720,7 @@
         
         // Make navigateTo globally accessible
         window.navigateTo = function(pageName, id = null) {
+            console.log('navigateTo called with:', pageName, id);
             // Ensure mainContent is available
             if (!mainContent) {
                 mainContent = document.getElementById('main-content');
@@ -6377,6 +6377,8 @@
             displayEntries();
         }
 
+        // Initialize progress tracking after all DOM elements are set up
+        ProgressTracker.init();
     });
     </script>
 </body>
