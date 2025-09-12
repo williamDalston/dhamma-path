@@ -3803,7 +3803,6 @@
 
 
     <script>
-    console.log('Script starting...');
     // --- DATABASE --- //
     const db = {
         articles: {
@@ -4129,6 +4128,12 @@
                     const data = JSON.parse(saved);
                     if (data.date === today) {
                         this.activities = data.activities;
+                        // Convert time strings back to Date objects
+                        Object.keys(this.activities).forEach(activity => {
+                            if (this.activities[activity].time) {
+                                this.activities[activity].time = new Date(this.activities[activity].time);
+                            }
+                        });
                     } else {
                         // New day, reset progress
                         this.resetProgress();
@@ -4173,7 +4178,7 @@
                             statusEl.className = 'w-8 h-8 rounded-full bg-forest-green flex items-center justify-center';
                             statusEl.innerHTML = '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
                             const time = this.activities[activity].time;
-                            timeEl.textContent = time ? time.toLocaleTimeString() : 'Completed';
+                            timeEl.textContent = time && time instanceof Date ? time.toLocaleTimeString() : 'Completed';
                         } else {
                             statusEl.className = 'w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center';
                             timeEl.textContent = 'Not started';
@@ -4200,7 +4205,6 @@
     let mainContent; // Declare globally
     
     document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOMContentLoaded fired');
         mainContent = document.getElementById('main-content');
         
         // --- Dark Mode --- //
@@ -4720,7 +4724,6 @@
         
         // Make navigateTo globally accessible
         window.navigateTo = function(pageName, id = null) {
-            console.log('navigateTo called with:', pageName, id);
             // Ensure mainContent is available
             if (!mainContent) {
                 mainContent = document.getElementById('main-content');
