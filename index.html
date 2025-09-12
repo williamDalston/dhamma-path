@@ -7942,61 +7942,8 @@
     // Journal logic
 
     // Workout logic
-
-    // Global workout functions
-    window.startWorkout = function() {
-        if (!workoutIsRunning && workoutExerciseSelect && workoutExerciseSelect.value) {
-            const exercise = exercises.find(e => e.id === workoutExerciseSelect.value);
-            if (exercise) {
-                workoutIsRunning = true;
-                workoutIsPaused = false;
-                workoutTimeRemaining = exercise.duration;
-                workoutTotalTime = exercise.duration;
-                
-                if (workoutStartBtn) workoutStartBtn.classList.add('hidden');
-                if (workoutPauseBtn) workoutPauseBtn.classList.remove('hidden');
-                
-                workoutInterval = setInterval(() => {
-                    if (workoutTimeRemaining > 0) {
-                        workoutTimeRemaining--;
-                        updateWorkoutDisplay();
-                    } else {
-                        clearInterval(workoutInterval);
-                        workoutIsRunning = false;
-                        if (workoutStatus) workoutStatus.textContent = 'Exercise complete! 🎉';
-                        if (workoutStartBtn) workoutStartBtn.classList.remove('hidden');
-                        if (workoutPauseBtn) workoutPauseBtn.classList.add('hidden');
-                    }
-                }, 1000);
-            }
-        }
-    };
-
-    window.pauseWorkout = function() {
-        if (workoutIsRunning) {
-            workoutIsRunning = false;
-            workoutIsPaused = true;
-            clearInterval(workoutInterval);
-            if (workoutStartBtn) workoutStartBtn.classList.remove('hidden');
-            if (workoutPauseBtn) workoutPauseBtn.classList.add('hidden');
-        }
-    };
-
-    window.resetWorkout = function() {
-        clearInterval(workoutInterval);
-        workoutIsRunning = false;
-        workoutIsPaused = false;
-        if (workoutExerciseSelect && workoutExerciseSelect.value) {
-            const exercise = exercises.find(e => e.id === workoutExerciseSelect.value);
-            if (exercise) {
-                workoutTimeRemaining = exercise.duration;
-                workoutTotalTime = exercise.duration;
-            }
-        }
-        updateWorkoutDisplay();
-        if (workoutStartBtn) workoutStartBtn.classList.remove('hidden');
-        if (workoutPauseBtn) workoutPauseBtn.classList.add('hidden');
-    };
+    // Note: Removed duplicate global workout functions that were causing conflicts
+    // The proper workout functions are defined in initializeWorkoutFeatures()
 
     window.updateWorkoutDisplay = function() {
         if (workoutDisplay) {
@@ -8368,71 +8315,7 @@
             }
         }
 
-        function startWorkout() {
-            console.log('Start workout function called!');
-            if (!isWorkoutRunning) {
-                isWorkoutRunning = true;
-                isWorkoutPaused = false;
-                currentTime = 30;
-                currentExercise = 1;
-                
-                if (startBtn) elements.startBtn.classList.add('hidden');
-                if (pauseBtn) elements.pauseBtn.classList.remove('hidden');
-                
-                updateTimerDisplay();
-                updateProgress();
-                
-                workoutTimer = setInterval(() => {
-                    currentTime--;
-                    updateTimerDisplay();
-                    
-                    if (currentTime <= 0) {
-                        // Exercise complete
-                        playBell(); // Play sound
-                        currentExercise++;
-                        
-                        if (currentExercise > totalExercises) {
-                            // Workout complete
-                            clearInterval(workoutTimer);
-                            isWorkoutRunning = false;
-                            
-                            if (timerDisplay) elements.timerDisplay.textContent = 'Complete!';
-                            if (timerLabel) timerLabel.textContent = 'Workout finished';
-                            
-                            if (startBtn) {
-                                elements.startBtn.classList.remove('hidden');
-                                elements.startBtn.textContent = 'Start Again';
-                            }
-                            if (pauseBtn) elements.pauseBtn.classList.add('hidden');
-                            
-                            // Remove pulsing effect
-                            const timerContainerMobile = document.querySelector('.relative.w-56');
-                            if (timerContainerMobile) {
-                                timerContainerMobile.classList.remove('timer-running');
-                            }
-                            
-                            // Session complete
-                            if (status) status.textContent = 'Session complete! 🎉';
-                            
-                            // Show start button again
-                            if (startBtn) {
-                                elements.startBtn.classList.remove('hidden');
-                                elements.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
-                            }
-                            if (pauseBtn) elements.pauseBtn.classList.add('hidden');
-                            
-                            // Removed alert for production - using notification instead
-                        } else {
-                            // Next exercise
-                            currentTime = 30;
-                            updateProgress();
-                            updateTimerDisplay();
-                        }
-                    }
-                }, 1000);
-            }
-            }
-        }
+        // Removed duplicate startWorkout function - using the more complete version in initializeWorkout()
 
     // Interview logic
     function attachInterviewLogic() {
@@ -9024,57 +8907,8 @@
                 }
             }
 
-            
-            function pauseWorkout() {
-                if (isWorkoutRunning) {
-                    clearInterval(workoutTimer);
-                    isWorkoutRunning = false;
-                    isWorkoutPaused = true;
-                    
-                    if (startBtn) {
-                        elements.startBtn.classList.remove('hidden');
-                elements.startBtn.textContent = 'Resume';
-                    }
-                    if (pauseBtn) elements.pauseBtn.classList.add('hidden');
-                }
-            }
-            
-            function resetWorkout() {
-                clearInterval(workoutTimer);
-                isWorkoutRunning = false;
-                isWorkoutPaused = false;
-                currentTime = 30;
-                currentExercise = 1;
-                
-                if (startBtn) {
-                elements.startBtn.classList.remove('hidden');
-                    elements.startBtn.textContent = 'Start Workout';
-                }
-                if (pauseBtn) elements.pauseBtn.classList.add('hidden');
-                
-                updateTimerDisplay();
-                updateProgress();
-            }
-            
-            // Event listeners
-            if (startBtn) {
-                console.log('Adding start button event listener');
-                elements.startBtn.addEventListener('click', startWorkout);
-            } else {
-                console.error('Start button not found!');
-            }
-            if (pauseBtn) {
-                console.log('Adding pause button event listener');
-                elements.pauseBtn.addEventListener('click', pauseWorkout);
-            } else {
-                console.error('Pause button not found!');
-            }
-            if (resetBtn) {
-                console.log('Adding reset button event listener');
-                elements.resetBtn.addEventListener('click', resetWorkout);
-            } else {
-                console.error('Reset button not found!');
-            }
+            // Removed duplicate pauseWorkout and resetWorkout functions
+            // These are properly defined in initializeWorkout() function below
             
             // Initialize display
             updateTimerDisplay();
