@@ -622,38 +622,6 @@
         .btn-morph:active {
             transform: translateY(0) scale(0.98);
         }
-
-        /* Breathing pulse animation for main CTA */
-        .breathing-pulse {
-            animation: breathingPulse 3s ease-in-out infinite;
-        }
-        
-        @keyframes breathingPulse {
-            0%, 100% { 
-                box-shadow: 0 0 0 0 rgba(74, 108, 85, 0.4);
-                transform: scale(1);
-            }
-            50% { 
-                box-shadow: 0 0 0 20px rgba(74, 108, 85, 0);
-                transform: scale(1.02);
-            }
-        }
-
-        /* Enhanced trust indicators */
-        .trust-indicator {
-            animation: trustFadeIn 0.6s ease-out;
-        }
-        
-        @keyframes trustFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
         
         .fade-in {
             animation: fadeIn 0.5s ease-out;
@@ -3898,9 +3866,9 @@
                         </div>
                     </div>
 
-                    <!-- Primary CTA with Enhanced Animation -->
+                    <!-- Primary CTA -->
                     <div class="text-center slide-in-right">
-                        <button onclick="navigateTo('timer')" class="inline-flex items-center justify-center px-10 sm:px-12 md:px-16 py-5 sm:py-6 md:py-7 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl border-2 border-forest-green/20 focus:ring-4 focus:ring-forest-green/30 focus:outline-none min-h-[64px] w-full sm:w-auto cursor-pointer touch-manipulation select-none btn-enhanced gentle-glow group breathing-pulse">
+                        <button onclick="navigateTo('timer')" class="inline-flex items-center justify-center px-10 sm:px-12 md:px-16 py-5 sm:py-6 md:py-7 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl border-2 border-forest-green/20 focus:ring-4 focus:ring-forest-green/30 focus:outline-none min-h-[64px] w-full sm:w-auto cursor-pointer touch-manipulation select-none btn-enhanced gentle-glow group">
                             <svg class="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 mr-3 sm:mr-4 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
                             </svg>
@@ -3911,19 +3879,6 @@
                             </svg>
                         </button>
                         <p class="text-base sm:text-lg text-white/90 mt-6 sm:mt-7 font-medium px-4 animate-pulse">✨ Free forever • No signup required • Start in 30 seconds</p>
-                        
-                        <!-- Quick Start Options -->
-                        <div class="mt-6 flex flex-wrap justify-center gap-3">
-                            <button onclick="navigateTo('timer')" class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm hover:bg-white/30 transition-colors">
-                                ⚡ Quick 2-min Demo
-                            </button>
-                            <button onclick="navigateTo('journal')" class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm hover:bg-white/30 transition-colors">
-                                ✍️ Try Journaling
-                            </button>
-                            <button onclick="navigateTo('workout')" class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm hover:bg-white/30 transition-colors">
-                                💪 7-min Workout
-                            </button>
-                        </div>
                     </div>
                     
                     <!-- Shimmer divider -->
@@ -6582,75 +6537,75 @@
     // These are defined at the top so they're available everywhere
     window.startTimer = function() {
         console.log('=== START TIMER CALLED ===');
-        if (!isRunning) {
-            isRunning = true;
-            isPaused = false;
+        if (!window.isRunning) {
+            window.isRunning = true;
+            window.isPaused = false;
             
-            if (startBtn) startBtn.classList.add('hidden');
-            if (pauseBtn) pauseBtn.classList.remove('hidden');
+            if (window.startBtn) window.startBtn.classList.add('hidden');
+            if (window.pauseBtn) window.pauseBtn.classList.remove('hidden');
                 
-            timerInterval = setInterval(() => {
-                if (timeRemaining > 0) {
-                    timeRemaining--;
+            window.timerInterval = setInterval(() => {
+                if (window.timeRemaining > 0) {
+                    window.timeRemaining--;
                     window.updateDisplay();
                 } else {
-                    clearInterval(timerInterval);
-                    isRunning = false;
-                    if (status) status.textContent = 'Session complete! 🎉';
-                    if (startBtn) {
-                        startBtn.classList.remove('hidden');
-                        startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+                    clearInterval(window.timerInterval);
+                    window.isRunning = false;
+                    if (window.status) window.status.textContent = 'Session complete! 🎉';
+                    if (window.startBtn) {
+                        window.startBtn.classList.remove('hidden');
+                        window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
                     }
-                    if (pauseBtn) pauseBtn.classList.add('hidden');
+                    if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
                 }
             }, 1000);
         }
     };
 
     window.pauseTimer = function() {
-        if (isRunning) {
-            isRunning = false;
-            isPaused = true;
-            clearInterval(timerInterval);
-            if (startBtn) startBtn.classList.remove('hidden');
-            if (pauseBtn) pauseBtn.classList.add('hidden');
-            updateDisplay();
+        if (window.isRunning) {
+            window.isRunning = false;
+            window.isPaused = true;
+            clearInterval(window.timerInterval);
+            if (window.startBtn) window.startBtn.classList.remove('hidden');
+            if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+            window.updateDisplay();
         }
     };
 
     window.resetTimer = function() {
-        clearInterval(timerInterval);
-        isRunning = false;
-        isPaused = false;
-        if (durationSelect) {
-            timeRemaining = parseInt(durationSelect.value);
-            totalTime = timeRemaining;
+        clearInterval(window.timerInterval);
+        window.isRunning = false;
+        window.isPaused = false;
+        if (window.durationSelect) {
+            window.timeRemaining = parseInt(window.durationSelect.value);
+            window.totalTime = window.timeRemaining;
         } else {
-            timeRemaining = 600;
-            totalTime = 600;
+            window.timeRemaining = 600;
+            window.totalTime = 600;
         }
-        updateDisplay();
-        if (startBtn) {
-            startBtn.classList.remove('hidden');
-            startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+        window.updateDisplay();
+        if (window.startBtn) {
+            window.startBtn.classList.remove('hidden');
+            window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
         }
-        if (pauseBtn) pauseBtn.classList.add('hidden');
+        if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
     };
 
     window.updateDisplay = function() {
-        if (display) {
-            const minutes = Math.floor(timeRemaining / 60);
-            const seconds = timeRemaining % 60;
+        if (window.display) {
+            const minutes = Math.floor(window.timeRemaining / 60);
+            const seconds = window.timeRemaining % 60;
             const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            display.textContent = displayText;
+            window.display.textContent = displayText;
         }
-        if (status) {
-            if (isRunning) {
-                status.textContent = 'Meditating...';
-            } else if (isPaused) {
-                status.textContent = 'Paused';
+        if (window.status) {
+            if (window.isRunning) {
+                window.status.textContent = 'Meditating...';
+            } else if (window.isPaused) {
+                window.status.textContent = 'Paused';
             } else {
-                status.textContent = 'Ready to begin';
+                window.status.textContent = 'Ready to begin';
             }
         }
     };
@@ -6688,6 +6643,10 @@
             window.soundToggle = soundToggle;
             window.progressRing = progressRing;
             
+            // Initialize timer state
+            window.timeRemaining = parseInt(durationSelect ? durationSelect.value : 600);
+            window.totalTime = window.timeRemaining;
+            
             // Event listeners
             if (startBtn) {
                 startBtn.addEventListener('click', window.startTimer);
@@ -6702,9 +6661,9 @@
             // Duration change
             if (durationSelect) {
                 durationSelect.addEventListener('change', () => {
-                    if (!isRunning) {
-                        timeRemaining = parseInt(durationSelect.value);
-                        totalTime = timeRemaining;
+                    if (!window.isRunning) {
+                        window.timeRemaining = parseInt(durationSelect.value);
+                        window.totalTime = window.timeRemaining;
                         window.updateDisplay();
                     }
                 });
@@ -6880,20 +6839,20 @@
     };
 
     
-    // Timer variables - moved outside function scope
-    let timerInterval = null;
-    let timeRemaining = 600; // 10 minutes default
-    let totalTime = 600;
-    let isRunning = false;
-    let isPaused = false;
-    let display = null;
-    let status = null;
-    let progressRing = null;
-    let startBtn = null;
-    let pauseBtn = null;
-    let resetBtn = null;
-    let durationSelect = null;
-    let soundToggle = null;
+    // Timer variables - made global so they can be accessed by timer functions
+    window.timerInterval = null;
+    window.timeRemaining = 600; // 10 minutes default
+    window.totalTime = 600;
+    window.isRunning = false;
+    window.isPaused = false;
+    window.display = null;
+    window.status = null;
+    window.progressRing = null;
+    window.startBtn = null;
+    window.pauseBtn = null;
+    window.resetBtn = null;
+    window.durationSelect = null;
+    window.soundToggle = null;
 
     // Timer functions - defined globally so they can be accessed by event listeners
     function updateDisplay() {
@@ -8683,15 +8642,20 @@
         
         // Register Service Worker for PWA functionality
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(registration => {
-                    console.log('Service Worker registered successfully:', registration);
-                    analytics.track('pwa_sw_registered');
-                })
-                .catch(error => {
-                    console.log('Service Worker registration failed:', error);
-                    analytics.reportError(error, { context: 'service_worker_registration' });
-                });
+            // Only register service worker if we're on the same domain (not GitHub Pages)
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered successfully:', registration);
+                        analytics.track('pwa_sw_registered');
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                        analytics.reportError(error, { context: 'service_worker_registration' });
+                    });
+            } else {
+                console.log('Service Worker registration skipped for production deployment');
+            }
         }
         
         // PWA Install Prompt
