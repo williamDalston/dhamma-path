@@ -2213,6 +2213,37 @@
             transform: scale(1.02);
         }
         
+        /* Mobile-optimized touch targets */
+        .recording-button {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .recording-button:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .recording-button {
+                min-height: 52px;
+                min-width: 120px;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            .video-container {
+                margin-bottom: 1.5rem;
+            }
+            
+            .video-container video {
+                border-radius: 0.75rem;
+            }
+        }
+        
         /* Video containers with better performance */
         .video-container {
             position: relative;
@@ -4010,31 +4041,44 @@
                     
                     <!-- Video Container -->
                     <div class="video-container relative mb-4 sm:mb-6">
-                        <video id="live-video" class="w-full h-48 sm:h-64 bg-gray-100 rounded-xl object-cover hidden"></video>
-                        <video id="playback-video" class="w-full h-48 sm:h-64 bg-gray-100 rounded-xl object-cover hidden"></video>
+                        <video id="live-video" class="w-full h-48 sm:h-64 bg-gray-100 rounded-xl object-cover hidden" playsinline muted preload="none"></video>
+                        <video id="playback-video" class="w-full h-48 sm:h-64 bg-gray-100 rounded-xl object-cover hidden" playsinline controls></video>
                         <div id="video-placeholder" class="w-full h-48 sm:h-64 bg-gradient-to-br from-forest-green/10 to-forest-green/5 rounded-xl flex items-center justify-center border-2 border-dashed border-forest-green/30">
-                            <div class="text-center">
+                            <div class="text-center p-4">
                                 <svg class="w-12 h-12 text-forest-green mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                                 </svg>
-                                <p class="text-sm text-charcoal/70">Click "Start Camera" to begin recording</p>
+                                <p class="text-sm text-charcoal/70 mb-2">Click "Start Camera" to begin recording</p>
+                                <p class="text-xs text-charcoal/50">Optimized for mobile devices</p>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Recording Controls -->
                     <div id="recorder-controls" class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                        <button id="start-camera-btn" class="recording-button flex-1 px-4 sm:px-6 py-3 sm:py-4 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 transition-colors text-sm sm:text-base min-h-[48px]">
-                            📹 Start Camera
+                        <button id="start-camera-btn" class="recording-button flex-1 px-4 sm:px-6 py-4 sm:py-4 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green/90 active:bg-forest-green/80 transition-all duration-200 text-sm sm:text-base min-h-[52px] touch-manipulation select-none shadow-lg hover:shadow-xl active:scale-95">
+                            <div class="flex items-center justify-center space-x-2">
+                                <span class="text-lg">📹</span>
+                                <span>Start Camera</span>
+                            </div>
                         </button>
-                        <button id="start-recording-btn" class="recording-button flex-1 px-4 sm:px-6 py-3 sm:py-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-colors text-sm sm:text-base min-h-[48px] hidden">
-                            🔴 Start Recording
+                        <button id="start-recording-btn" class="recording-button flex-1 px-4 sm:px-6 py-4 sm:py-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 active:bg-red-700 transition-all duration-200 text-sm sm:text-base min-h-[52px] touch-manipulation select-none shadow-lg hover:shadow-xl active:scale-95 hidden">
+                            <div class="flex items-center justify-center space-x-2">
+                                <span class="text-lg">🔴</span>
+                                <span>Start Recording</span>
+                            </div>
                         </button>
-                        <button id="stop-recording-btn" class="recording-button flex-1 px-4 sm:px-6 py-3 sm:py-4 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors text-sm sm:text-base min-h-[48px] hidden">
-                            ⏹️ Stop Recording
+                        <button id="stop-recording-btn" class="recording-button flex-1 px-4 sm:px-6 py-4 sm:py-4 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 active:bg-gray-800 transition-all duration-200 text-sm sm:text-base min-h-[52px] touch-manipulation select-none shadow-lg hover:shadow-xl active:scale-95 hidden">
+                            <div class="flex items-center justify-center space-x-2">
+                                <span class="text-lg">⏹️</span>
+                                <span>Stop Recording</span>
+                            </div>
                         </button>
-                        <button id="stop-camera-btn" class="recording-button flex-1 px-4 sm:px-6 py-3 sm:py-4 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 transition-colors text-sm sm:text-base min-h-[48px] hidden">
-                            📹 Stop Camera
+                        <button id="stop-camera-btn" class="recording-button flex-1 px-4 sm:px-6 py-4 sm:py-4 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 active:bg-gray-700 transition-all duration-200 text-sm sm:text-base min-h-[52px] touch-manipulation select-none shadow-lg hover:shadow-xl active:scale-95 hidden">
+                            <div class="flex items-center justify-center space-x-2">
+                                <span class="text-lg">📹</span>
+                                <span>Stop Camera</span>
+                            </div>
                         </button>
                     </div>
                 </div>
@@ -4227,8 +4271,8 @@
             }
         }
         
-        // Clear current content
-        mainContent.innerHTML = '';
+        // Show loading indicator
+        mainContent.innerHTML = '<div class="flex items-center justify-center min-h-[400px]"><div class="text-center"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-forest-green mx-auto mb-4"></div><p class="text-charcoal/70">Loading...</p></div></div>';
         
         // Set current page
         currentPage = pageName;
@@ -4258,7 +4302,20 @@
                 pageContent = document.getElementById('template-glossary').content.cloneNode(true);
                 break;
             case 'category-meditation':
+            case 'category-introduction':
                 pageContent = document.getElementById('template-category').content.cloneNode(true);
+                break;
+            case 'article':
+                pageContent = document.getElementById('template-article').content.cloneNode(true);
+                break;
+            case 'privacy':
+                pageContent = document.getElementById('template-privacy').content.cloneNode(true);
+                break;
+            case 'terms':
+                pageContent = document.getElementById('template-terms').content.cloneNode(true);
+                break;
+            case 'path':
+                pageContent = document.getElementById('template-path').content.cloneNode(true);
                 break;
             case 'searchResults':
                 pageContent = document.getElementById('template-search-results').content.cloneNode(true);
@@ -4268,22 +4325,26 @@
         }
         
         if (pageContent) {
-            mainContent.appendChild(pageContent);
+            // Small delay to show loading indicator
+            setTimeout(() => {
+                mainContent.innerHTML = '';
+                mainContent.appendChild(pageContent);
             
-            // Attach page-specific logic
-            if (pageName === 'timer') {
-                attachTimerLogic();
-            } else if (pageName === 'journal') {
-                attachJournalLogic();
-            } else if (pageName === 'workout') {
-                attachWorkoutLogic();
-            } else if (pageName === 'interview') {
-                attachInterviewLogic();
-            } else if (pageName === 'glossary') {
-                // Glossary page is now static HTML
-            } else if (pageName === 'category-meditation') {
-                // Learning page is now static HTML
-            }
+                // Attach page-specific logic
+                if (pageName === 'timer') {
+                    attachTimerLogic();
+                } else if (pageName === 'journal') {
+                    attachJournalLogic();
+                } else if (pageName === 'workout') {
+                    attachWorkoutLogic();
+                } else if (pageName === 'interview') {
+                    attachInterviewLogic();
+                } else if (pageName === 'glossary') {
+                    // Glossary page is now static HTML
+                } else if (pageName === 'category-meditation') {
+                    // Learning page is now static HTML
+                }
+            }, 100); // Small delay for better UX
         }
         
         // Close mobile menu if open
@@ -4758,28 +4819,82 @@
         // Camera functionality
         startCameraBtn.addEventListener('click', async () => {
             try {
+                // Mobile-optimized video settings for better performance
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
+                const videoConstraints = isMobile ? {
+                    width: { ideal: 640, max: 1280 },
+                    height: { ideal: 480, max: 720 },
+                    facingMode: 'user',
+                    frameRate: { ideal: 15, max: 30 }
+                } : {
+                    width: { ideal: 1280, max: 1920 },
+                    height: { ideal: 720, max: 1080 },
+                    facingMode: 'user',
+                    frameRate: { ideal: 30, max: 60 }
+                };
+                
                 stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 },
-                        facingMode: 'user'
-                    }, 
-                    audio: true 
+                    video: videoConstraints,
+                    audio: { 
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    }
                 });
                 
+                // Optimize video for mobile performance
                 liveVideo.srcObject = stream;
                 liveVideo.style.display = 'block';
+                liveVideo.muted = true; // Mute to prevent feedback
+                liveVideo.playsInline = true; // Important for iOS
+                liveVideo.setAttribute('playsinline', 'true'); // iOS compatibility
+                
                 videoPlaceholder.style.display = 'none';
                 playbackVideo.style.display = 'none';
                 
-                startCameraBtn.style.display = 'none';
-                startRecordingBtn.style.display = 'block';
-                stopCameraBtn.style.display = 'block';
+                // Show loading state
+                startCameraBtn.innerHTML = '⏳ Starting Camera...';
+                startCameraBtn.disabled = true;
                 
-                console.log('Camera started successfully');
+                // Wait for video to load
+                liveVideo.onloadedmetadata = () => {
+                    startCameraBtn.style.display = 'none';
+                    startRecordingBtn.style.display = 'block';
+                    stopCameraBtn.style.display = 'block';
+                    console.log('Camera started successfully');
+                };
+                
+                // Fallback timeout
+                setTimeout(() => {
+                    if (startCameraBtn.disabled) {
+                        startCameraBtn.innerHTML = '📹 Start Camera';
+                        startCameraBtn.disabled = false;
+                        startCameraBtn.style.display = 'block';
+                        startRecordingBtn.style.display = 'none';
+                        stopCameraBtn.style.display = 'none';
+                    }
+                }, 5000);
             } catch (error) {
                 console.error('Error accessing camera:', error);
-                alert('Unable to access camera. Please check permissions and try again.');
+                
+                // Reset button state
+                startCameraBtn.innerHTML = '📹 Start Camera';
+                startCameraBtn.disabled = false;
+                
+                // Better error messages for mobile
+                let errorMessage = 'Unable to access camera. ';
+                if (error.name === 'NotAllowedError') {
+                    errorMessage += 'Please allow camera access in your browser settings and try again.';
+                } else if (error.name === 'NotFoundError') {
+                    errorMessage += 'No camera found. Please check your device.';
+                } else if (error.name === 'NotSupportedError') {
+                    errorMessage += 'Camera not supported on this device.';
+                } else {
+                    errorMessage += 'Please check permissions and try again.';
+                }
+                
+                alert(errorMessage);
             }
         });
         
@@ -4806,8 +4921,23 @@
             if (!stream) return;
             
             recordedChunks = [];
+            
+            // Mobile-optimized recording settings
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            let mimeType = 'video/webm;codecs=vp9,opus';
+            
+            // Fallback for mobile devices
+            if (isMobile) {
+                if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) {
+                    mimeType = 'video/webm;codecs=vp8,opus';
+                } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+                    mimeType = 'video/mp4';
+                }
+            }
+            
             mediaRecorder = new MediaRecorder(stream, {
-                mimeType: 'video/webm;codecs=vp9,opus'
+                mimeType: mimeType,
+                videoBitsPerSecond: isMobile ? 1000000 : 2500000 // Lower bitrate for mobile
             });
             
             mediaRecorder.ondataavailable = (event) => {
