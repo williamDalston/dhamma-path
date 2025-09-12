@@ -5455,7 +5455,10 @@
                 
                 const handler = pageLogicHandlers[pageName];
                 if (handler) {
+                    console.log(`Calling handler for page: ${pageName}`);
                     handler();
+                } else {
+                    console.log(`No handler found for page: ${pageName}`);
                 }
             });
         }
@@ -5482,6 +5485,17 @@
         const durationSelect = document.getElementById('timer-duration');
         const soundToggle = document.getElementById('timer-sound');
         const progressRing = document.getElementById('progress-ring');
+        
+        console.log('Timer elements found:', {
+            startBtn: !!startBtn,
+            pauseBtn: !!pauseBtn,
+            resetBtn: !!resetBtn,
+            display: !!display,
+            status: !!status,
+            durationSelect: !!durationSelect,
+            soundToggle: !!soundToggle,
+            progressRing: !!progressRing
+        });
         
         let timerInterval = null;
         let timeRemaining = 600; // 10 minutes default
@@ -5799,6 +5813,7 @@
 
         // Workout logic
             function attachWorkoutLogic() {
+                console.log('Attaching workout logic...');
             console.log('Workout page - adding mobile-friendly sound functionality and timer');
             
             // Workout timer variables
@@ -6051,6 +6066,7 @@
 
     // Interview logic
         function attachInterviewLogic() {
+            console.log('Attaching interview logic...');
         console.log('Interview page - adding dynamic functionality with video recording');
         
         // Interview questions by category
