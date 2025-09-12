@@ -3803,413 +3803,43 @@
 
 
     <script>
-    // --- DATABASE --- //
+    // --- SIMPLIFIED WORKING JAVASCRIPT --- //
+
+    // Global variables
+    let mainContent;
+    let currentPage = 'home';
+
+    // Simple database
     const db = {
         articles: {
             "what-is-theravada": {
                 title: "What Is Theravāda Buddhism? A Simple Guide",
                 category: "Introduction",
                 categoryId: "introduction",
-                date: "September 10, 2025",
-                readTime: 8,
-                author: "Alan Dhamma",
-                tags: ["theravada", "buddhism", "introduction"],
-                content: `
-                    <p><span class="pali-term" data-term="theravada">Theravāda</span>, which means "The Way of the Elders" in the Pāli language, is the oldest surviving school of Buddhism. It is widely considered to be the most faithful representation of the original teachings of Siddhartha Gautama, the Buddha. For over two millennia, its traditions have been passed down from teacher to student, preserving a path of wisdom that is both profound and practical.</p>
-                    <h2>The Foundation: The Pāli Canon</h2>
-                    <p>The core of Theravāda Buddhism is the Pāli Canon, the most complete and earliest collection of the Buddha's discourses. This vast body of texts, known as the Tipiṭaka (or "Three Baskets"), is organized into three main sections:</p>
-                    <ul>
-                        <li><strong>Vinaya Piṭaka:</strong> The code of monastic discipline for monks and nuns.</li>
-                        <li><strong>Sutta Piṭaka:</strong> The collection of discourses and sermons delivered by the Buddha and his senior disciples. This is the heart of the teachings.</li>
-                        <li><strong>Abhidhamma Piṭaka:</strong> A detailed philosophical and psychological analysis of the nature of mind and matter.</li>
-                    </ul>
-                    <p>Unlike some other Buddhist schools, Theravāda does not recognize later scriptures or sutras as canonical. It holds that the path to liberation is found within these original teachings.</p>
-                    <blockquote>"Ardently do today what must be done. Who knows? Tomorrow, death comes."</blockquote>
-                    <h2>Core Beliefs: The Three Marks of Existence</h2>
-                    <p>At the heart of Theravāda philosophy are the Three Marks of Existence (Tilakkhaṇa), the fundamental characteristics of all conditioned phenomena:</p>
-                    <ol>
-                        <li><strong><span class="pali-term" data-term="anicca">Anicca</span> (Impermanence):</strong> Everything is in a constant state of flux. Nothing lasts forever.</li>
-                        <li><strong><span class="pali-term" data-term="dukkha">Dukkha</span> (Unsatisfactoriness):</strong> Because things are impermanent, clinging to them inevitably leads to suffering or a subtle sense of dissatisfaction.</li>
-                        <li><strong><span class="pali-term" data-term="anatta">Anattā</span> (Not-Self):</strong> There is no permanent, unchanging, independent self or soul. What we call "I" is merely a temporary combination of physical and mental components.</li>
-                    </ol>
-                    <div class="call-out-box">
-                        <p><strong>Key Takeaway:</strong> Understanding these three truths on an experiential level, not just an intellectual one, is the key to liberation in Theravāda Buddhism. This insight is cultivated through meditation.</p>
-                    </div>
-                    <h2>The Path to Liberation: The Noble Eightfold Path</h2>
-                    <p>The Buddha taught that the way to end suffering is to follow the Noble Eightfold Path. This isn't a linear sequence of steps, but rather eight interconnected factors that should be developed simultaneously. They are grouped into three divisions: Wisdom (<span class="pali-term" data-term="panna">Paññā</span>), Ethical Conduct (Sīla), and Mental Discipline (<span class="pali-term" data-term="samadhi">Samādhi</span>).</p>
-                    <p>By cultivating this path, practitioners aim to achieve the ultimate goal: <span class="pali-term" data-term="nibbana">Nibbāna</span> (Nirvana), the complete cessation of suffering and the cycle of rebirth.</p>
-                `
-            },
-            "vipassana-guide": {
-                title: "How to Practice Vipassanā: A Beginner's Guide",
-                category: "Meditation",
-                categoryId: "meditation",
-                date: "September 8, 2025",
-                readTime: 10,
-                author: "Jane Bodhi",
-                tags: ["meditation", "vipassana", "mindfulness", "guide"],
-                audioSrc: null, // Audio will be generated programmatically
-                content: `
-                    <p><span class="pali-term" data-term="vipassana">Vipassanā</span>, which means "to see things as they really are," is one of India's most ancient meditation techniques. It is a process of self-observation, a journey to the common root of mind and body that dissolves mental impurity, resulting in a balanced mind full of love and compassion.</p>
-                    <h2>Preparing for Your Practice</h2>
-                    <p>Before you begin, find a quiet place where you won't be disturbed for 15-20 minutes. Sit in a comfortable position, either on a cushion on the floor with your legs crossed or upright in a chair with your feet flat on the ground. The key is to keep your back straight but not stiff. Close your eyes gently.</p>
-                    <h2>The Practice: Mindfulness of Breath (<span class="pali-term" data-term="anapanasati">Ānāpānasati</span>)</h2>
-                    <p>The foundation of Vipassanā practice is mindfulness of breath. This is your anchor to the present moment.</p>
-                    <ol>
-                        <li><strong>Bring your attention to your breath.</strong> Observe the natural, normal sensation of the breath as it enters and leaves your nostrils. Don't try to control or change it. Just observe.</li>
-                        <li><strong>Focus on the sensation.</strong> Notice the feeling of the air touching the inside of your nostrils or the area of your upper lip. Stay with this sensation.</li>
-                        <li><strong>When the mind wanders, gently bring it back.</strong> And it will wander. Thoughts, sounds, or physical sensations will pull your attention away. This is normal. The moment you realize your mind has wandered, without any judgment or frustration, gently guide your attention back to the sensation of the breath.</li>
-                    </ol>
-                    <blockquote>"The breath is the bridge which connects life to consciousness, which unites your body to your thoughts."</blockquote>
-                    <h2>Expanding Awareness: Body Scan</h2>
-                    <p>Once you have developed some stability with the breath, you can begin to expand your awareness to the entire body. Systematically move your attention through your body, from the top of your head to the tips of your toes, observing whatever sensations arise.</p>
-                    <p>You might feel tingling, warmth, pressure, or nothing at all. Whatever the sensation, simply observe it with a balanced, equanimous mind. The goal is to understand the impermanent nature of all sensations without reacting to them with craving or aversion.</p>
-                    <div class="call-out-box">
-                        <p><strong>Key Insight:</strong> The practice is not about having pleasant sensations. It's about developing equanimity—the ability to observe your experience without being controlled by it.</p>
-                    </div>
-                    <p>End your session by taking a few moments to sit quietly, letting go of the technique. Then, when you are ready, gently open your eyes.</p>
-                `
-            },
-            "four-noble-truths": {
-                title: "The Four Noble Truths Explained",
-                category: "Core Teachings",
-                categoryId: "teachings",
-                date: "September 5, 2025",
-                readTime: 7,
-                author: "Alan Dhamma",
-                tags: ["theravada", "teachings", "four noble truths", "dukkha"],
-                content: `
-                    <p>The Four Noble Truths are the very first teaching the Buddha gave after his enlightenment. They are the foundation of all Buddhist traditions and provide a framework for understanding the nature of our experience and the path to liberation.</p>
-                    <h2>1. The Truth of Suffering (<span class="pali-term" data-term="dukkha">Dukkha</span>)</h2>
-                    <p>The first truth acknowledges that life inevitably contains suffering. This isn't a pessimistic view but a realistic one. It includes obvious suffering like pain, old age, and sickness, but also more subtle forms of dissatisfaction, like the stress of not getting what we want or the anxiety of holding onto what we have.</p>
-                    <h2>2. The Truth of the Origin of Suffering (Samudāya)</h2>
-                    <p>The second truth identifies the cause of suffering: craving and clinging (Taṇhā). We suffer because we cling to things, ideas, and even our sense of self, wishing they were permanent when they are not. This craving comes in three forms:</p>
-                    <ul>
-                        <li>Craving for sense pleasures.</li>
-                        <li>Craving for existence and becoming.</li>
-                        <li>Craving for non-existence.</li>
-                    </ul>
-                    <blockquote>"The root of suffering is attachment."</blockquote>
-                    <h2>3. The Truth of the Cessation of Suffering (Nirodhha)</h2>
-                    <p>The third truth is the good news: there is an end to suffering. By eliminating craving and clinging, we can attain <span class="pali-term" data-term="nibbana">Nibbāna</span> (Nirvana), a state of profound peace, freedom, and the complete cessation of Dukkha.</p>
-                    <h2>4. The Truth of the Path to the Cessation of Suffering (Magga)</h2>
-                    <p>The fourth and final truth lays out the practical method for ending suffering: The Noble Eightfold Path. This is the prescription for the ailment of Dukkha. By cultivating wisdom, ethical conduct, and mental discipline, we systematically uproot the causes of our dissatisfaction and move towards liberation.</p>
-                `
-            },
-            "noble-eightfold-path": {
-                title: "The Noble Eightfold Path: A Practical Guide",
-                category: "Core Teachings",
-                categoryId: "teachings",
-                date: "September 1, 2025",
-                readTime: 9,
-                author: "Alan Dhamma",
-                tags: ["teachings", "eightfold path", "ethics", "meditation"],
-                content: `
-                    <p>The Noble Eightfold Path is the Buddha's practical prescription for ending suffering. It is not a set of rules, but a group of eight interconnected factors that, when developed together, lead to wisdom, peace, and liberation.</p>
-                    <h2>Division 1: Wisdom (<span class="pali-term" data-term="panna">Paññā</span>)</h2>
-                    <ol>
-                        <li><strong>Right Understanding (Sammā Diṭṭhi):</strong> Seeing things as they truly are, which begins with understanding the Four Noble Truths.</li>
-                        <li><strong>Right Intention (Sammā Saṅkappa):</strong> Cultivating intentions of renunciation, goodwill, and harmlessness.</li>
-                    </ol>
-                    <h2>Division 2: Ethical Conduct (Sīla)</h2>
-                    <ol start="3">
-                        <li><strong>Right Speech (Sammā Vācā):</strong> Abstaining from lying, divisive speech, harsh speech, and idle chatter.</li>
-                        <li><strong>Right Action (Sammā Kammanta):</strong> Abstaining from killing, stealing, and sexual misconduct.</li>
-                        <li><strong>Right Livelihood (Sammā Ājīva):</strong> Earning a living in a way that does not harm others.</li>
-                    </ol>
-                    <h2>Division 3: Mental Discipline (<span class="pali-term" data-term="samadhi">Samādhi</span>)</h2>
-                    <ol start="6">
-                        <li><strong>Right Effort (Sammā Vāyāma):</strong> Actively preventing unwholesome states and cultivating wholesome ones.</li>
-                        <li><strong>Right Mindfulness (Sammā Sati):</strong> Developing bare awareness of the body, feelings, mind, and mental objects.</li>
-                        <li><strong>Right Concentration (Sammā Samādhi):</strong> Developing one-pointedness of mind, often through meditation, leading to deep states of calm and insight.</li>
-                    </ol>
-                    <div class="call-out-box"><p>These eight factors support and strengthen each other. Ethical conduct provides a stable foundation for concentration, which in turn clarifies the mind, allowing wisdom to arise.</p></div>
-                `
-            },
-            "metta-meditation": {
-                title: "A Guide to Mettā (Loving-Kindness) Meditation",
-                category: "Meditation",
-                categoryId: "meditation",
-                date: "September 12, 2025",
-                readTime: 8,
-                author: "Jane Bodhi",
-                tags: ["meditation", "metta", "loving-kindness", "compassion"],
-                audioSrc: null, // Audio will be generated programmatically
-                content: `
-                    <p><span class="pali-term" data-term="metta">Mettā</span>, or loving-kindness, is a meditation practice designed to cultivate unconditional, compassionate love for all beings. It is a powerful antidote to anger, ill will, and fear.</p>
-                    <h2>The Practice</h2>
-                    <p>Find a comfortable sitting position and gently close your eyes. Begin by offering loving-kindness to yourself. Silently repeat phrases that resonate with you, such as:</p>
-                    <ul>
-                        <li>May I be happy.</li>
-                        <li>May I be healthy.</li>
-                        <li>May I be safe.</li>
-                        <li>May I live with ease.</li>
-                    </ul>
-                    <p>Feel the intention behind the words. There is no need to force a particular feeling; simply offer the phrases with gentle sincerity.</p>
-                    <h2>Expanding the Circle of Kindness</h2>
-                    <p>After a few minutes of offering mettā to yourself, you gradually expand the circle of loving-kindness to include others:</p>
-                    <ol>
-                        <li><strong>A loved one:</strong> Bring to mind a close friend or family member. Offer them the same phrases: "May you be happy. May you be healthy..."</li>
-                        <li><strong>A neutral person:</strong> Think of someone you see regularly but don't have strong feelings about, like a cashier or a neighbor. Offer them mettā.</li>
-                        <li><strong>A difficult person:</strong> This can be challenging. Bring to mind someone with whom you have friction. To the best of your ability, offer them the same wishes for their happiness and well-being.</li>
-                        <li><strong>All beings:</strong> Finally, expand your loving-kindness to all living beings everywhere, without exception. "May all beings be happy. May all beings be healthy..."</li>
-                    </ol>
-                    <blockquote>"Just as a mother would protect her only child at the risk of her own life, even so, let him cultivate a boundless heart towards all beings."</blockquote>
-                `
+                readTime: "8",
+                content: "<p>This is a simple guide to Theravāda Buddhism.</p>",
+                author: "admin",
+                tags: ["buddhism", "theravada", "introduction"]
             }
         },
-        categories: {
-            "introduction": {
-                title: "Introduction to Theravāda",
-                description: "Begin your journey here. Understand the origins, history, and foundational principles of the oldest school of Buddhism."
-            },
-            "teachings": {
-                title: "Core Teachings",
-                description: "Explore the fundamental doctrines of the Buddha, from the Four Noble Truths to the nature of reality. These articles form the philosophical heart of the path."
-            },
-            "meditation": {
-                title: "Meditation & Practice",
-                description: "Learn the practical techniques of mindfulness and concentration. Our guides provide clear, step-by-step instructions to help you establish a stable and fruitful practice."
+        authors: {
+            admin: {
+                name: "The Dhamma Path Team",
+                bio: "Dedicated to sharing authentic Buddhist teachings",
+                avatar: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiMyZDUwMTYiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSI+CjxwYXRoIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0tMiAxNWwtNS01IDEuNDEtMS40MUwxMCAxNC4xN2w3LjU5LTcuNTlMMTkgOGwtOSA5eiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cjwvc3ZnPgo="
             }
         },
         glossary: {
-            "theravada": "The 'Way of the Elders'. The oldest surviving school of Buddhism, based on the Pāli Canon.",
-            "dukkha": "Unsatisfactoriness, suffering, stress. The inherent unease in conditioned existence.",
-            "anicca": "Impermanence. The principle that all conditioned things are in a constant state of flux.",
-            "anatta": "Not-self. The doctrine that there is no permanent, unchanging soul or self.",
-            "nibbana": "Nirvana. The ultimate goal, meaning 'to extinguish'. The cessation of suffering and the cycle of rebirth.",
-            "panna": "Wisdom, insight. One of the three divisions of the Noble Eightfold Path.",
-            "samadhi": "Concentration, mental discipline. The second division of the Noble Eightfold Path.",
-            "vipassana": "Insight meditation. The practice of seeing things as they truly are.",
-            "anapanasati": "Mindfulness of breathing. A core meditation practice.",
-            "metta": "Loving-kindness, goodwill. A meditation practice for cultivating universal, non-attached love."
-        },
-        authors: {
-            "Alan Dhamma": {
-                name: "Alan Dhamma",
-                bio: "Alan is the founder of The Dhamma Path and a long-term practitioner of Vipassanā meditation in the Theravāda tradition. His focus is on making the original teachings accessible and practical for modern life.",
-                avatar: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiIGZpbGw9IiM2Yjg1NzYiLz4KPGNpcmNsZSBjeD0iNDAiIGN5PSIzMCIgcj0iMTIiIGZpbGw9IiNGREZCRjUiLz4KPHBhdGggZD0iTTI1IDY1QzI1IDU1IDMxIDQ1IDQwIDQ1UzU1IDU1IDU1IDY1VjY1SDI1WiIgZmlsbD0iI0ZERkJGNSIvPgo8L3N2Zz4K"
-            },
-            "Jane Bodhi": {
-                name: "Jane Bodhi",
-                bio: "Jane has been a dedicated student of Buddhist meditation for over 15 years. She is a certified mindfulness instructor and is passionate about sharing the benefits of practice with others.",
-                 avatar: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiIGZpbGw9IiNjOWE5NzMiLz4KPGNpcmNsZSBjeD0iNDAiIGN5PSIzMCIgcj0iMTIiIGZpbGw9IiNGREZCRjUiLz4KPHBhdGggZD0iTTI1IDY1QzI1IDU1IDMxIDQ1IDQwIDQ1UzU1IDU1IDU1IDY1VjY1SDI1WiIgZmlsbD0iI0ZERkJGNSIvPgo8L3N2Zz4K"
-            }
-        },
-        paths: {
-            "7-day-mindfulness": {
-                title: "7-Day Introduction to Mindfulness",
-                description: "A guided path for beginners to establish a daily practice. Each day includes a short reading and a guided meditation.",
-                steps: [
-                    { day: 1, title: "Finding Your Seat & Your Breath", articleId: "vipassana-guide", focus: "Posture and basic breath awareness."},
-                    { day: 2, title: "Working with a Wandering Mind", articleId: "vipassana-guide", focus: "Gently returning your attention without judgment."},
-                    { day: 3, title: "Mindfulness of the Body", articleId: "vipassana-guide", focus: "Expanding awareness to physical sensations."},
-                    { day: 4, title: "Cultivating Loving-Kindness", articleId: "metta-meditation", focus: "Introducing the practice of Mettā."},
-                    { day: 5, title: "Observing Thoughts and Feelings", articleId: "vipassana-guide", focus: "Seeing mental events as impermanent."},
-                    { day: 6, title: "Mindfulness in Daily Life", articleId: "what-is-theravada", focus: "Taking practice off the cushion."},
-                    { day: 7, title: "Establishing a Routine", articleId: "noble-eightfold-path", focus: "Tips for continuing your practice."}
-                ]
-            }
-        },
-        workout: {
-            exercises: [
-                { name: "Jumping Jacks", duration: 30, calories: 8, instructions: "Stand with feet together and arms at your sides. Jump up spreading your feet shoulder-width apart while bringing your arms overhead. Jump back to starting position.", visual: '<svg viewBox="0 0 100 100" class="w-full h-full"><g stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="50" cy="25" r="6" fill="currentColor" opacity="0.8"/><path d="M50 35v25m0 0l-12 25m12-25l12 25M50 45L35 30m30 0L65 30"><animateTransform attributeName="transform" type="translate" values="0 0; 0 8; 0 0" dur="0.8s" repeatCount="indefinite"/></path><path d="M35 75L25 90m30-30l-10-15m30 30l10-15"><animateTransform attributeName="transform" type="translate" values="0 0; 0 -8; 0 0" dur="0.8s" repeatCount="indefinite"/></path><circle cx="20" cy="85" r="3" fill="currentColor" opacity="0.6"><animateTransform attributeName="transform" type="translate" values="0 0; 0 -5; 0 0" dur="0.8s" repeatCount="indefinite"/></circle><circle cx="80" cy="85" r="3" fill="currentColor" opacity="0.6"><animateTransform attributeName="transform" type="translate" values="0 0; 0 -5; 0 0" dur="0.8s" repeatCount="indefinite"/></circle></g></svg>' },
-                { name: "Wall Sit", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M30 10v80"/><circle cx="50" cy="35" r="5"/><path d="M50 40v20 H40 v20 H50 v10"/><path d="M50 60 L60 60"><animate attributeName="d" values="M50 60 L60 60; M50 60 L65 60; M50 60 L60 60" dur="2s" repeatCount="indefinite"/></path></g></svg>' },
-                { name: "Push-ups", duration: 30, visual: '<svg viewBox="0 0 100 100" class="w-full h-full"><g stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"><rect x="10" y="75" width="80" height="8" fill="currentColor" opacity="0.3"/><path d="M25 75 L50 35 L75 75"><animate attributeName="d" values="M25 75 L50 35 L75 75; M25 75 L50 55 L75 75; M25 75 L50 35 L75 75" dur="1.2s" repeatCount="indefinite"/></path><circle cx="50" cy="35" r="4" fill="currentColor" opacity="0.8"><animateTransform attributeName="transform" type="translate" values="0 0; 0 20; 0 0" dur="1.2s" repeatCount="indefinite"/></circle><path d="M45 30 L50 25 L55 30" stroke-width="2"><animateTransform attributeName="transform" type="translate" values="0 0; 0 20; 0 0" dur="1.2s" repeatCount="indefinite"/></path></g></svg>' },
-                { name: "Crunches", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M20 80 L40 60 H80 L90 80"/><path d="M45 60 L35 40 m 30 0 L75 40"><animateTransform attributeName="transform" type="translate" values="0 0; 0 5; 0 0" dur="1s" repeatCount="indefinite"/></path><circle cx="55" cy="30" r="5"><animateTransform attributeName="transform" type="translate" values="0 0; 0 5; 0 0" dur="1s" repeatCount="indefinite"/></circle></g></svg>' },
-                { name: "Step-ups", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M20 80H80v10H20z"/><circle cx="40" cy="30" r="5"/><path d="M40 35v35H30v10"><animate attributeName="d" values="M40 35v35H30v10; M60 35v35H50v10; M40 35v35H30v10" dur="1.5s" repeatCount="indefinite"/></path></g></svg>' },
-                { name: "Squats", duration: 30, visual: '<svg viewBox="0 0 100 100" class="w-full h-full"><g stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="50" cy="25" r="6" fill="currentColor" opacity="0.8"/><path d="M50 35v30m0 0L40 90m10-25L60 90"><animateTransform attributeName="transform" type="translate" values="0 0; 0 15; 0 0" dur="1.5s" repeatCount="indefinite"/></path><path d="M45 30 L50 25 L55 30" stroke-width="2"><animateTransform attributeName="transform" type="translate" values="0 0; 0 15; 0 0" dur="1.5s" repeatCount="indefinite"/></path><circle cx="35" cy="85" r="4" fill="currentColor" opacity="0.6"><animateTransform attributeName="transform" type="translate" values="0 0; 0 15; 0 0" dur="1.5s" repeatCount="indefinite"/></circle><circle cx="65" cy="85" r="4" fill="currentColor" opacity="0.6"><animateTransform attributeName="transform" type="translate" values="0 0; 0 15; 0 0" dur="1.5s" repeatCount="indefinite"/></circle></g></svg>' },
-                { name: "Triceps Dips", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M20 60h60v10H20z"/><g><circle cx="50" cy="30" r="5"/><path d="M50 35v15m-15-15l15 15l15-15"/><animateTransform attributeName="transform" type="translate" values="0 0; 0 10; 0 0" dur="1s" repeatCount="indefinite"/></g></g></svg>' },
-                { name: "Plank", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M10 70L30 50 H70 L90 70"/><path d="M30 50v20m40-20v20"><animateTransform attributeName="transform" type="translate" values="0 0; 0 2; 0 0" dur="2s" repeatCount="indefinite"/></path></g></svg>' },
-                { name: "High Knees", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="50" cy="30" r="5"/><path d="M50 35v25m0 0L40 85m10-25L60 85"/><path d="M40 85v-20h-5"><animate attributeName="d" values="M40 85v-20h-5; M40 65v-20h-5; M40 85v-20h-5" dur="0.5s" repeatCount="indefinite"/></path><path d="M60 65v20h5"><animate attributeName="d" values="M60 65v20h5; M60 85v-20h5; M60 65v20h5" dur="0.5s" repeatCount="indefinite"/></path></g></svg>' },
-                { name: "Lunges", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="50" cy="30" r="5"/><path d="M50 35v25L70 85"/><path d="M50 60L30 85"><animate attributeName="d" values="M50 60L30 85; M50 60L50 85; M50 60L30 85" dur="1s" repeatCount="indefinite" alternate="true"/></path></g></svg>' },
-                { name: "Push-up & Rotation", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M10 80h80"/><path d="M20 80 L50 40 L80 80"/><path d="M50 40v-15"><animateTransform attributeName="transform" type="rotate" values="0 50 40; 90 50 40; 0 50 40" dur="2s" repeatCount="indefinite"/></path></g></svg>' },
-                { name: "Side Plank", duration: 30, visual: '<svg viewBox="0 0 100 100"><g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M50 10v80"/><path d="M50 50l30-20v40z"/><circle cx="80" cy="30" r="5"><animateTransform attributeName="transform" type="translate" values="0 0; 0 2; 0 0" dur="2s" repeatCount="indefinite"/></path></g></svg>' }
-            ],
-            restDuration: 10
-        },
-        interviewQuestions: {
-            general: [
-                "Tell me about yourself.",
-                "What are your goals for today?",
-                "How do you like to start your mornings?",
-                "What motivates you to get up each day?",
-                "Describe your ideal morning routine.",
-                "What's something you're looking forward to this week?",
-                "How do you stay focused throughout the day?",
-                "What's a recent accomplishment you're proud of?",
-                "Describe your perfect day from start to finish.",
-                "What's the best advice you've ever received?",
-                "Tell me about a person who has influenced you greatly.",
-                "What's something you're currently learning or want to learn?",
-                "Describe a place that makes you feel peaceful.",
-                "What's your favorite way to unwind after a long day?",
-                "Tell me about a book, movie, or song that changed your perspective."
-            ],
-            storytelling: [
-                "Tell me about a time you overcame a fear.",
-                "Describe your most memorable travel experience.",
-                "Share a story about a time you helped someone.",
-                "Tell me about a moment when you felt truly proud.",
-                "Describe a time you had to be brave.",
-                "Share a story about a mistake that taught you something valuable.",
-                "Tell me about a time you had to stand up for what you believed in.",
-                "Describe a moment when you felt completely at peace.",
-                "Share a story about a time you had to start over.",
-                "Tell me about a time you surprised yourself.",
-                "Describe a moment when you felt deeply grateful.",
-                "Share a story about a time you had to be patient.",
-                "Tell me about a time you had to trust your instincts.",
-                "Describe a moment when you felt truly connected to someone.",
-                "Share a story about a time you had to let go of something."
-            ],
-            communication: [
-                "Explain why meditation is important for daily life.",
-                "Describe your ideal work environment.",
-                "Present three ways to stay productive throughout the day.",
-                "Explain the benefits of a healthy morning routine.",
-                "Describe how you would teach someone to be more confident.",
-                "Present your vision for personal growth this year.",
-                "Explain why self-care is essential for success.",
-                "Describe how you handle stress and pressure.",
-                "Explain what mindfulness means to you.",
-                "Describe your approach to building meaningful relationships.",
-                "Present your philosophy on work-life balance.",
-                "Explain how you stay motivated during difficult times.",
-                "Describe what success means to you personally.",
-                "Present your thoughts on the importance of gratitude.",
-                "Explain how you would help someone who's feeling overwhelmed."
-            ],
-            creativity: [
-                "If you could have dinner with anyone, who would it be and why?",
-                "Describe your dream job or career path.",
-                "If you could travel anywhere in the world, where would you go?",
-                "What's a skill you wish you had more time to develop?",
-                "If you could solve one world problem, what would it be?",
-                "Describe your ideal weekend.",
-                "What's something you've always wanted to try but haven't yet?",
-                "If you could give your younger self one piece of advice, what would it be?",
-                "Describe a project or hobby you're passionate about.",
-                "What's a goal you have for the next five years?",
-                "If you could learn any language instantly, which would you choose?",
-                "Describe your perfect home or living space.",
-                "What's a cause or issue you care deeply about?",
-                "If you could have any superpower, what would it be and why?",
-                "Describe what happiness looks like to you."
-            ]
+            "dhamma": "The teachings of the Buddha",
+            "sangha": "The community of Buddhist practitioners",
+            "buddha": "One who is awakened or enlightened"
         }
     };
 
-    // --- PROGRESS TRACKING --- //
-    const ProgressTracker = {
-        activities: {
-            meditation: { completed: false, time: null },
-            journal: { completed: false, time: null },
-            workout: { completed: false, time: null },
-            confidence: { completed: false, time: null }
-        },
-        
-        init() {
-            this.loadProgress();
-            this.updateDisplay();
-        },
-        
-        markComplete(activity, duration = null) {
-            this.activities[activity].completed = true;
-            this.activities[activity].time = new Date();
-            this.saveProgress();
-            this.updateDisplay();
-        },
-        
-        loadProgress() {
-            const today = new Date().toDateString();
-            const saved = localStorage.getItem('dailyProgress');
-            if (saved) {
-                const data = JSON.parse(saved);
-                if (data.date === today) {
-                    this.activities = data.activities;
-                    // Convert time strings back to Date objects
-                    Object.keys(this.activities).forEach(activity => {
-                        if (this.activities[activity].time) {
-                            this.activities[activity].time = new Date(this.activities[activity].time);
-                        }
-                    });
-                } else {
-                    // New day, reset progress
-                    this.resetProgress();
-                }
-            }
-        },
-        
-        saveProgress() {
-            const data = {
-                date: new Date().toDateString(),
-                activities: this.activities
-            };
-            localStorage.setItem('dailyProgress', JSON.stringify(data));
-        },
-        
-        resetProgress() {
-            Object.keys(this.activities).forEach(key => {
-                this.activities[key] = { completed: false, time: null };
-            });
-            this.saveProgress();
-        },
-        
-        updateDisplay() {
-                const completedCount = Object.values(this.activities).filter(a => a.completed).length;
-                const progressPercent = (completedCount / 4) * 100;
-                
-                // Update progress bar
-                const progressBar = document.getElementById('overall-progress');
-                const progressText = document.getElementById('progress-text');
-                if (progressBar && progressText) {
-                    progressBar.style.width = `${progressPercent}%`;
-                    progressText.textContent = `Complete ${completedCount} of 4 activities`;
-                }
-                
-                // Update individual activity status
-                Object.keys(this.activities).forEach(activity => {
-                    const statusEl = document.getElementById(`${activity}-status`);
-                    const timeEl = document.getElementById(`${activity}-time`);
-                    
-                    if (statusEl && timeEl) {
-                        if (this.activities[activity].completed) {
-                            statusEl.className = 'w-8 h-8 rounded-full bg-forest-green flex items-center justify-center';
-                            statusEl.innerHTML = '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
-                            const time = this.activities[activity].time;
-                            timeEl.textContent = time && time instanceof Date ? time.toLocaleTimeString() : 'Completed';
-                        } else {
-                            statusEl.className = 'w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center';
-                            timeEl.textContent = 'Not started';
-                        }
-                    }
-                });
-                
-                // Update streak
-                this.updateStreak();
-        },
-        
-        updateStreak() {
-            const streakEl = document.getElementById('streak-text');
-            if (streakEl) {
-                // Simple streak calculation - in a real app, you'd track this more sophisticatedly
-                const allCompleted = Object.values(this.activities).every(a => a.completed);
-                const streak = allCompleted ? 1 : 0; // Simplified for now
-                streakEl.textContent = `🔥 ${streak} day streak`;
-            }
-        }
-    };
-
-    // --- APP LOGIC --- //
-    let mainContent;
-    let currentPage = 'home';
-    
-    // Simple, bulletproof navigation function
+    // Simple navigation function
     function navigateToPage(pageName, id = null) {
         console.log('Navigating to:', pageName);
         
-        // Get main content container
         if (!mainContent) {
             mainContent = document.getElementById('main-content');
             if (!mainContent) {
@@ -4279,148 +3909,17 @@
             mobileMenu.classList.add('hidden');
         }
     }
-    
+
     // Make navigation globally accessible
     window.navigateTo = navigateToPage;
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOM loaded, initializing...');
-        mainContent = document.getElementById('main-content');
-        
-        // JavaScript is working
-        console.log('JavaScript is working!');
-        
-        // --- Dark Mode --- //
-        function initDarkMode() {
-            const darkModeToggle = document.getElementById('dark-mode-toggle');
-            const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
-            const sunIcon = document.getElementById('sun-icon');
-            const moonIcon = document.getElementById('moon-icon');
-            
-            function toggleDarkMode() {
-                const isDark = !document.documentElement.classList.contains('dark');
-                document.documentElement.classList.toggle('dark', isDark);
-                localStorage.setItem('darkMode', isDark);
-                
-                if (sunIcon && moonIcon) {
-                    sunIcon.style.display = isDark ? 'none' : 'block';
-                    moonIcon.style.display = isDark ? 'block' : 'none';
-                }
-            }
-            
-            if (darkModeToggle) {
-                darkModeToggle.addEventListener('click', toggleDarkMode);
-            }
-            if (darkModeToggleMobile) {
-                darkModeToggleMobile.addEventListener('click', toggleDarkMode);
-            }
-            
-            // Apply saved preference
-            const savedMode = localStorage.getItem('darkMode');
-            if (savedMode === 'true') {
-                document.documentElement.classList.add('dark');
-                if (sunIcon && moonIcon) {
-                    sunIcon.style.display = 'none';
-                    moonIcon.style.display = 'block';
-                }
-            }
-        }
-        
-        initDarkMode();
 
-        // --- Mobile Menu --- //
-        function initMobileMenu() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
-        }
-        
-        initMobileMenu();
-        
-        // Initialize progress tracking
-        ProgressTracker.init();
-        
-        // Load home page by default
-        navigateToPage('home');
-        
-        // Global click handler for navigation links
-        document.body.addEventListener('click', (e) => {
-            const link = e.target.closest('.main-nav-link');
-            if (link) {
-                e.preventDefault();
-                const page = link.dataset.page;
-                const id = link.dataset.articleId || link.dataset.pathId;
-                navigateToPage(page, id);
-            }
-        });
-        
-        // Search functionality
-        const searchInput = document.getElementById('search-input');
-        const autocompleteResults = document.getElementById('autocomplete-results');
-        
-        if (searchInput && autocompleteResults) {
-            searchInput.addEventListener('keyup', (e) => {
-                const query = searchInput.value.toLowerCase().trim();
-                
-                if (e.key === 'Enter' && query) {
-                    // Navigate to search results
-                    navigateToPage('searchResults', query);
-                    autocompleteResults.classList.add('hidden');
-                    searchInput.blur();
-                    return;
-                }
-                
-                if (query.length < 2) {
-                    autocompleteResults.classList.add('hidden');
-                    return;
-                }
-                
-                // Simple search results (you can expand this with actual content)
-                const searchResults = [
-                    { title: 'Meditation Timer', page: 'timer' },
-                    { title: 'Mindful Journal', page: 'journal' },
-                    { title: '7-Minute Workout', page: 'workout' },
-                    { title: 'Interview Practice', page: 'interview' },
-                    { title: 'Learning Center', page: 'category-meditation' },
-                    { title: 'Pāli Glossary', page: 'glossary' },
-                    { title: 'About Us', page: 'about' }
-                ];
-                
-                const filteredResults = searchResults.filter(item => 
-                    item.title.toLowerCase().includes(query)
-                );
-                
-                if (filteredResults.length > 0) {
-                    autocompleteResults.innerHTML = filteredResults.map(item => 
-                        `<a href="#" data-page="${item.page}" class="main-nav-link block px-4 py-2 hover:bg-light-green dark:hover:bg-gray-700 text-charcoal dark:text-white">${item.title}</a>`
-                    ).join('');
-                    autocompleteResults.classList.remove('hidden');
-                } else {
-                    autocompleteResults.classList.add('hidden');
-                }
-            });
-            
-            // Hide search results when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!searchInput.contains(e.target) && !autocompleteResults.contains(e.target)) {
-                    autocompleteResults.classList.add('hidden');
-                }
-            });
-        }
-    });
-    
-    // Simplified timer logic
+    // Timer logic
     function attachTimerLogic() {
         console.log('Attaching timer logic...');
         
         const startBtn = document.getElementById('timer-start-btn');
-        const pauseBtn = document.getElementById('pause-timer-btn');
-        const resetBtn = document.getElementById('reset-timer-btn');
+        const pauseBtn = document.getElementById('timer-pause-btn');
+        const resetBtn = document.getElementById('timer-reset-btn');
         const display = document.getElementById('timer-display');
         const durationButtons = document.querySelectorAll('.timer-duration-btn');
         
@@ -4532,8 +4031,8 @@
         updateDisplay();
         setDuration(10);
     }
-    
-    // Simplified journal logic
+
+    // Journal logic
     function attachJournalLogic() {
         console.log('Attaching journal logic...');
         
@@ -4588,8 +4087,8 @@
         
         displayEntries();
     }
-    
-    // Simplified workout logic
+
+    // Workout logic
     function attachWorkoutLogic() {
         console.log('Attaching workout logic...');
         
@@ -4673,8 +4172,8 @@
         
         updateDisplay();
     }
-    
-    // Simplified interview logic
+
+    // Interview logic
     function attachInterviewLogic() {
         console.log('Attaching interview logic...');
         
@@ -4713,8 +4212,124 @@
         
         updateQuestion();
     }
+
+    // Dark mode functionality
+    function initDarkMode() {
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
+        
+        function toggleDarkMode() {
+            const isDark = !document.documentElement.classList.contains('dark');
+            document.documentElement.classList.toggle('dark', isDark);
+            localStorage.setItem('darkMode', isDark);
+        }
+        
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+        }
+        if (darkModeToggleMobile) {
+            darkModeToggleMobile.addEventListener('click', toggleDarkMode);
+        }
+        
+        // Apply saved preference
+        const savedMode = localStorage.getItem('darkMode');
+        if (savedMode === 'true') {
+            document.documentElement.classList.add('dark');
+        }
+    }
+
+    // Mobile menu functionality
+    function initMobileMenu() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    }
+
+    // Search functionality
+    function initSearch() {
+        const searchInput = document.getElementById('search-input');
+        const autocompleteResults = document.getElementById('autocomplete-results');
+        
+        if (searchInput && autocompleteResults) {
+            searchInput.addEventListener('keyup', (e) => {
+                const query = searchInput.value.toLowerCase().trim();
+                
+                if (e.key === 'Enter' && query) {
+                    navigateToPage('searchResults', query);
+                    autocompleteResults.classList.add('hidden');
+                    searchInput.blur();
+                    return;
+                }
+                
+                if (query.length < 2) {
+                    autocompleteResults.classList.add('hidden');
+                    return;
+                }
+                
+                // Simple search results
+                const searchResults = [
+                    { title: 'Meditation Timer', page: 'timer' },
+                    { title: 'Mindful Journal', page: 'journal' },
+                    { title: '7-Minute Workout', page: 'workout' },
+                    { title: 'Interview Practice', page: 'interview' },
+                    { title: 'Learning Center', page: 'category-meditation' },
+                    { title: 'Pāli Glossary', page: 'glossary' },
+                    { title: 'About Us', page: 'about' }
+                ];
+                
+                const filteredResults = searchResults.filter(item => 
+                    item.title.toLowerCase().includes(query)
+                );
+                
+                if (filteredResults.length > 0) {
+                    autocompleteResults.innerHTML = filteredResults.map(item => 
+                        `<a href="#" data-page="${item.page}" class="main-nav-link block px-4 py-2 hover:bg-light-green dark:hover:bg-gray-700 text-charcoal dark:text-white">${item.title}</a>`
+                    ).join('');
+                    autocompleteResults.classList.remove('hidden');
+                } else {
+                    autocompleteResults.classList.add('hidden');
+                }
+            });
+            
+            // Hide search results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !autocompleteResults.contains(e.target)) {
+                    autocompleteResults.classList.add('hidden');
+                }
+            });
+        }
+    }
+
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM loaded, initializing...');
+        mainContent = document.getElementById('main-content');
+        
+        // Initialize all functionality
+        initDarkMode();
+        initMobileMenu();
+        initSearch();
+        
+        // Global click handler for navigation links
+        document.body.addEventListener('click', (e) => {
+            const link = e.target.closest('.main-nav-link');
+            if (link) {
+                e.preventDefault();
+                const page = link.dataset.page;
+                const id = link.dataset.articleId || link.dataset.pathId;
+                navigateToPage(page, id);
+            }
+        });
+        
+        // Load home page by default
+        navigateToPage('home');
+    });
     
     </script>
 </body>
 </html>
-  
