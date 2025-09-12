@@ -3061,11 +3061,6 @@
 
                     <!-- Primary CTA -->
                     <div class="text-center slide-in-right">
-                        <!-- Simple test button first -->
-                        <button onclick="alert('HOME BUTTON WORKS!'); navigateTo('timer');" style="background: blue; color: white; padding: 20px; font-size: 20px; border: none; cursor: pointer; margin: 10px; display: block;">
-                            SIMPLE HOME TEST BUTTON
-                        </button>
-                        
                         <button onclick="navigateTo('timer')" class="inline-flex items-center justify-center px-10 sm:px-12 md:px-16 py-5 sm:py-6 md:py-7 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl border-2 border-forest-green/20 focus:ring-4 focus:ring-forest-green/30 focus:outline-none min-h-[64px] w-full sm:w-auto cursor-pointer touch-manipulation select-none">
                             <svg class="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 mr-3 sm:mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
@@ -4624,11 +4619,6 @@
                             
                             <!-- Control Buttons - Mobile First with Better Touch Targets -->
                             <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                                <!-- Simple test button first -->
-                                <button onclick="alert('SIMPLE BUTTON WORKS!')" style="background: red; color: white; padding: 20px; font-size: 20px; border: none; cursor: pointer; margin: 10px;">
-                                    SIMPLE TEST BUTTON
-                    </button>
-                                
                                 <button id="timer-start-btn" onclick="testButtonClick()" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-base sm:text-lg min-h-[56px] shadow-lg touch-manipulation">
                                     <div class="flex items-center justify-center space-x-2">
                                         <span class="text-xl">▶️</span>
@@ -5344,12 +5334,11 @@
     
     // Test if JavaScript is running at all
     console.log('=== JAVASCRIPT IS RUNNING ===');
-    alert('JavaScript is loaded and running!');
     
     // Simple button test function
     function testButtonClick() {
         console.log('=== BUTTON CLICKED! ===');
-        alert('Button click is working! JavaScript is functioning properly.');
+        // Remove alert for production
     }
     
     // Check for overlays or blocking elements
@@ -5384,7 +5373,7 @@
     // Add missing functions that buttons are calling
     function testWorkoutSound() {
         console.log('Testing workout sound...');
-        alert('Workout sound test - this function now exists!');
+        // Remove alert for production
         
         // Create audio context for sound
         let audioContext = null;
@@ -5423,7 +5412,7 @@
     
     function playRecording(url) {
         console.log('Playing recording:', url);
-        alert('Playing recording: ' + url);
+        // Remove alert for production
         
         // Create audio element and play
         const audio = new Audio(url);
@@ -5627,7 +5616,7 @@
                 return;
             }
 
-            alert('Timer logic is being attached!');
+            // Timer logic is being attached
             
             // Check for blocking elements
             checkForBlockingElements();
@@ -5642,7 +5631,7 @@
             
             startBtn.addEventListener('click', () => {
                 console.log('Start button clicked - event listener working!');
-                alert('Start button clicked!');
+                startTimer();
             });
             
             // Rest of the timer logic will go here
