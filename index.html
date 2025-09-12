@@ -6635,11 +6635,13 @@
         const backdrop = document.createElement('div');
         backdrop.className = 'mobile-menu-backdrop';
         backdrop.id = 'mobile-menu-backdrop';
+        backdrop.style.display = 'none'; // Hide by default
         document.body.appendChild(backdrop);
         
         function openMobileMenu() {
             mobileMenu.classList.remove('hidden');
             mobileMenu.classList.add('show');
+            backdrop.style.display = 'block';
             backdrop.classList.add('show');
             hamburgerIcon.classList.add('hidden');
             closeIcon.classList.remove('hidden');
@@ -6650,6 +6652,7 @@
         function closeMobileMenu() {
             mobileMenu.classList.remove('show');
             mobileMenu.classList.add('hidden');
+            backdrop.style.display = 'none';
             backdrop.classList.remove('show');
             hamburgerIcon.classList.remove('hidden');
             closeIcon.classList.add('hidden');
