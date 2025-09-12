@@ -6312,6 +6312,7 @@
                 startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
             }
             if (pauseBtn) pauseBtn.classList.add('hidden');
+            }
         }
         
         // Event listeners
@@ -7382,8 +7383,6 @@
         analytics.track('page_navigation', { page: pageName, id });
         return originalNavigateToPage(pageName, id);
     };
-    
-    } // Close the main script block
     
     </script>
 </body>
