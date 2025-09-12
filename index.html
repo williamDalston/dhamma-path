@@ -5018,7 +5018,7 @@
                                         <span class="font-bold text-xl sm:text-2xl">Start Meditation</span>
                                     </div>
                                 </button>
-                                <button id="timer-pause-btn" class="w-full sm:w-auto px-8 sm:px-10 md:px-12 py-5 sm:py-6 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-3xl hover:from-earthy-gold/90 hover:to-earthy-gold/80 hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 text-xl sm:text-2xl min-h-[64px] shadow-2xl hidden touch-manipulation">
+                                <button id="timer-pause-btn" class="w-full sm:w-auto px-8 sm:px-10 md:px-12 py-5 sm:py-6 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-3xl hover:from-earthy-gold/90 hover:to-earthy-gold/80 hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 text-xl sm:text-2xl min-h-[64px] shadow-2xl touch-manipulation">
                                     <div class="flex items-center justify-center space-x-4">
                                         <span class="text-3xl">⏸️</span>
                                         <span class="font-bold text-xl sm:text-2xl">Pause</span>
@@ -6070,11 +6070,6 @@
             console.log('Start button pointer events:', window.getComputedStyle(startBtn).pointerEvents);
             console.log('Start button z-index:', window.getComputedStyle(startBtn).zIndex);
             
-            startBtn.addEventListener('click', () => {
-                console.log('Start button clicked - event listener working!');
-                startTimer();
-            });
-            
             // Rest of the timer logic will go here
             attachTimerEventListeners(startBtn, pauseBtn, resetBtn, display, status, durationSelect, soundToggle, progressRing);
         }, 100);
@@ -6182,7 +6177,6 @@
                 } else {
                     status.textContent = 'Ready to begin';
                 }
-            }
             }
 
             function startTimer() {
@@ -7493,4 +7487,4 @@
 </html>
 
 
-
+    });
