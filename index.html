@@ -98,6 +98,14 @@
         document.documentElement.className += ' ' + criticalClasses;
     </script>
     <script src="https://cdn.tailwindcss.com" defer></script>
+    <script>
+        // Suppress Tailwind CSS production warning
+        window.tailwindConfig = {
+            theme: {
+                extend: {}
+            }
+        };
+    </script>
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -2215,11 +2223,19 @@
         
         /* Global Enhancements */
         .btn-primary { 
-            @apply px-6 py-3 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            transform: scale(1);
             background: var(--gradient-primary);
             box-shadow: var(--shadow-soft);
             display: inline-block !important;
             visibility: visible !important;
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
         }
         
         /* Ensure all start buttons are visible */
@@ -2240,8 +2256,18 @@
             box-shadow: var(--shadow-hover);
         }
         .btn-secondary { 
-            @apply px-6 py-3 bg-transparent border-2 border-earthy-gold text-earthy-gold font-semibold rounded-lg transition-all duration-300 transform hover:scale-105;
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 2px solid var(--earthy-gold);
+            color: var(--earthy-gold);
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            transform: scale(1);
             background: linear-gradient(135deg, transparent 0%, rgba(185, 139, 76, 0.05) 100%);
+        }
+        .btn-secondary:hover {
+            transform: scale(1.05);
         }
         .btn-secondary:hover {
             background: var(--gradient-secondary);
@@ -2822,16 +2848,33 @@
         
         /* Enhanced Focus Management */
         .focus-ring {
-            @apply focus:outline-none focus:ring-2 focus:ring-forest-green focus:ring-offset-2 focus:ring-offset-linen-white dark:focus:ring-offset-charcoal;
+            outline: none;
+        }
+        .focus-ring:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--forest-green), 0 0 0 4px rgba(74, 108, 85, 0.2);
+        }
+        .dark .focus-ring:focus {
+            box-shadow: 0 0 0 2px var(--forest-green), 0 0 0 4px rgba(74, 108, 85, 0.3);
         }
         
         .focus-visible-ring {
-            @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-green focus-visible:ring-offset-2 focus-visible:ring-offset-linen-white dark:focus-visible:ring-offset-charcoal;
+            outline: none;
+        }
+        .focus-visible-ring:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--forest-green), 0 0 0 4px rgba(74, 108, 85, 0.2);
+        }
+        .dark .focus-visible-ring:focus-visible {
+            box-shadow: 0 0 0 2px var(--forest-green), 0 0 0 4px rgba(74, 108, 85, 0.3);
         }
         
         /* Improved focus indicators for better accessibility */
         .main-nav-link:focus-visible {
-            @apply ring-2 ring-forest-green ring-offset-2 ring-offset-linen-white dark:ring-offset-charcoal;
+            box-shadow: 0 0 0 2px var(--forest-green), 0 0 0 4px rgba(74, 108, 85, 0.2);
+        }
+        .dark .main-nav-link:focus-visible {
+            box-shadow: 0 0 0 2px var(--forest-green), 0 0 0 4px rgba(74, 108, 85, 0.3);
         }
         
         /* Skip link styling */
@@ -6219,46 +6262,37 @@
     // --- SIMPLIFIED WORKING JAVASCRIPT --- //
     
     // Test if JavaScript is running at all
-    console.log('=== JAVASCRIPT IS RUNNING ===');
+    // JavaScript initialized
     
     // Simple button test function
     function testButtonClick() {
-        console.log('=== BUTTON CLICKED! ===');
+        // Button clicked
         // Remove alert for production
     }
     
     // Check for overlays or blocking elements
     function checkForBlockingElements() {
-        console.log('Checking for blocking elements...');
+        // Checking for blocking elements
         const timerButtons = document.querySelectorAll('button[id*="timer"]');
-        console.log('Found timer buttons:', timerButtons.length);
         
         timerButtons.forEach((btn, index) => {
             const rect = btn.getBoundingClientRect();
             const computedStyle = window.getComputedStyle(btn);
-            console.log(`Button ${index}:`, {
-                element: btn,
-                rect: rect,
-                pointerEvents: computedStyle.pointerEvents,
-                zIndex: computedStyle.zIndex,
-                position: computedStyle.position,
-                display: computedStyle.display,
-                visibility: computedStyle.visibility,
-                opacity: computedStyle.opacity
-            });
+            // Button debug info (commented out for production)
+            // console.log(`Button ${index}:`, { element, rect, pointerEvents, zIndex, position, display, visibility, opacity });
             
             // Check if there's an element covering this button
             const elementAtCenter = document.elementFromPoint(
                 rect.left + rect.width / 2,
                 rect.top + rect.height / 2
             );
-            console.log(`Element at button ${index} center:`, elementAtCenter);
+            // console.log(`Element at button ${index} center:`, elementAtCenter);
         });
     }
     
     // Add missing functions that buttons are calling
     function testWorkoutSound() {
-        console.log('Testing workout sound...');
+        // Testing workout sound
         // Remove alert for production
         
         // Create audio context for sound
@@ -6297,7 +6331,7 @@
     }
     
     function playRecording(url) {
-        console.log('Playing recording:', url);
+        // Playing recording
         // Remove alert for production
         
         // Create audio element and play
@@ -6442,7 +6476,7 @@
 
     // Simple navigation function
     function navigateToPage(pageName, id = null) {
-        console.log('Navigating to:', pageName, 'with id:', id);
+        // Navigating to page
         
         if (!mainContent) {
             mainContent = document.getElementById('main-content');
@@ -6514,10 +6548,10 @@
                 
                 const handler = pageLogicHandlers[pageName];
                 if (handler) {
-                    console.log(`Calling handler for page: ${pageName}`);
+                    // Calling page handler
                     handler();
                 } else {
-                    console.log(`No handler found for page: ${pageName}`);
+                    // No handler found for page
                 }
             });
         }
@@ -6536,7 +6570,7 @@
     // ===== GLOBAL TIMER FUNCTIONS =====
     // These are defined at the top so they're available everywhere
     window.startTimer = function() {
-        console.log('=== START TIMER CALLED ===');
+        // Start timer called
         if (!window.isRunning) {
             window.isRunning = true;
             window.isPaused = false;
@@ -6612,17 +6646,17 @@
 
     // Home page logic
     function attachHomeLogic() {
-        console.log('Attaching home page logic...');
+        // Attaching home page logic
         // Home page doesn't need specific logic, just initialization
     }
 
     // Timer logic
     function attachTimerLogic() {
-        console.log('Attaching enhanced timer logic...');
+        // Attaching enhanced timer logic
         
         // Add a small delay to ensure DOM is fully rendered
         setTimeout(() => {
-            console.log('Looking for timer elements after delay...');
+            // Looking for timer elements after delay
             
             const startBtn = document.getElementById('timer-start-btn');
             const pauseBtn = document.getElementById('timer-pause-btn');
@@ -6676,7 +6710,7 @@
 
     // Journal logic
     function attachJournalLogic() {
-        console.log('Attaching journal logic...');
+        // Attaching journal logic
         
         const saveBtn = document.getElementById('journal-save-btn');
         const entryText = document.getElementById('journal-entry');
@@ -6907,7 +6941,7 @@
     }
 
     function startTimer() {
-        console.log('=== START TIMER CALLED ===');
+        // Start timer called
         console.log('Current state:', { isRunning, isPaused, timeRemaining, totalTime });
         if (!isRunning) {
             console.log('Starting timer...');
@@ -7116,7 +7150,7 @@
 
     // Journal logic
     function attachJournalLogic() {
-        console.log('Attaching journal logic...');
+        // Attaching journal logic
         
         const saveBtn = document.getElementById('journal-save-btn');
         const entryText = document.getElementById('journal-entry');
@@ -7508,7 +7542,7 @@
         nextQuestion();
     }
     function attachJournalLogic() {
-        console.log('Attaching journal logic...');
+        // Attaching journal logic
         
         const saveBtn = document.getElementById('journal-save-btn');
         const entryText = document.getElementById('journal-entry');
@@ -7560,7 +7594,7 @@
 
     // Journal logic
     function attachJournalLogic() {
-        console.log('Attaching journal logic...');
+        // Attaching journal logic
         
         const saveBtn = document.getElementById('journal-save-btn');
         const entryText = document.getElementById('journal-entry');
