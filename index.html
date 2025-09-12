@@ -5521,6 +5521,13 @@
             
             alert('Timer logic is being attached!');
             
+            // Test if buttons are clickable
+            console.log('Testing button clickability...');
+            startBtn.addEventListener('click', () => {
+                console.log('Start button clicked - event listener working!');
+                alert('Start button clicked!');
+            });
+            
             // Rest of the timer logic will go here
             attachTimerEventListeners(startBtn, pauseBtn, resetBtn, display, status, durationSelect, soundToggle, progressRing);
         }, 100);
