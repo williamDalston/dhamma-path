@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     
     <!-- Primary SEO Meta Tags -->
     <title>The Dhamma Path - Transform Your Mornings, Transform Your Life</title>
@@ -164,6 +164,98 @@
     }
     </script>
 
+    <!-- Website Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "The Dhamma Path",
+        "url": "https://thedhammapath.com",
+        "description": "Transform your mornings with meditation, journaling, exercise, and confidence practice. Free tools for building powerful morning routines based on Buddhist wisdom.",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
+        "publisher": {
+            "@type": "Organization",
+            "name": "The Dhamma Path",
+            "url": "https://thedhammapath.com"
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://thedhammapath.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        },
+        "mainEntity": {
+            "@type": "WebApplication",
+            "name": "The Dhamma Path",
+            "applicationCategory": "HealthApplication",
+            "operatingSystem": "Web Browser",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            }
+        }
+    }
+    </script>
+
+    <!-- Health and Wellness Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HealthAndBeautyBusiness",
+        "name": "The Dhamma Path",
+        "description": "A comprehensive wellness platform offering meditation, mindfulness, and personal development tools based on Buddhist wisdom",
+        "url": "https://thedhammapath.com",
+        "telephone": "",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "US"
+        },
+        "openingHours": "Mo-Su 00:00-23:59",
+        "priceRange": "Free",
+        "paymentAccepted": "Free",
+        "currenciesAccepted": "USD",
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Wellness Services",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Meditation Timer",
+                        "description": "Guided meditation sessions with customizable timers"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Mindful Journaling",
+                        "description": "Digital journaling platform for self-reflection and growth"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "7-Minute Workout",
+                        "description": "High-intensity circuit training for physical wellness"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Confidence Practice",
+                        "description": "Video-based speaking and communication practice"
+                    }
+                }
+            ]
+        }
+    }
+    </script>
+
     <!-- Critical CSS - Above the fold styles -->
     <style>
         /* Critical CSS - Above the fold styles for instant paint */
@@ -280,6 +372,81 @@
         /* Performance optimizations */
         * {
             box-sizing: border-box;
+        }
+        
+        /* Mobile-specific performance optimizations */
+        @media (max-width: 768px) {
+            /* Reduce animations on mobile for better performance */
+            .floating-particle {
+                animation-duration: 8s;
+            }
+            
+            .ambient-breathe {
+                animation-duration: 6s;
+            }
+            
+            .ambient-float {
+                animation-duration: 10s;
+            }
+            
+            /* Optimize hover effects for touch devices */
+            .hover\:scale-105:hover {
+                transform: scale(1.02);
+            }
+            
+            .hover\:shadow-2xl:hover {
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            }
+            
+            /* Better touch feedback */
+            .touch-manipulation {
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            /* Improved mobile scrolling */
+            .overflow-y-auto {
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Better mobile focus states */
+            .focus\:ring-4:focus {
+                box-shadow: 0 0 0 3px rgba(74, 108, 85, 0.3);
+            }
+            
+            /* Enhanced mobile accessibility */
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+            
+            /* Better mobile text selection */
+            ::selection {
+                background-color: rgba(74, 108, 85, 0.2);
+                color: inherit;
+            }
+            
+            /* Improved mobile button states */
+            button:active {
+                transform: scale(0.98);
+            }
+            
+            /* Better mobile link states */
+            a:active {
+                transform: scale(0.99);
+            }
+            
+            /* Enhanced mobile scrolling */
+            body {
+                -webkit-overflow-scrolling: touch;
+            }
         }
 
         /* === FORM VALIDATION SYSTEM === */
@@ -2503,23 +2670,77 @@
             opacity: 1;
         }
         
-        /* Responsive mobile navigation improvements */
-        @media (max-width: 480px) {
-            #mobile-menu-button {
+        /* Mobile-first responsive improvements */
+        @media (max-width: 640px) {
+            /* Enhanced touch targets */
+            button, a, input, select, textarea {
                 min-height: 44px;
                 min-width: 44px;
-                padding: 8px;
+            }
+            
+            /* Better mobile typography */
+            h1 {
+                font-size: 2.5rem;
+                line-height: 1.1;
+            }
+            
+            h2 {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+            
+            h3 {
+                font-size: 1.5rem;
+                line-height: 1.3;
+            }
+            
+            /* Improved mobile spacing */
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            /* Better mobile cards */
+            .bg-white {
+                border-radius: 1.5rem;
+                padding: 1.5rem;
+            }
+            
+            /* Enhanced mobile buttons */
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 1.125rem;
+                border-radius: 0.75rem;
+            }
+            
+            /* Mobile navigation improvements */
+            #mobile-menu-button {
+                min-height: 56px;
+                min-width: 56px;
+                padding: 12px;
             }
             
             #mobile-nav-links .main-nav-link {
-                min-height: 48px;
-                font-size: 15px;
-                padding: 12px 16px;
+                min-height: 64px;
+                font-size: 1.125rem;
+                padding: 1.5rem;
+                border-radius: 1rem;
             }
             
             #mobile-nav-links .main-nav-link span:first-child {
-                font-size: 20px;
-                margin-right: 12px;
+                font-size: 1.875rem;
+                margin-right: 1rem;
+            }
+            
+            /* Better mobile hero section */
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+            
+            /* Improved mobile testimonials */
+            .testimonial-card {
+                padding: 1.5rem;
+                margin-bottom: 1rem;
             }
         }
         
@@ -2681,6 +2902,169 @@
             max-width: 800px;
             margin: auto;
         }
+        
+        /* Special meditation animations and effects */
+        @keyframes zenFloat {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes breatheIn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes breatheOut {
+            0% { transform: scale(1.1); }
+            50% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes gentleGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(74, 108, 85, 0.3), 0 0 40px rgba(74, 108, 85, 0.1);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(74, 108, 85, 0.5), 0 0 60px rgba(74, 108, 85, 0.2);
+            }
+        }
+        
+        @keyframes lotusBloom {
+            0% {
+                transform: scale(0.8) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.1) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(360deg);
+                opacity: 0.8;
+            }
+        }
+        
+        @keyframes meditationPulse {
+            0%, 100% {
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            50% {
+                transform: scale(1.02);
+                filter: brightness(1.1);
+            }
+        }
+        
+        @keyframes zenParticles {
+            0% {
+                transform: translateY(100vh) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes wisdomFade {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateY(10px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+        
+        /* Special meditation classes */
+        .zen-float {
+            animation: zenFloat 6s ease-in-out infinite;
+        }
+        
+        .breathe-in {
+            animation: breatheIn 4s ease-in-out infinite;
+        }
+        
+        .breathe-out {
+            animation: breatheOut 4s ease-in-out infinite;
+        }
+        
+        .gentle-glow {
+            animation: gentleGlow 3s ease-in-out infinite;
+        }
+        
+        .lotus-bloom {
+            animation: lotusBloom 8s ease-in-out infinite;
+        }
+        
+        .meditation-pulse {
+            animation: meditationPulse 2s ease-in-out infinite;
+        }
+        
+        .wisdom-fade {
+            animation: wisdomFade 4s ease-in-out infinite;
+        }
+        
+        /* Breathing guide visual */
+        .breathing-circle {
+            width: 200px;
+            height: 200px;
+            border: 3px solid rgba(74, 108, 85, 0.3);
+            border-radius: 50%;
+            position: relative;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+        
+        .breathing-circle.active {
+            border-color: rgba(74, 108, 85, 0.8);
+            box-shadow: 0 0 30px rgba(74, 108, 85, 0.3);
+        }
+        
+        .breathing-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4A6C55;
+            text-align: center;
+        }
+        
+        /* Zen particles */
+        .zen-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(74, 108, 85, 0.6);
+            border-radius: 50%;
+            animation: zenParticles 15s linear infinite;
+        }
+        
+        .zen-particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .zen-particle:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .zen-particle:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .zen-particle:nth-child(4) { left: 40%; animation-delay: 6s; }
+        .zen-particle:nth-child(5) { left: 50%; animation-delay: 8s; }
+        .zen-particle:nth-child(6) { left: 60%; animation-delay: 10s; }
+        .zen-particle:nth-child(7) { left: 70%; animation-delay: 12s; }
+        .zen-particle:nth-child(8) { left: 80%; animation-delay: 14s; }
+        .zen-particle:nth-child(9) { left: 90%; animation-delay: 16s; }
     </style>
 </head>
 <body class="bg-linen-white text-charcoal transition-colors duration-300">
@@ -2936,7 +3320,7 @@
     <template id="template-home">
         <article class="space-y-6 sm:space-y-8 lg:space-y-12 max-w-5xl mx-auto">
             <!-- Hero Section -->
-            <header class="text-left py-12 sm:py-16 lg:py-20 rounded-2xl breathing-bg floating-particles zen-particles ambient-gradient dark:from-gray-800/30 dark:via-gray-900/20 dark:to-transparent relative overflow-hidden">
+            <header class="text-left py-16 sm:py-20 lg:py-24 rounded-3xl breathing-bg floating-particles zen-particles ambient-gradient dark:from-gray-800/30 dark:via-gray-900/20 dark:to-transparent relative overflow-hidden hero-section">
                 <!-- Subtle background pattern with floating animation -->
                 <div class="absolute inset-0 opacity-5">
                     <div class="absolute top-10 left-10 w-32 h-32 bg-forest-green rounded-full blur-3xl float-animation ambient-breathe"></div>
@@ -2953,10 +3337,10 @@
                 <div class="floating-particle parallax-fast particle-1" style="left: 90%; animation-delay: 15s;"></div>
                 <div class="relative max-w-5xl">
                     <!-- Trust Badge -->
-                    <div class="flex items-center justify-center mb-6 slide-in-left">
-                        <div class="flex items-center space-x-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-white/20">
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                            <span class="text-sm font-medium text-charcoal">Join 1,200+ people transforming their mornings</span>
+                    <div class="flex items-center justify-center mb-8 slide-in-left">
+                        <div class="flex items-center space-x-3 bg-white/95 backdrop-blur-sm px-6 py-3 rounded-full shadow-xl border border-white/30">
+                            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                            <span class="text-base sm:text-lg font-semibold text-charcoal">Join 1,200+ people transforming their mornings</span>
                         </div>
                     </div>
                     
@@ -3030,30 +3414,30 @@
                     </div>
                     
                     <!-- How It Works -->
-                    <div class="mb-8 slide-in-right">
-                        <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-6 sm:p-8 max-w-4xl mx-auto">
-                            <h3 class="text-xl sm:text-2xl font-bold text-charcoal text-center mb-6">How It Works</h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-                                <div class="text-center">
-                                    <div class="w-12 h-12 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                                        <span class="text-2xl">1️⃣</span>
+                    <div class="mb-8 sm:mb-12 slide-in-right">
+                        <div class="bg-white/20 backdrop-blur-sm rounded-3xl p-8 sm:p-10 max-w-5xl mx-auto">
+                            <h3 class="text-2xl sm:text-3xl font-bold text-charcoal text-center mb-8">How It Works</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-10">
+                                <div class="text-center group">
+                                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-forest-green/20 to-forest-green/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                        <span class="text-3xl sm:text-4xl">1️⃣</span>
                                     </div>
-                                    <h4 class="text-sm sm:text-base font-semibold text-charcoal mb-2">Choose Your Practice</h4>
-                                    <p class="text-xs sm:text-sm text-charcoal/80">Pick meditation, journaling, exercise, or confidence practice</p>
+                                    <h4 class="text-lg sm:text-xl font-bold text-charcoal mb-3">Choose Your Practice</h4>
+                                    <p class="text-sm sm:text-base text-charcoal/80 leading-relaxed">Pick meditation, journaling, exercise, or confidence practice</p>
                                 </div>
-                                <div class="text-center">
-                                    <div class="w-12 h-12 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                                        <span class="text-2xl">2️⃣</span>
+                                <div class="text-center group">
+                                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-forest-green/20 to-forest-green/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                        <span class="text-3xl sm:text-4xl">2️⃣</span>
                                     </div>
-                                    <h4 class="text-sm sm:text-base font-semibold text-charcoal mb-2">Set Your Timer</h4>
-                                    <p class="text-xs sm:text-sm text-charcoal/80">Customize duration and preferences for your session</p>
+                                    <h4 class="text-lg sm:text-xl font-bold text-charcoal mb-3">Set Your Timer</h4>
+                                    <p class="text-sm sm:text-base text-charcoal/80 leading-relaxed">Customize duration and preferences for your session</p>
                                 </div>
-                                <div class="text-center">
-                                    <div class="w-12 h-12 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                                        <span class="text-2xl">3️⃣</span>
+                                <div class="text-center group">
+                                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-forest-green/20 to-forest-green/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                        <span class="text-3xl sm:text-4xl">3️⃣</span>
                                     </div>
-                                    <h4 class="text-sm sm:text-base font-semibold text-charcoal mb-2">Start Your Journey</h4>
-                                    <p class="text-xs sm:text-sm text-charcoal/80">Begin your practice and track your progress</p>
+                                    <h4 class="text-lg sm:text-xl font-bold text-charcoal mb-3">Start Your Journey</h4>
+                                    <p class="text-sm sm:text-base text-charcoal/80 leading-relaxed">Begin your practice and track your progress</p>
                                 </div>
                             </div>
                         </div>
@@ -3121,36 +3505,36 @@
                     </div>
                     
                     <!-- Testimonial 2 -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
-                        <div class="flex items-center mb-4 sm:mb-6">
-                            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center">
-                                <span class="text-white font-bold text-xs sm:text-sm">M</span>
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:scale-105">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-lg sm:text-xl">M</span>
                             </div>
-                            <div class="ml-3">
-                                <p class="font-semibold text-charcoal text-xs sm:text-sm">Mike R.</p>
-                                <p class="text-xs text-charcoal/60">Software Developer</p>
+                            <div class="ml-4">
+                                <p class="font-bold text-charcoal text-base sm:text-lg">Mike R.</p>
+                                <p class="text-sm text-charcoal/60">Software Developer</p>
                             </div>
                         </div>
-                        <p class="text-xs sm:text-sm text-charcoal/80 leading-relaxed">"The journaling feature helped me process my thoughts better. I'm more focused and less stressed throughout the day. The freewriting approach unlocked creativity I didn't know I had."</p>
-                        <div class="flex text-earthy-gold mt-3 sm:mt-4">
-                            <span class="text-sm sm:text-base">⭐⭐⭐⭐⭐</span>
+                        <p class="text-sm sm:text-base text-charcoal/80 leading-relaxed mb-4">"The journaling feature helped me process my thoughts better. I'm more focused and less stressed throughout the day. The freewriting approach unlocked creativity I didn't know I had."</p>
+                        <div class="flex text-earthy-gold">
+                            <span class="text-lg sm:text-xl">⭐⭐⭐⭐⭐</span>
                         </div>
                     </div>
                     
                     <!-- Testimonial 3 -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300 sm:col-span-2 lg:col-span-1">
-                        <div class="flex items-center mb-4 sm:mb-6">
-                            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center">
-                                <span class="text-white font-bold text-xs sm:text-sm">A</span>
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:scale-105 sm:col-span-2 lg:col-span-1">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-lg sm:text-xl">A</span>
                             </div>
-                            <div class="ml-3">
-                                <p class="font-semibold text-charcoal text-xs sm:text-sm">Alex K.</p>
-                                <p class="text-xs text-charcoal/60">Entrepreneur</p>
+                            <div class="ml-4">
+                                <p class="font-bold text-charcoal text-base sm:text-lg">Alex K.</p>
+                                <p class="text-sm text-charcoal/60">Entrepreneur</p>
                             </div>
                         </div>
-                        <p class="text-xs sm:text-sm text-charcoal/80 leading-relaxed">"The confidence practice sessions are incredible. I feel so much more prepared for presentations and meetings now."</p>
-                        <div class="flex text-earthy-gold mt-3 sm:mt-4">
-                            <span class="text-sm sm:text-base">⭐⭐⭐⭐⭐</span>
+                        <p class="text-sm sm:text-base text-charcoal/80 leading-relaxed mb-4">"The confidence practice sessions are incredible. I feel so much more prepared for presentations and meetings now."</p>
+                        <div class="flex text-earthy-gold">
+                            <span class="text-lg sm:text-xl">⭐⭐⭐⭐⭐</span>
                         </div>
                     </div>
                 </div>
@@ -3791,116 +4175,125 @@
             </div>
 
             <!-- Meditation Learning Section -->
-            <div class="bg-gradient-to-br from-forest-green/10 via-white to-light-green/20 rounded-2xl p-6 sm:p-8 lg:p-12 shadow-xl border border-forest-green/20 mb-8 relative overflow-hidden">
-                <div class="relative z-10">
-                    <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-forest-green/20 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-3xl">🧘</span>
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-bold text-charcoal font-lora">Meditation Fundamentals</h2>
+            <div class="mobile-learning-section bg-gradient-to-br from-forest-green/10 via-white to-light-green/20">
+                <div class="mobile-learning-section-header">
+                    <div class="mobile-learning-section-icon bg-forest-green/20">
+                        <span>🧘</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-charcoal font-lora">Meditation Fundamentals</h2>
+                </div>
+                
+                <div class="mobile-learning-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="mobile-learning-card">
+                        <h3 class="text-xl font-semibold text-charcoal mb-3">Getting Started</h3>
+                        <p class="text-charcoal/70 mb-4">Learn the basics of meditation practice, from posture to breathing techniques.</p>
+                        <ul class="text-sm text-charcoal/60 space-y-2">
+                            <li>• Proper sitting posture</li>
+                            <li>• Breathing awareness</li>
+                            <li>• Dealing with distractions</li>
+                            <li>• Building consistency</li>
+                        </ul>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-white rounded-xl p-6 shadow-lg border border-forest-green/10">
-                            <h3 class="text-xl font-semibold text-charcoal mb-3">Getting Started</h3>
-                            <p class="text-charcoal/70 mb-4">Learn the basics of meditation practice, from posture to breathing techniques.</p>
-                            <ul class="text-sm text-charcoal/60 space-y-2">
-                                <li>• Proper sitting posture</li>
-                                <li>• Breathing awareness</li>
-                                <li>• Dealing with distractions</li>
-                                <li>• Building consistency</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="bg-white rounded-xl p-6 shadow-lg border border-forest-green/10">
-                            <h3 class="text-xl font-semibold text-charcoal mb-3">Types of Meditation</h3>
-                            <p class="text-charcoal/70 mb-4">Explore different meditation techniques and find what works for you.</p>
-                            <ul class="text-sm text-charcoal/60 space-y-2">
-                                <li>• Mindfulness meditation</li>
-                                <li>• Loving-kindness (Metta)</li>
-                                <li>• Body scan practice</li>
-                                <li>• Walking meditation</li>
-                            </ul>
-                        </div>
+                    <div class="mobile-learning-card">
+                        <h3 class="text-xl font-semibold text-charcoal mb-3">Types of Meditation</h3>
+                        <p class="text-charcoal/70 mb-4">Explore different meditation techniques and find what works for you.</p>
+                        <ul class="text-sm text-charcoal/60 space-y-2">
+                            <li>• Mindfulness meditation</li>
+                            <li>• Loving-kindness (Metta)</li>
+                            <li>• Body scan practice</li>
+                            <li>• Walking meditation</li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
             <!-- Buddhist Wisdom Section -->
-            <div class="bg-gradient-to-br from-earthy-gold/10 via-white to-earthy-gold/5 rounded-2xl p-6 sm:p-8 lg:p-12 shadow-xl border border-earthy-gold/20 mb-8 relative overflow-hidden">
-                <div class="relative z-10">
-                    <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-earthy-gold/20 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-3xl">📚</span>
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-bold text-charcoal font-lora">Buddhist Wisdom</h2>
+            <div class="mobile-learning-section bg-gradient-to-br from-earthy-gold/10 via-white to-earthy-gold/5">
+                <div class="mobile-learning-section-header">
+                    <div class="mobile-learning-section-icon bg-earthy-gold/20">
+                        <span>📚</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-charcoal font-lora">Buddhist Wisdom</h2>
+                </div>
+                
+                <div class="mobile-learning-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="mobile-learning-card">
+                        <h3 class="text-xl font-semibold text-charcoal mb-3">Core Teachings</h3>
+                        <p class="text-charcoal/70 mb-4">Essential Buddhist concepts for modern life and personal growth.</p>
+                        <ul class="text-sm text-charcoal/60 space-y-2">
+                            <li>• The Four Noble Truths</li>
+                            <li>• The Eightfold Path</li>
+                            <li>• Impermanence (Anicca)</li>
+                            <li>• Non-self (Anatta)</li>
+                        </ul>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-white rounded-xl p-6 shadow-lg border border-earthy-gold/10">
-                            <h3 class="text-xl font-semibold text-charcoal mb-3">Core Teachings</h3>
-                            <p class="text-charcoal/70 mb-4">Essential Buddhist concepts for modern life and personal growth.</p>
-                            <ul class="text-sm text-charcoal/60 space-y-2">
-                                <li>• The Four Noble Truths</li>
-                                <li>• The Eightfold Path</li>
-                                <li>• Impermanence (Anicca)</li>
-                                <li>• Non-self (Anatta)</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="bg-white rounded-xl p-6 shadow-lg border border-earthy-gold/10">
-                            <h3 class="text-xl font-semibold text-charcoal mb-3">Practical Applications</h3>
-                            <p class="text-charcoal/70 mb-4">How to apply ancient wisdom to modern challenges and daily life.</p>
-                            <ul class="text-sm text-charcoal/60 space-y-2">
-                                <li>• Managing stress and anxiety</li>
-                                <li>• Cultivating compassion</li>
-                                <li>• Building resilience</li>
-                                <li>• Finding inner peace</li>
-                            </ul>
-                        </div>
+                    <div class="mobile-learning-card">
+                        <h3 class="text-xl font-semibold text-charcoal mb-3">Practical Applications</h3>
+                        <p class="text-charcoal/70 mb-4">How to apply ancient wisdom to modern challenges and daily life.</p>
+                        <ul class="text-sm text-charcoal/60 space-y-2">
+                            <li>• Managing stress and anxiety</li>
+                            <li>• Cultivating compassion</li>
+                            <li>• Building resilience</li>
+                            <li>• Finding inner peace</li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
             <!-- Morning Routine Guide -->
-            <div class="bg-gradient-to-br from-light-green/20 via-white to-forest-green/10 rounded-2xl p-6 sm:p-8 lg:p-12 shadow-xl border border-light-green/20 relative overflow-hidden">
-                <div class="relative z-10">
-                    <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-light-green/30 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-3xl">🌅</span>
+            <div class="mobile-learning-section bg-gradient-to-br from-light-green/20 via-white to-forest-green/10">
+                <div class="mobile-learning-section-header">
+                    <div class="mobile-learning-section-icon bg-light-green/30">
+                        <span>🌅</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-charcoal font-lora">Morning Routine Guide</h2>
+                </div>
+                
+                <div class="mobile-learning-grid grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="mobile-learning-card">
+                        <h3 class="text-lg font-semibold text-charcoal mb-3">5-Minute Routine</h3>
+                        <p class="text-sm text-charcoal/70 mb-3">Perfect for busy mornings</p>
+                        <ul class="text-xs text-charcoal/60 space-y-1">
+                            <li>• 2 min: Deep breathing</li>
+                            <li>• 2 min: Gratitude journal</li>
+                            <li>• 1 min: Intention setting</li>
+                        </ul>
+                        <div class="mt-4">
+                            <a href="#" data-page="timer" class="mobile-learning-action-btn mobile-touch-target text-xs">
+                                Start 5-Min Practice
+                            </a>
                         </div>
-                        <h2 class="text-2xl sm:text-3xl font-bold text-charcoal font-lora">Morning Routine Guide</h2>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white rounded-xl p-6 shadow-lg border border-light-green/10">
-                            <h3 class="text-lg font-semibold text-charcoal mb-3">5-Minute Routine</h3>
-                            <p class="text-sm text-charcoal/70 mb-3">Perfect for busy mornings</p>
-                            <ul class="text-xs text-charcoal/60 space-y-1">
-                                <li>• 2 min: Deep breathing</li>
-                                <li>• 2 min: Gratitude journal</li>
-                                <li>• 1 min: Intention setting</li>
-                            </ul>
+                    <div class="mobile-learning-card">
+                        <h3 class="text-lg font-semibold text-charcoal mb-3">15-Minute Routine</h3>
+                        <p class="text-sm text-charcoal/70 mb-3">Balanced and comprehensive</p>
+                        <ul class="text-xs text-charcoal/60 space-y-1">
+                            <li>• 5 min: Meditation</li>
+                            <li>• 5 min: Journaling</li>
+                            <li>• 5 min: Light exercise</li>
+                        </ul>
+                        <div class="mt-4">
+                            <a href="#" data-page="timer" class="mobile-learning-action-btn mobile-touch-target text-xs">
+                                Start 15-Min Practice
+                            </a>
                         </div>
-                        
-                        <div class="bg-white rounded-xl p-6 shadow-lg border border-light-green/10">
-                            <h3 class="text-lg font-semibold text-charcoal mb-3">15-Minute Routine</h3>
-                            <p class="text-sm text-charcoal/70 mb-3">Balanced and comprehensive</p>
-                            <ul class="text-xs text-charcoal/60 space-y-1">
-                                <li>• 5 min: Meditation</li>
-                                <li>• 5 min: Journaling</li>
-                                <li>• 5 min: Light exercise</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="bg-white rounded-xl p-6 shadow-lg border border-light-green/10">
-                            <h3 class="text-lg font-semibold text-charcoal mb-3">30-Minute Routine</h3>
-                            <p class="text-sm text-charcoal/70 mb-3">Complete morning practice</p>
-                            <ul class="text-xs text-charcoal/60 space-y-1">
-                                <li>• 10 min: Meditation</li>
-                                <li>• 10 min: Journaling</li>
-                                <li>• 10 min: Exercise</li>
-                            </ul>
+                    </div>
+                    
+                    <div class="mobile-learning-card">
+                        <h3 class="text-lg font-semibold text-charcoal mb-3">30-Minute Routine</h3>
+                        <p class="text-sm text-charcoal/70 mb-3">Complete morning practice</p>
+                        <ul class="text-xs text-charcoal/60 space-y-1">
+                            <li>• 10 min: Meditation</li>
+                            <li>• 10 min: Journaling</li>
+                            <li>• 10 min: Exercise</li>
+                        </ul>
+                        <div class="mt-4">
+                            <a href="#" data-page="timer" class="mobile-learning-action-btn mobile-touch-target text-xs">
+                                Start 30-Min Practice
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -4585,9 +4978,9 @@
                                 
                                 <!-- Timer Content -->
                                 <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                    <div id="timer-display" class="text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-lora text-forest-green font-bold mb-3 sm:mb-4 drop-shadow-sm">10:00</div>
-                                    <div id="timer-status" class="text-base sm:text-lg md:text-xl text-charcoal/90 font-semibold mb-3 sm:mb-4">Ready to begin</div>
-                                    <div class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl drop-shadow-sm">🧘‍♀️</div>
+                                    <div id="timer-display" class="text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-lora text-forest-green font-bold mb-4 sm:mb-5 drop-shadow-lg leading-none meditation-pulse">10:00</div>
+                                    <div id="timer-status" class="text-lg sm:text-xl md:text-2xl text-charcoal/90 font-semibold mb-4 sm:mb-5 px-4 wisdom-fade">Ready to begin</div>
+                                    <div class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl drop-shadow-lg lotus-bloom">🧘‍♀️</div>
                     </div>
                                 
                                 <!-- Pulsing effect when running -->
@@ -4617,67 +5010,106 @@
                 </div>
                             </div>
                             
-                            <!-- Control Buttons - Mobile First with Better Touch Targets -->
-                            <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                                <button id="timer-start-btn" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-lg sm:text-xl min-h-[56px] shadow-lg touch-manipulation">
-                                    <div class="flex items-center justify-center space-x-3">
-                                        <span class="text-2xl">▶️</span>
-                                        <span class="font-bold text-lg sm:text-xl">Start Meditation</span>
+                            <!-- Control Buttons - Enhanced Mobile First with Better Touch Targets -->
+                            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                                <button id="timer-start-btn" class="w-full sm:w-auto px-8 sm:px-10 md:px-12 py-5 sm:py-6 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-3xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 text-xl sm:text-2xl min-h-[64px] shadow-2xl touch-manipulation mobile-touch-feedback mobile-button-hover">
+                                    <div class="flex items-center justify-center space-x-4">
+                                        <span class="text-3xl">▶️</span>
+                                        <span class="font-bold text-xl sm:text-2xl">Start Meditation</span>
                                     </div>
                                 </button>
-                                <button id="timer-pause-btn" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-2xl hover:from-earthy-gold/90 hover:to-earthy-gold/80 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-lg sm:text-xl min-h-[56px] shadow-lg hidden touch-manipulation">
-                                    <div class="flex items-center justify-center space-x-3">
-                                        <span class="text-2xl">⏸️</span>
-                                        <span class="font-bold text-lg sm:text-xl">Pause</span>
+                                <button id="timer-pause-btn" class="w-full sm:w-auto px-8 sm:px-10 md:px-12 py-5 sm:py-6 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-3xl hover:from-earthy-gold/90 hover:to-earthy-gold/80 hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 text-xl sm:text-2xl min-h-[64px] shadow-2xl hidden touch-manipulation">
+                                    <div class="flex items-center justify-center space-x-4">
+                                        <span class="text-3xl">⏸️</span>
+                                        <span class="font-bold text-xl sm:text-2xl">Pause</span>
                                     </div>
                                 </button>
-                                <button id="timer-reset-btn" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold rounded-2xl hover:from-gray-600 hover:to-gray-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-lg sm:text-xl min-h-[56px] shadow-lg touch-manipulation">
-                                    <div class="flex items-center justify-center space-x-3">
-                                        <span class="text-2xl">🔄</span>
-                                        <span class="font-bold text-lg sm:text-xl">Reset</span>
+                                <button id="timer-reset-btn" class="w-full sm:w-auto px-8 sm:px-10 md:px-12 py-5 sm:py-6 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold rounded-3xl hover:from-gray-600 hover:to-gray-700 hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 text-xl sm:text-2xl min-h-[64px] shadow-2xl touch-manipulation">
+                                    <div class="flex items-center justify-center space-x-4">
+                                        <span class="text-3xl">🔄</span>
+                                        <span class="font-bold text-xl sm:text-2xl">Reset</span>
                                     </div>
                                 </button>
                             </div>
                             
-                            <!-- Quick Tips - Mobile Optimized -->
-                            <div class="mt-4 sm:mt-6 bg-light-green/20 rounded-xl p-3 sm:p-4 max-w-sm sm:max-w-md mx-auto">
-                                <p class="text-xs sm:text-sm text-charcoal/70 leading-relaxed">
-                                    💡 <strong>Pro Tip:</strong> Find a quiet space, sit comfortably, and focus on your breath. The timer will guide you through your meditation.
+                            <!-- Breathing Guide -->
+                            <div class="mt-6 sm:mt-8 bg-gradient-to-r from-light-green/30 to-forest-green/20 rounded-2xl p-4 sm:p-6 max-w-lg sm:max-w-xl mx-auto border-2 border-light-green/40 shadow-lg">
+                                <h3 class="text-lg sm:text-xl font-bold text-charcoal mb-4 text-center">🌬️ Breathing Guide</h3>
+                                <div class="breathing-circle" id="breathing-guide">
+                                    <div class="breathing-text" id="breathing-text">Breathe In</div>
+                                </div>
+                                <p class="text-sm sm:text-base text-charcoal/80 leading-relaxed text-center mt-4">
+                                    💡 <strong>Pro Tip:</strong> Follow the circle's rhythm. Breathe in as it expands, breathe out as it contracts.
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <!-- Meditation Guide - Mobile Optimized -->
-                    <div class="bg-gradient-to-br from-light-green/30 to-forest-green/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 lg:p-10 shadow-xl border-2 border-light-green/40 relative overflow-hidden">
+                    <!-- Meditation Guide - Enhanced Mobile Optimized -->
+                    <div class="bg-gradient-to-br from-light-green/40 to-forest-green/30 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl border-2 border-light-green/50 relative overflow-hidden">
                         <!-- Subtle background elements -->
                         <div class="absolute inset-0 opacity-10">
-                            <div class="absolute top-0 right-0 w-20 sm:w-24 h-20 sm:h-24 bg-forest-green rounded-full blur-xl float-animation"></div>
-                            <div class="absolute bottom-0 left-0 w-16 sm:w-20 h-16 sm:h-20 bg-earthy-gold rounded-full blur-lg float-animation"></div>
+                            <div class="absolute top-0 right-0 w-32 sm:w-40 h-32 sm:h-40 bg-forest-green rounded-full blur-2xl float-animation"></div>
+                            <div class="absolute bottom-0 left-0 w-24 sm:w-32 h-24 sm:h-32 bg-earthy-gold rounded-full blur-xl float-animation"></div>
                         </div>
                         
                         <div class="relative z-10">
-                            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-charcoal mb-4 sm:mb-6 md:mb-8 text-center font-lora">Meditation Guide</h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 text-center">
-                                <div class="meditation-guide-card bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border border-white/50 hover:shadow-xl hover:scale-105 transition-all duration-300 touch-manipulation">
-                                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
-                                        <span class="text-2xl sm:text-3xl">🏠</span>
+                            <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal mb-6 sm:mb-8 md:mb-10 text-center font-lora">Meditation Guide</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 text-center">
+                                <div class="meditation-guide-card bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border-2 border-white/60 hover:shadow-3xl hover:scale-110 transition-all duration-300 touch-manipulation">
+                                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-2xl">
+                                        <span class="text-3xl sm:text-4xl">🏠</span>
                                     </div>
-                                    <h4 class="text-base sm:text-lg md:text-xl font-bold text-charcoal mb-2 sm:mb-3">Find a Quiet Space</h4>
-                                    <p class="text-xs sm:text-sm md:text-base text-charcoal/80 leading-relaxed">Choose a peaceful spot where you won't be disturbed</p>
+                                    <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-charcoal mb-3 sm:mb-4">Find a Quiet Space</h4>
+                                    <p class="text-sm sm:text-base md:text-lg text-charcoal/80 leading-relaxed">Choose a peaceful spot where you won't be disturbed</p>
                                 </div>
-                                <div class="meditation-guide-card bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border border-white/50 hover:shadow-xl hover:scale-105 transition-all duration-300 touch-manipulation">
-                                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
-                                        <span class="text-2xl sm:text-3xl">🧘</span>
+                                <div class="meditation-guide-card bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border-2 border-white/60 hover:shadow-3xl hover:scale-110 transition-all duration-300 touch-manipulation">
+                                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-2xl">
+                                        <span class="text-3xl sm:text-4xl">🧘</span>
                                     </div>
-                                    <h4 class="text-base sm:text-lg md:text-xl font-bold text-charcoal mb-2 sm:mb-3">Sit Comfortably</h4>
-                                    <p class="text-xs sm:text-sm md:text-base text-charcoal/80 leading-relaxed">Keep your back straight but relaxed, hands on your lap</p>
+                                    <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-charcoal mb-3 sm:mb-4">Sit Comfortably</h4>
+                                    <p class="text-sm sm:text-base md:text-lg text-charcoal/80 leading-relaxed">Keep your back straight but relaxed, hands on your lap</p>
                                 </div>
-                                <div class="meditation-guide-card bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border border-white/50 hover:shadow-xl hover:scale-105 transition-all duration-300 touch-manipulation sm:col-span-2 lg:col-span-1">
-                                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-light-green to-light-green/80 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
-                                        <span class="text-2xl sm:text-3xl">🌬️</span>
+                                <div class="meditation-guide-card bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border-2 border-white/60 hover:shadow-3xl hover:scale-110 transition-all duration-300 touch-manipulation sm:col-span-2 lg:col-span-1">
+                                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-light-green to-light-green/80 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-2xl">
+                                        <span class="text-3xl sm:text-4xl">🌬️</span>
                                     </div>
-                                    <h4 class="text-base sm:text-lg md:text-xl font-bold text-charcoal mb-2 sm:mb-3">Focus on Your Breath</h4>
-                                    <p class="text-xs sm:text-sm md:text-base text-charcoal/80 leading-relaxed">Breathe naturally and observe each inhale and exhale</p>
+                                    <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-charcoal mb-3 sm:mb-4">Focus on Your Breath</h4>
+                                    <p class="text-sm sm:text-base md:text-lg text-charcoal/80 leading-relaxed">Breathe naturally and observe each inhale and exhale</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Meditation Wisdom Section -->
+                    <div class="bg-gradient-to-br from-forest-green/10 to-light-green/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border-2 border-forest-green/30 relative overflow-hidden">
+                        <!-- Zen particles -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                            <div class="zen-particle"></div>
+                            <div class="zen-particle"></div>
+                            <div class="zen-particle"></div>
+                        </div>
+                        
+                        <div class="relative z-10 text-center">
+                            <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal mb-6 sm:mb-8 font-lora">✨ Ancient Wisdom</h3>
+                            <div class="max-w-4xl mx-auto">
+                                <blockquote class="text-lg sm:text-xl md:text-2xl text-charcoal/90 italic leading-relaxed mb-6 wisdom-fade">
+                                    "The present moment is the only time over which we have dominion."
+                                </blockquote>
+                                <p class="text-sm sm:text-base text-charcoal/70 mb-8">— Thích Nhất Hạnh</p>
+                                
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                                    <div class="bg-white/60 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-lg border border-white/50">
+                                        <div class="text-2xl sm:text-3xl mb-3">🧘‍♂️</div>
+                                        <p class="text-sm sm:text-base text-charcoal/80 font-medium">"Meditation is not about stopping thoughts, but recognizing that you are not your thoughts."</p>
+                                    </div>
+                                    <div class="bg-white/60 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-lg border border-white/50">
+                                        <div class="text-2xl sm:text-3xl mb-3">🌱</div>
+                                        <p class="text-sm sm:text-base text-charcoal/80 font-medium">"The mind is like water. When agitated, it becomes difficult to see. When calm, everything becomes clear."</p>
+                                    </div>
+                                    <div class="bg-white/60 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-lg border border-white/50 sm:col-span-2 lg:col-span-1">
+                                        <div class="text-2xl sm:text-3xl mb-3">🌸</div>
+                                        <p class="text-sm sm:text-base text-charcoal/80 font-medium">"Peace comes from within. Do not seek it without."</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -4699,6 +5131,7 @@
                                             <h4 class="text-sm sm:text-base font-bold text-charcoal">10-minute Meditation</h4>
                                             <p class="text-xs sm:text-sm text-charcoal/70">Today at 7:30 AM</p>
                                         </div>
+
                                     </div>
                                     <div class="flex items-center space-x-2">
                                         <span class="text-xs sm:text-sm text-charcoal/60">Duration:</span>
@@ -4849,21 +5282,21 @@
                         </div>
                     </div>
                     
-                    <!-- Settings Row - Compact -->
-                    <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 relative z-10">
+                    <!-- Settings Row - Mobile Optimized -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-8 relative z-10">
                         <div class="flex items-center space-x-3">
-                            <label class="flex items-center space-x-3 cursor-pointer p-3 rounded-xl hover:bg-white/50 transition-all duration-300">
-                                <input type="checkbox" id="workout-double-mode" class="h-5 w-5 rounded text-forest-green focus:ring-forest-green focus:ring-2">
-                                <span class="text-sm font-semibold text-charcoal">14-Minute Mode</span>
+                            <label class="flex items-center space-x-3 cursor-pointer p-3 sm:p-4 rounded-xl hover:bg-white/50 active:bg-white/70 transition-all duration-300 touch-manipulation">
+                                <input type="checkbox" id="workout-double-mode" class="h-6 w-6 sm:h-5 sm:w-5 rounded text-forest-green focus:ring-forest-green focus:ring-2">
+                                <span class="text-base sm:text-sm font-semibold text-charcoal">14-Minute Mode</span>
                             </label>
-                </div>
+                        </div>
                         <div class="flex items-center space-x-3">
-                            <label for="workout-sound" class="text-sm font-semibold text-charcoal">Sound:</label>
-                            <select id="workout-sound" class="px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-earthy-gold focus:border-earthy-gold focus:outline-none bg-white shadow-sm transition-all duration-300 text-sm min-h-[44px]">
+                            <label for="workout-sound" class="text-base sm:text-sm font-semibold text-charcoal">Sound:</label>
+                            <select id="workout-sound" class="px-4 py-3 sm:py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-earthy-gold focus:border-earthy-gold focus:outline-none bg-white shadow-sm transition-all duration-300 text-base sm:text-sm min-h-[48px] sm:min-h-[44px] touch-manipulation">
                                 <option value="on">🔊 On</option>
                                 <option value="off">🔇 Off</option>
                             </select>
-                         </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -4905,84 +5338,84 @@
                             <div class="w-8 h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
                                 <span class="text-sm font-bold text-forest-green">1</span>
                 </div>
-                            <h4 class="font-medium text-charcoal text-xs sm:text-sm">Jumping Jacks</h4>
+                            <h4 class="font-medium text-charcoal text-xs sm:text-sm leading-tight">Jumping Jacks</h4>
             </div>
 
-                        <div class="exercise-card bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 text-center">
-                            <div class="w-8 h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                                <span class="text-sm font-bold text-forest-green">2</span>
-                </div>
-                            <h4 class="font-medium text-charcoal text-xs sm:text-sm">Wall Sit</h4>
-            </div>
+                        <div class="exercise-card bg-white rounded-lg p-2 sm:p-3 shadow-sm border border-gray-100 hover:shadow-md active:shadow-lg transition-all duration-300 text-center min-h-[80px] sm:min-h-[90px] flex flex-col justify-center touch-manipulation">
+                            <div class="w-6 h-6 sm:w-8 sm:h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <span class="text-xs sm:text-sm font-bold text-forest-green">2</span>
+                            </div>
+                            <h4 class="font-medium text-charcoal text-xs sm:text-sm leading-tight">Wall Sit</h4>
+                        </div>
                         
                         <div class="exercise-card bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 text-center">
                             <div class="w-8 h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
                                 <span class="text-sm font-bold text-forest-green">3</span>
         </div>
-                            <h4 class="font-medium text-charcoal text-xs sm:text-sm">Push-ups</h4>
+                            <h4 class="font-medium text-charcoal text-xs sm:text-sm leading-tight">Push-ups</h4>
                         </div>
                         
                         <div class="exercise-card bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 text-center">
                             <div class="w-8 h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
                                 <span class="text-sm font-bold text-forest-green">4</span>
                             </div>
-                            <h4 class="font-medium text-charcoal text-xs sm:text-sm">Crunches</h4>
+                            <h4 class="font-medium text-charcoal text-xs sm:text-sm leading-tight">Crunches</h4>
                         </div>
                         
                         <div class="exercise-card bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 text-center">
                             <div class="w-8 h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
                                 <span class="text-sm font-bold text-forest-green">5</span>
                     </div>
-                            <h4 class="font-medium text-charcoal text-xs sm:text-sm">Step-ups</h4>
+                            <h4 class="font-medium text-charcoal text-xs sm:text-sm leading-tight">Step-ups</h4>
                     </div>
                         
                         <div class="exercise-card bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 text-center">
                             <div class="w-8 h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
                                 <span class="text-sm font-bold text-forest-green">6</span>
                             </div>
-                            <h4 class="font-medium text-charcoal text-xs sm:text-sm">Squats</h4>
+                            <h4 class="font-medium text-charcoal text-xs sm:text-sm leading-tight">Squats</h4>
                         </div>
                         
                         <div class="exercise-card bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 text-center">
                             <div class="w-8 h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
                                 <span class="text-sm font-bold text-forest-green">7</span>
                             </div>
-                            <h4 class="font-medium text-charcoal text-xs sm:text-sm">Tricep Dips</h4>
+                            <h4 class="font-medium text-charcoal text-xs sm:text-sm leading-tight">Tricep Dips</h4>
                         </div>
                         
                         <div class="exercise-card bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 text-center">
                             <div class="w-8 h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
                                 <span class="text-sm font-bold text-forest-green">8</span>
                             </div>
-                            <h4 class="font-medium text-charcoal text-xs sm:text-sm">Plank</h4>
+                            <h4 class="font-medium text-charcoal text-xs sm:text-sm leading-tight">Plank</h4>
                         </div>
                         
                         <div class="exercise-card bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 text-center">
                             <div class="w-8 h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
                                 <span class="text-sm font-bold text-forest-green">9</span>
                             </div>
-                            <h4 class="font-medium text-charcoal text-xs sm:text-sm">High Knees</h4>
+                            <h4 class="font-medium text-charcoal text-xs sm:text-sm leading-tight">High Knees</h4>
                         </div>
                         
                         <div class="exercise-card bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 text-center">
                             <div class="w-8 h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
                                 <span class="text-sm font-bold text-forest-green">10</span>
                             </div>
-                            <h4 class="font-medium text-charcoal text-xs sm:text-sm">Lunges</h4>
+                            <h4 class="font-medium text-charcoal text-xs sm:text-sm leading-tight">Lunges</h4>
                         </div>
                         
                         <div class="exercise-card bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 text-center">
                             <div class="w-8 h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
                                 <span class="text-sm font-bold text-forest-green">11</span>
                             </div>
-                            <h4 class="font-medium text-charcoal text-xs sm:text-sm">Push-up & Rotation</h4>
+                            <h4 class="font-medium text-charcoal text-xs sm:text-sm leading-tight">Push-up & Rotation</h4>
                         </div>
                         
                         <div class="exercise-card bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 text-center">
                             <div class="w-8 h-8 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
                                 <span class="text-sm font-bold text-forest-green">12</span>
                             </div>
-                            <h4 class="font-medium text-charcoal text-xs sm:text-sm">Side Plank</h4>
+                            <h4 class="font-medium text-charcoal text-xs sm:text-sm leading-tight">Side Plank</h4>
                         </div>
                     </div>
                 </div>
@@ -5138,20 +5571,20 @@
                         </div>
                     </div>
 
-                <!-- Video Recording Area - Mobile Optimized -->
-                <div class="interview-card bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-3 sm:p-4 md:p-6 lg:p-8 shadow-xl border border-gray-100">
-                    <h3 class="text-base sm:text-lg md:text-xl font-bold text-charcoal mb-3 sm:mb-4 md:mb-6 text-center">Record Your Practice</h3>
+                <!-- Video Recording Area -->
+                <div class="interview-card bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100">
+                    <h3 class="text-lg sm:text-xl font-bold text-charcoal mb-4 sm:mb-6 text-center">Record Your Practice</h3>
                     
-                    <!-- Video Container - Mobile Enhanced -->
-                    <div class="video-container mb-3 sm:mb-4 md:mb-6 relative">
-                        <video id="live-video" class="w-full h-auto bg-gray-100 rounded-xl hidden" playsinline muted preload="none" webkit-playsinline></video>
-                        <video id="playback-video" class="w-full h-auto bg-gray-100 rounded-xl hidden" playsinline controls webkit-playsinline></video>
+                    <!-- Video Container -->
+                    <div class="video-container mb-4 sm:mb-6">
+                        <video id="live-video" class="bg-gray-100 rounded-xl hidden" playsinline muted preload="none" webkit-playsinline></video>
+                        <video id="playback-video" class="bg-gray-100 rounded-xl hidden" playsinline controls webkit-playsinline></video>
                         <div id="video-placeholder" class="absolute inset-0 bg-gradient-to-br from-forest-green/10 to-forest-green/5 rounded-xl flex items-center justify-center border-2 border-dashed border-forest-green/30">
-                            <div class="text-center p-3 sm:p-4">
-                                <svg class="w-10 h-10 sm:w-12 sm:h-12 text-forest-green mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="text-center p-4">
+                                <svg class="w-12 h-12 text-forest-green mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                                 </svg>
-                                <p class="text-xs sm:text-sm text-charcoal/70 mb-1 sm:mb-2">Tap "Start Camera" to begin recording</p>
+                                <p class="text-sm text-charcoal/70 mb-2">Click "Start Camera" to begin recording</p>
                                 <p class="text-xs text-charcoal/50">Optimized for mobile devices</p>
                             </div>
                         </div>
@@ -5938,8 +6371,27 @@
                 entries.unshift(entry);
                 localStorage.setItem('journalEntries', JSON.stringify(entries));
                 
+                // Clear textarea and draft
                 entryText.value = '';
+                localStorage.removeItem('journal-draft');
+                
+                // Hide save button
+                if (saveBtn) {
+                    saveBtn.classList.add('hidden');
+                }
+                
                 displayEntries();
+                
+                // Show success feedback
+                if (saveBtn) {
+                    const originalText = saveBtn.innerHTML;
+                    saveBtn.innerHTML = '<span class="flex items-center space-x-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Saved!</span></span>';
+                    saveBtn.classList.add('bg-green-600');
+                    setTimeout(() => {
+                        saveBtn.innerHTML = originalText;
+                        saveBtn.classList.remove('bg-green-600');
+                    }, 2000);
+                }
             }
         }
         
@@ -5947,11 +6399,11 @@
             if (entriesList) {
                 const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
                 entriesList.innerHTML = entries.map((entry, index) => `
-                    <div class="p-4 bg-light-green rounded-lg mb-4">
-                        <p class="text-charcoal mb-2">${entry.text}</p>
-                        <div class="flex justify-between items-center text-sm text-charcoal/70">
-                            <span>${entry.date}</span>
-                            <button onclick="deleteEntry(${index})" class="text-red-600 hover:text-red-800">Delete</button>
+                    <div class="journal-entry-item">
+                        <div class="journal-entry-date">${entry.date}</div>
+                        <div class="journal-entry-text">${entry.text}</div>
+                        <div class="mt-3 flex justify-end">
+                            <button onclick="deleteEntry(${index})" class="text-red-600 hover:text-red-800 text-sm font-medium px-3 py-1 rounded-md hover:bg-red-50 transition-colors">Delete</button>
                         </div>
                     </div>
                 `).join('');
@@ -5963,6 +6415,50 @@
             entries.splice(index, 1);
             localStorage.setItem('journalEntries', JSON.stringify(entries));
             displayEntries();
+        }
+        
+        // Quick preset button functionality
+        quickPresetBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const duration = parseInt(btn.dataset.duration);
+                if (durationSelect) {
+                    durationSelect.value = duration;
+                }
+                // Trigger change event
+                if (durationSelect) {
+                    durationSelect.dispatchEvent(new Event('change'));
+                }
+            });
+        });
+        
+        // Enhanced textarea behavior
+        if (entryText) {
+            // Auto-save functionality
+            let saveTimeout;
+            entryText.addEventListener('input', () => {
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(() => {
+                    // Auto-save to localStorage
+                    localStorage.setItem('journal-draft', entryText.value);
+                }, 1000);
+            });
+            
+            // Load draft on page load
+            const draft = localStorage.getItem('journal-draft');
+            if (draft) {
+                entryText.value = draft;
+            }
+            
+            // Show save button when there's content
+            entryText.addEventListener('input', () => {
+                if (saveBtn) {
+                    if (entryText.value.trim()) {
+                        saveBtn.classList.remove('hidden');
+                    } else {
+                        saveBtn.classList.add('hidden');
+                    }
+                }
+            });
         }
         
         if (saveBtn) {
@@ -6896,4 +7392,105 @@
     </script>
 </body>
 </html>
+
+
+            initMobileLearningPage();
+            
+            // Throttled global click handler for navigation links
+            const throttledNavigation = throttle((e) => {
+                console.log('Click detected on:', e.target);
+                const link = e.target.closest('.main-nav-link');
+                if (link) {
+                    console.log('Navigation link clicked:', link.dataset.page);
+                    e.preventDefault();
+                    const page = link.dataset.page;
+                    const id = link.dataset.articleId || link.dataset.pathId;
+                    navigateToPage(page, id);
+                } else {
+                    console.log('No navigation link found');
+                }
+            }, 100);
+            
+            document.body.addEventListener('click', throttledNavigation);
+            
+            // Load home page by default
+            navigateToPage('home');
+        });
+        
+        // Performance monitoring
+        const initEnd = performance.now();
+        console.log(`Initialization took ${(initEnd - initStart).toFixed(2)}ms`);
+        
+        if (typeof performance !== 'undefined') {
+            const perfEntries = performance.getEntriesByType('navigation');
+            if (perfEntries.length > 0) {
+                const navTiming = perfEntries[0];
+                console.log('Page load time:', navTiming.loadEventEnd - navTiming.loadEventStart, 'ms');
+                console.log('DOM content loaded:', navTiming.domContentLoadedEventEnd - navTiming.domContentLoadedEventStart, 'ms');
+            }
+        }
+    });
+    
+    // Lightweight Analytics and Error Reporting
+    const analytics = {
+        // Simple analytics without external dependencies
+        track: (event, data = {}) => {
+            if (typeof performance !== 'undefined') {
+                console.log(`Analytics: ${event}`, data);
+                // In production, you would send this to your analytics service
+                // Example: fetch('/api/analytics', { method: 'POST', body: JSON.stringify({ event, data, timestamp: Date.now() }) });
+            }
+        },
+        
+        // Error reporting
+        reportError: (error, context = {}) => {
+            console.error('Error reported:', error, context);
+            // In production, you would send this to your error reporting service
+            // Example: fetch('/api/errors', { method: 'POST', body: JSON.stringify({ error: error.message, stack: error.stack, context, timestamp: Date.now() }) });
+        }
+    };
+    
+    // Global error handler
+    window.addEventListener('error', (event) => {
+        analytics.reportError(event.error, {
+            filename: event.filename,
+            lineno: event.lineno,
+            colno: event.colno
+        });
+    });
+    
+    // Unhandled promise rejection handler
+    window.addEventListener('unhandledrejection', (event) => {
+        analytics.reportError(new Error(event.reason), {
+            type: 'unhandledrejection'
+        });
+    });
+    
+    // Track page performance
+    window.addEventListener('load', () => {
+        if (typeof performance !== 'undefined') {
+            const perfEntries = performance.getEntriesByType('navigation');
+            if (perfEntries.length > 0) {
+                const navTiming = perfEntries[0];
+                analytics.track('page_load', {
+                    loadTime: navTiming.loadEventEnd - navTiming.loadEventStart,
+                    domContentLoaded: navTiming.domContentLoadedEventEnd - navTiming.domContentLoadedEventStart,
+                    firstPaint: performance.getEntriesByType('paint').find(entry => entry.name === 'first-paint')?.startTime || 0
+                });
+            }
+        }
+    });
+    
+    // Track navigation
+    const originalNavigateToPage = navigateToPage;
+    navigateToPage = (pageName, id = null) => {
+        analytics.track('page_navigation', { page: pageName, id });
+        return originalNavigateToPage(pageName, id);
+    };
+    
+    </script>
+</body>
+</html>
+
+
 
