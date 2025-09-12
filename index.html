@@ -1603,6 +1603,23 @@
             margin-bottom: 0;
         }
         
+        .skeleton-card {
+            background: linear-gradient(90deg, #f8f9fa 25%, #e9ecef 50%, #f8f9fa 75%);
+            background-size: 200% 100%;
+            animation: skeletonLoading 1.5s infinite;
+            border-radius: 0.5rem;
+            height: 200px;
+        }
+        
+        .skeleton-button {
+            background: linear-gradient(90deg, #e9ecef 25%, #dee2e6 50%, #e9ecef 75%);
+            background-size: 200% 100%;
+            animation: skeletonLoading 1.5s infinite;
+            border-radius: 0.375rem;
+            height: 2.5rem;
+            width: 120px;
+        }
+        
         /* Scroll Progress Bar */
         .scroll-progress {
             position: fixed;
@@ -1840,13 +1857,6 @@
             background: var(--gradient-secondary);
             color: white;
             border-color: transparent;
-        }
-        .btn-icon { 
-            @apply p-3 bg-gray-200 text-charcoal rounded-full transition-all duration-300 transform hover:scale-110 dark:bg-gray-700 dark:hover:bg-gray-600;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            display: inline-block !important;
-            visibility: visible !important;
-            border: 2px solid #e5e7eb !important;
         }
         
         .main-nav-link, .timer-duration-btn, button, .card-link {
@@ -2110,7 +2120,7 @@
             <div class="flex items-center justify-between h-20 transition-all duration-300">
                 <!-- Logo -->
                 <a href="#" data-page="home" class="flex items-center space-x-2 main-nav-link" aria-label="The Dhamma Path - Home">
-                     <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="fill-charcoal transition-colors duration-300" aria-hidden="true">
+                     <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="fill-charcoal transition-colors duration-300" aria-label="The Dhamma Path Logo" role="img">
                         <defs>
                             <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" style="stop-color:currentColor;stop-opacity:0.8" />
@@ -2127,31 +2137,31 @@
                 <!-- Enhanced Desktop Nav -->
                 <div id="desktop-nav-links" class="hidden md:flex items-center space-x-1">
                     <!-- Activities First -->
-                    <a href="#" data-page="timer" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">🧘 Meditate</a>
-                    <a href="#" data-page="journal" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">✍️ Journal</a>
-                    <a href="#" data-page="workout" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">💪 Exercise</a>
-                    <a href="#" data-page="interview" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">🎤 Practice</a>
+                    <a href="#" data-page="timer" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">🧘 Meditate</a>
+                    <a href="#" data-page="journal" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">✍️ Journal</a>
+                    <a href="#" data-page="workout" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">💪 Exercise</a>
+                    <a href="#" data-page="interview" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">🎤 Practice</a>
                     <!-- Info Pages Last -->
-                    <a href="#" data-page="category-meditation" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">📚 Learning</a>
-                    <a href="#" data-page="glossary" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">Glossary</a>
-                    <a href="#" data-page="about" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-4 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">About</a>
+                    <a href="#" data-page="category-meditation" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">📚 Learning</a>
+                    <a href="#" data-page="glossary" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">Glossary</a>
+                    <a href="#" data-page="about" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm">About</a>
                     <div class="relative">
-                        <input type="search" id="search-input" placeholder="Search wisdom..." class="form-focus focus-grow focus-ring w-40 bg-gradient-to-r from-gray-100 to-gray-50 border border-transparent rounded-full px-4 py-2 focus:w-48 focus:bg-white focus:border-earthy-gold focus:outline-none focus:shadow-lg transition-all duration-300 dark:bg-gray-700 dark:text-white">
-                        <svg class="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <input type="search" id="search-input" placeholder="Search wisdom..." class="form-focus focus-grow focus-ring w-40 bg-gradient-to-r from-light-green to-linen-white border border-transparent rounded-full px-4 py-2 focus:w-48 focus:bg-white focus:border-earthy-gold focus:outline-none focus:shadow-lg transition-all duration-300 dark:bg-gray-700 dark:text-white">
+                        <svg class="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-charcoal/60" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Search icon" role="img"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         <div id="autocomplete-results" class="hidden absolute top-full mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl"></div>
                     </div>
-                    <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors border border-gray-300" style="display: inline-block !important; visibility: visible !important;">
+                    <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-light-green/20 dark:hover:bg-charcoal/20 transition-colors border border-forest-green/20" style="display: inline-block !important; visibility: visible !important;">
                         <!-- Sun Icon -->
-                        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Switch to dark mode" role="img"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                         <!-- Moon Icon -->
-                        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Switch to light mode" role="img"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
                     </button>
                 </div>
 
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-charcoal hover:text-forest-green focus:outline-none border border-gray-300" style="display: inline-flex !important; visibility: visible !important;">
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-charcoal hover:text-forest-green focus:outline-none border border-forest-green/20" style="display: inline-flex !important; visibility: visible !important;" aria-label="Open mobile menu" aria-expanded="false" aria-controls="mobile-menu">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Menu icon" role="img">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                         </svg>
                     </button>
@@ -2159,20 +2169,20 @@
             </div>
         </nav>
         <!-- Enhanced Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden hidden bg-gradient-to-b from-linen-white/95 to-linen-white/90 backdrop-blur-lg border-t border-gray-200/50 shadow-lg">
+        <div id="mobile-menu" class="md:hidden hidden bg-gradient-to-b from-linen-white/95 to-linen-white/90 backdrop-blur-lg border-t border-gray-200/50 shadow-lg" role="navigation" aria-label="Mobile navigation menu">
             <div id="mobile-nav-links" class="px-4 pt-4 pb-6 space-y-2">
-                <a href="#" data-page="timer" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">🧘 Meditate</a>
-                <a href="#" data-page="journal" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">✍️ Journal</a>
-                <a href="#" data-page="workout" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">💪 Exercise</a>
-                <a href="#" data-page="interview" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">🎤 Practice</a>
-                <a href="#" data-page="category-meditation" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">📚 Learning</a>
-                <a href="#" data-page="glossary" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">Glossary</a>
-                <a href="#" data-page="about" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">About</a>
+                <a href="#" data-page="timer" class="main-nav-link text-charcoal hover:text-forest-green block px-6 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">🧘 Meditate</a>
+                <a href="#" data-page="journal" class="main-nav-link text-charcoal hover:text-forest-green block px-6 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">✍️ Journal</a>
+                <a href="#" data-page="workout" class="main-nav-link text-charcoal hover:text-forest-green block px-6 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">💪 Exercise</a>
+                <a href="#" data-page="interview" class="main-nav-link text-charcoal hover:text-forest-green block px-6 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">🎤 Practice</a>
+                <a href="#" data-page="category-meditation" class="main-nav-link text-charcoal hover:text-forest-green block px-6 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">📚 Learning</a>
+                <a href="#" data-page="glossary" class="main-nav-link text-charcoal hover:text-forest-green block px-6 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">Glossary</a>
+                <a href="#" data-page="about" class="main-nav-link text-charcoal hover:text-forest-green block px-6 py-3 rounded-xl text-base font-medium hover:bg-light-green/20 hover:shadow-sm transition-all duration-300">About</a>
                 <div class="px-3 py-2">
-                    <button id="dark-mode-toggle-mobile" class="w-full flex items-center justify-between p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors border border-gray-300" style="display: block !important; visibility: visible !important;">
+                    <button id="dark-mode-toggle-mobile" class="w-full flex items-center justify-between p-2 rounded-md hover:bg-light-green/20 dark:hover:bg-charcoal/20 transition-colors border border-forest-green/20" style="display: block !important; visibility: visible !important;" aria-label="Toggle dark mode">
                         <span>Toggle Theme</span>
                         <div class="flex items-center">
-                           <svg class="h-6 w-6 text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><use href="#sun-icon" /><use href="#moon-icon" /></svg>
+                           <svg class="h-6 w-6 text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Theme toggle icon" role="img"><use href="#sun-icon" /><use href="#moon-icon" /></svg>
                         </div>
                     </button>
                 </div>
@@ -2216,38 +2226,18 @@
         </div>
     </div>
 
-    <!-- Quick Access Toolbar -->
-    <div id="quick-access" class="fixed bottom-6 right-6 z-40 hidden">
-        <div class="flex flex-col space-y-3">
-            <button onclick="navigateTo('timer')" class="btn-icon" title="Meditation Timer (⌘T)">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-            </button>
-            <button onclick="navigateTo('journal')" class="btn-icon" title="10-Minute Journal (⌘J)">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
-                </svg>
-            </button>
-            <button onclick="navigateTo('home')" class="btn-icon" title="Home (⌘H)">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                </svg>
-            </button>
-        </div>
-    </div>
 
-    <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 page-transition">
+    <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 page-transition">
         <!-- Page content will be injected here -->
     </main>
     
     <!-- Enhanced Footer -->
     <footer id="footer" class="bg-gradient-to-br from-light-green/40 via-white to-light-green/20 border-t border-gray-200/80 transition-colors duration-300 shadow-lg" role="contentinfo">
         <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div class="space-y-4 md:col-span-2">
                     <a href="#" data-page="home" class="main-nav-link link-smooth flex items-center space-x-2" aria-label="The Dhamma Path - Home">
-                         <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="fill-charcoal transition-colors duration-300" aria-hidden="true">
+                         <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="fill-charcoal transition-colors duration-300" aria-label="The Dhamma Path Logo" role="img">
                              <defs>
                                  <linearGradient id="logoGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
                                      <stop offset="0%" style="stop-color:currentColor;stop-opacity:0.8" />
@@ -2290,9 +2280,9 @@
 
     <!-- TEMPLATES for dynamic content -->
     <template id="template-home">
-        <article class="space-y-4 sm:space-y-6 max-w-5xl mx-auto">
+        <article class="space-y-8 sm:space-y-12 max-w-5xl mx-auto">
             <!-- Hero Section -->
-            <header class="text-left py-16 sm:py-24 rounded-2xl breathing-bg floating-particles zen-particles ambient-gradient dark:from-gray-800/30 dark:via-gray-900/20 dark:to-transparent relative overflow-hidden">
+            <header class="text-left py-16 sm:py-20 rounded-2xl breathing-bg floating-particles zen-particles ambient-gradient dark:from-gray-800/30 dark:via-gray-900/20 dark:to-transparent relative overflow-hidden">
                 <!-- Subtle background pattern with floating animation -->
                 <div class="absolute inset-0 opacity-5">
                     <div class="absolute top-10 left-10 w-32 h-32 bg-forest-green rounded-full blur-3xl float-animation ambient-breathe"></div>
@@ -2320,30 +2310,30 @@
                     <p class="text-body-large text-charcoal/80 text-smooth-transition max-w-4xl mx-auto text-center slide-in-right mb-8">Master the art of mindful mornings with our integrated toolkit: meditation, journaling, exercise, and confidence practice. Discover how just <strong class="text-forest-green">30 minutes each morning</strong> can revolutionize your entire day.</p>
                     
                     <!-- Key Benefits -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 slide-in-right">
-                        <div class="text-center p-4 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30">
-                            <div class="text-2xl mb-2">🧘‍♂️</div>
-                            <p class="text-sm font-semibold text-charcoal">Find Inner Peace</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 slide-in-right">
+                        <div class="text-center p-8 bg-white/90 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg">
+                            <div class="text-3xl mb-3">🧘‍♂️</div>
+                            <p class="text-base font-semibold text-charcoal">Find Inner Peace</p>
                         </div>
-                        <div class="text-center p-4 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30">
-                            <div class="text-2xl mb-2">⚡</div>
-                            <p class="text-sm font-semibold text-charcoal">Boost Energy</p>
+                        <div class="text-center p-8 bg-white/90 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg">
+                            <div class="text-3xl mb-3">⚡</div>
+                            <p class="text-base font-semibold text-charcoal">Boost Energy</p>
                         </div>
-                        <div class="text-center p-4 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30">
-                            <div class="text-2xl mb-2">🎯</div>
-                            <p class="text-sm font-semibold text-charcoal">Build Confidence</p>
+                        <div class="text-center p-8 bg-white/90 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg">
+                            <div class="text-3xl mb-3">🎯</div>
+                            <p class="text-base font-semibold text-charcoal">Build Confidence</p>
                         </div>
                     </div>
                     
                     <!-- Primary CTA -->
                     <div class="text-center slide-in-right">
-                        <button onclick="navigateTo('timer')" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold text-lg rounded-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl border-2 border-forest-green focus:ring-4 focus:ring-earthy-gold focus:outline-none">
-                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button onclick="navigateTo('timer')" class="inline-flex items-center px-10 py-5 bg-white text-forest-green font-bold text-xl rounded-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl border-2 border-white focus:ring-4 focus:ring-white/50 focus:outline-none">
+                            <svg class="w-7 h-7 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
                             </svg>
                             Start Your Morning Journey
                         </button>
-                        <p class="text-sm text-charcoal/60 mt-3">✨ Free forever • No signup required • Start in 30 seconds</p>
+                        <p class="text-base text-white/90 mt-4 font-medium">✨ Free forever • No signup required • Start in 30 seconds</p>
                     </div>
                     
                     <!-- Shimmer divider -->
@@ -2352,7 +2342,7 @@
             </header>
 
             <!-- Social Proof & Testimonials -->
-            <section class="bg-gradient-to-r from-white to-gray-50/50 rounded-2xl p-8 sm:p-12 shadow-lg border border-gray-100 relative overflow-hidden">
+            <section class="bg-gradient-to-r from-white to-gray-50/50 rounded-2xl p-6 sm:p-10 shadow-lg border border-gray-100 relative overflow-hidden">
                 <!-- Subtle background pattern -->
                 <div class="absolute inset-0 opacity-5">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-forest-green rounded-full blur-2xl"></div>
@@ -2360,14 +2350,14 @@
                 </div>
                 
                 <div class="text-center mb-8 relative">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-charcoal font-lora mb-4">What People Are Saying</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-charcoal font-lora mb-6">What People Are Saying</h2>
                     <p class="text-charcoal/70">Real stories from people who transformed their mornings</p>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Testimonial 1 -->
-                    <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
-                        <div class="flex items-center mb-4">
+                    <div class="bg-white rounded-xl p-8 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
+                        <div class="flex items-center mb-6">
                             <div class="w-10 h-10 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center">
                                 <span class="text-white font-bold text-sm">S</span>
                             </div>
@@ -2377,14 +2367,14 @@
                             </div>
                         </div>
                         <p class="text-sm text-charcoal/80 leading-relaxed">"This changed everything. I went from chaotic mornings to feeling centered and ready for anything. The meditation timer is perfect."</p>
-                        <div class="flex text-yellow-400 mt-3">
+                        <div class="flex text-earthy-gold mt-4">
                             <span>⭐⭐⭐⭐⭐</span>
                         </div>
                     </div>
                     
                     <!-- Testimonial 2 -->
-                    <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
-                        <div class="flex items-center mb-4">
+                    <div class="bg-white rounded-xl p-8 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
+                        <div class="flex items-center mb-6">
                             <div class="w-10 h-10 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center">
                                 <span class="text-white font-bold text-sm">M</span>
                             </div>
@@ -2394,14 +2384,14 @@
                             </div>
                         </div>
                         <p class="text-sm text-charcoal/80 leading-relaxed">"The journaling feature helped me process my thoughts better. I'm more focused and less stressed throughout the day."</p>
-                        <div class="flex text-yellow-400 mt-3">
+                        <div class="flex text-earthy-gold mt-4">
                             <span>⭐⭐⭐⭐⭐</span>
                         </div>
                     </div>
                     
                     <!-- Testimonial 3 -->
-                    <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
-                        <div class="flex items-center mb-4">
+                    <div class="bg-white rounded-xl p-8 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
+                        <div class="flex items-center mb-6">
                             <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center">
                                 <span class="text-white font-bold text-sm">A</span>
                             </div>
@@ -2411,7 +2401,7 @@
                             </div>
                         </div>
                         <p class="text-sm text-charcoal/80 leading-relaxed">"The confidence practice sessions are incredible. I feel so much more prepared for presentations and meetings now."</p>
-                        <div class="flex text-yellow-400 mt-3">
+                        <div class="flex text-earthy-gold mt-4">
                             <span>⭐⭐⭐⭐⭐</span>
                         </div>
                     </div>
@@ -2443,16 +2433,16 @@
             </section>
 
             <!-- Daily Morning Routine -->
-            <section class="observe-fade-in bg-gradient-to-br from-light-green/40 via-white to-light-gold/20 rounded-2xl p-10 sm:p-14 shadow-lg border border-light-green/20 relative overflow-hidden">
+            <section class="observe-fade-in bg-gradient-to-br from-light-green/40 via-white to-light-gold/20 rounded-2xl p-8 sm:p-12 shadow-lg border border-light-green/20 relative overflow-hidden">
                 <!-- Subtle background elements -->
                 <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-forest-green/10 to-transparent rounded-full blur-2xl"></div>
                 <div class="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-earthy-gold/10 to-transparent rounded-full blur-xl"></div>
                 
-                <div class="text-center mb-12 relative">
+                <div class="text-center mb-10 relative">
                     <h2 class="text-3xl sm:text-4xl font-bold text-gradient font-lora mb-6 text-glow">Your Daily Morning Routine</h2>
                     <p class="text-lg text-charcoal/80 max-w-2xl mx-auto leading-relaxed">Four powerful practices, one transformative morning. Build your ideal routine by combining meditation, journaling, exercise, and confidence practice.</p>
                     <!-- Decorative elements -->
-                    <div class="mt-6 flex justify-center space-x-2">
+                    <div class="mt-4 flex justify-center space-x-2">
                         <div class="w-2 h-2 bg-forest-green rounded-full"></div>
                         <div class="w-2 h-2 bg-earthy-gold rounded-full"></div>
                         <div class="w-2 h-2 bg-light-green rounded-full"></div>
@@ -2509,18 +2499,18 @@
                     </a>
 
                     <!-- Confidence Practice -->
-                    <a href="#" data-page="interview" class="main-nav-link card-lift observe-scale group block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-blue-600/10 hover:border-blue-600/30 hover:-translate-y-1 relative overflow-hidden card-breathe card-breathe-gentle ambient-shadow">
+                    <a href="#" data-page="interview" class="main-nav-link card-lift observe-scale group block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-forest-green/10 hover:border-forest-green/30 hover:-translate-y-1 relative overflow-hidden card-breathe card-breathe-gentle ambient-shadow">
                         <!-- Subtle gradient overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-forest-green/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <div class="text-center relative">
-                            <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-500 shadow-lg">
+                            <div class="w-20 h-20 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-500 shadow-lg">
                                 <svg class="w-10 h-10 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-hierarchy-4 text-charcoal font-lora mb-3 group-hover:text-blue-600 text-smooth-transition">Confidence Practice</h3>
+                            <h3 class="text-hierarchy-4 text-charcoal font-lora mb-3 group-hover:text-forest-green text-smooth-transition">Confidence Practice</h3>
                             <p class="text-body-small text-charcoal/70 mb-4 paragraph-spacing">Build speaking confidence with video practice for storytelling, communication, and presentation skills.</p>
-                            <span class="inline-block px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-600 text-xs font-semibold rounded-full border border-blue-200">Build Skills</span>
+                            <span class="inline-block px-4 py-2 bg-gradient-to-r from-light-green to-light-green/50 text-forest-green text-xs font-semibold rounded-full border border-forest-green/20">Build Skills</span>
                         </div>
                     </a>
                 </div>
@@ -2531,7 +2521,7 @@
             </section>
 
             <!-- Daily Progress Tracker -->
-            <section class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-10 shadow-xl border border-gray-100 relative overflow-hidden">
+            <section class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-8 shadow-xl border border-gray-100 relative overflow-hidden">
                 <!-- Subtle background pattern -->
                 <div class="absolute inset-0 opacity-5">
                     <div class="absolute top-0 left-0 w-64 h-64 bg-forest-green rounded-full blur-3xl"></div>
@@ -2591,9 +2581,9 @@
                     </div>
 
                     <!-- Confidence Practice Progress -->
-                    <div class="flex items-center p-5 bg-gradient-to-r from-blue-100/50 to-blue-50/30 rounded-xl border border-blue-200/20 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center p-5 bg-gradient-to-r from-light-green/50 to-light-green/30 rounded-xl border border-forest-green/20 shadow-sm hover:shadow-md transition-all duration-300">
                         <div class="flex-shrink-0">
-                            <div id="confidence-status" class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-lg">
+                            <div id="confidence-status" class="w-10 h-10 rounded-full bg-gradient-to-br from-forest-green to-forest-green/80 flex items-center justify-center shadow-lg">
                                 <svg class="w-5 h-5 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                                 </svg>
@@ -2837,7 +2827,7 @@
     <template id="template-about">
         <div class="max-w-6xl mx-auto">
             <!-- Hero Section with Enhanced Styling -->
-            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-12 sm:p-16 mb-16 relative overflow-hidden">
+            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-16 sm:p-20 mb-16 relative overflow-hidden">
                 <!-- Subtle background elements -->
                 <div class="absolute inset-0 opacity-10">
                     <div class="absolute top-10 left-10 w-40 h-40 bg-forest-green rounded-full blur-3xl float-animation ambient-breathe"></div>
@@ -3148,7 +3138,7 @@
     <template id="template-glossary">
         <div class="max-w-6xl mx-auto">
             <!-- Hero Section with Enhanced Styling -->
-            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-12 sm:p-16 mb-16 relative overflow-hidden">
+            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-16 sm:p-20 mb-16 relative overflow-hidden">
                 <!-- Subtle background elements -->
                 <div class="absolute inset-0 opacity-10">
                     <div class="absolute top-10 left-10 w-40 h-40 bg-forest-green rounded-full blur-3xl float-animation ambient-breathe"></div>
@@ -3249,7 +3239,7 @@
     <template id="template-timer">
         <div class="max-w-4xl mx-auto">
             <!-- Hero Section with Breathing Background -->
-            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-12 sm:p-16 mb-12 relative overflow-hidden">
+            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-16 sm:p-20 mb-16 relative overflow-hidden">
                 <!-- Subtle background elements -->
                 <div class="absolute inset-0 opacity-10">
                     <div class="absolute top-10 left-10 w-32 h-32 bg-forest-green rounded-full blur-3xl float-animation ambient-breathe"></div>
@@ -3308,7 +3298,7 @@
                     <circle class="timer-ring-bg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent"></circle>
                     <circle id="timer-progress-ring" class="timer-ring-fg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent" stroke-dasharray="283" stroke-dashoffset="283"></circle>
                 </svg>
-                                    <div id="timer-display" class="absolute inset-0 flex items-center justify-center text-6xl font-lora text-forest-green font-bold drop-shadow-lg">10:00</div>
+                                    <div id="timer-display" class="absolute inset-0 flex items-center justify-center text-6xl font-lora text-forest-green font-bold drop-shadow-lg" role="timer" aria-live="polite" aria-label="Meditation timer display">10:00</div>
             </div>
                             </div>
                         </div>
@@ -3462,7 +3452,7 @@
     <template id="template-path">
         <div class="max-w-6xl mx-auto">
             <!-- Hero Section with Enhanced Styling -->
-            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-12 sm:p-16 mb-16 relative overflow-hidden">
+            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-16 sm:p-20 mb-16 relative overflow-hidden">
                 <!-- Subtle background elements -->
                 <div class="absolute inset-0 opacity-10">
                     <div class="absolute top-10 left-10 w-40 h-40 bg-forest-green rounded-full blur-3xl float-animation ambient-breathe"></div>
@@ -3705,10 +3695,10 @@
                     <button data-category="general" class="interview-cat-btn px-6 py-4 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm shadow-lg border-2 border-forest-green" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #2d5016 !important;">Daily Life</button>
                     <button data-category="storytelling" class="interview-cat-btn px-6 py-4 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm shadow-lg border-2 border-earthy-gold" style="background-color: #b8860b !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #b8860b !important;">Storytelling</button>
                     <button data-category="communication" class="interview-cat-btn px-6 py-4 bg-gradient-to-r from-light-green to-light-green/80 text-forest-green font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm shadow-lg border-2 border-forest-green" style="background-color: #d4edda !important; color: #2d5016 !important; display: inline-block !important; visibility: visible !important; border: 2px solid #2d5016 !important;">Communication</button>
-                    <button data-category="creativity" class="interview-cat-btn px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm shadow-lg border-2 border-blue-600" style="background-color: #2563eb !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #2563eb !important;">Creativity</button>
+                    <button data-category="creativity" class="interview-cat-btn px-6 py-4 bg-gradient-to-r from-forest-green to-forest-green/80 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm shadow-lg border-2 border-forest-green" style="background-color: #4A6C55 !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #4A6C55 !important;">Creativity</button>
                 </div>
                 <div class="text-center">
-                    <button id="random-question-btn" class="px-10 py-4 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg border-2 border-gray-600" style="background-color: #4b5563 !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #4b5563 !important;">🎲 Random Question</button>
+                    <button id="random-question-btn" class="px-10 py-4 bg-gradient-to-r from-earthy-gold to-earthy-gold/80 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg border-2 border-earthy-gold" style="background-color: #B98B4C !important; color: white !important; display: inline-block !important; visibility: visible !important; border: 2px solid #B98B4C !important;">🎲 Random Question</button>
                 </div>
             </div>
 
@@ -4888,13 +4878,57 @@
         });
 
         // Error Handling and Resilience
+        function showUserError(message, details = '') {
+            const errorToast = document.createElement('div');
+            errorToast.className = 'fixed top-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg z-50 max-w-sm';
+            errorToast.innerHTML = `
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <p class="font-semibold">${message}</p>
+                        ${details ? `<p class="text-sm opacity-75">${details}</p>` : ''}
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-red-500 hover:text-red-700">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(errorToast);
+            setTimeout(() => errorToast.remove(), 5000);
+        }
+
+        function showUserSuccess(message) {
+            const successToast = document.createElement('div');
+            successToast.className = 'fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg z-50 max-w-sm';
+            successToast.innerHTML = `
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <p class="font-semibold">${message}</p>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-green-500 hover:text-green-700">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(successToast);
+            setTimeout(() => successToast.remove(), 3000);
+        }
+
         window.addEventListener('error', (e) => {
-            console.error('Global error:', e.error);
-            // Could add error reporting here
+            showUserError('Something went wrong', 'Please refresh the page if the problem persists.');
         });
 
         window.addEventListener('unhandledrejection', (e) => {
-            console.error('Unhandled promise rejection:', e.reason);
+            showUserError('An unexpected error occurred', 'Please try again or refresh the page.');
             e.preventDefault();
         });
 
@@ -4902,8 +4936,12 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(registration => console.log('SW registered: ', registration))
-                    .catch(registrationError => console.log('SW registration failed: ', registrationError));
+                    .then(registration => {
+                        // Service worker registered successfully
+                    })
+                    .catch(registrationError => {
+                        // Service worker registration failed
+                    });
             });
         }
 
@@ -5040,7 +5078,7 @@
                 <button onclick="this.parentElement.remove()">Dismiss</button>
             `;
             document.body.appendChild(errorDiv);
-            console.error('Error boundary caught:', error);
+            // Error boundary caught error
         }
 
         // Global error handler
@@ -5078,6 +5116,12 @@
                 link.href = src;
                 document.head.appendChild(link);
             });
+            
+            // Preload critical fonts
+            if ('fonts' in document) {
+                document.fonts.load('400 16px Inter');
+                document.fonts.load('400 16px Lora');
+            }
         }
 
         preloadCriticalResources();
@@ -5087,8 +5131,13 @@
             window.addEventListener('load', () => {
                 setTimeout(() => {
                     const perfData = performance.getEntriesByType('navigation')[0];
-                    console.log('Page Load Time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
-                    console.log('DOM Content Loaded:', perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart, 'ms');
+                    const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
+                    const domContentLoaded = perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart;
+                    
+                    // Log performance metrics for optimization
+                    if (loadTime > 3000) {
+                        showUserError('Slow loading detected', 'The page is loading slowly. Please check your connection.');
+                    }
                 }, 0);
             });
         }
@@ -5275,21 +5324,10 @@
             let timerInterval = null;
             const ringCircumference = 2 * Math.PI * 45; // 2 * PI * r
             
-            // Debug logging
-            console.log('Timer elements found:', {
-                display: !!display,
-                ringContainer: !!ringContainer,
-                progressRing: !!progressRing,
-                startBtn: !!startBtn,
-                pauseBtn: !!pauseBtn,
-                resetBtn: !!resetBtn,
-                durationButtons: !!durationButtons,
-                soundSelect: !!soundSelect
-            });
+            // Timer elements initialized
             
             function updateDisplay() {
                 if (!display) {
-                    console.error('Timer display element not found');
                     return;
                 }
                 const minutes = Math.floor(secondsRemaining / 60);
@@ -5307,7 +5345,7 @@
                 // Update session status
                 updateSessionStatus();
 
-                console.log('Timer updated:', display.textContent);
+                // Timer display updated
             }
 
             function updateProgressIndicator() {
@@ -5349,7 +5387,7 @@
             }
 
             function startTimer() {
-                console.log('Timer start clicked, isPaused:', isPaused);
+                // Timer start clicked
                 if (isPaused) {
                     isPaused = false;
                     if (startBtn) {
@@ -5385,6 +5423,7 @@
                             if (typeof ProgressTracker !== 'undefined') {
                                 ProgressTracker.markComplete('meditation');
                             }
+                            showUserSuccess('Meditation session completed! Great work!');
                             // Clear saved session on completion
                             localStorage.removeItem('meditationSession');
                         }
@@ -5470,7 +5509,7 @@
                     log.push({ date: today, duration: totalSeconds / 60 });
                     localStorage.setItem('practiceLog', JSON.stringify(log));
                 } catch (e) {
-                    console.error("Could not save practice log:", e);
+                    // Could not save practice log
                 }
                 displayPracticeLog();
             }
@@ -5480,7 +5519,7 @@
                 try {
                     log = JSON.parse(localStorage.getItem('practiceLog')) || [];
                 } catch(e) {
-                    console.error("Could not read practice log:", e);
+                    // Could not read practice log
                 }
                 const logContainer = document.getElementById('practice-log');
                 if (log.length > 0) {
@@ -5562,15 +5601,14 @@
                 durationButtons.addEventListener('click', e => {
                     if (e.target.classList.contains('timer-duration-btn')) {
                         const duration = parseInt(e.target.dataset.duration);
-                        console.log('Duration button clicked:', duration, 'minutes');
+                        // Duration button clicked
                         setDuration(duration);
                     }
                 });
             }
             
             // Debug button visibility
-            console.log('Timer start button found:', startBtn);
-            console.log('Timer start button visible:', startBtn ? startBtn.offsetWidth > 0 : false);
+            // Timer start button initialized
             
             if (startBtn) startBtn.addEventListener('click', startTimer);
             if (pauseBtn) pauseBtn.addEventListener('click', pauseTimer);
@@ -5593,7 +5631,7 @@
             if (display) {
                 display.style.display = 'flex';
                 display.style.visibility = 'visible';
-                console.log('Timer display initialized with:', display.textContent);
+                // Timer display initialized
             }
 
             function addKeyboardNavigation() {
@@ -5641,7 +5679,7 @@
                             }
                         }
                     } catch (e) {
-                        console.log('Could not load session state:', e);
+                        // Could not load session state
                     }
                 }
             }
@@ -5903,7 +5941,7 @@
                     
                     const options = { mimeType: 'video/webm;codecs=vp8,opus' };
                     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                         console.warn(`${options.mimeType} is not supported, using default.`);
+                         // MIME type not supported, using default
                          mediaRecorder = new MediaRecorder(stream);
                     } else {
                          mediaRecorder = new MediaRecorder(stream, options);
@@ -5922,9 +5960,10 @@
                         
                         // Mark confidence practice as complete
                         ProgressTracker.markComplete('confidence');
+                        showUserSuccess('Recording saved! Great practice session!');
                     };
                 } catch (err) {
-                    console.error("Error accessing camera:", err);
+                    // Error accessing camera
                     cameraErrorEl.classList.remove('hidden');
                 }
             }
@@ -6000,8 +6039,7 @@
             }
             
             // Debug interview button visibility
-            console.log('Interview start button found:', startBtn);
-            console.log('Interview start button visible:', startBtn ? startBtn.offsetWidth > 0 : false);
+            // Interview start button initialized
             
             startBtn.addEventListener('click', startRecording);
             stopBtn.addEventListener('click', stopRecording);
@@ -6074,7 +6112,7 @@
                 totalDuration = parseInt(durationSelect.value);
                 secondsRemaining = totalDuration;
                 updateDisplay();
-                console.log('Journal timer reset to:', secondsRemaining, 'seconds');
+                // Journal timer reset
             }
 
             function startJournal() {
@@ -6122,8 +6160,9 @@
                     
                     // Mark journal as complete
                     ProgressTracker.markComplete('journal');
+                    showUserSuccess('Journal entry saved successfully!');
                 } catch(e) {
-                    console.error("Failed to save journal entry:", e);
+                    // Failed to save journal entry
                 }
                 
                 entryEl.value = '';
@@ -6135,7 +6174,7 @@
                 try {
                     entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
                 } catch(e) {
-                    console.error("Failed to load journal entries:", e);
+                    // Failed to load journal entries
                 }
                 historyList.innerHTML = '';
                 if(entries.length === 0) {
@@ -6175,7 +6214,7 @@
             });
             
             startBtn.addEventListener('click', () => {
-                console.log('Journal start clicked');
+                // Journal start clicked
                 entryEl.disabled = false;
                 entryEl.value = '';
                 entryEl.focus();
