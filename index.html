@@ -8533,8 +8533,46 @@
             
             document.body.addEventListener('click', throttledNavigation);
             
-            // Load home page by default
-            navigateToPage('home');
+        // Load home page by default
+        navigateToPage('home');
+        
+        // Handle welcome overlay
+        const welcomeOverlay = document.getElementById('welcome-overlay');
+        const welcomeTryDemo = document.getElementById('welcome-try-demo');
+        const welcomeExplore = document.getElementById('welcome-explore');
+        
+        if (welcomeOverlay) {
+            // Hide overlay after 3 seconds automatically
+            setTimeout(() => {
+                welcomeOverlay.style.opacity = '0';
+                welcomeOverlay.style.transition = 'opacity 0.5s ease-out';
+                setTimeout(() => {
+                    welcomeOverlay.style.display = 'none';
+                }, 500);
+            }, 3000);
+            
+            // Handle button clicks
+            if (welcomeTryDemo) {
+                welcomeTryDemo.addEventListener('click', () => {
+                    welcomeOverlay.style.display = 'none';
+                    navigateToPage('timer');
+                });
+            }
+            
+            if (welcomeExplore) {
+                welcomeExplore.addEventListener('click', () => {
+                    welcomeOverlay.style.display = 'none';
+                    // Stay on home page to explore
+                });
+            }
+            
+            // Allow clicking anywhere on overlay to dismiss
+            welcomeOverlay.addEventListener('click', (e) => {
+                if (e.target === welcomeOverlay) {
+                    welcomeOverlay.style.display = 'none';
+                }
+            });
+        }
         });
         
         // Performance monitoring
@@ -8642,8 +8680,11 @@
         
         // Register Service Worker for PWA functionality
         if ('serviceWorker' in navigator) {
-            // Only register service worker if we're on the same domain (not GitHub Pages)
-            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            // Only register service worker if we're on localhost or if the sw.js file exists
+            const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const isGitHubPages = window.location.hostname.includes('github.io');
+            
+            if (isLocalhost) {
                 navigator.serviceWorker.register('/sw.js')
                     .then(registration => {
                         console.log('Service Worker registered successfully:', registration);
@@ -8651,10 +8692,21 @@
                     })
                     .catch(error => {
                         console.log('Service Worker registration failed:', error);
-                        analytics.reportError(error, { context: 'service_worker_registration' });
+                        // Don't report this as an error for localhost
                     });
+            } else if (isGitHubPages) {
+                console.log('Service Worker registration skipped for GitHub Pages deployment');
             } else {
-                console.log('Service Worker registration skipped for production deployment');
+                // For other domains, try to register but don't report errors
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered successfully:', registration);
+                        analytics.track('pwa_sw_registered');
+                    })
+                    .catch(error => {
+                        console.log('Service Worker not available for this domain:', error.message);
+                        // Don't report this as an error
+                    });
             }
         }
         
