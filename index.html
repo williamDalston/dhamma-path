@@ -3238,42 +3238,14 @@
     
     <template id="template-timer">
         <div class="max-w-4xl mx-auto">
-            <!-- Hero Section with Breathing Background -->
-            <div class="breathing-bg floating-particles zen-particles ambient-gradient rounded-3xl p-16 sm:p-20 mb-16 relative overflow-hidden">
-                <!-- Subtle background elements -->
-                <div class="absolute inset-0 opacity-10">
-                    <div class="absolute top-10 left-10 w-32 h-32 bg-forest-green rounded-full blur-3xl float-animation ambient-breathe"></div>
-                    <div class="absolute bottom-10 right-10 w-24 h-24 bg-earthy-gold rounded-full blur-2xl float-animation ambient-float"></div>
-                    <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-light-green rounded-full blur-xl float-animation ambient-breathe"></div>
-                </div>
-                
-                <!-- Floating Particles -->
-                <div class="floating-particle particle-1" style="left: 15%; animation-delay: 2s;"></div>
-                <div class="floating-particle particle-2" style="left: 25%; animation-delay: 5s;"></div>
-                <div class="floating-particle particle-3" style="left: 75%; animation-delay: 8s;"></div>
-                <div class="floating-particle particle-4" style="left: 85%; animation-delay: 11s;"></div>
-                
-                <!-- Header with enhanced styling -->
-                <div class="text-center relative z-10">
-                    <h1 class="text-hierarchy-1 text-gradient font-lora mb-6 text-glow-strong">Meditation Overview</h1>
-                    <p class="text-body-large text-charcoal/80 max-w-2xl mx-auto mb-8 text-smooth-transition">Find your center with gentle guidance and peaceful timing. Begin your journey to inner peace.</p>
-                    <!-- Shimmer divider -->
-                    <div class="shimmer-divider w-24 mx-auto"></div>
-                </div>
-                
-                <!-- Foundation Icon with enhanced styling -->
-                <div class="mt-12 flex justify-center relative z-10">
-                    <div class="w-48 h-48 bg-gradient-to-br from-forest-green/40 to-earthy-gold/40 rounded-full flex items-center justify-center shadow-2xl icon-breathe border-4 border-white/20">
-                        <svg class="w-24 h-24 text-forest-green drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
-                        </svg>
-                    </div>
-                </div>
+            <!-- Compact Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gradient font-lora mb-4">Meditation Timer</h1>
+                <p class="text-lg text-charcoal/80 max-w-2xl mx-auto">Find your center with gentle guidance and peaceful timing</p>
             </div>
             
-            <!-- Main Content Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Timer Section -->
+            <!-- Main Timer Section - Centered and Prominent -->
+            <div class="max-w-4xl mx-auto">
                 <div class="space-y-8">
             
                     <!-- Enhanced timer ring container with breathing animation -->
@@ -3288,7 +3260,7 @@
                             <h2 class="text-2xl font-bold text-charcoal font-lora mb-6">Your Meditation Timer</h2>
                             
                             <!-- Timer Ring -->
-                            <div id="timer-ring-container" class="relative w-64 h-64 mx-auto mb-8 breathe">
+                            <div id="timer-ring-container" class="relative w-80 h-80 mx-auto mb-8 breathe">
                                 <!-- Outer glow effect -->
                                 <div class="absolute inset-0 rounded-full bg-gradient-to-r from-forest-green/20 to-earthy-gold/20 blur-xl scale-110 float-animation"></div>
                                 
@@ -3298,7 +3270,7 @@
                     <circle class="timer-ring-bg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent"></circle>
                     <circle id="timer-progress-ring" class="timer-ring-fg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent" stroke-dasharray="283" stroke-dashoffset="283"></circle>
                 </svg>
-                                    <div id="timer-display" class="absolute inset-0 flex items-center justify-center text-6xl font-lora text-forest-green font-bold drop-shadow-lg" role="timer" aria-live="polite" aria-label="Meditation timer display">10:00</div>
+                                    <div id="timer-display" class="absolute inset-0 flex items-center justify-center text-7xl font-lora text-forest-green font-bold drop-shadow-lg" role="timer" aria-live="polite" aria-label="Meditation timer display">10:00</div>
             </div>
                             </div>
                         </div>
@@ -3310,7 +3282,7 @@
                             <div class="absolute top-0 right-0 w-32 h-32 bg-forest-green rounded-full blur-2xl float-animation"></div>
                             <div class="absolute bottom-0 left-0 w-24 h-24 bg-earthy-gold rounded-full blur-xl float-animation"></div>
                         </div>
-                <div class="text-center space-y-8 mb-8">
+                <div class="text-center space-y-8">
                     <!-- Session Progress Indicator -->
                     <div id="session-progress" class="hidden">
                         <div class="bg-white/80 dark:bg-gray-800/80 rounded-xl p-4 shadow-lg border border-forest-green/20">
@@ -3390,59 +3362,11 @@
             </div>
                 </div>
                 
-                <!-- Meditation Tips Sidebar -->
-                <div class="space-y-6">
-                    <!-- Quick Tips Card -->
-                    <div class="bg-gradient-to-br from-earthy-gold/15 via-white to-earthy-gold/5 rounded-2xl p-8 shadow-xl border border-earthy-gold/20 relative overflow-hidden card-breathe-gentle ambient-shadow">
-                        <!-- Subtle background elements -->
-                        <div class="absolute inset-0 opacity-10">
-                            <div class="absolute top-0 right-0 w-24 h-24 bg-earthy-gold rounded-full blur-xl float-animation"></div>
-                            <div class="absolute bottom-0 left-0 w-16 h-16 bg-forest-green rounded-full blur-lg float-animation"></div>
-                        </div>
-                        
-                        <div class="relative z-10">
-                            <h3 class="text-hierarchy-3 text-charcoal font-lora mb-6 text-gradient text-glow-subtle">Meditation Tips</h3>
-                            
-                            <div class="space-y-4">
-                                <div class="flex items-start space-x-3">
-                                    <div class="w-8 h-8 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                                        <span class="text-white text-sm font-bold">1</span>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-hierarchy-5 text-charcoal mb-1 text-smooth-transition">Find Your Posture</h4>
-                                        <p class="text-body-small text-charcoal/70 paragraph-spacing">Sit comfortably with a straight spine. You don't need to be perfect - just stable and alert.</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-start space-x-3">
-                                    <div class="w-8 h-8 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                                        <span class="text-white text-sm font-bold">2</span>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-hierarchy-5 text-charcoal mb-1 text-smooth-transition">Focus on Breath</h4>
-                                        <p class="text-body-small text-charcoal/70 paragraph-spacing">Notice the natural rhythm of your breathing. When your mind wanders, gently return to the breath.</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-start space-x-3">
-                                    <div class="w-8 h-8 bg-gradient-to-br from-light-green to-light-green/80 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                                        <span class="text-forest-green text-sm font-bold">3</span>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-hierarchy-5 text-charcoal mb-1 text-smooth-transition">Be Kind to Yourself</h4>
-                                        <p class="text-body-small text-charcoal/70 paragraph-spacing">Thoughts will arise - that's normal. Simply notice them and return to your focus without judgment.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Practice Log Card -->
-                    <div class="bg-gradient-to-br from-light-green/30 to-light-green/10 rounded-2xl p-8 shadow-xl border border-light-green/20 relative overflow-hidden card-breathe-gentle ambient-shadow">
-                        <div class="relative z-10">
-                            <h3 class="text-3xl font-bold text-charcoal font-lora mb-6 text-gradient text-center">📊 Practice Log</h3>
-                            <div id="practice-log" class="text-left"></div>
-                        </div>
+                <!-- Practice Log Card - Moved below timer -->
+                <div class="bg-gradient-to-br from-light-green/30 to-light-green/10 rounded-2xl p-8 shadow-xl border border-light-green/20 relative overflow-hidden card-breathe-gentle ambient-shadow">
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-bold text-charcoal font-lora mb-6 text-gradient text-center">📊 Practice Log</h3>
+                        <div id="practice-log" class="text-left"></div>
                     </div>
                 </div>
             </div>
@@ -3532,13 +3456,11 @@
     
     <template id="template-workout">
         <div class="max-w-7xl mx-auto">
-            <!-- Enhanced header -->
-            <header class="text-center mb-16">
-                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mb-6 drop-shadow-sm">7-Minute Mindful Workout</h1>
-                <p class="max-w-3xl mx-auto text-xl text-charcoal/80 leading-relaxed">Strengthen your body and mind with this efficient, high-intensity circuit training designed for busy schedules.</p>
-                <!-- Shimmer divider -->
-                <div class="mt-8 shimmer-divider w-24 mx-auto"></div>
-            </header>
+            <!-- Compact Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gradient font-lora mb-4">7-Minute Mindful Workout</h1>
+                <p class="text-lg text-charcoal/80 max-w-2xl mx-auto">Strengthen your body and mind with efficient circuit training</p>
+            </div>
             
             <!-- Enhanced Workout Settings -->
             <div class="bg-gradient-to-br from-light-green/40 via-white to-light-green/20 rounded-2xl p-8 shadow-xl border border-light-green/20 mb-10 relative overflow-hidden">
@@ -3577,33 +3499,33 @@
                 </div>
             </div>
 
-            <!-- Enhanced Main Workout Display -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-                <!-- Exercise Visual -->
-                <div class="order-2 lg:order-1">
-                    <div id="workout-visual" class="bg-gradient-to-br from-light-green/40 via-white to-light-green/20 rounded-2xl p-10 flex items-center justify-center h-80 lg:h-96 shadow-xl border border-light-green/20 relative overflow-hidden">
+            <!-- Main Workout Display - Single Column -->
+            <div class="max-w-4xl mx-auto space-y-8">
+                <!-- Exercise Visual - Centered -->
+                <div class="text-center">
+                    <div id="workout-visual" class="bg-gradient-to-br from-light-green/40 via-white to-light-green/20 rounded-2xl p-10 flex items-center justify-center h-80 mx-auto shadow-xl border border-light-green/20 relative overflow-hidden max-w-md">
                         <!-- Subtle background elements -->
                         <div class="absolute inset-0 opacity-5">
                             <div class="absolute top-4 right-4 w-24 h-24 bg-forest-green rounded-full blur-2xl"></div>
                             <div class="absolute bottom-4 left-4 w-20 h-20 bg-earthy-gold rounded-full blur-xl"></div>
                         </div>
-                    <!-- SVG Animation will be injected here -->
-                </div>
+                        <!-- SVG Animation will be injected here -->
+                    </div>
                     
-                    <!-- Enhanced Exercise Instructions -->
-                    <div id="workout-instructions" class="mt-8 p-8 bg-gradient-to-br from-white to-gray-50/50 rounded-2xl shadow-lg border border-gray-100">
-                        <h3 class="text-xl font-bold text-charcoal mb-4 flex items-center space-x-2">
+                    <!-- Exercise Instructions -->
+                    <div id="workout-instructions" class="mt-6 p-6 bg-gradient-to-br from-white to-gray-50/50 rounded-2xl shadow-lg border border-gray-100 max-w-2xl mx-auto">
+                        <h3 class="text-xl font-bold text-charcoal mb-4 flex items-center justify-center space-x-2">
                             <svg class="w-6 h-6 text-forest-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <span>Instructions</span>
                         </h3>
-                        <p id="workout-instruction-text" class="text-charcoal/80 leading-relaxed text-lg">Get ready to start with jumping jacks. Stand with feet together and arms at your sides.</p>
+                        <p id="workout-instruction-text" class="text-charcoal/80 leading-relaxed text-lg text-center">Get ready to start with jumping jacks. Stand with feet together and arms at your sides.</p>
                     </div>
-                    </div>
+                </div>
 
-                <!-- Enhanced Workout Controls -->
-                <div class="order-1 lg:order-2">
+                <!-- Workout Controls - Centered -->
+                <div class="text-center">
                     <div id="workout-display" class="p-10 bg-gradient-to-br from-light-green/40 via-white to-light-green/20 rounded-2xl shadow-xl border border-light-green/20 relative overflow-hidden">
                         <!-- Subtle background elements -->
                         <div class="absolute inset-0 opacity-5">
@@ -3673,13 +3595,11 @@
     
     <template id="template-interview">
         <div class="max-w-6xl mx-auto">
-            <!-- Enhanced header -->
-            <header class="text-center mb-16">
-                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mb-6 drop-shadow-sm">Morning Confidence Practice</h1>
-                <p class="max-w-3xl mx-auto text-xl text-charcoal/80 leading-relaxed">Start your day with confidence! Practice speaking skills, build self-assurance, and prepare for any conversation with our quick morning practice sessions.</p>
-                <!-- Decorative line -->
-                <div class="mt-8 w-24 h-1 bg-gradient-to-r from-forest-green to-earthy-gold rounded-full mx-auto"></div>
-            </header>
+            <!-- Compact Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gradient font-lora mb-4">Morning Confidence Practice</h1>
+                <p class="text-lg text-charcoal/80 max-w-2xl mx-auto">Practice speaking skills and build self-assurance</p>
+            </div>
             
             <!-- Enhanced Practice Options -->
             <div class="bg-gradient-to-br from-earthy-gold/15 via-white to-earthy-gold/5 rounded-2xl p-8 shadow-lg border border-earthy-gold/20 mb-10 relative overflow-hidden">
@@ -3712,10 +3632,11 @@
                 <h2 id="interview-question" class="text-3xl font-lora text-earthy-gold relative drop-shadow-sm">Tell me about yourself.</h2>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <!-- Enhanced Recording Side -->
-                <div>
-                    <h3 class="text-2xl font-bold font-lora text-charcoal mb-6 text-center drop-shadow-sm">Your Camera</h3>
+            <!-- Main Practice Area - Single Column -->
+            <div class="max-w-4xl mx-auto space-y-8">
+                <!-- Recording Section - Centered -->
+                <div class="text-center">
+                    <h3 class="text-2xl font-bold font-lora text-charcoal mb-6 drop-shadow-sm">Your Camera</h3>
                     <div id="recorder-section">
                         <div class="relative bg-gradient-to-br from-gray-200 to-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-200">
                             <div class="video-container">
@@ -3744,9 +3665,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- Enhanced Playback Side -->
-                <div>
-                    <h3 class="text-2xl font-bold font-lora text-charcoal mb-6 text-center drop-shadow-sm">Session Recordings</h3>
+                <!-- Playback Section - Centered -->
+                <div class="text-center">
+                    <h3 class="text-2xl font-bold font-lora text-charcoal mb-6 drop-shadow-sm">Session Recordings</h3>
                     <div id="playback-section" class="space-y-6">
                          <div id="no-recordings-message" class="text-center p-10 bg-gradient-to-br from-light-green/30 to-light-green/10 rounded-2xl text-charcoal/70 shadow-lg border border-light-green/20">
                              <div class="flex flex-col items-center space-y-3">
@@ -3794,21 +3715,10 @@
     
     <template id="template-journal">
         <div class="max-w-5xl mx-auto">
-            <!-- Enhanced header -->
-            <header class="text-center mb-16">
-                <h1 class="text-4xl sm:text-5xl font-bold text-forest-green font-lora mb-6 drop-shadow-sm">Mindful Freewriting</h1>
-                <p class="max-w-3xl mx-auto text-xl text-charcoal/80 leading-relaxed">Cultivate self-awareness through stream-of-consciousness writing. Let your thoughts flow freely for your chosen duration—everything saves automatically.</p>
-                <!-- Decorative line -->
-                <div class="mt-8 w-24 h-1 bg-gradient-to-r from-forest-green to-earthy-gold rounded-full mx-auto"></div>
-            </header>
-            
-            <!-- Journal Image -->
-            <div class="mb-12 flex justify-center">
-                <div class="w-32 h-32 bg-gradient-to-br from-earthy-gold/20 to-forest-green/20 rounded-full flex items-center justify-center shadow-lg">
-                    <svg class="w-16 h-16 text-earthy-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                    </svg>
-                </div>
+            <!-- Compact Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gradient font-lora mb-4">Mindful Freewriting</h1>
+                <p class="text-lg text-charcoal/80 max-w-2xl mx-auto">Let your thoughts flow freely - everything saves automatically</p>
             </div>
 
             <!-- Enhanced Quick Morning Presets -->
@@ -5608,8 +5518,15 @@
                         const duration = parseInt(e.target.dataset.duration);
                         // Duration button clicked
                         setDuration(duration);
+                        showUserSuccess(`Timer set to ${duration} minutes`);
                     }
                 });
+            } else {
+                // Debug: Check if duration buttons exist
+                const debugButtons = document.querySelectorAll('.timer-duration-btn');
+                if (debugButtons.length === 0) {
+                    showUserError('Duration buttons not found', 'Please refresh the page and try again.');
+                }
             }
             
             // Debug button visibility
@@ -5638,6 +5555,9 @@
                 display.style.visibility = 'visible';
                 // Timer display initialized
             }
+            
+            // Highlight default 10-minute duration
+            setDuration(10);
 
             function addKeyboardNavigation() {
                 // Space bar to start/pause
