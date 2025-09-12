@@ -8493,11 +8493,18 @@
         const playBtn = document.getElementById('play-btn');
         const videoElement = document.getElementById('video-preview');
         const audioElement = document.getElementById('audio-preview');
+        const downloadBtn = document.getElementById('download-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const liveVideo = document.getElementById('live-video');
+        const playbackVideo = document.getElementById('playback-video');
         
         // Media recording
         let mediaRecorder = null;
         let recordedChunks = [];
         let isRecording = false;
+        let interviewHistory = [];
+        let recordingsList = document.getElementById('recordings-list');
+        let recordingsSection = document.getElementById('recordings-section');
         
         // Functions
         function getRandomQuestion(category) {
