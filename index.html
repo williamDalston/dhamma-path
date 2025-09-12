@@ -5236,6 +5236,34 @@
             });
         }
         
+        function addKeyboardNavigation(startTimer, pauseTimer, resetTimer, setDuration, timerState) {
+            // Space bar to start/pause
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' && !e.target.matches('input, textarea, select')) {
+                    e.preventDefault();
+                    if (timerState.isPaused) {
+                        startTimer();
+                    } else {
+                        pauseTimer();
+                    }
+                }
+                
+                // Escape to reset
+                if (e.code === 'Escape') {
+                    resetTimer();
+                }
+                
+                // Number keys for duration selection
+                if (e.code >= 'Digit1' && e.code <= 'Digit5') {
+                    const durations = [5, 10, 15, 20, 30];
+                    const index = parseInt(e.code.replace('Digit', '')) - 1;
+                    if (durations[index]) {
+                        setDuration(durations[index]);
+                    }
+                }
+            });
+        }
+        
         function attachTimerLogic() {
             // Comprehensive element validation
             const elements = {
@@ -5541,7 +5569,7 @@
                         }
                     }, 1000);
                     
-                    showUserSuccess(`Timer set to ${minutes} minutes`);
+                    // Duration set successfully
                 } catch (error) {
                     showUserError('Duration change failed', 'Please try again.');
                 }
@@ -5648,9 +5676,12 @@
                     try {
                         // Use event delegation for better reliability
                         const button = e.target.closest('.timer-duration-btn');
-                        if (!button) return;
+                        if (!button) {
+                            return;
+                        }
                         
                         const duration = parseInt(button.dataset.duration);
+                        
                         if (isNaN(duration) || !validDurations.includes(duration)) {
                             showUserError('Invalid duration selected', 'Please try a different duration.');
                             return;
@@ -5658,6 +5689,7 @@
                         
                         setDuration(duration);
                     } catch (error) {
+                        console.error('Duration selection error:', error);
                         showUserError('Duration selection failed', 'Please try again.');
                     }
                 });
@@ -5688,7 +5720,7 @@
             setDuration(10);
             
             // Add keyboard navigation
-            addKeyboardNavigation();
+            addKeyboardNavigation(startTimer, pauseTimer, resetTimer, setDuration, timerState);
             
             // Add session persistence
             loadSessionState();
@@ -5699,36 +5731,10 @@
                 elements.display.style.visibility = 'visible';
             }
             
-            // Mark timer as ready
-            showUserSuccess('Meditation timer ready!');
+            // Timer initialized successfully
 
-            function addKeyboardNavigation() {
-                // Space bar to start/pause
-                document.addEventListener('keydown', (e) => {
-                    if (e.code === 'Space' && !e.target.matches('input, textarea, select')) {
-                        e.preventDefault();
-                        if (isPaused) {
-                            startTimer();
-                        } else {
-                            pauseTimer();
-                        }
-                    }
-                    
-                    // Escape to reset
-                    if (e.code === 'Escape') {
-                        resetTimer();
-                    }
-                    
-                    // Number keys for duration selection
-                    if (e.code >= 'Digit1' && e.code <= 'Digit5') {
-                        const durations = [5, 10, 15, 20, 30];
-                        const index = parseInt(e.code.replace('Digit', '')) - 1;
-                        if (durations[index]) {
-                            setDuration(durations[index]);
-                        }
-                    }
-                });
-            }
+            // Add keyboard navigation
+            addKeyboardNavigation(startTimer, pauseTimer, resetTimer, setDuration, timerState);
 
             function loadSessionState() {
                 // Load saved session state from localStorage
