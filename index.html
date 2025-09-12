@@ -573,6 +573,87 @@
                 transform: translateY(0);
             }
         }
+
+        /* Word-by-word fade-in animation */
+        .word-fade-in {
+            opacity: 0;
+            animation: wordFadeIn 0.8s ease-out forwards;
+        }
+        
+        @keyframes wordFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Breathing background animation */
+        .breathing-bg {
+            animation: breathe 8s ease-in-out infinite;
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* Preview overlay animations */
+        .preview-overlay {
+            pointer-events: none;
+        }
+        
+        .group:hover .preview-overlay {
+            pointer-events: auto;
+        }
+
+        /* Button morphing animations */
+        .btn-morph {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .btn-morph:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .btn-morph:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Breathing pulse animation for main CTA */
+        .breathing-pulse {
+            animation: breathingPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes breathingPulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(74, 108, 85, 0.4);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 0 20px rgba(74, 108, 85, 0);
+                transform: scale(1.02);
+            }
+        }
+
+        /* Enhanced trust indicators */
+        .trust-indicator {
+            animation: trustFadeIn 0.6s ease-out;
+        }
+        
+        @keyframes trustFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
         
         .fade-in {
             animation: fadeIn 0.5s ease-out;
@@ -3563,7 +3644,38 @@
         </ol>
     </nav>
 
+    <!-- Welcome Animation Overlay -->
+    <div id="welcome-overlay" class="fixed inset-0 bg-gradient-to-br from-forest-green/95 via-light-green/90 to-earthy-gold/95 z-50 flex items-center justify-center">
+        <div class="text-center text-white">
+            <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse">
+                <span class="text-4xl">🧘‍♀️</span>
+            </div>
+            <h2 class="text-3xl font-bold mb-4 word-fade-in">Welcome to Your Journey</h2>
+            <p class="text-xl mb-8 word-fade-in" style="animation-delay: 0.5s;">Take a deep breath. You're exactly where you need to be.</p>
+            <div class="flex justify-center space-x-4 word-fade-in" style="animation-delay: 1s;">
+                <button id="welcome-try-demo" class="px-6 py-3 bg-white/20 backdrop-blur-sm rounded-xl hover:bg-white/30 transition-colors">
+                    Try 2-Min Demo
+                </button>
+                <button id="welcome-explore" class="px-6 py-3 bg-white text-forest-green rounded-xl hover:bg-white/90 transition-colors font-semibold">
+                    Explore Features
+                </button>
+            </div>
+        </div>
+    </div>
+
     <main id="main-content" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 page-transition">
+        <!-- Breadcrumb Navigation -->
+        <nav id="breadcrumb-nav" class="mb-6 hidden" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2 text-sm">
+                <li><a href="#" data-page="home" class="text-charcoal/60 hover:text-forest-green transition-colors">Home</a></li>
+                <li class="flex items-center">
+                    <svg class="w-4 h-4 mx-2 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span id="breadcrumb-current" class="text-charcoal font-medium">Current Page</span>
+                </li>
+            </ol>
+        </nav>
         <!-- Page content will be injected here -->
     </main>
     
@@ -3634,15 +3746,24 @@
                 <div class="floating-particle parallax-medium particle-5" style="left: 80%; animation-delay: 12s;"></div>
                 <div class="floating-particle parallax-fast particle-1" style="left: 90%; animation-delay: 15s;"></div>
                 <div class="relative max-w-5xl">
-                    <!-- Trust Badge -->
+                    <!-- Enhanced Trust Badge with Live Counter -->
                     <div class="flex items-center justify-center mb-8 slide-in-left">
                         <div class="flex items-center space-x-3 bg-white/95 backdrop-blur-sm px-6 py-3 rounded-full shadow-xl border border-white/30">
                             <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                            <span class="text-base sm:text-lg font-semibold text-charcoal">Join 1,200+ people transforming their mornings</span>
+                            <span class="text-base sm:text-lg font-semibold text-charcoal">
+                                <span id="live-user-count">1,247</span> people are meditating right now
+                            </span>
                         </div>
                     </div>
                     
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-gradient font-lora text-glow-strong slide-in-left text-center leading-tight mb-6">Transform Your Mornings, Transform Your Life</h1>
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-gradient font-lora text-glow-strong slide-in-left text-center leading-tight mb-6">
+                        <span class="word-fade-in" style="animation-delay: 0.2s;">Transform</span>
+                        <span class="word-fade-in" style="animation-delay: 0.4s;">Your</span>
+                        <span class="word-fade-in" style="animation-delay: 0.6s;">Mornings,</span>
+                        <span class="word-fade-in" style="animation-delay: 0.8s;">Transform</span>
+                        <span class="word-fade-in" style="animation-delay: 1.0s;">Your</span>
+                        <span class="word-fade-in" style="animation-delay: 1.2s;">Life</span>
+                    </h1>
                     <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-charcoal/90 text-smooth-transition max-w-5xl mx-auto text-center slide-in-right mb-8 px-3 sm:px-4 leading-relaxed font-medium">Master the art of mindful mornings with our integrated toolkit: meditation, journaling, exercise, and confidence practice.</p>
                     <p class="text-base sm:text-lg md:text-xl text-charcoal/80 text-smooth-transition max-w-4xl mx-auto text-center slide-in-right mb-8 px-3 sm:px-4 leading-relaxed">Discover how just <strong class="text-forest-green text-xl sm:text-2xl">30 minutes each morning</strong> can revolutionize your entire day and build lasting habits that stick.</p>
                     
@@ -3677,34 +3798,70 @@
                         </div>
                     </div>
                     
-                    <!-- Key Benefits -->
+                    <!-- Key Benefits with Interactive Previews -->
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8 md:mb-12 slide-in-right">
-                        <a href="#" data-page="timer" class="main-nav-link text-center p-4 sm:p-6 md:p-8 lg:p-10 bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-forest-green/20 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer block">
-                            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg">
+                        <a href="#" data-page="timer" class="main-nav-link text-center p-4 sm:p-6 md:p-8 lg:p-10 bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-forest-green/20 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer block group">
+                            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-forest-green to-forest-green/80 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                                 <span class="text-2xl sm:text-3xl">🧘‍♂️</span>
                             </div>
-                            <p class="text-sm sm:text-base md:text-lg font-bold text-charcoal mb-2 sm:mb-3">Find Inner Peace</p>
+                            <p class="text-sm sm:text-base md:text-lg font-bold text-charcoal mb-2 sm:mb-3 group-hover:text-forest-green transition-colors">Find Inner Peace</p>
                             <p class="text-xs sm:text-sm md:text-base text-charcoal/80 mt-1 sm:mt-2 leading-relaxed">Daily meditation for clarity and calm</p>
+                            
+                            <!-- Interactive Preview -->
+                            <div class="preview-overlay absolute inset-0 bg-forest-green/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <div class="text-center">
+                                    <div class="w-12 h-12 bg-forest-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                                        <span class="text-forest-green text-lg">⏱️</span>
+                                    </div>
+                                    <p class="text-xs text-forest-green font-semibold">5-30 min sessions</p>
+                                    <p class="text-xs text-forest-green/80">Gentle sounds & guidance</p>
+                                </div>
+                            </div>
+                            
                             <div class="mt-3 flex items-center justify-center">
-                                <span class="text-xs text-forest-green font-semibold">Start Meditating →</span>
+                                <span class="text-xs text-forest-green font-semibold group-hover:translate-x-1 transition-transform duration-300">Start Meditating →</span>
                             </div>
                         </a>
-                        <a href="#" data-page="workout" class="main-nav-link text-center p-4 sm:p-6 md:p-8 lg:p-10 bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-earthy-gold/20 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer block btn-enhanced group">
+                        <a href="#" data-page="workout" class="main-nav-link text-center p-4 sm:p-6 md:p-8 lg:p-10 bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-earthy-gold/20 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer block btn-enhanced group relative">
                             <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-earthy-gold to-earthy-gold/80 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg group-hover:gentle-bounce transition-all duration-300">
                                 <span class="text-2xl sm:text-3xl">⚡</span>
                             </div>
                             <p class="text-sm sm:text-base md:text-lg font-bold text-charcoal mb-2 sm:mb-3 group-hover:text-earthy-gold transition-colors duration-300">Boost Energy</p>
                             <p class="text-xs sm:text-sm md:text-base text-charcoal/80 mt-1 sm:mt-2 leading-relaxed">7-minute workouts to start strong</p>
+                            
+                            <!-- Interactive Preview -->
+                            <div class="preview-overlay absolute inset-0 bg-earthy-gold/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <div class="text-center">
+                                    <div class="w-12 h-12 bg-earthy-gold/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                                        <span class="text-earthy-gold text-lg">💪</span>
+                                    </div>
+                                    <p class="text-xs text-earthy-gold font-semibold">7-min circuit</p>
+                                    <p class="text-xs text-earthy-gold/80">All fitness levels</p>
+                                </div>
+                            </div>
+                            
                             <div class="mt-3 flex items-center justify-center">
                                 <span class="text-xs text-earthy-gold font-semibold group-hover:translate-x-1 transition-transform duration-300">Start Workout →</span>
                             </div>
                         </a>
-                        <a href="#" data-page="interview" class="main-nav-link text-center p-4 sm:p-6 md:p-8 lg:p-10 bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-light-green/20 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer block btn-enhanced group">
+                        <a href="#" data-page="interview" class="main-nav-link text-center p-4 sm:p-6 md:p-8 lg:p-10 bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-light-green/20 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer block btn-enhanced group relative">
                             <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-light-green to-light-green/80 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg group-hover:gentle-bounce transition-all duration-300">
                                 <span class="text-2xl sm:text-3xl">🎯</span>
                             </div>
                             <p class="text-sm sm:text-base md:text-lg font-bold text-charcoal mb-2 sm:mb-3 group-hover:text-light-green transition-colors duration-300">Build Confidence</p>
                             <p class="text-xs sm:text-sm md:text-base text-charcoal/80 mt-1 sm:mt-2 leading-relaxed">Practice speaking and storytelling</p>
+                            
+                            <!-- Interactive Preview -->
+                            <div class="preview-overlay absolute inset-0 bg-light-green/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <div class="text-center">
+                                    <div class="w-12 h-12 bg-light-green/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                                        <span class="text-forest-green text-lg">🎤</span>
+                                    </div>
+                                    <p class="text-xs text-forest-green font-semibold">Video practice</p>
+                                    <p class="text-xs text-forest-green/80">Build speaking skills</p>
+                                </div>
+                            </div>
+                            
                             <div class="mt-3 flex items-center justify-center">
                                 <span class="text-xs text-light-green font-semibold group-hover:translate-x-1 transition-transform duration-300">Start Practice →</span>
                             </div>
@@ -3741,9 +3898,9 @@
                         </div>
                     </div>
 
-                    <!-- Primary CTA -->
+                    <!-- Primary CTA with Enhanced Animation -->
                     <div class="text-center slide-in-right">
-                        <button onclick="navigateTo('timer')" class="inline-flex items-center justify-center px-10 sm:px-12 md:px-16 py-5 sm:py-6 md:py-7 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl border-2 border-forest-green/20 focus:ring-4 focus:ring-forest-green/30 focus:outline-none min-h-[64px] w-full sm:w-auto cursor-pointer touch-manipulation select-none btn-enhanced gentle-glow group">
+                        <button onclick="navigateTo('timer')" class="inline-flex items-center justify-center px-10 sm:px-12 md:px-16 py-5 sm:py-6 md:py-7 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl border-2 border-forest-green/20 focus:ring-4 focus:ring-forest-green/30 focus:outline-none min-h-[64px] w-full sm:w-auto cursor-pointer touch-manipulation select-none btn-enhanced gentle-glow group breathing-pulse">
                             <svg class="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 mr-3 sm:mr-4 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m-9-9h18M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9"></path>
                             </svg>
@@ -3754,6 +3911,19 @@
                             </svg>
                         </button>
                         <p class="text-base sm:text-lg text-white/90 mt-6 sm:mt-7 font-medium px-4 animate-pulse">✨ Free forever • No signup required • Start in 30 seconds</p>
+                        
+                        <!-- Quick Start Options -->
+                        <div class="mt-6 flex flex-wrap justify-center gap-3">
+                            <button onclick="navigateTo('timer')" class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm hover:bg-white/30 transition-colors">
+                                ⚡ Quick 2-min Demo
+                            </button>
+                            <button onclick="navigateTo('journal')" class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm hover:bg-white/30 transition-colors">
+                                ✍️ Try Journaling
+                            </button>
+                            <button onclick="navigateTo('workout')" class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm hover:bg-white/30 transition-colors">
+                                💪 7-min Workout
+                            </button>
+                        </div>
                     </div>
                     
                     <!-- Shimmer divider -->
@@ -5299,13 +5469,35 @@
                         </select>
                     </div>
                                 
-                                <!-- Sound Toggle - Mobile Optimized -->
-                                <div class="flex items-center justify-center">
-                                    <label class="flex items-center space-x-3 cursor-pointer bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-gray-200 min-h-[48px]">
-                                        <input type="checkbox" id="timer-sound" class="h-5 w-5 rounded text-forest-green focus:ring-forest-green focus:ring-2" checked>
-                                        <span class="text-sm font-bold text-charcoal">🔔 Sound</span>
-                                    </label>
-                </div>
+                                <!-- Sound Options - Enhanced -->
+                                <div class="flex flex-col items-center space-y-3">
+                                    <div class="flex items-center space-x-3">
+                                        <label class="flex items-center space-x-3 cursor-pointer bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-gray-200 min-h-[48px]">
+                                            <input type="checkbox" id="timer-sound" class="h-5 w-5 rounded text-forest-green focus:ring-forest-green focus:ring-2" checked>
+                                            <span class="text-sm font-bold text-charcoal">🔔 Sound</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <!-- Ambient Sound Selection with Preview -->
+                                    <div id="sound-options" class="flex flex-wrap justify-center gap-2 mt-2">
+                                        <button class="sound-option px-3 py-2 text-xs bg-forest-green/20 text-forest-green rounded-lg hover:bg-forest-green/30 transition-colors group" data-sound="bell">
+                                            🔔 Bell
+                                            <span class="sound-preview-text text-xs text-forest-green/60 ml-1">(hover to preview)</span>
+                                        </button>
+                                        <button class="sound-option px-3 py-2 text-xs bg-forest-green/20 text-forest-green rounded-lg hover:bg-forest-green/30 transition-colors group" data-sound="rain">
+                                            🌧️ Rain
+                                            <span class="sound-preview-text text-xs text-forest-green/60 ml-1">(hover to preview)</span>
+                                        </button>
+                                        <button class="sound-option px-3 py-2 text-xs bg-forest-green/20 text-forest-green rounded-lg hover:bg-forest-green/30 transition-colors group" data-sound="ocean">
+                                            🌊 Ocean
+                                            <span class="sound-preview-text text-xs text-forest-green/60 ml-1">(hover to preview)</span>
+                                        </button>
+                                        <button class="sound-option px-3 py-2 text-xs bg-forest-green/20 text-forest-green rounded-lg hover:bg-forest-green/30 transition-colors group" data-sound="forest">
+                                            🌲 Forest
+                                            <span class="sound-preview-text text-xs text-forest-green/60 ml-1">(hover to preview)</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             
                             <!-- Control Buttons - Enhanced Mobile First with Better Touch Targets -->
@@ -6358,6 +6550,7 @@
                 
                 // Lazy load page-specific logic
                 const pageLogicHandlers = {
+                    'home': attachHomeLogic,
                     'timer': attachTimerLogic,
                     'journal': attachJournalLogic,
                     'workout': attachWorkoutLogic,
@@ -6389,59 +6582,59 @@
     // These are defined at the top so they're available everywhere
     window.startTimer = function() {
         console.log('=== START TIMER CALLED ===');
-        if (!isRunning) {
-            isRunning = true;
-            isPaused = false;
+        if (!window.isRunning) {
+            window.isRunning = true;
+            window.isPaused = false;
             
-            if (startBtn) startBtn.classList.add('hidden');
-            if (pauseBtn) pauseBtn.classList.remove('hidden');
+            if (window.startBtn) window.startBtn.classList.add('hidden');
+            if (window.pauseBtn) window.pauseBtn.classList.remove('hidden');
                 
-            timerInterval = setInterval(() => {
-                if (timeRemaining > 0) {
-                    timeRemaining--;
-                    updateDisplay();
+            window.timerInterval = setInterval(() => {
+                if (window.timeRemaining > 0) {
+                    window.timeRemaining--;
+                    window.updateDisplay();
                 } else {
-                    clearInterval(timerInterval);
-                    isRunning = false;
-                    if (status) status.textContent = 'Session complete! 🎉';
-                    if (startBtn) {
-                        startBtn.classList.remove('hidden');
-                        startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+                    clearInterval(window.timerInterval);
+                    window.isRunning = false;
+                    if (window.status) window.status.textContent = 'Session complete! 🎉';
+                    if (window.startBtn) {
+                        window.startBtn.classList.remove('hidden');
+                        window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
                     }
-                    if (pauseBtn) pauseBtn.classList.add('hidden');
+                    if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
                 }
             }, 1000);
         }
     };
 
     window.pauseTimer = function() {
-        if (isRunning) {
-            isRunning = false;
-            isPaused = true;
-            clearInterval(timerInterval);
-            if (startBtn) startBtn.classList.remove('hidden');
-            if (pauseBtn) pauseBtn.classList.add('hidden');
-            updateDisplay();
+        if (window.isRunning) {
+            window.isRunning = false;
+            window.isPaused = true;
+            clearInterval(window.timerInterval);
+            if (window.startBtn) window.startBtn.classList.remove('hidden');
+            if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+            window.updateDisplay();
         }
     };
 
     window.resetTimer = function() {
-        clearInterval(timerInterval);
-        isRunning = false;
-        isPaused = false;
-        if (durationSelect) {
-            timeRemaining = parseInt(durationSelect.value);
-            totalTime = timeRemaining;
+        clearInterval(window.timerInterval);
+        window.isRunning = false;
+        window.isPaused = false;
+        if (window.durationSelect) {
+            window.timeRemaining = parseInt(window.durationSelect.value);
+            window.totalTime = window.timeRemaining;
         } else {
-            timeRemaining = 600;
-            totalTime = 600;
+            window.timeRemaining = 600;
+            window.totalTime = 600;
         }
-        updateDisplay();
-        if (startBtn) {
-            startBtn.classList.remove('hidden');
-            startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+        window.updateDisplay();
+        if (window.startBtn) {
+            window.startBtn.classList.remove('hidden');
+            window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
         }
-        if (pauseBtn) pauseBtn.classList.add('hidden');
+        if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
     };
 
     window.updateDisplay = function() {
@@ -6461,6 +6654,12 @@
             }
         }
     };
+
+    // Home page logic
+    function attachHomeLogic() {
+        console.log('Attaching home page logic...');
+        // Home page doesn't need specific logic, just initialization
+    }
 
     // Timer logic
     function attachTimerLogic() {
@@ -6489,6 +6688,10 @@
             window.soundToggle = soundToggle;
             window.progressRing = progressRing;
             
+            // Initialize timer state
+            window.timeRemaining = parseInt(durationSelect ? durationSelect.value : 600);
+            window.totalTime = window.timeRemaining;
+            
             // Event listeners
             if (startBtn) {
                 startBtn.addEventListener('click', window.startTimer);
@@ -6503,9 +6706,9 @@
             // Duration change
             if (durationSelect) {
                 durationSelect.addEventListener('change', () => {
-                    if (!isRunning) {
-                        timeRemaining = parseInt(durationSelect.value);
-                        totalTime = timeRemaining;
+                    if (!window.isRunning) {
+                        window.timeRemaining = parseInt(durationSelect.value);
+                        window.totalTime = window.timeRemaining;
                         window.updateDisplay();
                     }
                 });
@@ -6680,66 +6883,21 @@
         }
     };
 
-    // Additional timer setup with delay
-    setTimeout(() => {
-        if (display) {
-            console.log('Display element found:', display);
-            console.log('Display element ID:', display.id);
-            console.log('Display element current text:', display.textContent);
-        } else {
-            console.error('Display element NOT found!');
-            console.log('All elements with timer-display:', document.querySelectorAll('[id*="timer-display"]'));
-        }
-        
-        // If elements are not found, log the actual elements
-        if (!startBtn) {
-            console.error('Start button not found!');
-            console.log('Available buttons:', document.querySelectorAll('button[id*="timer"]'));
-        }
-        if (!pauseBtn) {
-            console.error('Pause button not found!');
-        }
-        if (!resetBtn) {
-            console.error('Reset button not found!');
-        }
-        
-        // Only proceed if we have the essential elements
-        if (!startBtn || !pauseBtn || !resetBtn) {
-            console.error('Essential timer buttons not found, cannot attach logic');
-            return;
-        }
-
-        // Timer logic is being attached
-        
-        // Check for blocking elements
-        checkForBlockingElements();
-        
-        // Test if buttons are clickable
-        console.log('Testing button clickability...');
-        console.log('Start button element:', startBtn);
-        console.log('Start button position:', startBtn.getBoundingClientRect());
-        console.log('Start button computed styles:', window.getComputedStyle(startBtn));
-        console.log('Start button pointer events:', window.getComputedStyle(startBtn).pointerEvents);
-        console.log('Start button z-index:', window.getComputedStyle(startBtn).zIndex);
-        
-        // Rest of the timer logic will go here
-        attachTimerEventListeners(startBtn, pauseBtn, resetBtn, display, status, durationSelect, soundToggle, progressRing);
-    }, 100);
     
-    // Timer variables - moved outside function scope
-    let timerInterval = null;
-    let timeRemaining = 600; // 10 minutes default
-    let totalTime = 600;
-    let isRunning = false;
-    let isPaused = false;
-    let display = null;
-    let status = null;
-    let progressRing = null;
-    let startBtn = null;
-    let pauseBtn = null;
-    let resetBtn = null;
-    let durationSelect = null;
-    let soundToggle = null;
+    // Timer variables - made global so they can be accessed by timer functions
+    window.timerInterval = null;
+    window.timeRemaining = 600; // 10 minutes default
+    window.totalTime = 600;
+    window.isRunning = false;
+    window.isPaused = false;
+    window.display = null;
+    window.status = null;
+    window.progressRing = null;
+    window.startBtn = null;
+    window.pauseBtn = null;
+    window.resetBtn = null;
+    window.durationSelect = null;
+    window.soundToggle = null;
 
     // Timer functions - defined globally so they can be accessed by event listeners
     function updateDisplay() {

@@ -4,7 +4,6 @@ const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/favicon.ico',
   // Add other static assets as needed
 ];
 
@@ -46,16 +45,3 @@ self.addEventListener('activate', (event) => {
     })
   );
 });
-
-// Background sync for offline actions
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'background-sync') {
-    event.waitUntil(doBackgroundSync());
-  }
-});
-
-function doBackgroundSync() {
-  // Handle offline actions when connection is restored
-  console.log('Background sync triggered');
-  return Promise.resolve();
-}
