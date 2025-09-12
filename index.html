@@ -4619,7 +4619,7 @@
                             
                             <!-- Control Buttons - Mobile First with Better Touch Targets -->
                             <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                                <button id="timer-start-btn" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-base sm:text-lg min-h-[56px] shadow-lg touch-manipulation">
+                                <button id="timer-start-btn" onclick="testButtonClick()" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-2xl hover:from-forest-green/90 hover:to-forest-green/80 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-base sm:text-lg min-h-[56px] shadow-lg touch-manipulation">
                                     <div class="flex items-center justify-center space-x-2">
                                         <span class="text-xl">▶️</span>
                                         <span>Start Meditation</span>
@@ -5331,7 +5331,20 @@
 
     <script>
     // --- SIMPLIFIED WORKING JAVASCRIPT --- //
-
+    
+    // Test if JavaScript is running at all
+    console.log('=== JAVASCRIPT IS RUNNING ===');
+    alert('JavaScript is loaded and running!');
+    
+    // Simple button test function
+    function testButtonClick() {
+        console.log('=== BUTTON CLICKED! ===');
+        alert('Button click is working! JavaScript is functioning properly.');
+    }
+    
+    // Make test function globally accessible
+    window.testButtonClick = testButtonClick;
+    
     // Global variables
     let mainContent;
     let currentPage = 'home';
