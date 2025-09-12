@@ -4624,18 +4624,18 @@
                                         <span class="text-2xl">▶️</span>
                                         <span class="font-bold text-lg sm:text-xl">Start Meditation</span>
                                     </div>
-                    </button>
+                                </button>
                                 <button id="timer-pause-btn" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-2xl hover:from-earthy-gold/90 hover:to-earthy-gold/80 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-lg sm:text-xl min-h-[56px] shadow-lg hidden touch-manipulation">
                                     <div class="flex items-center justify-center space-x-3">
                                         <span class="text-2xl">⏸️</span>
                                         <span class="font-bold text-lg sm:text-xl">Pause</span>
-                </div>
+                                    </div>
                                 </button>
                                 <button id="timer-reset-btn" class="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold rounded-2xl hover:from-gray-600 hover:to-gray-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-lg sm:text-xl min-h-[56px] shadow-lg touch-manipulation">
                                     <div class="flex items-center justify-center space-x-3">
                                         <span class="text-2xl">🔄</span>
                                         <span class="font-bold text-lg sm:text-xl">Reset</span>
-            </div>
+                                    </div>
                                 </button>
                             </div>
                             
@@ -4815,32 +4815,32 @@
                             <div class="text-6xl sm:text-7xl font-bold text-forest-green font-mono mb-2" id="workout-timer-display">30</div>
                             <div class="text-lg text-charcoal/70 mb-4" id="workout-timer-label">seconds remaining</div>
                             <div class="text-xl font-bold text-charcoal" id="workout-progress-text">Exercise 1 of 12</div>
-            </div>
-            
+                        </div>
+                        
                         <!-- Progress Bar -->
                         <div class="w-full max-w-md mx-auto mb-6">
                             <div class="w-full bg-gray-200 rounded-full h-4 shadow-inner">
                                 <div id="workout-progress-bar" class="bg-gradient-to-r from-forest-green via-light-green to-earthy-gold h-4 rounded-full transition-all duration-500 shadow-lg" style="width: 0%">
                                     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
+                                </div>
                             </div>
-                        </div>
                         </div>
                         
                         <!-- Control Buttons -->
-                        <div class="flex justify-center space-x-4 relative z-20">
-                            <button id="workout-start-btn" class="px-8 py-4 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg min-h-[56px] shadow-lg relative z-30 cursor-pointer" style="position: relative; z-index: 30;">
+                        <div class="flex justify-center space-x-4">
+                            <button id="workout-start-btn" class="px-8 py-4 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg min-h-[56px] shadow-lg">
                                 <span class="flex items-center space-x-3">
                                     <span class="text-2xl">▶️</span>
                                     <span>Start Workout</span>
                                 </span>
                             </button>
-                            <button id="workout-pause-btn" class="px-8 py-4 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg min-h-[56px] shadow-lg hidden relative z-30 cursor-pointer" style="position: relative; z-index: 30;">
+                            <button id="workout-pause-btn" class="px-8 py-4 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg min-h-[56px] shadow-lg hidden">
                                 <span class="flex items-center space-x-3">
                                     <span class="text-2xl">⏸️</span>
                                     <span>Pause</span>
                                 </span>
                             </button>
-                            <button id="workout-reset-btn" class="px-6 py-4 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg min-h-[56px] shadow-lg relative z-30 cursor-pointer" style="position: relative; z-index: 30;">
+                            <button id="workout-reset-btn" class="px-6 py-4 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg min-h-[56px] shadow-lg">
                                 <span class="flex items-center space-x-2">
                                     <span class="text-xl">🔄</span>
                                     <span>Reset</span>
@@ -5138,20 +5138,20 @@
                         </div>
                     </div>
 
-                <!-- Video Recording Area -->
-                <div class="interview-card bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100">
-                    <h3 class="text-lg sm:text-xl font-bold text-charcoal mb-4 sm:mb-6 text-center">Record Your Practice</h3>
+                <!-- Video Recording Area - Mobile Optimized -->
+                <div class="interview-card bg-gradient-to-br from-white to-gray-50/50 rounded-2xl p-3 sm:p-4 md:p-6 lg:p-8 shadow-xl border border-gray-100">
+                    <h3 class="text-base sm:text-lg md:text-xl font-bold text-charcoal mb-3 sm:mb-4 md:mb-6 text-center">Record Your Practice</h3>
                     
-                    <!-- Video Container -->
-                    <div class="video-container mb-4 sm:mb-6">
-                        <video id="live-video" class="bg-gray-100 rounded-xl hidden" playsinline muted preload="none" webkit-playsinline></video>
-                        <video id="playback-video" class="bg-gray-100 rounded-xl hidden" playsinline controls webkit-playsinline></video>
+                    <!-- Video Container - Mobile Enhanced -->
+                    <div class="video-container mb-3 sm:mb-4 md:mb-6 relative">
+                        <video id="live-video" class="w-full h-auto bg-gray-100 rounded-xl hidden" playsinline muted preload="none" webkit-playsinline></video>
+                        <video id="playback-video" class="w-full h-auto bg-gray-100 rounded-xl hidden" playsinline controls webkit-playsinline></video>
                         <div id="video-placeholder" class="absolute inset-0 bg-gradient-to-br from-forest-green/10 to-forest-green/5 rounded-xl flex items-center justify-center border-2 border-dashed border-forest-green/30">
-                            <div class="text-center p-4">
-                                <svg class="w-12 h-12 text-forest-green mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="text-center p-3 sm:p-4">
+                                <svg class="w-10 h-10 sm:w-12 sm:h-12 text-forest-green mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                                 </svg>
-                                <p class="text-sm text-charcoal/70 mb-2">Click "Start Camera" to begin recording</p>
+                                <p class="text-xs sm:text-sm text-charcoal/70 mb-1 sm:mb-2">Tap "Start Camera" to begin recording</p>
                                 <p class="text-xs text-charcoal/50">Optimized for mobile devices</p>
                             </div>
                         </div>
@@ -5285,7 +5285,7 @@
                                 <option value="1800">30 minutes</option>
                                 <option value="3600">1 hour</option>
                             </select>
-                </div>
+                        </div>
                         <button id="journal-start-btn" class="ripple hover-soft px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-base sm:text-lg shadow-xl border-2 border-forest-green min-h-[48px]" style="background-color: #2d5016 !important; color: white !important; display: inline-block !important; visibility: visible !important;">
                             <span class="flex items-center justify-center space-x-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -6134,31 +6134,19 @@
             // Event listeners
             if (startBtn) {
                 console.log('Adding start button event listener');
-                startBtn.addEventListener('click', (e) => {
-                    console.log('Start button clicked!', e.target);
-                    e.stopPropagation();
-                    startWorkout();
-                });
+                startBtn.addEventListener('click', startWorkout);
             } else {
                 console.error('Start button not found!');
             }
             if (pauseBtn) {
                 console.log('Adding pause button event listener');
-                pauseBtn.addEventListener('click', (e) => {
-                    console.log('Pause button clicked!', e.target);
-                    e.stopPropagation();
-                pauseWorkout();
-                });
+                pauseBtn.addEventListener('click', pauseWorkout);
             } else {
                 console.error('Pause button not found!');
             }
             if (resetBtn) {
                 console.log('Adding reset button event listener');
-                resetBtn.addEventListener('click', (e) => {
-                    console.log('Reset button clicked!', e.target);
-                    e.stopPropagation();
-                    resetWorkout();
-                });
+                resetBtn.addEventListener('click', resetWorkout);
             } else {
                 console.error('Reset button not found!');
             }
@@ -6166,14 +6154,6 @@
             // Initialize display
             updateTimerDisplay();
             updateProgress();
-            
-            // Add debugging for button container clicks
-            const buttonContainer = document.querySelector('.flex.justify-center.space-x-4.relative.z-20');
-            if (buttonContainer) {
-                buttonContainer.addEventListener('click', (e) => {
-                    console.log('Button container clicked:', e.target);
-                });
-            }
         
         function initAudio() {
             if (!audioContext) {
@@ -6916,3 +6896,4 @@
     </script>
 </body>
 </html>
+
