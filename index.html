@@ -4100,63 +4100,63 @@
         }
     };
 
-        // --- PROGRESS TRACKING --- //
-        const ProgressTracker = {
-            activities: {
-                meditation: { completed: false, time: null },
-                journal: { completed: false, time: null },
-                workout: { completed: false, time: null },
-                confidence: { completed: false, time: null }
-            },
-            
-            init() {
-                this.loadProgress();
-                this.updateDisplay();
-            },
-            
-            markComplete(activity, duration = null) {
-                this.activities[activity].completed = true;
-                this.activities[activity].time = new Date();
-                this.saveProgress();
-                this.updateDisplay();
-            },
-            
-            loadProgress() {
-                const today = new Date().toDateString();
-                const saved = localStorage.getItem('dailyProgress');
-                if (saved) {
-                    const data = JSON.parse(saved);
-                    if (data.date === today) {
-                        this.activities = data.activities;
-                        // Convert time strings back to Date objects
-                        Object.keys(this.activities).forEach(activity => {
-                            if (this.activities[activity].time) {
-                                this.activities[activity].time = new Date(this.activities[activity].time);
-                            }
-                        });
-                    } else {
-                        // New day, reset progress
-                        this.resetProgress();
-                    }
+    // --- PROGRESS TRACKING --- //
+    const ProgressTracker = {
+        activities: {
+            meditation: { completed: false, time: null },
+            journal: { completed: false, time: null },
+            workout: { completed: false, time: null },
+            confidence: { completed: false, time: null }
+        },
+        
+        init() {
+            this.loadProgress();
+            this.updateDisplay();
+        },
+        
+        markComplete(activity, duration = null) {
+            this.activities[activity].completed = true;
+            this.activities[activity].time = new Date();
+            this.saveProgress();
+            this.updateDisplay();
+        },
+        
+        loadProgress() {
+            const today = new Date().toDateString();
+            const saved = localStorage.getItem('dailyProgress');
+            if (saved) {
+                const data = JSON.parse(saved);
+                if (data.date === today) {
+                    this.activities = data.activities;
+                    // Convert time strings back to Date objects
+                    Object.keys(this.activities).forEach(activity => {
+                        if (this.activities[activity].time) {
+                            this.activities[activity].time = new Date(this.activities[activity].time);
+                        }
+                    });
+                } else {
+                    // New day, reset progress
+                    this.resetProgress();
                 }
-            },
-            
-            saveProgress() {
-                const data = {
-                    date: new Date().toDateString(),
-                    activities: this.activities
-                };
-                localStorage.setItem('dailyProgress', JSON.stringify(data));
-            },
-            
-            resetProgress() {
-                Object.keys(this.activities).forEach(key => {
-                    this.activities[key] = { completed: false, time: null };
-                });
-                this.saveProgress();
-            },
-            
-            updateDisplay() {
+            }
+        },
+        
+        saveProgress() {
+            const data = {
+                date: new Date().toDateString(),
+                activities: this.activities
+            };
+            localStorage.setItem('dailyProgress', JSON.stringify(data));
+        },
+        
+        resetProgress() {
+            Object.keys(this.activities).forEach(key => {
+                this.activities[key] = { completed: false, time: null };
+            });
+            this.saveProgress();
+        },
+        
+        updateDisplay() {
                 const completedCount = Object.values(this.activities).filter(a => a.completed).length;
                 const progressPercent = (completedCount / 4) * 100;
                 
@@ -4188,16 +4188,16 @@
                 
                 // Update streak
                 this.updateStreak();
-            },
-            
-            updateStreak() {
-                const streakEl = document.getElementById('streak-text');
-                if (streakEl) {
-                    // Simple streak calculation - in a real app, you'd track this more sophisticatedly
-                    const allCompleted = Object.values(this.activities).every(a => a.completed);
-                    const streak = allCompleted ? 1 : 0; // Simplified for now
-                    streakEl.textContent = `🔥 ${streak} day streak`;
-                }
+        },
+        
+        updateStreak() {
+            const streakEl = document.getElementById('streak-text');
+            if (streakEl) {
+                // Simple streak calculation - in a real app, you'd track this more sophisticatedly
+                const allCompleted = Object.values(this.activities).every(a => a.completed);
+                const streak = allCompleted ? 1 : 0; // Simplified for now
+                streakEl.textContent = `🔥 ${streak} day streak`;
+            }
         }
     };
 
@@ -4286,6 +4286,9 @@
     document.addEventListener('DOMContentLoaded', () => {
         console.log('DOM loaded, initializing...');
         mainContent = document.getElementById('main-content');
+        
+        // JavaScript is working
+        console.log('JavaScript is working!');
         
         // --- Dark Mode --- //
         function initDarkMode() {
