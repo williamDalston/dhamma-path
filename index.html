@@ -6642,24 +6642,77 @@
     // These are defined at the top so they're available everywhere
     window.startTimer = function() {
         // Start timer called
+        console.log('Current state:', { isRunning: window.isRunning, isPaused: window.isPaused, timeRemaining: window.timeRemaining, totalTime: window.totalTime });
         if (!window.isRunning) {
+            console.log('Starting timer...');
             window.isRunning = true;
             window.isPaused = false;
+            
+            // Haptic feedback for mobile
+            if (typeof triggerHapticFeedback === 'function') {
+                triggerHapticFeedback('light');
+            }
+            
+            // Add pulsing effect to timer container
+            const timerContainer = document.querySelector('.relative.w-48, .relative.w-56, .relative.w-64, .relative.w-72, .relative.w-80');
+            if (timerContainer) {
+                timerContainer.classList.add('timer-running');
+                // Add start signal animation
+                timerContainer.classList.add('timer-start-signal');
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    timerContainer.classList.remove('timer-start-signal');
+                }, 1500);
+            }
             
             if (window.startBtn) window.startBtn.classList.add('hidden');
             if (window.pauseBtn) window.pauseBtn.classList.remove('hidden');
                 
+            console.log('Setting up setInterval...');
             window.timerInterval = setInterval(() => {
+                console.log('=== SETINTERVAL TICK ===');
+                console.log('timeRemaining before decrement:', window.timeRemaining);
+                console.log('isRunning:', window.isRunning);
+                console.log('timerInterval:', window.timerInterval);
                 if (window.timeRemaining > 0) {
                     window.timeRemaining--;
+                    console.log('timeRemaining after decrement:', window.timeRemaining);
+                    console.log('About to call updateDisplay...');
                     window.updateDisplay();
+                    console.log('updateDisplay called');
+                    
+                    // Play bell at specific intervals
+                    if (window.timeRemaining === 0) {
+                        // Final bell - play sound if enabled
+                        if (window.soundToggle && window.soundToggle.checked) {
+                            console.log('Playing final bell');
+                        }
+                    } else if (window.timeRemaining === 60 && window.totalTime > 120) {
+                        // 1 minute warning
+                        if (window.soundToggle && window.soundToggle.checked) {
+                            console.log('Playing 1 minute warning');
+                        }
+                    } else if (window.timeRemaining === 300 && window.totalTime > 600) {
+                        // 5 minute warning
+                        if (window.soundToggle && window.soundToggle.checked) {
+                            console.log('Playing 5 minute warning');
+                        }
+                    }
                 } else {
                     clearInterval(window.timerInterval);
                     window.isRunning = false;
+                    
+                    // Remove pulsing effect
+                    const timerContainerStop = document.querySelector('.relative.w-56');
+                    if (timerContainerStop) {
+                        timerContainerStop.classList.remove('timer-running');
+                    }
+                    
+                    // Session complete
                     if (window.status) window.status.textContent = 'Session complete! 🎉';
                     if (window.startBtn) {
                         window.startBtn.classList.remove('hidden');
-                        window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+                        window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-4"><span class="text-3xl group-hover:scale-110 transition-transform duration-300">▶️</span><span class="font-bold text-xl sm:text-2xl group-hover:tracking-wide transition-all duration-300">Start Meditation</span></div>';
                     }
                     if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
                 }
@@ -6712,6 +6765,12 @@
             } else {
                 window.status.textContent = 'Ready to begin';
             }
+        }
+        
+        // Update progress ring
+        if (window.progressRing && window.totalTime > 0) {
+            const progress = (window.timeRemaining / window.totalTime) * 283;
+            window.progressRing.style.strokeDashoffset = progress;
         }
     };
 
@@ -7170,112 +7229,6 @@
         }
     }
 
-    function startTimer() {
-        // Start timer called
-        console.log('Current state:', { isRunning: window.isRunning, isPaused: window.isPaused, timeRemaining: window.timeRemaining, totalTime: window.totalTime });
-        if (!window.isRunning) {
-            console.log('Starting timer...');
-            window.isRunning = true;
-            window.isPaused = false;
-            
-            // Haptic feedback for mobile
-            triggerHapticFeedback('light');
-            
-            // Add pulsing effect to timer container
-            const timerContainer = document.querySelector('.relative.w-48, .relative.w-56, .relative.w-64, .relative.w-72, .relative.w-80');
-            if (timerContainer) {
-                timerContainer.classList.add('timer-running');
-                // Add start signal animation
-                timerContainer.classList.add('timer-start-signal');
-                // Remove animation class after animation completes
-                setTimeout(() => {
-                    timerContainer.classList.remove('timer-start-signal');
-                }, 1500);
-            }
-            
-            if (window.startBtn) window.startBtn.classList.add('hidden');
-            if (window.pauseBtn) window.pauseBtn.classList.remove('hidden');
-                
-            console.log('Setting up setInterval...');
-            window.timerInterval = setInterval(() => {
-                console.log('=== SETINTERVAL TICK ===');
-                console.log('timeRemaining before decrement:', window.timeRemaining);
-                console.log('isRunning:', window.isRunning);
-                console.log('timerInterval:', window.timerInterval);
-                if (window.timeRemaining > 0) {
-                    window.timeRemaining--;
-                    console.log('timeRemaining after decrement:', window.timeRemaining);
-                    console.log('About to call updateDisplay...');
-                    window.updateDisplay();
-                    console.log('updateDisplay called');
-                    
-                    // Play bell at specific intervals
-                    if (window.timeRemaining === 0) {
-                        // Final bell - play sound if enabled
-                        if (window.soundToggle && window.soundToggle.checked) {
-                            console.log('Playing final bell');
-                        }
-                    } else if (window.timeRemaining === 60 && window.totalTime > 120) {
-                        // 1 minute warning
-                        if (window.soundToggle && window.soundToggle.checked) {
-                            console.log('Playing 1 minute warning');
-                        }
-                    } else if (window.timeRemaining === 300 && window.totalTime > 600) {
-                        // 5 minute warning
-                        if (window.soundToggle && window.soundToggle.checked) {
-                            console.log('Playing 5 minute warning');
-                        }
-                    }
-                } else {
-                    clearInterval(window.timerInterval);
-                    window.isRunning = false;
-                    
-                    // Remove pulsing effect
-                    const timerContainerStop = document.querySelector('.relative.w-56');
-                    if (timerContainerStop) {
-                        timerContainerStop.classList.remove('timer-running');
-                    }
-                    
-                    // Session complete
-                    if (status) status.textContent = 'Session complete! 🎉';
-                    
-                    // Enhanced completion feedback
-                    triggerHapticFeedback('success');
-                    showToast('Meditation complete! Well done! 🧘‍♀️', 'success', 4000);
-                    
-                    // Add completion animation
-                    const timerContainerComplete = document.querySelector('.relative.w-48, .relative.w-56, .relative.w-64, .relative.w-72, .relative.w-80');
-                    if (timerContainerComplete) {
-                        timerContainerComplete.classList.add('gentle-glow');
-                        setTimeout(() => {
-                            timerContainerComplete.classList.remove('gentle-glow');
-                        }, 3000);
-                    }
-                    
-                    // Show completion message with mobile-friendly approach
-                    setTimeout(() => {
-                        if (isMobile) {
-                            // Use a more mobile-friendly notification
-                            const notification = document.createElement('div');
-                            notification.className = 'fixed top-4 left-4 right-4 bg-forest-green text-white p-4 rounded-lg shadow-lg z-50 text-center';
-                            notification.innerHTML = '🧘‍♀️ Meditation Complete!<br><small>Take a moment to notice how you feel.</small>';
-                            document.body.appendChild(notification);
-                            
-                            setTimeout(() => {
-                                notification.remove();
-                            }, 4000);
-                        }
-                    }, 500);
-                    
-                    if (startBtn) {
-                        startBtn.classList.remove('hidden');
-                        startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
-                    }
-                    if (pauseBtn) pauseBtn.classList.add('hidden');
-                }
-            }, 1000);
-        }
-    }
 
     function pauseTimer() {
         if (isRunning) {
