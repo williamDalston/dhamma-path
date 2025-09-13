@@ -7234,34 +7234,26 @@
                 });
             }
             
-            // Initialize display properly
+            // Initialize display properly - USING DIRECT TIMER SYSTEM
             console.log('Initializing timer display...');
-            console.log('Initial timeRemaining:', window.timeRemaining);
-            console.log('Initial totalTime:', window.totalTime);
-            console.log('Display element reference:', window.display);
+            console.log('Using direct timer system - no old timer variables');
             
-            // Force update display
-            if (window.display) {
-                const minutes = Math.floor(window.timeRemaining / 60);
-                const seconds = window.timeRemaining % 60;
+            // Initialize direct timer variables
+            const durationSelect = document.getElementById('timer-duration');
+            const initialDuration = durationSelect ? parseInt(durationSelect.value) : 600;
+            window.directTimeRemaining = initialDuration;
+            window.directIsRunning = false;
+            
+            // Force update display using direct timer system
+            const display = document.getElementById('timer-display');
+            if (display) {
+                const minutes = Math.floor(initialDuration / 60);
+                const seconds = initialDuration % 60;
                 const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                window.display.textContent = displayText;
+                display.textContent = displayText;
                 console.log('Set display to:', displayText);
             } else {
-                console.error('Display element is null during initialization!');
-                // Try to find it again
-                const displayElement = document.getElementById('timer-display');
-                if (displayElement) {
-                    window.display = displayElement;
-                    console.log('Found display element during init:', displayElement);
-                    const minutes = Math.floor(window.timeRemaining / 60);
-                    const seconds = window.timeRemaining % 60;
-                    const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    window.display.textContent = displayText;
-                    console.log('Set display to (init retry):', displayText);
-                } else {
-                    console.error('timer-display element not found during initialization!');
-                }
+                console.error('Timer display element not found during initialization!');
             }
             
             // Update status
@@ -7271,8 +7263,8 @@
             }
             
             // Update progress ring
-            if (window.progressRing && window.totalTime > 0) {
-                const progress = (window.timeRemaining / window.totalTime) * 283;
+            if (window.progressRing && initialDuration > 0) {
+                const progress = (initialDuration / initialDuration) * 283;
                 window.progressRing.style.strokeDashoffset = progress;
                 console.log('Set progress ring to:', progress);
             }
