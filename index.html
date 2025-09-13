@@ -6639,7 +6639,8 @@
     window.navigateToPage = navigateToPage;
 
     // ===== GLOBAL TIMER FUNCTIONS =====
-    // These are defined at the top so they're available everywhere
+    // DISABLED - Using direct timer system instead
+    /*
     window.startTimer = function() {
         // Start timer called
         console.log('Current state:', { isRunning: window.isRunning, isPaused: window.isPaused, timeRemaining: window.timeRemaining, totalTime: window.totalTime });
@@ -6787,68 +6788,11 @@
         if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
     };
 
+    */
+    // DISABLED - Using direct timer system instead
     window.updateDisplay = function() {
-        console.log('🚀🚀🚀 UPDATE DISPLAY FUNCTION CALLED 🚀🚀🚀');
-        try {
-            console.log('=== UPDATE DISPLAY CALLED ===');
-            console.log('window.display:', window.display);
-            console.log('window.timeRemaining:', window.timeRemaining);
-            console.log('window.totalTime:', window.totalTime);
-        } catch (error) {
-            console.error('Error in updateDisplay start:', error);
-        }
-        
-        // Update timer display
-        if (window.display) {
-            const minutes = Math.floor(window.timeRemaining / 60);
-            const seconds = window.timeRemaining % 60;
-            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            console.log('Setting display to:', displayText);
-            console.log('Display element before update:', window.display.textContent);
-            window.display.textContent = displayText;
-            console.log('Display element after update:', window.display.textContent);
-        } else {
-            console.error('Display element not found!');
-            // Try to find it again
-            const displayElement = document.getElementById('timer-display');
-            console.log('Looking for timer-display element:', displayElement);
-            if (displayElement) {
-                window.display = displayElement;
-                console.log('Updated window.display reference');
-                // Try again
-                const minutes = Math.floor(window.timeRemaining / 60);
-                const seconds = window.timeRemaining % 60;
-                const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                console.log('Setting display to (retry):', displayText);
-                window.display.textContent = displayText;
-                console.log('Display element after retry:', window.display.textContent);
-            } else {
-                console.error('timer-display element not found in DOM!');
-                // Try to find any element with timer-display in the ID
-                const allElements = document.querySelectorAll('[id*="timer-display"]');
-                console.log('All elements with timer-display in ID:', allElements);
-            }
-        }
-        
-        // Update status
-        if (window.status) {
-            if (window.isRunning) {
-                window.status.textContent = 'Meditating...';
-            } else if (window.isPaused) {
-                window.status.textContent = 'Paused';
-            } else {
-                window.status.textContent = 'Ready to begin';
-            }
-        }
-        
-        // Update progress ring
-        if (window.progressRing && window.totalTime > 0) {
-            const progress = (window.timeRemaining / window.totalTime) * 283;
-            window.progressRing.style.strokeDashoffset = progress;
-            console.log('Updated progress ring to:', progress);
-        } else {
-            console.log('Progress ring not found or totalTime is 0');
-        }
+        // DISABLED - Using direct timer system instead
+        console.log('Old updateDisplay called - DISABLED');
     };
     
     // Test the function immediately
@@ -7517,7 +7461,8 @@
     };
 
     
-    // Timer variables - made global so they can be accessed by timer functions
+    // Timer variables - DISABLED - Using direct timer system instead
+    /*
     window.timerInterval = null;
     window.timeRemaining = 600; // 10 minutes default
     window.totalTime = 600;
@@ -7531,6 +7476,7 @@
     window.resetBtn = null;
     window.durationSelect = null;
     window.soundToggle = null;
+    */
 
     // Timer functions - defined globally so they can be accessed by event listeners
     // REMOVED DUPLICATE updateDisplay function - using window.updateDisplay instead
