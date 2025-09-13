@@ -614,11 +614,13 @@ class SeamlessFlowEngine {
         // Save flow history
         this.saveFlowHistory();
         
-        // Dispatch flow completion event for temporal echo
+        // Dispatch flow completion event for temporal echo and mirror of duality
         window.dispatchEvent(new CustomEvent('flowCompleted', {
             detail: {
                 total_activities: this.currentFlow.length,
-                total_duration: this.calculateTotalDuration()
+                total_duration: this.calculateTotalDuration(),
+                flow_type: this.currentFlowType || 'standard',
+                completion_timestamp: Date.now()
             }
         }));
     }

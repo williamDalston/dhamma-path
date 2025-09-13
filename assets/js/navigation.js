@@ -452,6 +452,9 @@ class NavigationManager {
             case 'gratitude':
                 this.initializeGratitudePage();
                 break;
+            case 'wisdom':
+                this.initializeWisdomPage();
+                break;
             case 'clarity':
                 this.initializeClarityPage();
                 break;
@@ -1028,6 +1031,82 @@ class NavigationManager {
                 page_location: window.location.href
             });
         }
+    }
+    
+    initializeWisdomPage() {
+        console.log('📚 Initializing Wisdom Collection...');
+        
+        // Initialize the Wisdom Collection display
+        if (window.mirrorOfDuality) {
+            this.displayWisdomCollection();
+        } else {
+            console.log('🪞 Mirror of Duality not yet initialized');
+            // Wait for initialization
+            setTimeout(() => {
+                if (window.mirrorOfDuality) {
+                    this.displayWisdomCollection();
+                }
+            }, 1000);
+        }
+        
+        // Track analytics
+        if (window.gtag) {
+            window.gtag('event', 'page_view', {
+                page_title: 'Wisdom Collection - Your Personal Insights',
+                page_location: window.location.href
+            });
+        }
+    }
+    
+    displayWisdomCollection() {
+        const wisdomCards = document.getElementById('wisdom-cards');
+        const emptyState = document.getElementById('empty-state');
+        
+        if (!wisdomCards) return;
+        
+        const wisdomCollection = window.mirrorOfDuality.getWisdomCollection();
+        
+        if (wisdomCollection.length === 0) {
+            if (emptyState) {
+                emptyState.style.display = 'block';
+            }
+            return;
+        }
+        
+        if (emptyState) {
+            emptyState.style.display = 'none';
+        }
+        
+        // Clear existing cards
+        wisdomCards.innerHTML = '';
+        
+        // Create wisdom cards
+        wisdomCollection.forEach(insight => {
+            const card = this.createWisdomCard(insight);
+            wisdomCards.appendChild(card);
+        });
+    }
+    
+    createWisdomCard(insight) {
+        const card = document.createElement('div');
+        card.className = 'wisdom-card';
+        
+        const date = new Date(insight.timestamp).toLocaleDateString();
+        const resonant = insight.resonant ? 'wisdom-card-resonant' : '';
+        
+        card.innerHTML = `
+            <div class="wisdom-card-header">
+                <div class="wisdom-card-icon">${insight.icon}</div>
+                <div class="wisdom-card-title">${insight.title}</div>
+            </div>
+            <div class="wisdom-card-content">${insight.content}</div>
+            <div class="wisdom-card-meta">
+                <div class="wisdom-card-date">${date}</div>
+                <div class="${resonant}">${insight.resonant ? 'Resonates' : ''}</div>
+            </div>
+        `;
+        
+        return card;
     }
     
     initializeClarityPage() {
