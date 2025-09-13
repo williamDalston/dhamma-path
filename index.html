@@ -6861,6 +6861,23 @@
         console.error('updateDisplay test failed:', error);
     }
     
+    // Test timer display element immediately
+    console.log('🔧 TESTING TIMER DISPLAY ELEMENT 🔧');
+    const testDisplay = document.getElementById('timer-display');
+    console.log('Timer display element found:', testDisplay);
+    if (testDisplay) {
+        console.log('Timer display element text:', testDisplay.textContent);
+        console.log('Timer display element classes:', testDisplay.className);
+        // Test direct update
+        testDisplay.textContent = 'TEST: 05:00';
+        console.log('Direct update test - new text:', testDisplay.textContent);
+    } else {
+        console.error('Timer display element not found!');
+        // Search for all elements with timer in the ID
+        const allTimerElements = document.querySelectorAll('[id*="timer"]');
+        console.log('All elements with timer in ID:', allTimerElements);
+    }
+    
     // ===== SIMPLE TIMER IMPLEMENTATION =====
     // Completely new, simple timer that we know will work
     window.simpleStartTimer = function() {
