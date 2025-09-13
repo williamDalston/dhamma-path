@@ -6860,6 +6860,99 @@
     } catch (error) {
         console.error('updateDisplay test failed:', error);
     }
+    
+    // ===== SIMPLE TIMER IMPLEMENTATION =====
+    // Completely new, simple timer that we know will work
+    window.simpleStartTimer = function() {
+        console.log('🚀 STARTING SIMPLE TIMER 🚀');
+        
+        // Get duration from select
+        const durationSelect = document.getElementById('timer-duration');
+        const duration = durationSelect ? parseInt(durationSelect.value) : 600;
+        
+        // Get display element
+        const display = document.getElementById('timer-display');
+        if (!display) {
+            console.error('Timer display element not found!');
+            return;
+        }
+        
+        console.log('Timer display element found:', display);
+        console.log('Starting timer with duration:', duration, 'seconds');
+        
+        // Clear any existing timer
+        if (window.simpleTimerInterval) {
+            clearInterval(window.simpleTimerInterval);
+        }
+        
+        // Set initial values
+        window.simpleTimeRemaining = duration;
+        window.simpleIsRunning = true;
+        
+        // Update display immediately
+        updateSimpleDisplay();
+        
+        // Hide start button, show pause button
+        const startBtn = document.getElementById('timer-start-btn');
+        const pauseBtn = document.getElementById('timer-pause-btn');
+        if (startBtn) startBtn.classList.add('hidden');
+        if (pauseBtn) pauseBtn.classList.remove('hidden');
+        
+        // Start the timer
+        window.simpleTimerInterval = setInterval(() => {
+            if (window.simpleTimeRemaining > 0) {
+                window.simpleTimeRemaining--;
+                updateSimpleDisplay();
+                console.log('Simple timer tick:', window.simpleTimeRemaining);
+            } else {
+                // Timer finished
+                clearInterval(window.simpleTimerInterval);
+                window.simpleIsRunning = false;
+                display.textContent = '00:00';
+                console.log('Simple timer finished!');
+                
+                // Reset buttons
+                if (startBtn) startBtn.classList.remove('hidden');
+                if (pauseBtn) pauseBtn.classList.add('hidden');
+            }
+        }, 1000);
+    };
+    
+    // Simple display update function
+    function updateSimpleDisplay() {
+        const display = document.getElementById('timer-display');
+        if (display && window.simpleTimeRemaining !== undefined) {
+            const minutes = Math.floor(window.simpleTimeRemaining / 60);
+            const seconds = window.simpleTimeRemaining % 60;
+            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            display.textContent = displayText;
+            console.log('Updated simple display to:', displayText);
+        }
+    }
+    
+    // Simple pause timer
+    window.simplePauseTimer = function() {
+        if (window.simpleTimerInterval) {
+            clearInterval(window.simpleTimerInterval);
+            window.simpleIsRunning = false;
+            console.log('Simple timer paused');
+        }
+    };
+    
+    // Simple reset timer
+    window.simpleResetTimer = function() {
+        if (window.simpleTimerInterval) {
+            clearInterval(window.simpleTimerInterval);
+        }
+        window.simpleIsRunning = false;
+        
+        const durationSelect = document.getElementById('timer-duration');
+        const duration = durationSelect ? parseInt(durationSelect.value) : 600;
+        window.simpleTimeRemaining = duration;
+        
+        updateSimpleDisplay();
+        console.log('Simple timer reset to:', duration);
+    };
 
     // Home page logic
     function attachHomeLogic() {
@@ -7057,26 +7150,24 @@
             window.isRunning = false;
             window.isPaused = false;
             
-            // Event listeners with debugging
+            // Event listeners with debugging - USING SIMPLE TIMER
             if (startBtn) {
-                console.log('Adding click listener to start button');
+                console.log('Adding click listener to start button - USING SIMPLE TIMER');
                 startBtn.addEventListener('click', (e) => {
-                    console.log('Start button clicked!', e);
-                    console.log('Current timeRemaining before start:', window.timeRemaining);
-                    console.log('Current totalTime before start:', window.totalTime);
+                    console.log('Start button clicked! Using simple timer');
                     e.preventDefault();
                     e.stopPropagation();
-                    window.startTimer();
+                    window.simpleStartTimer();
                 });
             } else {
                 console.error('Start button not found!');
                 console.log('Available buttons:', document.querySelectorAll('button[id*="timer"]'));
             }
             if (pauseBtn) {
-                pauseBtn.addEventListener('click', window.pauseTimer);
+                pauseBtn.addEventListener('click', window.simplePauseTimer);
             }
             if (resetBtn) {
-                resetBtn.addEventListener('click', window.resetTimer);
+                resetBtn.addEventListener('click', window.simpleResetTimer);
             }
             
             // Duration change
