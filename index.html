@@ -6568,15 +6568,16 @@
 
     // Simple navigation function
     function navigateToPage(pageName, id = null) {
-        // Navigating to page
+        console.log('🚀 navigateToPage called with:', pageName, id);
         
         if (!mainContent) {
             mainContent = document.getElementById('main-content');
             if (!mainContent) {
-                console.error('Main content not found');
+                console.error('❌ Main content not found');
                 return;
             }
         }
+        console.log('✅ Main content found:', mainContent);
         
         // Show enhanced loading indicator
         mainContent.innerHTML = `
@@ -6620,8 +6621,11 @@
         };
         
         const templateId = pageTemplates[pageName] || 'template-home';
+        console.log('🔍 Looking for template:', templateId);
         const template = document.getElementById(templateId);
+        console.log('🔍 Template found:', template);
         const pageContent = template ? template.content.cloneNode(true) : null;
+        console.log('🔍 Page content:', pageContent);
         
         if (pageContent) {
             // Use requestAnimationFrame for optimal performance
