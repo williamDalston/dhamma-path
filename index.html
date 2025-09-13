@@ -7417,7 +7417,15 @@
             // Initialize display
             window.updateDisplay();
         }, 100);
+    }
+
+    // Journal logic
+    function attachJournalLogic() {
+        console.log('🚀 attachJournalLogic() called');
         
+        const saveBtn = document.getElementById('journal-save-btn');
+        const entryText = document.getElementById('journal-entry');
+        const entriesList = document.getElementById('journal-entries');
         
         function saveEntry() {
             if (entryText && entryText.value.trim()) {
