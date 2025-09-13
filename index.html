@@ -6988,6 +6988,12 @@
                 progressRing: !!progressRing
             });
             
+            // Additional debugging
+            console.log('Start button element:', startBtn);
+            console.log('Display element:', display);
+            console.log('Duration select element:', durationSelect);
+            console.log('Current page:', currentPage);
+            
             // Set global variables
             window.startBtn = startBtn;
             window.pauseBtn = pauseBtn;
@@ -7009,12 +7015,15 @@
                 console.log('Adding click listener to start button');
                 startBtn.addEventListener('click', (e) => {
                     console.log('Start button clicked!', e);
+                    console.log('Current timeRemaining before start:', window.timeRemaining);
+                    console.log('Current totalTime before start:', window.totalTime);
                     e.preventDefault();
                     e.stopPropagation();
                     window.startTimer();
                 });
             } else {
                 console.error('Start button not found!');
+                console.log('Available buttons:', document.querySelectorAll('button[id*="timer"]'));
             }
             if (pauseBtn) {
                 pauseBtn.addEventListener('click', window.pauseTimer);
@@ -7074,6 +7083,20 @@
             }
             
             console.log('Timer initialization complete');
+            
+            // Add test function to global scope for debugging
+            window.testTimer = function() {
+                console.log('Testing timer...');
+                console.log('window.display:', window.display);
+                console.log('window.timeRemaining:', window.timeRemaining);
+                console.log('window.totalTime:', window.totalTime);
+                if (window.display) {
+                    window.display.textContent = 'TEST';
+                    setTimeout(() => {
+                        window.display.textContent = '10:00';
+                    }, 1000);
+                }
+            };
         }, 100);
     }
 
