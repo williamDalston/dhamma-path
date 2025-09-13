@@ -126,51 +126,8 @@
             });
         }
         
-        // NUCLEAR CACHE DESTROY - Clear everything and force reload
-        console.log('💥 NUCLEAR CACHE DESTROY - Clearing everything...');
-        console.log('💥 Current URL:', window.location.href);
-        
-        // Clear localStorage
-        try {
-            localStorage.clear();
-            console.log('💥 localStorage cleared');
-        } catch (e) {
-            console.log('💥 localStorage clear failed:', e);
-        }
-        
-        // Clear sessionStorage
-        try {
-            sessionStorage.clear();
-            console.log('💥 sessionStorage cleared');
-        } catch (e) {
-            console.log('💥 sessionStorage clear failed:', e);
-        }
-        
-        // Clear service worker cache
-        if ('caches' in window) {
-            caches.keys().then(cacheNames => {
-                cacheNames.forEach(cacheName => {
-                    console.log('💥 Deleting cache:', cacheName);
-                    caches.delete(cacheName);
-                });
-            });
-        }
-        
-        // Clear service worker registration
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(registrations => {
-                registrations.forEach(registration => {
-                    console.log('💥 Unregistering service worker:', registration);
-                    registration.unregister();
-                });
-            });
-        }
-        
-        // Force reload with cache-busting query parameters
-        const baseUrl = window.location.href.split('?')[0];
-        const newUrl = baseUrl + '?v=' + Date.now() + '&cache=' + Math.random() + '&destroy=' + Math.random() + '&nuclear=' + Math.random();
-        console.log('💥 New URL:', newUrl);
-        window.location.href = newUrl;
+        // SIMPLE WORKING NAVIGATION - No cache busting needed
+        console.log('🚀 SIMPLE NAVIGATION SYSTEM LOADING...');
         
         // Suppress Tailwind CSS production warning
         window.tailwindConfig = {
@@ -9007,40 +8964,284 @@
         initMobileMenu();
         initKeyboardShortcuts();
         
-        // Defer non-critical functionality
-        requestAnimationFrame(() => {
-            initSearch();
+        // SIMPLE WORKING NAVIGATION SYSTEM
+        function setupSimpleNavigation() {
+            console.log('🚀 Setting up simple navigation...');
             
-            // Enhanced navigation click handler with better debugging
-            const handleNavigationClick = (e) => {
-                // Ignore mobile menu button clicks
-                if (e.target.closest('#mobile-menu-button') || e.target.closest('#mobile-menu')) {
-                    return;
-                }
-                
-                console.log('🔍 Click detected on:', e.target);
-                console.log('🔍 Target classes:', e.target.className);
-                console.log('🔍 Target tag:', e.target.tagName);
-                
-                const link = e.target.closest('.main-nav-link');
-                console.log('🔍 Closest nav link:', link);
-                
-                if (link) {
-                    console.log('✅ Navigation link clicked:', link.dataset.page);
-                    console.log('✅ Link dataset:', link.dataset);
+            // Find all navigation links
+            const navLinks = document.querySelectorAll('.main-nav-link');
+            console.log('📋 Found navigation links:', navLinks.length);
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.dataset.page;
+                    console.log('🔗 Navigation clicked:', page);
+                    
+                    // Simple page switching
+                    switchPage(page);
+                });
+            });
+            
+            // Mobile menu button
+            const mobileMenuBtn = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                console.log('🍔 Setting up mobile menu...');
+                mobileMenuBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    const page = link.dataset.page;
-                    const id = link.dataset.articleId || link.dataset.pathId;
-                    console.log('✅ Navigating to page:', page, 'with id:', id);
-                    navigateToPage(page, id);
-                } else {
-                    console.log('❌ No navigation link found');
-                    console.log('❌ Available main-nav-links:', document.querySelectorAll('.main-nav-link').length);
-                }
+                    console.log('🍔 Mobile menu button clicked');
+                    
+                    if (mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.remove('hidden');
+                        console.log('📱 Mobile menu opened');
+                    } else {
+                        mobileMenu.classList.add('hidden');
+                        console.log('📱 Mobile menu closed');
+                    }
+                });
+            }
+            
+            console.log('✅ Simple navigation setup complete');
+        }
+        
+        // Simple page switching function
+        function switchPage(pageName) {
+            console.log('🔄 Switching to page:', pageName);
+            
+            const mainContent = document.getElementById('main-content');
+            if (!mainContent) {
+                console.error('❌ Main content not found');
+                return;
+            }
+            
+            // Simple page templates
+            const pages = {
+                'home': `
+                    <div class="text-center py-16">
+                        <h1 class="text-4xl font-bold text-charcoal mb-8">Welcome to The Dhamma Path</h1>
+                        <p class="text-xl text-charcoal/70 mb-8">Transform your mornings, transform your life</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                            <div class="bg-white/80 rounded-xl p-6 shadow-lg">
+                                <div class="text-4xl mb-4">🧘</div>
+                                <h3 class="text-xl font-semibold mb-2">Meditate</h3>
+                                <p class="text-charcoal/70">Start your day with mindfulness</p>
+                            </div>
+                            <div class="bg-white/80 rounded-xl p-6 shadow-lg">
+                                <div class="text-4xl mb-4">✍️</div>
+                                <h3 class="text-xl font-semibold mb-2">Journal</h3>
+                                <p class="text-charcoal/70">Reflect and grow</p>
+                            </div>
+                            <div class="bg-white/80 rounded-xl p-6 shadow-lg">
+                                <div class="text-4xl mb-4">💪</div>
+                                <h3 class="text-xl font-semibold mb-2">Exercise</h3>
+                                <p class="text-charcoal/70">7-minute workout</p>
+                            </div>
+                            <div class="bg-white/80 rounded-xl p-6 shadow-lg">
+                                <div class="text-4xl mb-4">🎤</div>
+                                <h3 class="text-xl font-semibold mb-2">Practice</h3>
+                                <p class="text-charcoal/70">Build confidence</p>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                'timer': `
+                    <div class="text-center py-16">
+                        <h1 class="text-4xl font-bold text-charcoal mb-8">🧘 Meditation Timer</h1>
+                        <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-md mx-auto">
+                            <div id="timer-display" class="text-6xl font-bold text-forest-green mb-6">10:00</div>
+                            <div class="mb-6">
+                                <select id="timer-duration" class="w-full px-4 py-3 border-2 border-forest-green/30 rounded-xl">
+                                    <option value="300">5 minutes</option>
+                                    <option value="600" selected>10 minutes</option>
+                                    <option value="900">15 minutes</option>
+                                    <option value="1200">20 minutes</option>
+                                </select>
+                            </div>
+                            <div class="flex gap-4">
+                                <button id="timer-start-btn" class="flex-1 px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Start</button>
+                                <button id="timer-pause-btn" class="flex-1 px-6 py-3 bg-earth-gold text-white rounded-xl font-semibold hidden">Pause</button>
+                                <button id="timer-reset-btn" class="flex-1 px-6 py-3 bg-charcoal/70 text-white rounded-xl font-semibold">Reset</button>
+                            </div>
+                            <div id="timer-status" class="mt-4 text-charcoal/70">Ready to begin</div>
+                        </div>
+                    </div>
+                `,
+                'journal': `
+                    <div class="text-center py-16">
+                        <h1 class="text-4xl font-bold text-charcoal mb-8">✍️ Journal</h1>
+                        <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
+                            <textarea class="w-full h-64 p-4 border-2 border-forest-green/30 rounded-xl resize-none" placeholder="What are you grateful for today? What did you learn? How are you feeling?"></textarea>
+                            <button class="mt-4 px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Save Entry</button>
+                        </div>
+                    </div>
+                `,
+                'workout': `
+                    <div class="text-center py-16">
+                        <h1 class="text-4xl font-bold text-charcoal mb-8">💪 7-Minute Workout</h1>
+                        <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-md mx-auto">
+                            <div class="text-6xl mb-6">🏃‍♂️</div>
+                            <h2 class="text-2xl font-semibold mb-4">Jumping Jacks</h2>
+                            <div class="text-4xl font-bold text-forest-green mb-6">30</div>
+                            <div class="flex gap-4">
+                                <button class="flex-1 px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Start</button>
+                                <button class="flex-1 px-6 py-3 bg-earth-gold text-white rounded-xl font-semibold">Pause</button>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                'interview': `
+                    <div class="text-center py-16">
+                        <h1 class="text-4xl font-bold text-charcoal mb-8">🎤 Interview Practice</h1>
+                        <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
+                            <h2 class="text-2xl font-semibold mb-4">Tell me about yourself</h2>
+                            <p class="text-charcoal/70 mb-6">Practice your elevator pitch and build confidence</p>
+                            <button class="px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Start Practice</button>
+                        </div>
+                    </div>
+                `
             };
             
-            document.body.addEventListener('click', handleNavigationClick);
+            // Load the page content
+            if (pages[pageName]) {
+                mainContent.innerHTML = pages[pageName];
+                console.log('✅ Page loaded:', pageName);
+                
+                // Initialize page-specific functionality
+                if (pageName === 'timer') {
+                    setTimeout(() => {
+                        window.meditationTimer = new MeditationTimer();
+                    }, 100);
+                }
+            } else {
+                mainContent.innerHTML = pages['home'];
+                console.log('⚠️ Page not found, loading home');
+            }
+        }
+        
+        // SIMPLE MEDITATION TIMER CLASS
+        class MeditationTimer {
+            constructor() {
+                console.log('🧘 MeditationTimer initialized');
+                this.timeRemaining = 600;
+                this.totalTime = 600;
+                this.isRunning = false;
+                this.intervalId = null;
+                this.init();
+            }
+            
+            init() {
+                this.findElements();
+                this.setupListeners();
+                this.updateDisplay();
+            }
+            
+            findElements() {
+                this.elements = {
+                    display: document.getElementById('timer-display'),
+                    startBtn: document.getElementById('timer-start-btn'),
+                    pauseBtn: document.getElementById('timer-pause-btn'),
+                    resetBtn: document.getElementById('timer-reset-btn'),
+                    durationSelect: document.getElementById('timer-duration'),
+                    status: document.getElementById('timer-status')
+                };
+                console.log('Timer elements found:', Object.keys(this.elements).reduce((acc, key) => {
+                    acc[key] = !!this.elements[key];
+                    return acc;
+                }, {}));
+            }
+            
+            setupListeners() {
+                if (this.elements.startBtn) {
+                    this.elements.startBtn.addEventListener('click', () => this.start());
+                }
+                if (this.elements.pauseBtn) {
+                    this.elements.pauseBtn.addEventListener('click', () => this.pause());
+                }
+                if (this.elements.resetBtn) {
+                    this.elements.resetBtn.addEventListener('click', () => this.reset());
+                }
+                if (this.elements.durationSelect) {
+                    this.elements.durationSelect.addEventListener('change', () => {
+                        if (!this.isRunning) {
+                            this.timeRemaining = parseInt(this.elements.durationSelect.value);
+                            this.totalTime = this.timeRemaining;
+                            this.updateDisplay();
+                        }
+                    });
+                }
+            }
+            
+            start() {
+                if (this.isRunning) return;
+                console.log('▶️ Timer started');
+                this.isRunning = true;
+                this.elements.startBtn.style.display = 'none';
+                this.elements.pauseBtn.style.display = 'inline-block';
+                this.updateStatus('Meditation in progress...');
+                
+                this.intervalId = setInterval(() => {
+                    this.timeRemaining--;
+                    this.updateDisplay();
+                    if (this.timeRemaining <= 0) {
+                        this.complete();
+                    }
+                }, 1000);
+            }
+            
+            pause() {
+                if (!this.isRunning) return;
+                console.log('⏸️ Timer paused');
+                this.isRunning = false;
+                clearInterval(this.intervalId);
+                this.elements.startBtn.style.display = 'inline-block';
+                this.elements.pauseBtn.style.display = 'none';
+                this.updateStatus('Paused');
+            }
+            
+            reset() {
+                console.log('🔄 Timer reset');
+                this.isRunning = false;
+                clearInterval(this.intervalId);
+                this.timeRemaining = parseInt(this.elements.durationSelect.value);
+                this.totalTime = this.timeRemaining;
+                this.elements.startBtn.style.display = 'inline-block';
+                this.elements.pauseBtn.style.display = 'none';
+                this.updateDisplay();
+                this.updateStatus('Ready to begin');
+            }
+            
+            complete() {
+                console.log('✅ Meditation complete!');
+                this.isRunning = false;
+                clearInterval(this.intervalId);
+                this.elements.startBtn.style.display = 'inline-block';
+                this.elements.pauseBtn.style.display = 'none';
+                this.updateStatus('Meditation complete! 🎉');
+                alert('Meditation Complete! 🎉');
+            }
+            
+            updateDisplay() {
+                const minutes = Math.floor(this.timeRemaining / 60);
+                const seconds = this.timeRemaining % 60;
+                const timeString = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                
+                if (this.elements.display) {
+                    this.elements.display.textContent = timeString;
+                }
+            }
+            
+            updateStatus(message) {
+                if (this.elements.status) {
+                    this.elements.status.textContent = message;
+                }
+            }
+        }
+        
+        // Initialize simple navigation
+        setupSimpleNavigation();
             
         // CLEAR ALL OLD NAVIGATION HANDLERS
         console.log('🧹 CLEARING ALL OLD NAVIGATION HANDLERS...');
