@@ -6681,6 +6681,18 @@
             if (window.pauseBtn) window.pauseBtn.classList.remove('hidden');
                 
             console.log('Setting up setInterval...');
+            
+            // Test updateDisplay function before starting timer
+            console.log('🔧 TESTING updateDisplay before timer start...');
+            console.log('🔧 updateDisplay exists:', typeof window.updateDisplay);
+            if (typeof window.updateDisplay === 'function') {
+                console.log('🔧 Calling updateDisplay test...');
+                window.updateDisplay();
+                console.log('🔧 updateDisplay test completed');
+            } else {
+                console.error('🔧 updateDisplay is not a function!');
+            }
+            
             window.timerInterval = setInterval(() => {
                 console.log('🚀🚀🚀 SETINTERVAL TICK VERSION 2.0 🚀🚀🚀');
                 console.log('🔧 timeRemaining before decrement:', window.timeRemaining, 'VERSION 2.0 🔧');
