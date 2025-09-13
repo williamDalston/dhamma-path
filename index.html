@@ -8830,12 +8830,23 @@
 
     // Enhanced Mobile menu functionality
     function initMobileMenu() {
+        console.log('🚀 initMobileMenu() called');
+        
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileMenuClose = document.getElementById('mobile-menu-close');
         const hamburgerIcon = document.getElementById('hamburger-icon');
         const closeIcon = document.getElementById('close-icon');
         const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile-header');
+        
+        console.log('Mobile menu elements found:', {
+            mobileMenuButton: !!mobileMenuButton,
+            mobileMenu: !!mobileMenu,
+            mobileMenuClose: !!mobileMenuClose,
+            hamburgerIcon: !!hamburgerIcon,
+            closeIcon: !!closeIcon,
+            darkModeToggleMobile: !!darkModeToggleMobile
+        });
         
         // Create backdrop element
         const backdrop = document.createElement('div');
@@ -8845,6 +8856,7 @@
         document.body.appendChild(backdrop);
         
         function openMobileMenu() {
+            console.log('📱 openMobileMenu() called');
             mobileMenu.classList.remove('hidden');
             mobileMenu.classList.add('show');
             backdrop.style.display = 'block';
@@ -8853,6 +8865,7 @@
             closeIcon.classList.remove('hidden');
             mobileMenuButton.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            console.log('📱 Mobile menu opened successfully');
         }
         
         function closeMobileMenu() {
@@ -8867,12 +8880,16 @@
         }
         
         if (mobileMenuButton && mobileMenu) {
+            console.log('✅ Mobile menu button and menu found, adding event listener');
             // Open menu
             mobileMenuButton.addEventListener('click', (e) => {
+                console.log('🍔 Mobile menu button clicked!', e);
                 e.stopPropagation();
                 if (mobileMenu.classList.contains('hidden')) {
+                    console.log('📱 Opening mobile menu');
                     openMobileMenu();
                 } else {
+                    console.log('📱 Closing mobile menu');
                     closeMobileMenu();
                 }
             });
