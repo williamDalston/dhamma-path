@@ -6025,3 +6025,559 @@ html {
         font-size: var(--font-sm);
     }
 }
+
+/* ========================================
+   SEAMLESS FLOW ENGINE - THE INVISIBLE HAND
+   ======================================== */
+
+/* Flow Overlay */
+.flow-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(248, 249, 250, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.flow-overlay-content {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(26, 77, 58, 0.15);
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid rgba(26, 77, 58, 0.1);
+}
+
+/* Flow Progress */
+.flow-progress {
+    margin-bottom: 2rem;
+}
+
+.flow-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(26, 77, 58, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.flow-progress-fill {
+    height: 100%;
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage-deep) 100%);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.flow-progress-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flow-current-activity {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--forest-deep);
+}
+
+.flow-progress-counter {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-sm);
+    color: var(--charcoal-light);
+    background: rgba(26, 77, 58, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+}
+
+/* Flow Controls */
+.flow-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.flow-control-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    border: none;
+    border-radius: 1rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 44px;
+}
+
+.flow-pause-btn {
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage-deep) 100%);
+    color: white;
+    box-shadow: 0 4px 16px rgba(26, 77, 58, 0.3);
+}
+
+.flow-pause-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26, 77, 58, 0.4);
+}
+
+.flow-skip-btn {
+    background: rgba(26, 77, 58, 0.1);
+    color: var(--forest-deep);
+    border: 1px solid rgba(26, 77, 58, 0.2);
+}
+
+.flow-skip-btn:hover {
+    background: rgba(26, 77, 58, 0.15);
+    transform: translateY(-1px);
+}
+
+.flow-stop-btn {
+    background: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+    border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.flow-stop-btn:hover {
+    background: rgba(220, 38, 38, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Selah Overlay */
+.selah-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(248, 249, 250, 0.95);
+    backdrop-filter: blur(15px);
+    z-index: 1100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.selah-content {
+    background: white;
+    border-radius: 2rem;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 25px 80px rgba(26, 77, 58, 0.2);
+    max-width: 400px;
+    width: 100%;
+    border: 1px solid rgba(26, 77, 58, 0.1);
+}
+
+.selah-icon {
+    margin-bottom: 1.5rem;
+    animation: selahFloat 3s ease-in-out infinite;
+}
+
+@keyframes selahFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+.selah-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--forest-deep);
+    margin: 0 0 0.5rem 0;
+}
+
+.selah-subtitle {
+    font-family: var(--font-family-content);
+    font-size: var(--font-base);
+    color: var(--charcoal-light);
+    margin: 0 0 2rem 0;
+}
+
+/* Selah Timer */
+.selah-timer {
+    margin-bottom: 2rem;
+}
+
+.selah-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(26, 77, 58, 0.1) 0%, rgba(122, 155, 122, 0.1) 100%);
+    border: 3px solid rgba(26, 77, 58, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0 auto;
+}
+
+.selah-circle-fill {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--forest-deep);
+    border-right-color: var(--sage-deep);
+    transition: stroke-dashoffset 1s ease;
+    stroke-dasharray: 100%;
+    stroke-dashoffset: 100%;
+}
+
+.selah-timer-text {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--forest-deep);
+    z-index: 1;
+}
+
+/* Selah Actions */
+.selah-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.selah-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 1.5rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 48px;
+}
+
+.selah-continue-btn {
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage-deep) 100%);
+    color: white;
+    box-shadow: 0 8px 24px rgba(26, 77, 58, 0.3);
+}
+
+.selah-continue-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(26, 77, 58, 0.4);
+}
+
+.selah-linger-btn {
+    background: rgba(26, 77, 58, 0.1);
+    color: var(--forest-deep);
+    border: 1px solid rgba(26, 77, 58, 0.2);
+}
+
+.selah-linger-btn:hover {
+    background: rgba(26, 77, 58, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Linger Overlay */
+.linger-overlay {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 12px 32px rgba(26, 77, 58, 0.15);
+    z-index: 1200;
+    display: none;
+    border: 1px solid rgba(26, 77, 58, 0.1);
+    max-width: 300px;
+}
+
+.linger-content {
+    text-align: center;
+}
+
+.linger-icon {
+    margin-bottom: 1rem;
+    color: var(--forest-deep);
+}
+
+.linger-text {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-sm);
+    color: var(--charcoal-light);
+    margin: 0 0 1rem 0;
+}
+
+.linger-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.linger-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage-deep) 100%);
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 44px;
+}
+
+.linger-action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(26, 77, 58, 0.3);
+}
+
+/* Flow Completion Overlay */
+.flow-completion-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(248, 249, 250, 0.95);
+    backdrop-filter: blur(15px);
+    z-index: 1300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.flow-completion-content {
+    background: white;
+    border-radius: 2rem;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 25px 80px rgba(26, 77, 58, 0.2);
+    max-width: 400px;
+    width: 100%;
+    border: 1px solid rgba(26, 77, 58, 0.1);
+    animation: completionSlideIn 0.6s ease;
+}
+
+@keyframes completionSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.completion-icon {
+    margin-bottom: 1.5rem;
+    animation: completionPulse 2s ease-in-out infinite;
+}
+
+@keyframes completionPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.completion-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--forest-deep);
+    margin: 0 0 0.5rem 0;
+}
+
+.completion-subtitle {
+    font-family: var(--font-family-content);
+    font-size: var(--font-base);
+    color: var(--charcoal-light);
+    margin: 0 0 2rem 0;
+}
+
+.completion-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.completion-stat {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-family: var(--font-family-display);
+    font-size: var(--font-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--forest-deep);
+}
+
+.stat-label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-sm);
+    color: var(--charcoal-light);
+}
+
+.completion-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage-deep) 100%);
+    color: white;
+    border: none;
+    border-radius: 1.5rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 48px;
+}
+
+.completion-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(26, 77, 58, 0.4);
+}
+
+/* Mobile Optimizations for Seamless Flow */
+@media screen and (max-width: 768px) {
+    .flow-overlay {
+        padding: 1rem;
+    }
+    
+    .flow-overlay-content {
+        padding: 1.5rem;
+        border-radius: 1rem;
+    }
+    
+    .flow-controls {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .flow-control-btn {
+        padding: 0.75rem 1.25rem;
+        font-size: var(--font-sm);
+    }
+    
+    .selah-overlay {
+        padding: 1rem;
+    }
+    
+    .selah-content {
+        padding: 2rem;
+        border-radius: 1.5rem;
+    }
+    
+    .selah-circle {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .selah-timer-text {
+        font-size: var(--font-xl);
+    }
+    
+    .selah-action-btn {
+        padding: 0.875rem 1.75rem;
+        font-size: var(--font-sm);
+    }
+    
+    .linger-overlay {
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+        max-width: none;
+    }
+    
+    .flow-completion-content {
+        padding: 2rem;
+        border-radius: 1.5rem;
+    }
+    
+    .completion-stats {
+        gap: 1.5rem;
+    }
+}
+
+/* iPhone-specific Seamless Flow Optimizations */
+@media screen and (max-width: 428px) {
+    .flow-overlay-content {
+        padding: 1rem;
+    }
+    
+    .flow-current-activity {
+        font-size: var(--font-base);
+    }
+    
+    .flow-progress-counter {
+        font-size: var(--font-xs);
+        padding: 0.2rem 0.6rem;
+    }
+    
+    .selah-content {
+        padding: 1.5rem;
+    }
+    
+    .selah-title {
+        font-size: var(--font-xl);
+    }
+    
+    .selah-circle {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .selah-timer-text {
+        font-size: var(--font-lg);
+    }
+    
+    .selah-action-btn {
+        padding: 0.75rem 1.5rem;
+        font-size: var(--font-sm);
+    }
+    
+    .linger-overlay {
+        padding: 1rem;
+    }
+    
+    .flow-completion-content {
+        padding: 1.5rem;
+    }
+    
+    .completion-title {
+        font-size: var(--font-xl);
+    }
+    
+    .completion-stats {
+        gap: 1rem;
+    }
+    
+    .stat-number {
+        font-size: var(--font-lg);
+    }
+}

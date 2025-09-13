@@ -59,6 +59,7 @@ class DhammaPathApp {
         this.initializePhysicsAnimations();
         this.initializeHapticStorytelling();
         this.initializeMotionSystem();
+        this.initializeSeamlessFlow();
         this.initializeContextualActions();
         this.initializeSmartRecommendations();
         this.initializeAdaptiveTiming();
@@ -207,6 +208,17 @@ class DhammaPathApp {
             this.mobilePerformanceOptimizer = new window.MobilePerformanceOptimizer();
         } else {
             console.error('❌ MobilePerformanceOptimizer not found');
+        }
+    }
+
+    initializeSeamlessFlow() {
+        if (window.SeamlessFlowEngine) {
+            try {
+                window.seamlessFlowEngine = new window.SeamlessFlowEngine();
+                console.log('✅ Seamless flow engine initialized');
+            } catch (error) {
+                console.error('❌ Failed to initialize seamless flow engine:', error);
+            }
         }
     }
 

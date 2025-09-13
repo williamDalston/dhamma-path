@@ -836,13 +836,18 @@ class NavigationManager {
             navigation.style.display = 'flex';
         }
         
-        // Begin Flow button - starts with recommended activity
+        // Begin Flow button - starts seamless flow
         const beginFlowBtn = document.querySelector('.begin-flow-btn, #begin-flow-btn');
         if (beginFlowBtn) {
             beginFlowBtn.addEventListener('click', () => {
                 console.log('🚀 Begin Flow clicked');
-                // Start with meditation (the recommended activity)
-                this.navigateToPage('timer');
+                // Start seamless flow instead of just navigating to timer
+                if (window.seamlessFlowEngine) {
+                    window.seamlessFlowEngine.startFlow();
+                } else {
+                    // Fallback to timer if seamless flow not available
+                    this.navigateToPage('timer');
+                }
             });
         }
         
