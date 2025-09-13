@@ -7363,7 +7363,7 @@
 
     // Timer logic
     function attachTimerLogic() {
-        console.log('🚀 attachTimerLogic() called - CLEAN VERSION');
+        console.log('🚀 attachTimerLogic() called - IMPROVED VERSION');
         
         // Ensure welcome overlay is hidden
         const welcomeOverlay = document.getElementById('welcome-overlay');
@@ -7372,78 +7372,275 @@
             welcomeOverlay.style.opacity = '0';
         }
         
-        // Add a small delay to ensure DOM is fully rendered
-        setTimeout(() => {
-            // Looking for timer elements after delay
-            const startBtn = document.getElementById('timer-start-btn');
-            const pauseBtn = document.getElementById('timer-pause-btn');
-            const resetBtn = document.getElementById('timer-reset-btn');
-            const display = document.getElementById('timer-display');
-            const status = document.getElementById('timer-status');
-            const durationSelect = document.getElementById('timer-duration');
-            const soundToggle = document.getElementById('timer-sound');
-            const progressRing = document.getElementById('progress-ring');
-            
-            // Debug logging
-            console.log('Timer elements found:', {
-                startBtn: !!startBtn,
-                pauseBtn: !!pauseBtn,
-                resetBtn: !!resetBtn,
-                display: !!display,
-                status: !!status,
-                durationSelect: !!durationSelect,
-                soundToggle: !!soundToggle,
-                progressRing: !!progressRing
-            });
-            
-            // Set global variables
-            window.startBtn = startBtn;
-            window.pauseBtn = pauseBtn;
-            window.resetBtn = resetBtn;
-            window.display = display;
-            window.status = status;
-            window.durationSelect = durationSelect;
-            window.soundToggle = soundToggle;
-            window.progressRing = progressRing;
-            
-            // Initialize timer state
-            window.timeRemaining = parseInt(durationSelect ? durationSelect.value : 600);
-            window.totalTime = window.timeRemaining;
-            window.isRunning = false;
-            window.isPaused = false;
-            
-            // Event listeners with debugging
-            if (startBtn) {
-                console.log('Adding click listener to start button');
-                startBtn.addEventListener('click', (e) => {
-                    console.log('Start button clicked!', e);
-                    e.preventDefault();
-                    e.stopPropagation();
-                    window.startTimer();
-                });
-            } else {
-                console.error('Start button not found!');
-            }
-            if (pauseBtn) {
-                pauseBtn.addEventListener('click', window.pauseTimer);
-            }
-            if (resetBtn) {
-                resetBtn.addEventListener('click', window.resetTimer);
+        // IMPROVED TIMER SYSTEM - Self-contained and robust
+        class MeditationTimer {
+            constructor() {
+                this.elements = {};
+                this.state = {
+                    timeRemaining: 600, // 10 minutes default
+                    totalTime: 600,
+                    isRunning: false,
+                    isPaused: false,
+                    intervalId: null
+                };
+                this.sounds = {
+                    bell: null,
+                    chime: null
+                };
+                this.init();
             }
             
-            // Duration change
-            if (durationSelect) {
-                durationSelect.addEventListener('change', () => {
-                    if (!window.isRunning) {
-                        window.timeRemaining = parseInt(durationSelect.value);
-                        window.totalTime = window.timeRemaining;
-                        window.updateDisplay();
+            init() {
+                this.findElements();
+                this.setupEventListeners();
+                this.initializeAudio();
+                this.updateDisplay();
+                console.log('✅ Meditation Timer initialized successfully');
+            }
+            
+            findElements() {
+                this.elements = {
+                    startBtn: document.getElementById('timer-start-btn'),
+                    pauseBtn: document.getElementById('timer-pause-btn'),
+                    resetBtn: document.getElementById('timer-reset-btn'),
+                    display: document.getElementById('timer-display'),
+                    status: document.getElementById('timer-status'),
+                    durationSelect: document.getElementById('timer-duration'),
+                    soundToggle: document.getElementById('timer-sound'),
+                    progressRing: document.getElementById('progress-ring')
+                };
+                
+                console.log('Timer elements found:', Object.keys(this.elements).reduce((acc, key) => {
+                    acc[key] = !!this.elements[key];
+                    return acc;
+                }, {}));
+            }
+            
+            setupEventListeners() {
+                // Start button
+                if (this.elements.startBtn) {
+                    this.elements.startBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.start();
+                    });
+                    console.log('✅ Start button listener added');
+                }
+                
+                // Pause button
+                if (this.elements.pauseBtn) {
+                    this.elements.pauseBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.pause();
+                    });
+                    console.log('✅ Pause button listener added');
+                }
+                
+                // Reset button
+                if (this.elements.resetBtn) {
+                    this.elements.resetBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.reset();
+                    });
+                    console.log('✅ Reset button listener added');
+                }
+                
+                // Duration change
+                if (this.elements.durationSelect) {
+                    this.elements.durationSelect.addEventListener('change', () => {
+                        if (!this.state.isRunning) {
+                            this.state.timeRemaining = parseInt(this.elements.durationSelect.value);
+                            this.state.totalTime = this.state.timeRemaining;
+                            this.updateDisplay();
+                        }
+                    });
+                    console.log('✅ Duration selector listener added');
+                }
+                
+                // Sound toggle
+                if (this.elements.soundToggle) {
+                    this.elements.soundToggle.addEventListener('change', () => {
+                        console.log('Sound toggle changed:', this.elements.soundToggle.checked);
+                    });
+                    console.log('✅ Sound toggle listener added');
+                }
+            }
+            
+            initializeAudio() {
+                try {
+                    // Create audio context for bell sounds
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    console.log('✅ Audio context initialized');
+                } catch (error) {
+                    console.log('⚠️ Audio context failed:', error);
+                }
+            }
+            
+            playBell() {
+                if (!this.elements.soundToggle || !this.elements.soundToggle.checked) return;
+                
+                try {
+                    if (this.audioContext && this.audioContext.state === 'suspended') {
+                        this.audioContext.resume();
                     }
-                });
+                    
+                    const oscillator = this.audioContext.createOscillator();
+                    const gainNode = this.audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(this.audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(800, this.audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(400, this.audioContext.currentTime + 0.5);
+                    
+                    gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.5);
+                    
+                    oscillator.start(this.audioContext.currentTime);
+                    oscillator.stop(this.audioContext.currentTime + 0.5);
+                    
+                    console.log('🔔 Bell sound played');
+                } catch (error) {
+                    console.log('⚠️ Bell sound failed:', error);
+                }
             }
             
-            // Initialize display
-            window.updateDisplay();
+            start() {
+                if (this.state.isRunning) return;
+                
+                console.log('▶️ Starting timer...');
+                this.state.isRunning = true;
+                this.state.isPaused = false;
+                
+                // Update button states
+                if (this.elements.startBtn) {
+                    this.elements.startBtn.style.display = 'none';
+                }
+                if (this.elements.pauseBtn) {
+                    this.elements.pauseBtn.style.display = 'inline-block';
+                }
+                
+                // Start the countdown
+                this.state.intervalId = setInterval(() => {
+                    this.state.timeRemaining--;
+                    this.updateDisplay();
+                    
+                    if (this.state.timeRemaining <= 0) {
+                        this.complete();
+                    }
+                }, 1000);
+                
+                this.updateStatus('Meditation in progress...');
+            }
+            
+            pause() {
+                if (!this.state.isRunning) return;
+                
+                console.log('⏸️ Pausing timer...');
+                this.state.isRunning = false;
+                this.state.isPaused = true;
+                
+                clearInterval(this.state.intervalId);
+                
+                // Update button states
+                if (this.elements.startBtn) {
+                    this.elements.startBtn.style.display = 'inline-block';
+                }
+                if (this.elements.pauseBtn) {
+                    this.elements.pauseBtn.style.display = 'none';
+                }
+                
+                this.updateStatus('Paused');
+            }
+            
+            reset() {
+                console.log('🔄 Resetting timer...');
+                
+                this.state.isRunning = false;
+                this.state.isPaused = false;
+                clearInterval(this.state.intervalId);
+                
+                // Reset time
+                if (this.elements.durationSelect) {
+                    this.state.timeRemaining = parseInt(this.elements.durationSelect.value);
+                } else {
+                    this.state.timeRemaining = 600;
+                }
+                this.state.totalTime = this.state.timeRemaining;
+                
+                // Update button states
+                if (this.elements.startBtn) {
+                    this.elements.startBtn.style.display = 'inline-block';
+                }
+                if (this.elements.pauseBtn) {
+                    this.elements.pauseBtn.style.display = 'none';
+                }
+                
+                this.updateDisplay();
+                this.updateStatus('Ready to begin');
+            }
+            
+            complete() {
+                console.log('✅ Meditation completed!');
+                
+                this.state.isRunning = false;
+                this.state.isPaused = false;
+                clearInterval(this.state.intervalId);
+                
+                // Play completion sound
+                this.playBell();
+                
+                // Update button states
+                if (this.elements.startBtn) {
+                    this.elements.startBtn.style.display = 'inline-block';
+                }
+                if (this.elements.pauseBtn) {
+                    this.elements.pauseBtn.style.display = 'none';
+                }
+                
+                this.updateStatus('Meditation complete! 🎉');
+                
+                // Show completion notification
+                setTimeout(() => {
+                    alert('Meditation Complete! 🎉\n\nTake a moment to reflect on your practice.');
+                }, 500);
+            }
+            
+            updateDisplay() {
+                const minutes = Math.floor(this.state.timeRemaining / 60);
+                const seconds = this.state.timeRemaining % 60;
+                const timeString = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                
+                // Update display
+                if (this.elements.display) {
+                    this.elements.display.textContent = timeString;
+                }
+                
+                // Update progress ring
+                if (this.elements.progressRing) {
+                    const progress = (this.state.totalTime - this.state.timeRemaining) / this.state.totalTime;
+                    const circumference = 2 * Math.PI * 45; // radius = 45
+                    const strokeDashoffset = circumference - (progress * circumference);
+                    
+                    this.elements.progressRing.style.strokeDashoffset = strokeDashoffset;
+                }
+                
+                console.log(`⏱️ Display updated: ${timeString}`);
+            }
+            
+            updateStatus(message) {
+                if (this.elements.status) {
+                    this.elements.status.textContent = message;
+                }
+                console.log(`📝 Status: ${message}`);
+            }
+        }
+        
+        // Initialize the timer
+        setTimeout(() => {
+            window.meditationTimer = new MeditationTimer();
         }, 100);
     }
 
