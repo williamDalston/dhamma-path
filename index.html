@@ -9005,7 +9005,7 @@
         DataManager.init();
         
         // Test script loading
-        console.log('🚀 SCRIPT LOADED - VERSION 2.0 🚀');
+        console.log('🚀 SCRIPT LOADED - VERSION 3.0 - CACHE BUSTED 🚀');
         
         initDarkMode();
         initMobileMenu();
@@ -9041,6 +9041,17 @@
             
             document.body.addEventListener('click', handleNavigationClick);
             
+        // CLEAR ALL OLD NAVIGATION HANDLERS
+        console.log('🧹 CLEARING ALL OLD NAVIGATION HANDLERS...');
+        const oldHandlers = document.querySelectorAll('*[data-navigation-handler]');
+        oldHandlers.forEach(handler => handler.remove());
+        
+        // Remove any existing click listeners on document.body
+        const newBody = document.body.cloneNode(true);
+        document.body.parentNode.replaceChild(newBody, document.body);
+        
+        console.log('✅ OLD HANDLERS CLEARED - NEW NAVIGATION SYSTEM ACTIVE');
+        
         // Load home page by default
         navigateToPage('home');
         
