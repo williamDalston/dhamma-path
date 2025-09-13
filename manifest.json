@@ -1,7 +1,7 @@
 {
-  "name": "The Dhamma Path - Premium Mindfulness App",
-  "short_name": "Dhamma Path",
-  "description": "Transform your mornings, transform your life with premium meditation, journaling, and wellness tools",
+  "name": "MorningFlow - Premium Morning Routine App",
+  "short_name": "MorningFlow",
+  "description": "Transform your mornings, transform your life with science-based wellness practices, meditation, and health optimization tools",
   "version": "1.0.0",
   "start_url": "/",
   "display": "standalone",
@@ -32,21 +32,21 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Home page showing meditation and journaling options"
+      "label": "Home page showing wellness and health optimization tools"
     },
     {
       "src": "/screenshots/mobile-timer.png",
       "sizes": "390x844",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Mobile meditation timer interface"
+      "label": "Mobile wellness timer interface"
     }
   ],
   "shortcuts": [
     {
       "name": "Start Meditation",
       "short_name": "Meditate",
-      "description": "Quick access to meditation timer",
+      "description": "Quick access to stress reduction and mental clarity",
       "url": "/?page=timer",
       "icons": [
         {
@@ -58,7 +58,7 @@
     {
       "name": "Write Journal",
       "short_name": "Journal",
-      "description": "Quick access to journaling",
+      "description": "Quick access to personal growth tracking",
       "url": "/?page=journal",
       "icons": [
         {
@@ -70,7 +70,7 @@
     {
       "name": "Start Workout",
       "short_name": "Workout",
-      "description": "Quick access to workout timer",
+      "description": "Quick access to physical health and energy boost",
       "url": "/?page=workout",
       "icons": [
         {
@@ -101,7 +101,7 @@
   ],
   "protocol_handlers": [
     {
-      "protocol": "web+dhamma",
+      "protocol": "web+morningflow",
       "url": "/?action=%s"
     }
   ],
