@@ -28,7 +28,7 @@ class MeditationTimer {
             startBtn: document.getElementById('timer-start-btn'),
             pauseBtn: document.getElementById('timer-pause-btn'),
             resetBtn: document.getElementById('timer-reset-btn'),
-            durationSelect: document.getElementById('timer-duration'),
+            durationBtns: document.querySelectorAll('.duration-btn'),
             status: document.getElementById('timer-status')
         };
         
@@ -48,13 +48,27 @@ class MeditationTimer {
         if (this.elements.resetBtn) {
             this.elements.resetBtn.addEventListener('click', () => this.reset());
         }
-        if (this.elements.durationSelect) {
-            this.elements.durationSelect.addEventListener('change', () => {
-                if (!this.isRunning) {
-                    this.timeRemaining = parseInt(this.elements.durationSelect.value);
-                    this.totalTime = this.timeRemaining;
-                    this.updateDisplay();
-                }
+        
+        // Setup duration button listeners
+        if (this.elements.durationBtns) {
+            this.elements.durationBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (!this.isRunning) {
+                        const duration = parseInt(btn.dataset.duration);
+                        this.timeRemaining = duration;
+                        this.totalTime = duration;
+                        
+                        // Update active button
+                        this.elements.durationBtns.forEach(b => {
+                            b.classList.remove('btn-primary', 'active');
+                            b.classList.add('btn-outline');
+                        });
+                        btn.classList.remove('btn-outline');
+                        btn.classList.add('btn-primary', 'active');
+                        
+                        this.updateDisplay();
+                    }
+                });
             });
         }
     }

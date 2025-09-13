@@ -25,22 +25,36 @@ class DhammaPathApp {
         }
     }
 
-    initialize() {
+    async initialize() {
         try {
+            // Critical initialization first
             this.setupErrorHandling();
             this.initializePerformanceMonitoring();
-            this.initializeAnimationSystem();
-            this.initializeAnalytics();
             this.initializeNavigation();
             this.setupGlobalEventListeners();
-            this.loadInitialPage();
-            this.setupPremiumFeatures();
             
+            // Use requestIdleCallback for non-critical features
+            if (window.requestIdleCallback) {
+                requestIdleCallback(() => {
+                    this.initializeNonCriticalFeatures();
+                });
+            } else {
+                setTimeout(() => this.initializeNonCriticalFeatures(), 0);
+            }
+            
+            this.loadInitialPage();
             this.isInitialized = true;
             console.log('✅ MorningFlow App initialized successfully');
         } catch (error) {
             console.error('❌ Failed to initialize app:', error);
         }
+    }
+    
+    initializeNonCriticalFeatures() {
+        // Initialize non-critical features when browser is idle
+        this.initializeAnimationSystem();
+        this.initializeAnalytics();
+        this.setupPremiumFeatures();
     }
 
     setupErrorHandling() {
@@ -154,9 +168,6 @@ class DhammaPathApp {
                 case '3':
                     this.navigateToPage('workout');
                     break;
-                case '4':
-                    this.navigateToPage('interview');
-                    break;
                 case 'h':
                 case 'H':
                     this.navigateToPage('home');
@@ -224,9 +235,6 @@ class DhammaPathApp {
                 break;
             case '3':
                 this.navigateToPage('workout');
-                break;
-            case '4':
-                this.navigateToPage('interview');
                 break;
             case 'h':
             case 'H':

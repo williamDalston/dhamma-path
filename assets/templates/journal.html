@@ -1,71 +1,145 @@
 <!-- Premium Journal Page -->
-<div class="text-center py-16">
+<div class="text-center py-8">
     <div class="animate-fade-up" data-animate="fade-up">
-        <h1 class="text-5xl font-bold gradient-text-premium mb-8">✍️ Mindful Journaling</h1>
-        <p class="text-xl text-charcoal/70 mb-12">Reflect, write, and grow through mindful practice</p>
+        <div class="text-center mb-12">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight" style="background: var(--text-gradient-premium); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">✍️ Mindful Journaling</h1>
+            <p class="text-xl md:text-2xl text-charcoal-medium max-w-4xl mx-auto leading-relaxed font-medium">Reflect, write, and grow through mindful practice</p>
+        </div>
     </div>
     
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-3xl mx-auto">
         <!-- Premium Journaling Timer -->
-        <div class="card-premium p-8 mb-8" data-animate="scale-in" data-delay="200">
-            <h2 class="text-2xl font-semibold mb-6 gradient-text-premium">Journaling Session</h2>
+        <div class="card-premium p-8 mb-8" data-animate="scale-in" data-delay="200" style="background: var(--gradient-warm); border: 2px solid var(--sage-medium);">
+            <h2 class="text-2xl font-semibold mb-6 text-forest-deep">Journaling Session</h2>
             
             <!-- Premium Timer Display with Progress Ring -->
             <div class="relative mb-8">
                 <svg class="w-32 h-32 mx-auto transform -rotate-90" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" stroke="rgba(74, 108, 85, 0.1)" stroke-width="6" fill="none"/>
-                    <circle id="journal-progress-circle" cx="50" cy="50" r="45" stroke="#4A6C55" stroke-width="6" fill="none"
+                    <circle cx="50" cy="50" r="45" stroke="rgba(156, 175, 136, 0.2)" stroke-width="8" fill="none"/>
+                    <circle id="journal-progress-circle" cx="50" cy="50" r="45" stroke="url(#journalProgressGradient)" stroke-width="8" fill="none"
                             stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"
                             class="transition-all duration-1000 ease-in-out"/>
+                    <defs>
+                        <linearGradient id="journalProgressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#1A4D3A;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#7A9B7A;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
                 </svg>
                 <div class="absolute inset-0 flex items-center justify-center">
-                    <div id="journal-display" class="text-3xl font-bold text-forest-green">10:00</div>
+                    <div id="journal-display" class="text-3xl font-bold" style="background: var(--text-gradient-calm); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">10:00</div>
                 </div>
             </div>
             
             <!-- Premium Duration Selector -->
             <div class="mb-8" data-animate="fade-up" data-delay="300">
-                <label class="block text-sm font-semibold text-charcoal mb-3">Choose Duration</label>
-                <div class="grid grid-cols-2 gap-3">
-                    <button class="journal-duration-btn btn-premium ripple-premium" data-duration="300">
-                        <div class="text-lg font-bold">5</div><div class="text-sm">minutes</div>
+                <label class="block text-lg font-semibold text-charcoal-rich mb-4">Choose Duration</label>
+                <div class="grid grid-cols-4 gap-3">
+                    <button class="journal-duration-btn btn-premium btn-sm rounded-xl" data-duration="300" style="background: transparent; color: var(--forest-deep); border: 2px solid var(--sage-medium);">
+                        <div class="text-base font-bold">5</div><div class="text-xs">min</div>
                     </button>
-                    <button class="journal-duration-btn btn-premium ripple-premium active" data-duration="600">
-                        <div class="text-lg font-bold">10</div><div class="text-sm">minutes</div>
+                    <button class="journal-duration-btn btn-premium btn-sm rounded-xl active" data-duration="600" style="background: var(--gradient-calm); color: var(--cream-rich); border: 2px solid var(--sage-medium);">
+                        <div class="text-base font-bold">10</div><div class="text-xs">min</div>
                     </button>
-                    <button class="journal-duration-btn btn-premium ripple-premium" data-duration="900">
-                        <div class="text-lg font-bold">15</div><div class="text-sm">minutes</div>
+                    <button class="journal-duration-btn btn-premium btn-sm rounded-xl" data-duration="900" style="background: transparent; color: var(--forest-deep); border: 2px solid var(--sage-medium);">
+                        <div class="text-base font-bold">15</div><div class="text-xs">min</div>
                     </button>
-                    <button class="journal-duration-btn btn-premium ripple-premium" data-duration="1200">
-                        <div class="text-lg font-bold">20</div><div class="text-sm">minutes</div>
+                    <button class="journal-duration-btn btn-premium btn-sm rounded-xl" data-duration="1200" style="background: transparent; color: var(--forest-deep); border: 2px solid var(--sage-medium);">
+                        <div class="text-base font-bold">20</div><div class="text-xs">min</div>
                     </button>
                 </div>
             </div>
             
             <!-- Premium Control Buttons -->
             <div class="flex gap-4 mb-6" data-animate="fade-up" data-delay="400">
-                <button id="journal-start-btn" class="flex-1 btn-premium ripple-premium glow-premium">
-                    <span class="text-xl mr-2">✍️</span>Start Writing
+                <button id="journal-start-btn" class="flex-1 btn-premium btn-lg rounded-2xl" style="background: var(--gradient-growth); color: var(--cream-rich); border: 2px solid var(--forest-medium);">
+                    <span class="text-lg mr-3">✍️</span>Start Writing
                 </button>
-                <button id="journal-pause-btn" class="flex-1 btn-premium ripple-premium hidden">
-                    <span class="text-xl mr-2">⏸️</span>Pause
+                <button id="journal-pause-btn" class="flex-1 btn-premium btn-lg rounded-2xl hidden" style="background: var(--gradient-energy); color: var(--charcoal-rich); border: 2px solid var(--gold-medium);">
+                    <span class="text-lg mr-3">⏸️</span>Pause
                 </button>
-                <button id="journal-reset-btn" class="flex-1 btn-premium ripple-premium">
-                    <span class="text-xl mr-2">🔄</span>Reset
+                <button id="journal-reset-btn" class="flex-1 btn-premium btn-lg rounded-2xl" style="background: transparent; color: var(--forest-deep); border: 2px solid var(--sage-medium);">
+                    <span class="text-lg mr-3">🔄</span>Reset
                 </button>
             </div>
             
-            <div id="journal-status" class="text-lg text-charcoal/70 pulse-premium">Ready to begin your mindful writing practice</div>
+            <div id="journal-status" class="text-lg text-charcoal-medium pulse-premium">Ready to begin your mindful writing practice</div>
         </div>
         
         <!-- Premium Writing Area -->
-        <div class="card-premium p-8" data-animate="fade-up" data-delay="500">
-            <h3 class="text-xl font-semibold mb-4 gradient-text-premium">Your Thoughts</h3>
+        <div class="card-premium p-6" data-animate="fade-up" data-delay="500">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold gradient-text-premium">Your Thoughts</h3>
+                <button id="prompt-btn" class="btn-premium btn-sm ripple-premium">
+                    <span class="text-sm mr-2">💡</span>Get Prompt
+                </button>
+            </div>
+            
+            <!-- Writing Prompts -->
+            <div id="writing-prompts" class="mb-4 p-4 bg-forest-green/5 rounded-lg border border-forest-green/20" style="display: none;">
+                <h4 class="font-semibold mb-2 text-forest-green">Today's Prompts:</h4>
+                <div class="space-y-2">
+                    <div class="text-sm text-charcoal/70">• What are you grateful for today?</div>
+                    <div class="text-sm text-charcoal/70">• What's one thing you want to accomplish?</div>
+                    <div class="text-sm text-charcoal/70">• How are you feeling right now?</div>
+                </div>
+            </div>
+            
+            <!-- Smart Writing Assistant -->
+            <div class="mb-4 p-4 bg-gradient-to-r from-forest-green/5 to-earthy-gold/5 rounded-lg border border-forest-green/20" id="writing-assistant" style="display: none;">
+                <div class="flex items-center space-x-2 mb-3">
+                    <span class="text-lg">🤖</span>
+                    <h4 class="font-semibold text-forest-green">Writing Assistant</h4>
+                </div>
+                <div class="space-y-2">
+                    <button class="w-full text-left p-2 hover:bg-white/20 rounded-lg transition-colors" onclick="insertPrompt('gratitude')">
+                        <span class="text-sm text-charcoal/70">✨ Start with gratitude</span>
+                    </button>
+                    <button class="w-full text-left p-2 hover:bg-white/20 rounded-lg transition-colors" onclick="insertPrompt('goals')">
+                        <span class="text-sm text-charcoal/70">🎯 Set today's intention</span>
+                    </button>
+                    <button class="w-full text-left p-2 hover:bg-white/20 rounded-lg transition-colors" onclick="insertPrompt('reflection')">
+                        <span class="text-sm text-charcoal/70">💭 Reflect on yesterday</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mood Tracker -->
+            <div class="mb-4 p-4 bg-white/30 backdrop-blur-sm rounded-lg border border-forest-green/20">
+                <h4 class="font-semibold mb-3 text-center text-forest-green">How are you feeling?</h4>
+                <div class="flex justify-center space-x-2 mb-3">
+                    <button class="mood-btn p-2 rounded-full hover:bg-forest-green/10 transition-all duration-200 transform hover:scale-110" data-mood="😊" title="Happy">
+                        <span class="text-2xl">😊</span>
+                    </button>
+                    <button class="mood-btn p-2 rounded-full hover:bg-forest-green/10 transition-all duration-200 transform hover:scale-110" data-mood="😌" title="Calm">
+                        <span class="text-2xl">😌</span>
+                    </button>
+                    <button class="mood-btn p-2 rounded-full hover:bg-forest-green/10 transition-all duration-200 transform hover:scale-110" data-mood="🤔" title="Thoughtful">
+                        <span class="text-2xl">🤔</span>
+                    </button>
+                    <button class="mood-btn p-2 rounded-full hover:bg-forest-green/10 transition-all duration-200 transform hover:scale-110" data-mood="😴" title="Tired">
+                        <span class="text-2xl">😴</span>
+                    </button>
+                    <button class="mood-btn p-2 rounded-full hover:bg-forest-green/10 transition-all duration-200 transform hover:scale-110" data-mood="😤" title="Frustrated">
+                        <span class="text-2xl">😤</span>
+                    </button>
+                </div>
+                <!-- Current Mood Display -->
+                <div id="mood-display" class="text-center" style="display: none;">
+                    <div class="inline-flex items-center bg-forest-green/10 px-3 py-2 rounded-full">
+                        <span class="text-sm text-charcoal/70">Today's mood: </span>
+                        <span class="text-lg ml-1"></span>
+                    </div>
+                </div>
+                <!-- Mood Stats -->
+                <div id="mood-stats" class="mt-3"></div>
+            </div>
             <div class="relative">
                 <textarea 
                     id="journal-textarea" 
                     placeholder="Begin writing your thoughts, reflections, or whatever comes to mind..."
-                    class="w-full h-64 p-4 border-2 border-forest-green/30 rounded-xl focus:ring-2 focus:ring-forest-green focus:border-forest-green focus:outline-none resize-none text-base leading-relaxed transition-all duration-300 hover:shadow-lg focus:shadow-xl"
+                    class="w-full h-48 p-4 border-2 border-forest-green/30 rounded-xl focus:ring-2 focus:ring-forest-green focus:border-forest-green focus:outline-none resize-none text-base leading-relaxed transition-all duration-300 hover:shadow-lg focus:shadow-xl"
                     disabled
                 ></textarea>
                 <div class="absolute top-2 right-2">
@@ -82,18 +156,18 @@
                         <span id="char-count" class="font-semibold text-forest-green">0</span> characters
                     </div>
                 </div>
-                <button id="journal-save-btn" class="btn-premium ripple-premium" disabled>
-                    <span class="text-lg mr-2">💾</span>Save Entry
+                <button id="journal-save-btn" class="btn-premium btn-sm ripple-premium" disabled>
+                    <span class="text-sm mr-2">💾</span>Save Entry
                 </button>
             </div>
         </div>
         
         <!-- Premium Journal Entries -->
-        <div class="card-premium p-8 mt-8" data-animate="fade-up" data-delay="600">
-            <h3 class="text-xl font-semibold mb-6 gradient-text-premium">Recent Entries</h3>
+        <div class="card-premium p-6 mt-6" data-animate="fade-up" data-delay="600">
+            <h3 class="text-lg font-semibold mb-4 gradient-text-premium">Recent Entries</h3>
             <div id="journal-entries" class="space-y-4">
-                <div class="text-center text-charcoal/60 py-8">
-                    <div class="text-4xl mb-4">📝</div>
+                <div class="text-center text-charcoal/60 py-6">
+                    <div class="text-3xl mb-3">📝</div>
                     <p>No entries yet. Start writing to see your thoughts here!</p>
                 </div>
             </div>

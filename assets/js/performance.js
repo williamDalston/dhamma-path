@@ -95,7 +95,7 @@ class PerformanceMonitor {
 
     optimizeLongTask(task) {
         // Break up long tasks using setTimeout
-        if (task.duration > 100) {
+        if (task.duration > 50) { // Reduced threshold for better performance
             console.log('🔧 Optimizing long task...');
             // Force garbage collection if available
             if (window.gc) {

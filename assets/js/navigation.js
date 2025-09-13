@@ -194,7 +194,6 @@ class NavigationManager {
             'timer': this.getTimerPageContent(),
             'journal': this.getJournalPageContent(),
             'workout': this.getWorkoutPageContent(),
-            'interview': this.getInterviewPageContent()
         };
 
         return pages[pageName] || pages['home'];
@@ -202,29 +201,52 @@ class NavigationManager {
 
     getHomePageContent() {
         return `
-            <div class="text-center py-16">
-                <h1 class="text-4xl font-bold text-charcoal mb-8">Welcome to The Dhamma Path</h1>
-                <p class="text-xl text-charcoal/70 mb-8">Transform your mornings, transform your life</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
-                    <div class="bg-white/80 rounded-xl p-6 shadow-lg card-link">
-                        <div class="text-4xl mb-4">🧘</div>
-                        <h3 class="text-xl font-semibold mb-2">Meditate</h3>
-                        <p class="text-charcoal/70">Start your day with mindfulness</p>
+            <!-- Flow Start - The One Thing Approach -->
+            <div class="flow-start min-h-screen flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+                <!-- Subtle Background Elements -->
+                <div class="absolute inset-0 morphing-premium opacity-3 pointer-events-none"></div>
+                
+                <div class="relative z-10 max-w-2xl mx-auto text-center">
+                    <!-- Personalized Greeting -->
+                    <div class="greeting mb-12 animate-fade-up">
+                        <h1 class="greeting-text text-4xl md:text-6xl font-bold text-charcoal mb-4 leading-tight">
+                            Good morning, <span class="text-forest-deep">Alex</span>.
+                        </h1>
+                        <p class="greeting-subtitle text-xl md:text-2xl text-charcoal/70 font-medium">
+                            Ready to begin your flow?
+                        </p>
                     </div>
-                    <div class="bg-white/80 rounded-xl p-6 shadow-lg card-link">
-                        <div class="text-4xl mb-4">✍️</div>
-                        <h3 class="text-xl font-semibold mb-2">Journal</h3>
-                        <p class="text-charcoal/70">Reflect and grow</p>
+                    
+                    <!-- Single Hero Action -->
+                    <div class="hero-action mb-16 animate-fade-up">
+                        <div class="activity-preview bg-white/60 backdrop-blur-md rounded-3xl p-8 mb-8 border border-white/30 shadow-xl max-w-md mx-auto">
+                            <div class="activity-icon text-6xl mb-6 float-premium">🧘</div>
+                            <div class="activity-info">
+                                <h2 class="activity-title text-2xl md:text-3xl font-bold text-forest-deep mb-3">
+                                    10-Minute Meditation
+                                </h2>
+                                <p class="activity-description text-charcoal/70 text-lg leading-relaxed">
+                                    Start your day with mindful breathing and inner calm
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-primary btn-xl text-xl px-12 py-6 rounded-2xl shadow-hover hover:shadow-premium transform hover:scale-105 transition-all duration-300 begin-flow-btn" 
+                                style="background: var(--gradient-premium); border: 2px solid var(--gold-medium);">
+                            <span class="text-2xl mr-4">✨</span>Begin Flow
+                        </button>
                     </div>
-                    <div class="bg-white/80 rounded-xl p-6 shadow-lg card-link">
-                        <div class="text-4xl mb-4">💪</div>
-                        <h3 class="text-xl font-semibold mb-2">Exercise</h3>
-                        <p class="text-charcoal/70">7-minute workout</p>
-                    </div>
-                    <div class="bg-white/80 rounded-xl p-6 shadow-lg card-link">
-                        <div class="text-4xl mb-4">🎤</div>
-                        <h3 class="text-xl font-semibold mb-2">Practice</h3>
-                        <p class="text-charcoal/70">Build confidence</p>
+                    
+                    <!-- Minimal Secondary Actions -->
+                    <div class="secondary-actions animate-fade-up">
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <button class="btn-ghost btn-lg px-8 py-4 rounded-xl hover:bg-forest-green/10 transition-all duration-300 customize-flow-btn">
+                                <span class="text-lg mr-3">⚙️</span>Customize Today's Flow
+                            </button>
+                            <button class="btn-ghost btn-lg px-8 py-4 rounded-xl hover:bg-forest-green/10 transition-all duration-300 view-progress-btn">
+                                <span class="text-lg mr-3">📊</span>View Progress
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -285,18 +307,6 @@ class NavigationManager {
         `;
     }
 
-    getInterviewPageContent() {
-        return `
-            <div class="text-center py-16">
-                <h1 class="text-4xl font-bold text-charcoal mb-8">🎤 Interview Practice</h1>
-                <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
-                    <h2 class="text-2xl font-semibold mb-4">Tell me about yourself</h2>
-                    <p class="text-charcoal/70 mb-6">Practice your elevator pitch and build confidence</p>
-                    <button id="interview-start-btn" class="px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Start Practice</button>
-                </div>
-            </div>
-        `;
-    }
 
     initializePageFeatures(pageName) {
         console.log(`🎯 Initializing ${pageName} page features...`);
@@ -311,9 +321,6 @@ class NavigationManager {
                 break;
             case 'workout':
                 this.initializeWorkoutPage();
-                break;
-            case 'interview':
-                this.initializeInterviewPage();
                 break;
             case 'home':
                 this.initializeHomePage();
@@ -674,173 +681,182 @@ class NavigationManager {
         updateExercise();
     }
 
-    initializeInterviewPage() {
-        this.initializeInterview();
-        this.initializeInterviewTimer();
-    }
-
-    initializeInterviewTimer() {
-        // Enhanced interview practice timer
-        const startBtn = document.getElementById('interview-start-btn');
-        const pauseBtn = document.getElementById('interview-pause-btn');
-        const resetBtn = document.getElementById('interview-reset-btn');
-        const display = document.getElementById('interview-display');
-        const status = document.getElementById('interview-status');
-        const prevBtn = document.getElementById('prev-question-btn');
-        const nextBtn = document.getElementById('next-question-btn');
-        const questionTitle = document.getElementById('question-title');
-        const questionEmoji = document.getElementById('question-emoji');
-        const questionDescription = document.getElementById('question-description');
-        const progressCircle = document.getElementById('interview-progress-circle');
-
-        if (!startBtn || !display) return;
-
-        const questions = [
-            { title: 'Tell me about yourself', emoji: '🎤', description: 'Practice your elevator pitch and build confidence in your communication skills.', duration: 120 },
-            { title: 'Why do you want this job?', emoji: '💼', description: 'Explain your motivation and how this role aligns with your career goals.', duration: 120 },
-            { title: 'What are your strengths?', emoji: '💪', description: 'Highlight your key skills and provide specific examples of how you use them.', duration: 120 },
-            { title: 'What is your greatest weakness?', emoji: '🤔', description: 'Show self-awareness and how you work to improve areas of growth.', duration: 120 },
-            { title: 'Where do you see yourself in 5 years?', emoji: '🚀', description: 'Share your career aspirations and how this role fits your long-term plan.', duration: 120 },
-            { title: 'Why should we hire you?', emoji: '⭐', description: 'Summarize your unique value proposition and what you bring to the team.', duration: 120 }
-        ];
-
-        let currentQuestionIndex = 0;
-        let timeRemaining = questions[0].duration;
-        let totalTime = questions[0].duration;
-        let isRunning = false;
-        let timerInterval = null;
-
-        // Navigation buttons
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                if (currentQuestionIndex > 0) {
-                    currentQuestionIndex--;
-                    updateQuestion();
-                }
-            });
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                if (currentQuestionIndex < questions.length - 1) {
-                    currentQuestionIndex++;
-                    updateQuestion();
-                }
-            });
-        }
-
-        // Start button
-        startBtn.addEventListener('click', () => {
-            if (isRunning) return;
-            
-            isRunning = true;
-            startBtn.classList.add('hidden');
-            pauseBtn.classList.remove('hidden');
-            
-            updateStatus('Practice in progress...');
-            
-            timerInterval = setInterval(() => {
-                timeRemaining--;
-                updateDisplay();
-                updateProgressCircle();
-                
-                if (timeRemaining <= 0) {
-                    nextQuestion();
-                }
-            }, 1000);
-        });
-
-        // Pause button
-        pauseBtn.addEventListener('click', () => {
-            if (!isRunning) return;
-            
-            isRunning = false;
-            clearInterval(timerInterval);
-            startBtn.classList.remove('hidden');
-            pauseBtn.classList.add('hidden');
-            updateStatus('Practice paused');
-        });
-
-        // Reset button
-        resetBtn.addEventListener('click', () => {
-            isRunning = false;
-            clearInterval(timerInterval);
-            currentQuestionIndex = 0;
-            updateQuestion();
-            startBtn.classList.remove('hidden');
-            pauseBtn.classList.add('hidden');
-            updateStatus('Ready to practice your interview skills');
-        });
-
-        function updateQuestion() {
-            const question = questions[currentQuestionIndex];
-            timeRemaining = question.duration;
-            totalTime = question.duration;
-            
-            if (questionTitle) questionTitle.textContent = question.title;
-            if (questionEmoji) questionEmoji.textContent = question.emoji;
-            if (questionDescription) questionDescription.textContent = question.description;
-            
-            updateDisplay();
-            updateProgressCircle();
-        }
-
-        function nextQuestion() {
-            if (currentQuestionIndex < questions.length - 1) {
-                currentQuestionIndex++;
-                updateQuestion();
-            } else {
-                completePractice();
-            }
-        }
-
-        function updateDisplay() {
-            const minutes = Math.floor(timeRemaining / 60);
-            const seconds = timeRemaining % 60;
-            display.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-        }
-
-        function updateProgressCircle() {
-            if (!progressCircle) return;
-            const progress = (totalTime - timeRemaining) / totalTime;
-            const circumference = 2 * Math.PI * 45;
-            const offset = circumference - (progress * circumference);
-            progressCircle.style.strokeDashoffset = offset;
-        }
-
-        function updateStatus(message) {
-            if (status) status.textContent = message;
-        }
-
-        function completePractice() {
-            isRunning = false;
-            clearInterval(timerInterval);
-            updateStatus('Practice complete! Great job!');
-            
-            showNotification('Interview practice complete! You\'re getting better!', 'success');
-        }
-
-        function showNotification(message, type = 'info') {
-            if (window.dhammaPathApp && window.dhammaPathApp.showNotification) {
-                window.dhammaPathApp.showNotification(message, type);
-            }
-        }
-
-        // Initial setup
-        updateQuestion();
-    }
 
     initializeHomePage() {
-        // Add click handlers for home page cards
-        const cards = document.querySelectorAll('.card-premium');
-        cards.forEach((card, index) => {
-            card.addEventListener('click', () => {
-                const pages = ['timer', 'journal', 'workout', 'interview'];
-                if (pages[index]) {
-                    this.navigateToPage(pages[index]);
+        console.log('🏠 Initializing Flow Start home page...');
+        
+        // Begin Flow button - starts with recommended activity
+        const beginFlowBtn = document.querySelector('.begin-flow-btn, #begin-flow-btn');
+        if (beginFlowBtn) {
+            beginFlowBtn.addEventListener('click', () => {
+                console.log('🚀 Begin Flow clicked');
+                // Start with meditation (the recommended activity)
+                this.navigateToPage('timer');
+            });
+        }
+        
+        // Customize Flow button
+        const customizeFlowBtn = document.querySelector('.customize-flow-btn, #customize-flow-btn');
+        if (customizeFlowBtn) {
+            customizeFlowBtn.addEventListener('click', () => {
+                console.log('⚙️ Customize Flow clicked');
+                this.showFlowBuilder();
+            });
+        }
+        
+        // View Progress button
+        const viewProgressBtn = document.querySelector('.view-progress-btn, #view-progress-btn');
+        if (viewProgressBtn) {
+            viewProgressBtn.addEventListener('click', () => {
+                console.log('📊 View Progress clicked');
+                this.showProgressView();
+            });
+        }
+        
+        // Follow Recommendation button
+        const followRecommendationBtn = document.querySelector('#follow-recommendation');
+        if (followRecommendationBtn) {
+            followRecommendationBtn.addEventListener('click', () => {
+                console.log('✨ Follow Recommendation clicked');
+                this.navigateToPage('timer');
+            });
+        }
+        
+        // Flow Builder Modal handlers
+        this.setupFlowBuilderModal();
+        
+        // Generate smart recommendation
+        this.generateSmartRecommendation();
+    }
+    
+    showFlowBuilder() {
+        const modal = document.getElementById('flow-builder-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+    }
+    
+    showProgressView() {
+        // Show progress overview (could be a modal or navigate to a progress page)
+        console.log('📊 Showing progress view');
+        // For now, just show a notification
+        if (window.dhammaPathApp && window.dhammaPathApp.showNotification) {
+            window.dhammaPathApp.showNotification('Progress view coming soon!', 'info');
+        }
+    }
+    
+    setupFlowBuilderModal() {
+        // Close modal button
+        const closeBtn = document.querySelector('#close-flow-builder');
+        const cancelBtn = document.querySelector('#cancel-flow-builder');
+        const modal = document.querySelector('#flow-builder-modal');
+        
+        if (closeBtn && modal) {
+            closeBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+        }
+        
+        if (cancelBtn && modal) {
+            cancelBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+        }
+        
+        // Save flow button
+        const saveBtn = document.querySelector('#save-flow-builder');
+        if (saveBtn) {
+            saveBtn.addEventListener('click', () => {
+                this.saveCustomFlow();
+                modal.classList.add('hidden');
+            });
+        }
+        
+        // Duration sliders
+        const sliders = document.querySelectorAll('.duration-slider');
+        sliders.forEach(slider => {
+            slider.addEventListener('input', (e) => {
+                const value = e.target.value;
+                const valueSpan = e.target.parentElement.querySelector('.duration-value');
+                if (valueSpan) {
+                    valueSpan.textContent = value + ' min';
                 }
             });
         });
+        
+        // Click outside to close
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        }
+    }
+    
+    saveCustomFlow() {
+        const meditationDuration = document.querySelector('#meditation-duration')?.value || 10;
+        const journalDuration = document.querySelector('#journal-duration')?.value || 10;
+        const exerciseDuration = document.querySelector('#exercise-duration')?.value || 10;
+        
+        const customFlow = {
+            meditation: parseInt(meditationDuration),
+            journal: parseInt(journalDuration),
+            exercise: parseInt(exerciseDuration),
+            timestamp: Date.now()
+        };
+        
+        localStorage.setItem('customFlow', JSON.stringify(customFlow));
+        
+        if (window.dhammaPathApp && window.dhammaPathApp.showNotification) {
+            window.dhammaPathApp.showNotification('Custom flow saved!', 'success');
+        }
+        
+        console.log('💾 Custom flow saved:', customFlow);
+    }
+    
+    generateSmartRecommendation() {
+        // Simple smart recommendation logic
+        const hour = new Date().getHours();
+        const savedFlow = localStorage.getItem('customFlow');
+        
+        let recommendation = {
+            activity: 'timer',
+            title: '10-Minute Meditation',
+            description: 'Start your day with mindful breathing and inner calm',
+            icon: '🧘'
+        };
+        
+        // Time-based recommendations
+        if (hour < 6) {
+            recommendation = {
+                activity: 'timer',
+                title: '5-Minute Meditation',
+                description: 'Gentle morning meditation to start your day',
+                icon: '🌅'
+            };
+        } else if (hour > 10) {
+            recommendation = {
+                activity: 'workout',
+                title: '7-Minute Workout',
+                description: 'Energize your body with a quick workout',
+                icon: '💪'
+            };
+        }
+        
+        // Update the activity preview if elements exist
+        const activityIcon = document.querySelector('.activity-icon');
+        const activityTitle = document.querySelector('.activity-title');
+        const activityDescription = document.querySelector('.activity-description');
+        
+        if (activityIcon) activityIcon.textContent = recommendation.icon;
+        if (activityTitle) activityTitle.textContent = recommendation.title;
+        if (activityDescription) activityDescription.textContent = recommendation.description;
+        
+        // Store recommendation for use by Begin Flow button
+        this.currentRecommendation = recommendation;
+        
+        console.log('🎯 Smart recommendation generated:', recommendation);
     }
 
     initializeMagneticEffects() {
@@ -874,10 +890,6 @@ class NavigationManager {
         console.log('💪 Workout page initialized');
     }
 
-    initializeInterview() {
-        // Basic interview functionality
-        console.log('🎤 Interview page initialized');
-    }
 }
 
 // Export for use in other modules
