@@ -7094,6 +7094,7 @@
 
     // Timer logic
     function attachTimerLogic() {
+        console.log('🚀 attachTimerLogic() called');
         // Attaching enhanced timer logic
         
         // Ensure welcome overlay is hidden
@@ -7103,8 +7104,12 @@
             welcomeOverlay.style.opacity = '0';
         }
         
+        console.log('🚀 Welcome overlay handled');
+        
         // Add a small delay to ensure DOM is fully rendered
+        console.log('🚀 Setting up setTimeout for timer elements');
         setTimeout(() => {
+            console.log('🚀 setTimeout callback executed - looking for timer elements');
             // Looking for timer elements after delay
             
             const startBtn = document.getElementById('timer-start-btn');
