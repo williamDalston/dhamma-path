@@ -407,3 +407,10 @@ class AnalyticsSystem {
 
 // Export for global use
 window.AnalyticsSystem = AnalyticsSystem;
+
+// Auto-initialize analytics system
+document.addEventListener('DOMContentLoaded', () => {
+    if (!window.analyticsSystem) {
+        window.analyticsSystem = new AnalyticsSystem();
+    }
+});

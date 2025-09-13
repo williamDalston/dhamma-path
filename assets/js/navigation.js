@@ -324,8 +324,8 @@ class NavigationManager {
         this.initializeMagneticEffects();
         
         // Track page view in analytics
-        if (window.AnalyticsSystem) {
-            window.AnalyticsSystem.trackPageView(pageName);
+        if (window.analyticsSystem && typeof window.analyticsSystem.trackPageView === 'function') {
+            window.analyticsSystem.trackPageView();
         }
     }
 

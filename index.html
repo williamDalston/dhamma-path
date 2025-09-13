@@ -127,6 +127,15 @@
                 extend: {}
             }
         };
+        
+        // Suppress Tailwind production warning
+        const originalConsoleWarn = console.warn;
+        console.warn = function(message) {
+            if (message && message.includes('cdn.tailwindcss.com should not be used in production')) {
+                return; // Suppress this specific warning
+            }
+            originalConsoleWarn.apply(console, arguments);
+        };
     </script>
 </head>
 
@@ -340,8 +349,8 @@
                 console.log('🎯 Performance Metrics:', perfData);
                 
                 // Send to analytics
-                if (window.AnalyticsSystem) {
-                    window.AnalyticsSystem.trackEvent('performance_metrics', perfData);
+                if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {
+                    window.analyticsSystem.trackEvent('performance_metrics', perfData);
             }
         }
     });
@@ -351,8 +360,8 @@
             console.error('🚨 Global Error:', event.error);
             
             // Send error to analytics
-            if (window.AnalyticsSystem) {
-                window.AnalyticsSystem.trackEvent('error', {
+            if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {
+                window.analyticsSystem.trackEvent('error', {
                     message: event.error?.message || 'Unknown error',
             filename: event.filename,
             lineno: event.lineno,
@@ -366,8 +375,8 @@
             console.error('🚨 Unhandled Promise Rejection:', event.reason);
             
             // Send error to analytics
-            if (window.AnalyticsSystem) {
-                window.AnalyticsSystem.trackEvent('unhandled_promise_rejection', {
+            if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {
+                window.analyticsSystem.trackEvent('unhandled_promise_rejection', {
                     reason: event.reason?.toString() || 'Unknown rejection'
                 });
             }

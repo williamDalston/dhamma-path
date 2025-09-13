@@ -15,7 +15,7 @@ class DhammaPathApp {
     }
 
     init() {
-        console.log('🚀 Initializing The Dhamma Path App...');
+        console.log('🚀 Initializing MorningFlow App...');
         
         // Wait for DOM to be ready
         if (document.readyState === 'loading') {
@@ -37,7 +37,7 @@ class DhammaPathApp {
             this.setupPremiumFeatures();
             
             this.isInitialized = true;
-            console.log('✅ The Dhamma Path App initialized successfully');
+            console.log('✅ MorningFlow App initialized successfully');
         } catch (error) {
             console.error('❌ Failed to initialize app:', error);
         }
