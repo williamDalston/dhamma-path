@@ -6770,6 +6770,7 @@
     };
 
     window.updateDisplay = function() {
+        console.log('=== UPDATE DISPLAY FUNCTION DEFINED ===');
         try {
             console.log('=== UPDATE DISPLAY CALLED ===');
             console.log('window.display:', window.display);
@@ -6831,6 +6832,15 @@
             console.log('Progress ring not found or totalTime is 0');
         }
     };
+    
+    // Test the function immediately
+    console.log('Testing updateDisplay function...');
+    try {
+        window.updateDisplay();
+        console.log('updateDisplay test successful');
+    } catch (error) {
+        console.error('updateDisplay test failed:', error);
+    }
 
     // Home page logic
     function attachHomeLogic() {
