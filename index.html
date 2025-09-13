@@ -136,6 +136,16 @@
             }
             originalConsoleWarn.apply(console, arguments);
         };
+        
+        // Aggressive cache busting
+        console.log('🔄 CACHE BUSTING - JavaScript reloaded at:', new Date().toISOString());
+        console.log('🔄 Current timestamp:', Date.now());
+        console.log('🔄 Version: v' + Date.now());
+        
+        // Clear any existing analytics system to force reinitialization
+        if (window.analyticsSystem) {
+            delete window.analyticsSystem;
+        }
     </script>
 </head>
 
@@ -261,8 +271,8 @@
     <!-- JavaScript Modules -->
     <script src="assets/js/performance.js"></script>
     <script src="assets/js/animations.js"></script>
-    <script src="assets/js/analytics.js"></script>
-    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/analytics.js?v=1757777000"></script>
+    <script src="assets/js/navigation.js?v=1757777000"></script>
     <script src="assets/js/meditation-timer.js"></script>
     <script src="assets/js/production-optimizer.js"></script>
     <script src="assets/js/error-monitor.js"></script>
@@ -275,7 +285,7 @@
     <script src="assets/js/interview-error-handler.js"></script>
     <script src="assets/js/error-dashboard.js"></script>
     
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/app.js?v=1757777000"></script>
     
     <!-- Production Testing (only in production) -->
     <script>

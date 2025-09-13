@@ -74,6 +74,8 @@ class DhammaPathApp {
     initializeAnalytics() {
         if (window.AnalyticsSystem) {
             this.analyticsSystem = new window.AnalyticsSystem();
+            // Make it globally available
+            window.analyticsSystem = this.analyticsSystem;
             console.log('📊 Analytics system initialized');
         }
     }

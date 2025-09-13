@@ -270,8 +270,8 @@ class ProductionOptimizer {
 
     reportError(error, type) {
         // In production, send to error tracking service
-        if (window.AnalyticsSystem) {
-            window.AnalyticsSystem.trackEvent('error', {
+        if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {
+            window.analyticsSystem.trackEvent('error', {
                 type: type,
                 message: error.message || error.toString(),
                 stack: error.stack,
