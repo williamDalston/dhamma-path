@@ -6884,6 +6884,66 @@
         return false;
     };
     
+    // Override old timer variables to prevent conflicts
+    window.timeRemaining = undefined;
+    window.timerInterval = undefined;
+    window.isRunning = undefined;
+    window.totalTime = undefined;
+    window.timerState = undefined;
+    window.isPaused = undefined;
+    
+    // Override the old timer system completely
+    window.startTimer = function() {
+        console.log('🚀 NEW TIMER SYSTEM OVERRIDE CALLED!');
+        console.log('🚀 This should be the only timer system running');
+        
+        // Get duration from select
+        const durationSelect = document.getElementById('timer-duration');
+        const duration = durationSelect ? parseInt(durationSelect.value) : 600;
+        console.log('🚀 Duration selected:', duration);
+        
+        // Clear any existing timer
+        if (window.timer.interval) {
+            clearInterval(window.timer.interval);
+        }
+        
+        // Set up timer
+        window.timer.isRunning = true;
+        window.timer.timeRemaining = duration;
+        console.log('🚀 Timer state set:', window.timer);
+        
+        // Update display immediately
+        console.log('🚀 Calling updateTimerDisplay...');
+        updateTimerDisplay();
+        
+        // Hide start button, show pause button
+        const startBtn = document.getElementById('timer-start-btn');
+        const pauseBtn = document.getElementById('timer-pause-btn');
+        if (startBtn) startBtn.classList.add('hidden');
+        if (pauseBtn) pauseBtn.classList.remove('hidden');
+        
+        // Start the countdown
+        window.timer.interval = setInterval(() => {
+            window.timer.timeRemaining--;
+            updateTimerDisplay();
+            
+            if (window.timer.timeRemaining <= 0) {
+                // Timer finished
+                clearInterval(window.timer.interval);
+                window.timer.isRunning = false;
+                window.timer.interval = null;
+                
+                // Reset buttons
+                if (startBtn) startBtn.classList.remove('hidden');
+                if (pauseBtn) pauseBtn.classList.add('hidden');
+                
+                console.log('✅ Timer finished!');
+            }
+        }, 1000);
+        
+        console.log('✅ Timer started with', duration, 'seconds');
+    };
+    
     console.log('🧹 Forced cleanup of all timer variables and intervals');
     
     // Periodic conflict detection (every 5 seconds)
