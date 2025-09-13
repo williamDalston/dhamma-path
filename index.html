@@ -6869,52 +6869,34 @@
     // REMOVED test that was overwriting timer display
     
     // ===== SIMPLE TIMER IMPLEMENTATION =====
-    // Completely new, simple timer that we know will work
-    window.simpleStartTimer = function() {
-        console.log('🚀 STARTING SIMPLE TIMER 🚀');
+    // Clean, simple timer that actually works
+    
+    // Global timer variables
+    window.timer = {
+        isRunning: false,
+        timeRemaining: 600,
+        interval: null
+    };
+    
+    // Start timer function
+    window.startTimer = function() {
+        console.log('🚀 Starting timer...');
         
         // Get duration from select
         const durationSelect = document.getElementById('timer-duration');
         const duration = durationSelect ? parseInt(durationSelect.value) : 600;
         
-        // Get display element
-        const simpleDisplay = document.getElementById('timer-display');
-        if (!simpleDisplay) {
-            console.error('Timer display element not found!');
-            return;
+        // Clear any existing timer
+        if (window.timer.interval) {
+            clearInterval(window.timer.interval);
         }
         
-        console.log('Timer display element found:', simpleDisplay);
-        console.log('Starting timer with duration:', duration, 'seconds');
-        
-        // Clear any existing timers
-        window.clearAllTimers();
-        
-        // Force clear any remaining timer variables
-        if (window.timerInterval) {
-            clearInterval(window.timerInterval);
-            window.timerInterval = null;
-        }
-        if (window.timer) {
-            clearInterval(window.timer);
-            window.timer = null;
-        }
-        if (window.isRunning) {
-            window.isRunning = false;
-        }
-        if (window.timeRemaining) {
-            window.timeRemaining = 0;
-        }
-        
-        // Check for conflicts before starting
-        window.detectTimerConflicts();
-        
-        // Set initial values
-        window.simpleTimeRemaining = duration;
-        window.simpleIsRunning = true;
+        // Set up timer
+        window.timer.isRunning = true;
+        window.timer.timeRemaining = duration;
         
         // Update display immediately
-        updateSimpleDisplay();
+        updateTimerDisplay();
         
         // Hide start button, show pause button
         const startBtn = document.getElementById('timer-start-btn');
@@ -6922,71 +6904,85 @@
         if (startBtn) startBtn.classList.add('hidden');
         if (pauseBtn) pauseBtn.classList.remove('hidden');
         
-        // Start the timer
-        console.log('🚀 Starting simple timer interval...');
-        window.simpleTimerInterval = setInterval(() => {
-            console.log('⏰ Timer tick - simpleTimeRemaining:', window.simpleTimeRemaining);
-            if (window.simpleTimeRemaining > 0) {
-                window.simpleTimeRemaining--;
-                console.log('⏰ Decremented to:', window.simpleTimeRemaining);
-                updateSimpleDisplay();
-                console.log('Simple timer tick:', window.simpleTimeRemaining);
-            } else {
+        // Start the countdown
+        window.timer.interval = setInterval(() => {
+            window.timer.timeRemaining--;
+            updateTimerDisplay();
+            
+            if (window.timer.timeRemaining <= 0) {
                 // Timer finished
-                console.log('🏁 Timer finished!');
-                clearInterval(window.simpleTimerInterval);
-                window.simpleIsRunning = false;
-                updateSimpleDisplay(); // Use the proper function instead of direct display access
-                console.log('Simple timer finished!');
+                clearInterval(window.timer.interval);
+                window.timer.isRunning = false;
+                window.timer.interval = null;
                 
                 // Reset buttons
                 if (startBtn) startBtn.classList.remove('hidden');
                 if (pauseBtn) pauseBtn.classList.add('hidden');
+                
+                console.log('✅ Timer finished!');
             }
         }, 1000);
         
-        console.log('✅ Timer interval set:', window.simpleTimerInterval);
+        console.log('✅ Timer started with', duration, 'seconds');
     };
     
-    // Simple display update function
-    function updateSimpleDisplay() {
-        console.log('🔄 updateSimpleDisplay called - simpleTimeRemaining:', window.simpleTimeRemaining);
-        const updateDisplay = document.getElementById('timer-display');
-        console.log('🔄 Display element found:', !!updateDisplay);
-        if (updateDisplay && window.simpleTimeRemaining !== undefined) {
-            const minutes = Math.floor(window.simpleTimeRemaining / 60);
-            const seconds = window.simpleTimeRemaining % 60;
-            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            updateDisplay.textContent = displayText;
-            console.log('✅ Updated simple display to:', displayText);
-        } else {
-            console.log('❌ updateSimpleDisplay failed - display:', !!updateDisplay, 'timeRemaining:', window.simpleTimeRemaining);
-        }
-    }
-    
-    // Simple pause timer
-    window.simplePauseTimer = function() {
-        if (window.simpleTimerInterval) {
-            clearInterval(window.simpleTimerInterval);
-            window.simpleIsRunning = false;
-            console.log('Simple timer paused');
-        }
-    };
-    
-    // Simple reset timer
-    window.simpleResetTimer = function() {
-        if (window.simpleTimerInterval) {
-            clearInterval(window.simpleTimerInterval);
-        }
-        window.simpleIsRunning = false;
+    // Pause timer function
+    window.pauseTimer = function() {
+        console.log('⏸️ Pausing timer...');
         
+        if (window.timer.interval) {
+            clearInterval(window.timer.interval);
+            window.timer.interval = null;
+        }
+        window.timer.isRunning = false;
+        
+        // Show start button, hide pause button
+        const startBtn = document.getElementById('timer-start-btn');
+        const pauseBtn = document.getElementById('timer-pause-btn');
+        if (startBtn) startBtn.classList.remove('hidden');
+        if (pauseBtn) pauseBtn.classList.add('hidden');
+        
+        console.log('✅ Timer paused');
+    };
+    
+    // Reset timer function
+    window.resetTimer = function() {
+        console.log('🔄 Resetting timer...');
+        
+        if (window.timer.interval) {
+            clearInterval(window.timer.interval);
+            window.timer.interval = null;
+        }
+        window.timer.isRunning = false;
+        
+        // Get duration from select
         const durationSelect = document.getElementById('timer-duration');
         const duration = durationSelect ? parseInt(durationSelect.value) : 600;
-        window.simpleTimeRemaining = duration;
+        window.timer.timeRemaining = duration;
         
-        updateSimpleDisplay();
-        console.log('Simple timer reset to:', duration);
+        // Update display
+        updateTimerDisplay();
+        
+        // Show start button, hide pause button
+        const startBtn = document.getElementById('timer-start-btn');
+        const pauseBtn = document.getElementById('timer-pause-btn');
+        if (startBtn) startBtn.classList.remove('hidden');
+        if (pauseBtn) pauseBtn.classList.add('hidden');
+        
+        console.log('✅ Timer reset to', duration, 'seconds');
     };
+    
+    // Update display function
+    function updateTimerDisplay() {
+        const display = document.getElementById('timer-display');
+        if (display) {
+            const minutes = Math.floor(window.timer.timeRemaining / 60);
+            const seconds = window.timer.timeRemaining % 60;
+            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            display.textContent = displayText;
+            console.log('📱 Display updated:', displayText);
+        }
+    }
 
     // Home page logic
     function attachHomeLogic() {
@@ -7186,75 +7182,60 @@
             // Initialize timer state - USING DIRECT TIMER SYSTEM
             // Old timer variables disabled - using direct timer system instead
             
-            // Event listeners with debugging - USING SIMPLE TIMER
+            // Event listeners - SIMPLE AND CLEAN
             if (startBtn) {
-                console.log('🔧 Adding click listener to start button - USING SIMPLE TIMER - VERSION 3.0 🔧');
-                console.log('🔧 Start button element:', startBtn);
-                console.log('🔧 addTimerEventListener function:', typeof window.addTimerEventListener);
-                
-                // Try direct event listener first to test
+                console.log('🔧 Adding start button listener');
                 startBtn.addEventListener('click', (e) => {
-                    console.log('🚀 DIRECT EVENT LISTENER TRIGGERED!');
-                    console.log('Start button clicked! Using SIMPLE timer');
                     e.preventDefault();
                     e.stopPropagation();
-                    
-                    // Call the simple timer function
-                    window.simpleStartTimer();
-                });
-                
-                console.log('✅ Direct event listener added successfully');
-            } else {
-                console.error('Start button not found!');
-                console.log('Available buttons:', document.querySelectorAll('button[id*="timer"]'));
-            }
-            if (pauseBtn) {
-                window.addTimerEventListener(pauseBtn, 'click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('Pause button clicked!');
-                    
-                    // Call the simple pause timer function
-                    window.simplePauseTimer();
-                });
-            }
-            if (resetBtn) {
-                window.addTimerEventListener(resetBtn, 'click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('Reset button clicked!');
-                    
-                    // Call the simple reset timer function
-                    window.simpleResetTimer();
+                    console.log('🚀 Start button clicked!');
+                    window.startTimer();
                 });
             }
             
-            // Duration change - UPDATED TO USE SIMPLE TIMER
+            if (pauseBtn) {
+                console.log('🔧 Adding pause button listener');
+                pauseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('⏸️ Pause button clicked!');
+                    window.pauseTimer();
+                });
+            }
+            
+            if (resetBtn) {
+                console.log('🔧 Adding reset button listener');
+                resetBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔄 Reset button clicked!');
+                    window.resetTimer();
+                });
+            }
+            
+            // Duration change - SIMPLE AND CLEAN
             if (attachDurationSelect) {
-                window.addTimerEventListener(attachDurationSelect, 'change', () => {
-                    if (!window.simpleIsRunning) {
+                attachDurationSelect.addEventListener('change', () => {
+                    if (!window.timer.isRunning) {
                         const newDuration = parseInt(attachDurationSelect.value);
-                        window.simpleTimeRemaining = newDuration;
+                        window.timer.timeRemaining = newDuration;
                         console.log('Duration changed to:', newDuration, 'seconds');
-                        
-                        // Update display using simple timer function
-                        updateSimpleDisplay();
+                        updateTimerDisplay();
                     }
                 });
             }
             
-            // Initialize display properly - USING SIMPLE TIMER SYSTEM
+            // Initialize timer display
             console.log('Initializing timer display...');
-            console.log('Using simple timer system');
             
-            // Initialize simple timer variables
+            // Initialize timer
             const initDurationSelect = document.getElementById('timer-duration');
             const initialDuration = initDurationSelect ? parseInt(initDurationSelect.value) : 600;
-            window.simpleTimeRemaining = initialDuration;
-            window.simpleIsRunning = false;
+            window.timer.timeRemaining = initialDuration;
+            window.timer.isRunning = false;
             
-            // Force update display using simple timer system
-            updateSimpleDisplay();
+            // Update display
+            updateTimerDisplay();
             
             // Update status
             if (window.status) {
