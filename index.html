@@ -10199,31 +10199,46 @@
         
         function updateDisplay() {
             const exercise = exercises[currentExercise];
-            document.getElementById('current-exercise-emoji').textContent = exercise.emoji;
-            document.getElementById('current-exercise-name').textContent = exercise.name;
-            document.getElementById('current-exercise-description').textContent = exercise.description;
-            document.getElementById('workout-timer-display').textContent = timeRemaining;
-            document.getElementById('workout-progress-text').textContent = `Exercise ${currentExercise + 1} of 12`;
+            
+            // Safely update elements - check if they exist first
+            const emojiEl = document.getElementById('current-exercise-emoji');
+            const nameEl = document.getElementById('current-exercise-name');
+            const descEl = document.getElementById('current-exercise-description');
+            const timerEl = document.getElementById('workout-timer-display');
+            const progressEl = document.getElementById('workout-progress-text');
+            const progressRing = document.getElementById('progress-ring');
+            const exerciseList = document.getElementById('exercise-list');
+            
+            if (emojiEl) emojiEl.textContent = exercise.emoji;
+            if (nameEl) nameEl.textContent = exercise.name;
+            if (descEl) descEl.textContent = exercise.description;
+            if (timerEl) timerEl.textContent = timeRemaining;
+            if (progressEl) progressEl.textContent = `Exercise ${currentExercise + 1} of 12`;
             
             // Update exercise list
-            const exerciseList = document.getElementById('exercise-list');
-            exerciseList.innerHTML = exercises.map((ex, index) => 
-                `<div class="text-center p-2 rounded ${index === currentExercise ? 'bg-forest-green/20' : 'bg-white/60'}">
-                    <div class="text-lg">${ex.emoji}</div>
-                    <div class="text-xs font-medium">${ex.name}</div>
-                </div>`
-            ).join('');
+            if (exerciseList) {
+                exerciseList.innerHTML = exercises.map((ex, index) => 
+                    `<div class="text-center p-2 rounded ${index === currentExercise ? 'bg-forest-green/20' : 'bg-white/60'}">
+                        <div class="text-lg">${ex.emoji}</div>
+                        <div class="text-xs font-medium">${ex.name}</div>
+                    </div>`
+                ).join('');
+            }
             
             // Update progress ring
-            const progress = (timeRemaining / 30) * 339.292;
-            document.getElementById('progress-ring').style.strokeDashoffset = progress;
+            if (progressRing) {
+                const progress = (timeRemaining / 30) * 339.292;
+                progressRing.style.strokeDashoffset = progress;
+            }
         }
         
         function startWorkout() {
             if (!isRunning) {
                 isRunning = true;
-                document.getElementById('workout-start-btn').classList.add('hidden');
-                document.getElementById('workout-pause-btn').classList.remove('hidden');
+                const startBtn = document.getElementById('workout-start-btn');
+                const pauseBtn = document.getElementById('workout-pause-btn');
+                if (startBtn) startBtn.classList.add('hidden');
+                if (pauseBtn) pauseBtn.classList.remove('hidden');
                 
                 timer = setInterval(() => {
                     timeRemaining--;
@@ -10251,8 +10266,10 @@
             if (isRunning) {
                 clearInterval(timer);
                 isRunning = false;
-                document.getElementById('workout-start-btn').classList.remove('hidden');
-                document.getElementById('workout-pause-btn').classList.add('hidden');
+                const startBtn = document.getElementById('workout-start-btn');
+                const pauseBtn = document.getElementById('workout-pause-btn');
+                if (startBtn) startBtn.classList.remove('hidden');
+                if (pauseBtn) pauseBtn.classList.add('hidden');
             }
         }
         
@@ -10262,8 +10279,10 @@
             currentExercise = 0;
             timeRemaining = 30;
             updateDisplay();
-            document.getElementById('workout-start-btn').classList.remove('hidden');
-            document.getElementById('workout-pause-btn').classList.add('hidden');
+            const startBtn = document.getElementById('workout-start-btn');
+            const pauseBtn = document.getElementById('workout-pause-btn');
+            if (startBtn) startBtn.classList.remove('hidden');
+            if (pauseBtn) pauseBtn.classList.add('hidden');
         }
         
         function prevExercise() {
@@ -10286,11 +10305,17 @@
         function initWorkout() {
             updateDisplay();
             
-            document.getElementById('workout-start-btn').addEventListener('click', startWorkout);
-            document.getElementById('workout-pause-btn').addEventListener('click', pauseWorkout);
-            document.getElementById('workout-reset-btn').addEventListener('click', resetWorkout);
-            document.getElementById('prev-exercise-btn').addEventListener('click', prevExercise);
-            document.getElementById('next-exercise-btn').addEventListener('click', nextExercise);
+            const startBtn = document.getElementById('workout-start-btn');
+            const pauseBtn = document.getElementById('workout-pause-btn');
+            const resetBtn = document.getElementById('workout-reset-btn');
+            const prevBtn = document.getElementById('prev-exercise-btn');
+            const nextBtn = document.getElementById('next-exercise-btn');
+            
+            if (startBtn) startBtn.addEventListener('click', startWorkout);
+            if (pauseBtn) pauseBtn.addEventListener('click', pauseWorkout);
+            if (resetBtn) resetBtn.addEventListener('click', resetWorkout);
+            if (prevBtn) prevBtn.addEventListener('click', prevExercise);
+            if (nextBtn) nextBtn.addEventListener('click', nextExercise);
         }
         
         // Auto-initialize when workout page loads
