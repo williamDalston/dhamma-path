@@ -255,7 +255,19 @@
     <script src="assets/js/analytics.js"></script>
     <script src="assets/js/navigation.js"></script>
     <script src="assets/js/meditation-timer.js"></script>
+    <script src="assets/js/production-optimizer.js"></script>
+    <script src="assets/js/error-monitor.js"></script>
     <script src="assets/js/app.js"></script>
+    
+    <!-- Production Testing (only in production) -->
+    <script>
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+            const testScript = document.createElement('script');
+            testScript.src = 'test/production-test-suite.js';
+            testScript.async = true;
+            document.head.appendChild(testScript);
+        }
+    </script>
     
     <!-- Premium Service Worker Registration -->
     <script>

@@ -1,59 +1,70 @@
-/**
- * Premium Service Worker
- * Ferrari-level caching and offline functionality
- */
+// Production Service Worker for The Dhamma Path
+// Ferrari-level caching strategies and offline support
 
-const CACHE_NAME = 'dhamma-path-v1.0.0';
-const STATIC_CACHE = 'static-v1';
-const DYNAMIC_CACHE = 'dynamic-v1';
+const CACHE_VERSION = 'v2.1.0';
+const STATIC_CACHE = `dhamma-path-static-${CACHE_VERSION}`;
+const DYNAMIC_CACHE = `dhamma-path-dynamic-${CACHE_VERSION}`;
+const IMAGE_CACHE = `dhamma-path-images-${CACHE_VERSION}`;
+const API_CACHE = `dhamma-path-api-${CACHE_VERSION}`;
 
-// Assets to cache immediately
-const STATIC_ASSETS = [
+// Critical resources for immediate caching
+const CRITICAL_RESOURCES = [
     '/',
     '/index.html',
     '/assets/css/critical.css',
     '/assets/css/styles.css',
-    '/assets/js/performance.js',
-    '/assets/js/animations.js',
-    '/assets/js/analytics.js',
     '/assets/js/navigation.js',
     '/assets/js/meditation-timer.js',
     '/assets/js/app.js',
+    '/assets/js/production-optimizer.js',
     '/manifest.json',
-    'https://cdn.tailwindcss.com',
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Lora:wght@400;700&display=swap'
+    '/favicon.svg',
+    '/favicon.png',
+    '/apple-touch-icon.png'
 ];
 
-// Install event - cache static assets
+// Template resources for prefetching
+const TEMPLATE_RESOURCES = [
+    '/assets/templates/home.html',
+    '/assets/templates/timer.html',
+    '/assets/templates/journal.html',
+    '/assets/templates/workout.html',
+    '/assets/templates/interview.html',
+    '/assets/templates/layout.html'
+];
+
+// Install event - cache critical resources
 self.addEventListener('install', (event) => {
-    console.log('🚀 Service Worker installing...');
-    
+    console.log('🚀 Production Service Worker installing...');
     event.waitUntil(
-        caches.open(STATIC_CACHE)
-            .then((cache) => {
-                console.log('📦 Caching static assets...');
-                return cache.addAll(STATIC_ASSETS);
+        Promise.all([
+            caches.open(STATIC_CACHE).then(cache => {
+                console.log('📦 Caching critical resources...');
+                return cache.addAll(CRITICAL_RESOURCES);
+            }),
+            caches.open(DYNAMIC_CACHE).then(cache => {
+                console.log('📦 Caching template resources...');
+                return cache.addAll(TEMPLATE_RESOURCES);
             })
-            .then(() => {
-                console.log('✅ Static assets cached successfully');
-                return self.skipWaiting();
-            })
-            .catch((error) => {
-                console.error('❌ Failed to cache static assets:', error);
-            })
+        ]).then(() => {
+            console.log('✅ All critical resources cached successfully');
+            return self.skipWaiting();
+        }).catch(error => {
+            console.error('❌ Failed to cache resources:', error);
+        })
     );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-    console.log('🔄 Service Worker activating...');
-    
+    console.log('🔄 Production Service Worker activating...');
     event.waitUntil(
         caches.keys()
-            .then((cacheNames) => {
+            .then(cacheNames => {
+                const validCaches = [STATIC_CACHE, DYNAMIC_CACHE, IMAGE_CACHE, API_CACHE];
                 return Promise.all(
-                    cacheNames.map((cacheName) => {
-                        if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
+                    cacheNames.map(cacheName => {
+                        if (!validCaches.includes(cacheName)) {
                             console.log('🗑️ Deleting old cache:', cacheName);
                             return caches.delete(cacheName);
                         }
@@ -61,113 +72,270 @@ self.addEventListener('activate', (event) => {
                 );
             })
             .then(() => {
-                console.log('✅ Service Worker activated');
+                console.log('✅ Production Service Worker activated successfully');
                 return self.clients.claim();
             })
     );
 });
 
-// Fetch event - serve from cache with network fallback
+// Fetch event - advanced caching strategies
 self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
 
-    // Skip non-GET requests
-    if (request.method !== 'GET') {
+    // Skip non-GET requests and non-http protocols
+    if (request.method !== 'GET' || !url.protocol.startsWith('http')) {
         return;
     }
 
-    // Skip chrome-extension and other non-http requests
-    if (!url.protocol.startsWith('http')) {
-        return;
+    // Handle different resource types with optimized strategies
+    if (url.pathname === '/' || url.pathname === '/index.html') {
+        event.respondWith(networkFirstWithFallback(request, STATIC_CACHE));
+    } else if (url.pathname.startsWith('/assets/css/') || url.pathname.startsWith('/assets/js/')) {
+        event.respondWith(cacheFirstWithNetworkUpdate(request, STATIC_CACHE));
+    } else if (url.pathname.startsWith('/assets/templates/')) {
+        event.respondWith(staleWhileRevalidate(request, DYNAMIC_CACHE));
+    } else if (url.pathname.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i)) {
+        event.respondWith(imageCacheStrategy(request));
+    } else if (url.pathname.startsWith('/api/')) {
+        event.respondWith(apiCacheStrategy(request));
+    } else {
+        event.respondWith(staleWhileRevalidate(request, DYNAMIC_CACHE));
     }
+});
 
-    event.respondWith(
-        caches.match(request)
-            .then((cachedResponse) => {
-                // Return cached version if available
-                if (cachedResponse) {
-                    console.log('📦 Serving from cache:', request.url);
-                    return cachedResponse;
-                }
+// Network first with fallback strategy
+async function networkFirstWithFallback(request, cacheName) {
+    try {
+        const networkResponse = await fetch(request);
+        if (networkResponse.ok) {
+            const cache = await caches.open(cacheName);
+            cache.put(request, networkResponse.clone());
+        }
+        return networkResponse;
+    } catch (error) {
+        const cachedResponse = await caches.match(request);
+        if (cachedResponse) {
+            return cachedResponse;
+        }
+        return new Response('Offline - Please check your connection', { 
+            status: 503,
+            headers: { 'Content-Type': 'text/html' }
+        });
+    }
+}
 
-                // Otherwise fetch from network
-                return fetch(request)
-                    .then((networkResponse) => {
-                        // Check if response is valid
-                        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-                            return networkResponse;
-                        }
-
-                        // Clone response for caching
-                        const responseToCache = networkResponse.clone();
-
-                        // Cache dynamic content
-                        if (shouldCache(request)) {
-                            caches.open(DYNAMIC_CACHE)
-                                .then((cache) => {
-                                    cache.put(request, responseToCache);
-                                    console.log('💾 Cached dynamic content:', request.url);
-                                });
-                        }
-
-                        return networkResponse;
-                    })
-                    .catch((error) => {
-                        console.error('❌ Network request failed:', error);
-                        
-                        // Return offline page for navigation requests
-                        if (request.destination === 'document') {
-                            return caches.match('/index.html');
-                        }
-                        
-                        // Return placeholder for images
-                        if (request.destination === 'image') {
-                            return new Response(
-                                '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="#f3f4f6"/><text x="100" y="100" text-anchor="middle" dy=".3em" fill="#6b7280">Image unavailable</text></svg>',
-                                { headers: { 'Content-Type': 'image/svg+xml' } }
-                            );
-                        }
-                        
-                        throw error;
+// Cache first with network update strategy
+async function cacheFirstWithNetworkUpdate(request, cacheName) {
+    try {
+        const cachedResponse = await caches.match(request);
+        if (cachedResponse) {
+            // Update cache in background
+            fetch(request).then(networkResponse => {
+                if (networkResponse.ok) {
+                    caches.open(cacheName).then(cache => {
+                        cache.put(request, networkResponse.clone());
                     });
-            })
-    );
-});
+                }
+            }).catch(() => {});
+            return cachedResponse;
+        }
 
-// Background sync for analytics
+        const networkResponse = await fetch(request);
+        if (networkResponse.ok) {
+            const cache = await caches.open(cacheName);
+            cache.put(request, networkResponse.clone());
+        }
+        return networkResponse;
+    } catch (error) {
+        return new Response('Resource unavailable offline', { status: 503 });
+    }
+}
+
+// Stale while revalidate strategy
+async function staleWhileRevalidate(request, cacheName) {
+    const cache = await caches.open(cacheName);
+    const cachedResponse = await cache.match(request);
+
+    const fetchPromise = fetch(request).then(networkResponse => {
+        if (networkResponse.ok) {
+            cache.put(request, networkResponse.clone());
+        }
+        return networkResponse;
+    }).catch(() => cachedResponse);
+
+    return cachedResponse || fetchPromise;
+}
+
+// Image caching strategy with compression
+async function imageCacheStrategy(request) {
+    try {
+        const cachedResponse = await caches.match(request);
+        if (cachedResponse) {
+            return cachedResponse;
+        }
+
+        const networkResponse = await fetch(request);
+        if (networkResponse.ok) {
+            const cache = await caches.open(IMAGE_CACHE);
+            cache.put(request, networkResponse.clone());
+        }
+        return networkResponse;
+    } catch (error) {
+        return new Response('Image unavailable offline', { status: 503 });
+    }
+}
+
+// API caching strategy with TTL
+async function apiCacheStrategy(request) {
+    try {
+        const cachedResponse = await caches.match(request);
+        const cacheDate = cachedResponse?.headers.get('sw-cache-date');
+        
+        // Check if cache is still valid (5 minutes TTL)
+        if (cachedResponse && cacheDate) {
+            const cacheTime = parseInt(cacheDate);
+            const now = Date.now();
+            if (now - cacheTime < 300000) { // 5 minutes
+                return cachedResponse;
+            }
+        }
+
+        const networkResponse = await fetch(request);
+        if (networkResponse.ok) {
+            const responseClone = networkResponse.clone();
+            const headers = new Headers(responseClone.headers);
+            headers.set('sw-cache-date', Date.now().toString());
+            
+            const cacheResponse = new Response(responseClone.body, {
+                status: responseClone.status,
+                statusText: responseClone.statusText,
+                headers: headers
+            });
+
+            const cache = await caches.open(API_CACHE);
+            cache.put(request, cacheResponse);
+        }
+        return networkResponse;
+    } catch (error) {
+        const cachedResponse = await caches.match(request);
+        if (cachedResponse) {
+            return cachedResponse;
+        }
+        return new Response('API unavailable offline', { status: 503 });
+    }
+}
+
+// Background sync for offline actions
 self.addEventListener('sync', (event) => {
-    if (event.tag === 'analytics-sync') {
-        event.waitUntil(syncAnalytics());
+    console.log('🔄 Background sync triggered:', event.tag);
+    
+    switch (event.tag) {
+        case 'background-sync':
+            event.waitUntil(doBackgroundSync());
+            break;
+        case 'analytics-sync':
+            event.waitUntil(syncAnalytics());
+            break;
+        case 'progress-sync':
+            event.waitUntil(syncProgress());
+            break;
     }
 });
 
-// Push notifications
+async function doBackgroundSync() {
+    try {
+        // Sync any pending data when back online
+        console.log('🔄 Syncing background data...');
+        
+        // Check for pending analytics
+        const pendingAnalytics = await getStoredData('pending-analytics');
+        if (pendingAnalytics && pendingAnalytics.length > 0) {
+            await syncAnalytics();
+        }
+        
+        // Check for pending progress data
+        const pendingProgress = await getStoredData('pending-progress');
+        if (pendingProgress && pendingProgress.length > 0) {
+            await syncProgress();
+        }
+        
+        console.log('✅ Background sync completed');
+    } catch (error) {
+        console.error('❌ Background sync failed:', error);
+    }
+}
+
+async function syncAnalytics() {
+    try {
+        const pendingData = await getStoredData('pending-analytics') || [];
+        if (pendingData.length === 0) return;
+        
+        // Send analytics data to server
+        const response = await fetch('/api/analytics/batch', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ events: pendingData })
+        });
+        
+        if (response.ok) {
+            await clearStoredData('pending-analytics');
+            console.log('✅ Analytics synced successfully');
+        }
+    } catch (error) {
+        console.error('❌ Analytics sync failed:', error);
+    }
+}
+
+async function syncProgress() {
+    try {
+        const pendingData = await getStoredData('pending-progress') || [];
+        if (pendingData.length === 0) return;
+        
+        // Send progress data to server
+        const response = await fetch('/api/progress/batch', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ progress: pendingData })
+        });
+        
+        if (response.ok) {
+            await clearStoredData('pending-progress');
+            console.log('✅ Progress synced successfully');
+        }
+    } catch (error) {
+        console.error('❌ Progress sync failed:', error);
+    }
+}
+
+// Push notifications with rich content
 self.addEventListener('push', (event) => {
     if (event.data) {
         const data = event.data.json();
-        
         const options = {
             body: data.body,
-            icon: '/favicon.png',
-            badge: '/favicon.png',
-            vibrate: [100, 50, 100],
+            icon: '/favicon.svg',
+            badge: '/favicon.svg',
+            vibrate: [200, 100, 200, 100, 200],
             data: {
                 dateOfArrival: Date.now(),
-                primaryKey: data.primaryKey
+                primaryKey: data.primaryKey,
+                url: data.url || '/'
             },
             actions: [
                 {
-                    action: 'explore',
-                    title: 'Explore',
-                    icon: '/favicon.png'
+                    action: 'open',
+                    title: 'Open App',
+                    icon: '/favicon.svg'
                 },
                 {
-                    action: 'close',
-                    title: 'Close',
-                    icon: '/favicon.png'
+                    action: 'dismiss',
+                    title: 'Dismiss',
+                    icon: '/favicon.svg'
                 }
-            ]
+            ],
+            requireInteraction: data.requireInteraction || false,
+            silent: data.silent || false
         };
 
         event.waitUntil(
@@ -176,86 +344,94 @@ self.addEventListener('push', (event) => {
     }
 });
 
-// Notification click handling
+// Enhanced notification click handling
 self.addEventListener('notificationclick', (event) => {
     event.notification.close();
 
-    if (event.action === 'explore') {
+    if (event.action === 'open' || !event.action) {
         event.waitUntil(
-            clients.openWindow('/')
+            clients.matchAll({ type: 'window' }).then(clientList => {
+                const url = event.notification.data?.url || '/';
+                
+                // Focus existing window or open new one
+                for (const client of clientList) {
+                    if (client.url === url && 'focus' in client) {
+                        return client.focus();
+                    }
+                }
+                
+                if (clients.openWindow) {
+                    return clients.openWindow(url);
+                }
+            })
         );
     }
 });
 
-// Helper functions
-function shouldCache(request) {
-    const url = new URL(request.url);
-    
-    // Cache API responses
-    if (url.pathname.startsWith('/api/')) {
-        return true;
-    }
-    
-    // Cache static assets
-    if (url.pathname.match(/\.(css|js|png|jpg|jpeg|gif|svg|woff|woff2)$/)) {
-        return true;
-    }
-    
-    // Cache HTML pages
-    if (request.destination === 'document') {
-        return true;
-    }
-    
-    return false;
-}
-
-async function syncAnalytics() {
+// Utility functions for data storage
+async function getStoredData(key) {
     try {
-        // Get analytics data from IndexedDB
-        const analyticsData = await getAnalyticsData();
-        
-        if (analyticsData && analyticsData.length > 0) {
-            // Send to analytics service
-            await fetch('/api/analytics', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(analyticsData)
-            });
-            
-            console.log('📊 Analytics synced successfully');
-        }
+        const cache = await caches.open(DYNAMIC_CACHE);
+        const response = await cache.match(`/data/${key}`);
+        return response ? await response.json() : null;
     } catch (error) {
-        console.error('❌ Failed to sync analytics:', error);
+        console.error('Failed to get stored data:', error);
+        return null;
     }
 }
 
-async function getAnalyticsData() {
-    // This would typically use IndexedDB
-    // For now, return empty array
-    return [];
+async function setStoredData(key, data) {
+    try {
+        const cache = await caches.open(DYNAMIC_CACHE);
+        const response = new Response(JSON.stringify(data));
+        await cache.put(`/data/${key}`, response);
+    } catch (error) {
+        console.error('Failed to store data:', error);
+    }
 }
 
-// Performance monitoring
+async function clearStoredData(key) {
+    try {
+        const cache = await caches.open(DYNAMIC_CACHE);
+        await cache.delete(`/data/${key}`);
+    } catch (error) {
+        console.error('Failed to clear stored data:', error);
+    }
+}
+
+// Cache management and cleanup
 self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'PERFORMANCE_METRICS') {
-        // Store performance metrics
-        console.log('🎯 Performance metrics received:', event.data.metrics);
-        
-        // Send to analytics if online
-        if (navigator.onLine) {
-            fetch('/api/performance', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(event.data.metrics)
-            }).catch(error => {
-                console.error('Failed to send performance metrics:', error);
-            });
-        }
+    if (event.data && event.data.type === 'CACHE_CLEANUP') {
+        event.waitUntil(cleanupCaches());
     }
 });
 
-console.log('🚀 Premium Service Worker loaded');
+async function cleanupCaches() {
+    try {
+        const cacheNames = await caches.keys();
+        const validCaches = [STATIC_CACHE, DYNAMIC_CACHE, IMAGE_CACHE, API_CACHE];
+        
+        for (const cacheName of cacheNames) {
+            if (!validCaches.includes(cacheName)) {
+                await caches.delete(cacheName);
+            }
+        }
+        
+        // Clean up old entries in dynamic cache
+        const dynamicCache = await caches.open(DYNAMIC_CACHE);
+        const requests = await dynamicCache.keys();
+        
+        for (const request of requests) {
+            const response = await dynamicCache.match(request);
+            const cacheDate = response?.headers.get('sw-cache-date');
+            
+            if (cacheDate && Date.now() - parseInt(cacheDate) > 86400000) { // 24 hours
+                await dynamicCache.delete(request);
+            }
+        }
+        
+        console.log('✅ Cache cleanup completed');
+    } catch (error) {
+        console.error('❌ Cache cleanup failed:', error);
+    }
+}
