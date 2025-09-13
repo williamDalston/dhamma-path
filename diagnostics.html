@@ -1,0 +1,71 @@
+<!-- === DIAGNOSTIC HARNESS (safe to paste at end of <body>) === -->
+<script>
+(() => {
+  const log = (...a) => console.log("[DIAG]", ...a);
+
+  // 1) Grab display element and check duplicates
+  const displays = document.querySelectorAll('#timer-display');
+  if (!displays.length) {
+    log("❌ #timer-display NOT FOUND");
+    return;
+  }
+  if (displays.length > 1) {
+    log(`❗ Found ${displays.length} elements with id="timer-display" (IDs must be unique).`);
+    displays.forEach((el, i) => log(` -> Node[${i}]`, el, 'visible=', !!(el.offsetParent)));
+  } else {
+    log("✅ Single #timer-display found.");
+  }
+  const display = displays[0];
+
+  // 2) Check if a ::before pseudo-element is showing content that could mask text
+  try {
+    const beforeContent = getComputedStyle(display, '::before').content;
+    const afterContent  = getComputedStyle(display, '::after').content;
+    log('::before content =', beforeContent, '::after content =', afterContent);
+    if (beforeContent && beforeContent !== 'none' && beforeContent !== 'normal' && beforeContent !== '""') {
+      log('❗ ::before is rendering content. It can visually mask the actual text.');
+    }
+    if (afterContent && afterContent !== 'none' && afterContent !== 'normal' && afterContent !== '""') {
+      log('❗ ::after is rendering content. It can visually mask the actual text.');
+    }
+  } catch (e) {
+    // Some browsers guard this; ignore
+  }
+
+  // 3) MutationObserver: see if any other script re-writes the display each tick
+  const mo = new MutationObserver((muts) => {
+    muts.forEach(m => {
+      if (m.type === 'childList' || m.type === 'characterData') {
+        log('🔁 Mutation on #timer-display →', display.textContent);
+        // Print a small stack sample to hint where it came from
+        try { throw new Error("Stack sample"); } catch (e) { log(e.stack.split('\n').slice(0,4).join('\n')); }
+      }
+    });
+  });
+  mo.observe(display, { childList: true, characterData: true, subtree: true });
+
+  // 4) Sanity test: directly update the node and verify it sticks after a microtask & a frame
+  const expect = '11:11 TEST';
+  display.textContent = expect;
+  queueMicrotask(() => {
+    const now1 = display.textContent;
+    log('⏱ After microtask:', now1);
+    requestAnimationFrame(() => {
+      const now2 = display.textContent;
+      log('⏱ After rAF:', now2);
+      if (now2 !== expect) {
+        log('❌ Something reverted the text between ticks. Likely a competing timer/render.');
+      } else {
+        log('✅ Direct text update persists. If your timer still appears stuck, a CSS overlay may be masking it.');
+      }
+    });
+  });
+
+  // 5) Lock in an owner mark; other scripts can respect it
+  display.dataset.owner = 'meditationTimer';
+  log('Owner set on #timer-display:', display.dataset.owner);
+
+  // Optional: neutralize a noisy "workout retry" loop if it pollutes logs
+  window.__DISABLE_WORKOUT_INIT__ = true;
+})();
+</script>

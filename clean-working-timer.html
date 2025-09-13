@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Meditation Timer — Working Reference</title>
+<style>
+  body { font-family: system-ui, sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; background:#f7f7f5; }
+  .card { background:#fff; padding:24px; border-radius:16px; box-shadow: 0 10px 30px rgba(0,0,0,.08); width: 360px; }
+  #timer-display { font-size:72px; font-weight:800; text-align:center; letter-spacing:1px; }
+  .row { display:flex; gap:8px; margin-top:16px; }
+  button, select { padding:10px 14px; font-weight:600; border-radius:10px; border:1px solid #d0d0c8; background:#fff; cursor:pointer; }
+  button.primary { background:#1f7a52; color:#fff; border-color:#1f7a52; }
+  button:disabled { opacity:.6; cursor:not-allowed; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div id="timer-display">10:00</div>
+
+    <div class="row">
+      <select id="timer-duration">
+        <option value="300">5 minutes</option>
+        <option value="600" selected>10 minutes</option>
+        <option value="900">15 minutes</option>
+        <option value="1200">20 minutes</option>
+        <option value="1800">30 minutes</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <button id="timer-start-btn" class="primary">Start</button>
+      <button id="timer-pause-btn">Pause</button>
+      <button id="timer-reset-btn">Reset</button>
+    </div>
+  </div>
+
+<script>
+(function () {
+  const els = {
+    display: document.getElementById('timer-display'),
+    duration: document.getElementById('timer-duration'),
+    start: document.getElementById('timer-start-btn'),
+    pause: document.getElementById('timer-pause-btn'),
+    reset: document.getElementById('timer-reset-btn'),
+  };
+
+  const S = {
+    running: false,
+    paused: false,
+    total: parseInt(els.duration.value, 10),
+    remaining: parseInt(els.duration.value, 10),
+    id: null
+  };
+
+  const fmt = (s) => {
+    const m = Math.floor(s / 60).toString().padStart(2, '0');
+    const ss = (s % 60).toString().padStart(2, '0');
+    return `${m}:${ss}`;
+  };
+
+  const updateDisplay = () => {
+    els.display.textContent = fmt(Math.max(0, S.remaining));
+  };
+
+  const tick = () => {
+    if (!S.running || S.paused) return;
+    S.remaining -= 1;
+    updateDisplay();
+    if (S.remaining <= 0) {
+      stop();
+    }
+  };
+
+  const start = () => {
+    if (S.running && !S.paused) return;
+    S.running = true; S.paused = false;
+    // clear any old interval we own
+    if (S.id) clearInterval(S.id);
+    S.id = setInterval(tick, 1000);
+    updateDisplay();
+  };
+
+  const pause = () => { S.paused = !S.paused; els.pause.textContent = S.paused ? 'Resume' : 'Pause'; };
+  const stop  = () => { S.running = false; S.paused = false; if (S.id) clearInterval(S.id); S.id = null; };
+  const reset = () => {
+    stop();
+    S.total = parseInt(els.duration.value, 10);
+    S.remaining = S.total;
+    updateDisplay();
+    els.pause.textContent = 'Pause';
+  };
+
+  // Init
+  els.duration.addEventListener('change', reset);
+  els.start.addEventListener('click', start);
+  els.pause.addEventListener('click', pause);
+  els.reset.addEventListener('click', reset);
+  reset();
+
+  // Export a compatible function for pages that call window.updateDisplay
+  window.updateDisplay = function () { updateDisplay(); };
+})();
+</script>
+</body>
+</html>
