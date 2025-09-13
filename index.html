@@ -7827,6 +7827,13 @@
     function attachWorkoutLogic() {
         console.log('Attaching workout logic...');
         console.log('Workout page - adding mobile-friendly sound functionality and timer');
+        
+        // Ensure welcome overlay is hidden
+        const welcomeOverlay = document.getElementById('welcome-overlay');
+        if (welcomeOverlay) {
+            welcomeOverlay.style.display = 'none';
+            welcomeOverlay.style.opacity = '0';
+        }
             
             // Workout timer variables
             let workoutTimer = null;
