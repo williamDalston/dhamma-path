@@ -7150,7 +7150,12 @@
             // Event listeners with debugging - USING SIMPLE TIMER
             if (startBtn) {
                 console.log('🔧 Adding click listener to start button - USING SIMPLE TIMER - VERSION 3.0 🔧');
-                window.addTimerEventListener(startBtn, 'click', (e) => {
+                console.log('🔧 Start button element:', startBtn);
+                console.log('🔧 addTimerEventListener function:', typeof window.addTimerEventListener);
+                
+                // Try direct event listener first to test
+                startBtn.addEventListener('click', (e) => {
+                    console.log('🚀 DIRECT EVENT LISTENER TRIGGERED!');
                     console.log('Start button clicked! Using SIMPLE timer');
                     e.preventDefault();
                     e.stopPropagation();
@@ -7158,6 +7163,8 @@
                     // Call the simple timer function
                     window.simpleStartTimer();
                 });
+                
+                console.log('✅ Direct event listener added successfully');
             } else {
                 console.error('Start button not found!');
                 console.log('Available buttons:', document.querySelectorAll('button[id*="timer"]'));
