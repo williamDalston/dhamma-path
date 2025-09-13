@@ -194,6 +194,7 @@ class NavigationManager {
             'timer': this.getTimerPageContent(),
             'journal': this.getJournalPageContent(),
             'workout': this.getWorkoutPageContent(),
+            'clarity': this.getClarityPageContent(),
         };
 
         return pages[pageName] || pages['home'];
@@ -307,6 +308,129 @@ class NavigationManager {
         `;
     }
 
+    getClarityPageContent() {
+        return `
+            <!-- Clarity/Vocal Journal - Mindful Expression -->
+            <div class="clarity-session min-h-screen flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+                <!-- Subtle Background Elements -->
+                <div class="absolute inset-0 morphing-premium opacity-3 pointer-events-none"></div>
+                
+                <div class="relative z-10 max-w-2xl mx-auto text-center">
+                    <!-- Clarity Header -->
+                    <div class="clarity-header mb-12 animate-fade-up">
+                        <div class="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-sage-deep/20 to-forest-deep/20 rounded-full flex items-center justify-center">
+                            <span class="text-3xl">🎤</span>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold text-forest-deep mb-4 leading-tight">
+                            Clarity
+                        </h1>
+                        <p class="text-xl md:text-2xl text-charcoal/70 font-medium max-w-lg mx-auto">
+                            Transform your inner thoughts into clear, confident expression
+                        </p>
+                    </div>
+                    
+                    <!-- Expression Container -->
+                    <div class="expression-container glass-control-strong mb-12 animate-fade-up">
+                        <!-- Current Prompt -->
+                        <div class="prompt-display mb-8">
+                            <div class="prompt-icon text-4xl mb-4">💭</div>
+                            <h2 class="prompt-title text-2xl md:text-3xl font-bold text-forest-deep mb-4" id="prompt-title">
+                                What is one intention you hold for today?
+                            </h2>
+                            <p class="prompt-description text-lg text-charcoal/70 leading-relaxed" id="prompt-description">
+                                Speak it into existence. Take your time and let your words flow naturally.
+                            </p>
+                        </div>
+                        
+                        <!-- Expression Timer -->
+                        <div class="expression-timer mb-8">
+                            <div class="timer-container relative">
+                                <svg class="timer-circle w-32 h-32 mx-auto transform -rotate-90" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="var(--sage-light)" stroke-width="3" opacity="0.3"/>
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="var(--forest-deep)" stroke-width="3" 
+                                            stroke-dasharray="283" stroke-dashoffset="283" id="timer-progress"
+                                            class="transition-all duration-1000 ease-out"/>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="timer-display text-2xl font-bold text-forest-deep" id="timer-display">
+                                        Ready
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="timer-guidance text-sm text-charcoal/60 mt-4" id="timer-guidance">
+                                Speak for about a minute. Take your time.
+                            </p>
+                        </div>
+                        
+                        <!-- Recording Controls -->
+                        <div class="recording-controls">
+                            <button class="btn-primary btn-xl px-12 py-6 rounded-2xl shadow-hover hover:shadow-premium transform hover:scale-105 transition-all duration-300 start-expression-btn" 
+                                    style="background: var(--gradient-calm); border: 2px solid var(--sage-medium);">
+                                <span class="text-2xl mr-4">🎤</span>Begin Expression
+                            </button>
+                            
+                            <button class="btn-ghost btn-lg px-8 py-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-300 hidden" id="stop-expression-btn">
+                                <span class="text-lg mr-3">⏹️</span>Complete
+                            </button>
+                            
+                            <button class="btn-ghost btn-lg px-8 py-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-300 hidden" id="listen-back-btn">
+                                <span class="text-lg mr-3">🔊</span>Listen Back
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Clarity Cues -->
+                    <div class="clarity-cues glass-card mb-8 animate-fade-up">
+                        <h3 class="text-lg font-bold text-forest-deep mb-4">Clarity Cues</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-charcoal/70">
+                            <div class="flex items-start space-x-2">
+                                <span class="text-sage-deep">•</span>
+                                <span>Speak slower than you think you need to</span>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <span class="text-sage-deep">•</span>
+                                <span>It's okay to pause and breathe</span>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <span class="text-sage-deep">•</span>
+                                <span>Focus on clarity, not perfection</span>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <span class="text-sage-deep">•</span>
+                                <span>Let your authentic voice emerge</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Prompt Navigation -->
+                    <div class="prompt-navigation flex justify-center space-x-4 mb-8">
+                        <button class="btn-ghost btn-sm px-4 py-2 rounded-lg hover:bg-sage-deep/10 transition-all duration-300" id="prev-prompt-btn">
+                            <span class="text-lg mr-2">←</span>Previous
+                        </button>
+                        <button class="btn-ghost btn-sm px-4 py-2 rounded-lg hover:bg-sage-deep/10 transition-all duration-300" id="next-prompt-btn">
+                            Next<span class="text-lg ml-2">→</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Reflection Section (Hidden initially) -->
+                    <div class="reflection-section hidden" id="reflection-section">
+                        <div class="glass-card mb-8">
+                            <h3 class="text-xl font-bold text-forest-deep mb-4">Reflection</h3>
+                            <p class="text-charcoal/70 mb-6">How did that feel? Notice the clarity and confidence in your voice.</p>
+                            <div class="flex gap-4 justify-center">
+                                <button class="btn-ghost btn-md px-6 py-3 rounded-xl hover:bg-sage-deep/10 transition-all duration-300" id="save-reflection-btn">
+                                    <span class="mr-2">💾</span>Save Reflection
+                                </button>
+                                <button class="btn-ghost btn-md px-6 py-3 rounded-xl hover:bg-sage-deep/10 transition-all duration-300" id="new-expression-btn">
+                                    <span class="mr-2">🔄</span>New Expression
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 
     initializePageFeatures(pageName) {
         console.log(`🎯 Initializing ${pageName} page features...`);
@@ -321,6 +445,9 @@ class NavigationManager {
                 break;
             case 'workout':
                 this.initializeWorkoutPage();
+                break;
+            case 'clarity':
+                this.initializeClarityPage();
                 break;
             case 'home':
                 this.initializeHomePage();
@@ -837,10 +964,10 @@ class NavigationManager {
             };
         } else if (hour > 10) {
             recommendation = {
-                activity: 'workout',
-                title: '7-Minute Workout',
-                description: 'Energize your body with a quick workout',
-                icon: '💪'
+                activity: 'clarity',
+                title: 'Vocal Expression',
+                description: 'Articulate your intentions for the day ahead',
+                icon: '🎤'
             };
         }
         
@@ -888,6 +1015,307 @@ class NavigationManager {
     initializeWorkout() {
         // Basic workout functionality
         console.log('💪 Workout page initialized');
+    }
+
+    initializeClarityPage() {
+        console.log('🎤 Initializing Clarity page...');
+        this.initializeClarityLogic();
+        this.initializeClarityPrompts();
+    }
+
+    initializeClarityLogic() {
+        // Clarity prompts data
+        const prompts = [
+            {
+                id: 'intention',
+                icon: '💭',
+                title: 'What is one intention you hold for today?',
+                description: 'Speak it into existence. Take your time and let your words flow naturally.',
+                guidance: 'Speak for about a minute. Take your time.'
+            },
+            {
+                id: 'beauty',
+                icon: '🌸',
+                title: 'Describe something you find beautiful, in detail',
+                description: 'Paint a picture with your words. What makes it beautiful to you?',
+                guidance: 'Speak for about a minute. Take your time.'
+            },
+            {
+                id: 'values',
+                icon: '⚖️',
+                title: 'Articulate a core value that will guide your actions today',
+                description: 'What principle will you carry with you today? How will it influence your choices?',
+                guidance: 'Speak for about a minute. Take your time.'
+            },
+            {
+                id: 'problem',
+                icon: '🤔',
+                title: 'Talk through a small problem you\'re pondering',
+                description: 'Explain it as if to a wise friend. What are you considering?',
+                guidance: 'Speak for about a minute. Take your time.'
+            },
+            {
+                id: 'gratitude',
+                icon: '🙏',
+                title: 'What are you grateful for right now?',
+                description: 'Explain why this brings you gratitude. How does it feel?',
+                guidance: 'Speak for about a minute. Take your time.'
+            },
+            {
+                id: 'growth',
+                icon: '🌱',
+                title: 'Describe one way you\'ve grown recently',
+                description: 'How does this growth feel? What has changed?',
+                guidance: 'Speak for about a minute. Take your time.'
+            }
+        ];
+
+        let currentPromptIndex = 0;
+        let isRecording = false;
+        let mediaRecorder = null;
+        let recordedChunks = [];
+        let audioBlob = null;
+
+        // Update prompt display
+        function updatePromptDisplay() {
+            const prompt = prompts[currentPromptIndex];
+            const promptTitle = document.getElementById('prompt-title');
+            const promptDescription = document.getElementById('prompt-description');
+            const promptIcon = document.querySelector('.prompt-icon');
+            const timerGuidance = document.getElementById('timer-guidance');
+
+            if (promptTitle) promptTitle.textContent = prompt.title;
+            if (promptDescription) promptDescription.textContent = prompt.description;
+            if (promptIcon) promptIcon.textContent = prompt.icon;
+            if (timerGuidance) timerGuidance.textContent = prompt.guidance;
+        }
+
+        // Start expression recording
+        function startExpression() {
+            if (isRecording) return;
+
+            // Request microphone access
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    recordedChunks = [];
+
+                    mediaRecorder.ondataavailable = event => {
+                        if (event.data.size > 0) {
+                            recordedChunks.push(event.data);
+                        }
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        audioBlob = new Blob(recordedChunks, { type: 'audio/wav' });
+                        stream.getTracks().forEach(track => track.stop());
+                        
+                        // Show reflection section
+                        const reflectionSection = document.getElementById('reflection-section');
+                        if (reflectionSection) {
+                            reflectionSection.classList.remove('hidden');
+                        }
+                    };
+
+                    // Start recording
+                    mediaRecorder.start();
+                    isRecording = true;
+
+                    // Update UI
+                    const startBtn = document.querySelector('.start-expression-btn');
+                    const stopBtn = document.getElementById('stop-expression-btn');
+                    const listenBtn = document.getElementById('listen-back-btn');
+                    const timerDisplay = document.getElementById('timer-display');
+                    const timerProgress = document.getElementById('timer-progress');
+
+                    if (startBtn) startBtn.classList.add('hidden');
+                    if (stopBtn) stopBtn.classList.remove('hidden');
+                    if (listenBtn) listenBtn.classList.add('hidden');
+
+                    // Start timer
+                    let timeElapsed = 0;
+                    const timerInterval = setInterval(() => {
+                        timeElapsed++;
+                        const minutes = Math.floor(timeElapsed / 60);
+                        const seconds = timeElapsed % 60;
+                        
+                        if (timerDisplay) {
+                            timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                        }
+
+                        // Update progress circle (60 seconds = full circle)
+                        if (timerProgress) {
+                            const progress = Math.min(timeElapsed / 60, 1);
+                            const circumference = 2 * Math.PI * 45;
+                            const offset = circumference - (progress * circumference);
+                            timerProgress.style.strokeDashoffset = offset;
+                        }
+                    }, 1000);
+
+                    // Store timer interval for cleanup
+                    window.clarityTimerInterval = timerInterval;
+
+                })
+                .catch(error => {
+                    console.error('Error accessing microphone:', error);
+                    if (window.dhammaPathApp && window.dhammaPathApp.showNotification) {
+                        window.dhammaPathApp.showNotification('Microphone access required for Clarity practice', 'warning');
+                    }
+                });
+        }
+
+        // Stop expression recording
+        function stopExpression() {
+            if (!isRecording || !mediaRecorder) return;
+
+            mediaRecorder.stop();
+            isRecording = false;
+
+            // Clear timer
+            if (window.clarityTimerInterval) {
+                clearInterval(window.clarityTimerInterval);
+            }
+
+            // Update UI
+            const startBtn = document.querySelector('.start-expression-btn');
+            const stopBtn = document.getElementById('stop-expression-btn');
+            const listenBtn = document.getElementById('listen-back-btn');
+
+            if (startBtn) startBtn.classList.add('hidden');
+            if (stopBtn) stopBtn.classList.add('hidden');
+            if (listenBtn) listenBtn.classList.remove('hidden');
+
+            // Show reflection section
+            const reflectionSection = document.getElementById('reflection-section');
+            if (reflectionSection) {
+                reflectionSection.classList.remove('hidden');
+            }
+
+            // Show completion notification
+            if (window.dhammaPathApp && window.dhammaPathApp.showNotification) {
+                window.dhammaPathApp.showNotification('Expression complete! Well done.', 'success');
+            }
+        }
+
+        // Listen back to recording
+        function listenBack() {
+            if (!audioBlob) return;
+
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const audio = new Audio(audioUrl);
+            
+            // Create a simple audio player
+            const audioPlayer = document.createElement('div');
+            audioPlayer.className = 'glass-card p-4 mb-4';
+            audioPlayer.innerHTML = `
+                <div class="flex items-center justify-center space-x-4">
+                    <button class="btn-ghost btn-sm" id="play-recording">
+                        <span class="text-lg mr-2">▶️</span>Play
+                    </button>
+                    <span class="text-sm text-charcoal/60">Your expression</span>
+                </div>
+            `;
+
+            const reflectionSection = document.getElementById('reflection-section');
+            if (reflectionSection) {
+                reflectionSection.insertBefore(audioPlayer, reflectionSection.firstChild);
+            }
+
+            // Play button handler
+            document.getElementById('play-recording')?.addEventListener('click', () => {
+                audio.play();
+            });
+        }
+
+        // Save reflection
+        function saveReflection() {
+            const reflection = {
+                prompt: prompts[currentPromptIndex],
+                timestamp: new Date().toISOString(),
+                audioBlob: audioBlob ? audioBlob.size : 0,
+                duration: 60 // This would be calculated from actual recording time
+            };
+
+            // Save to localStorage
+            const reflections = JSON.parse(localStorage.getItem('clarityReflections') || '[]');
+            reflections.push(reflection);
+            localStorage.setItem('clarityReflections', JSON.stringify(reflections));
+
+            if (window.dhammaPathApp && window.dhammaPathApp.showNotification) {
+                window.dhammaPathApp.showNotification('Reflection saved!', 'success');
+            }
+        }
+
+        // New expression
+        function newExpression() {
+            // Reset UI
+            const startBtn = document.querySelector('.start-expression-btn');
+            const stopBtn = document.getElementById('stop-expression-btn');
+            const listenBtn = document.getElementById('listen-back-btn');
+            const reflectionSection = document.getElementById('reflection-section');
+            const timerDisplay = document.getElementById('timer-display');
+            const timerProgress = document.getElementById('timer-progress');
+
+            if (startBtn) startBtn.classList.remove('hidden');
+            if (stopBtn) stopBtn.classList.add('hidden');
+            if (listenBtn) listenBtn.classList.add('hidden');
+            if (reflectionSection) reflectionSection.classList.add('hidden');
+            if (timerDisplay) timerDisplay.textContent = 'Ready';
+            if (timerProgress) timerProgress.style.strokeDashoffset = '283';
+
+            // Reset state
+            isRecording = false;
+            mediaRecorder = null;
+            recordedChunks = [];
+            audioBlob = null;
+
+            // Clear any existing audio player
+            const existingPlayer = document.querySelector('.glass-card p-4');
+            if (existingPlayer && existingPlayer.querySelector('#play-recording')) {
+                existingPlayer.remove();
+            }
+        }
+
+        // Event listeners
+        const startBtn = document.querySelector('.start-expression-btn');
+        const stopBtn = document.getElementById('stop-expression-btn');
+        const listenBtn = document.getElementById('listen-back-btn');
+        const saveBtn = document.getElementById('save-reflection-btn');
+        const newBtn = document.getElementById('new-expression-btn');
+        const prevBtn = document.getElementById('prev-prompt-btn');
+        const nextBtn = document.getElementById('next-prompt-btn');
+
+        if (startBtn) startBtn.addEventListener('click', startExpression);
+        if (stopBtn) stopBtn.addEventListener('click', stopExpression);
+        if (listenBtn) listenBtn.addEventListener('click', listenBack);
+        if (saveBtn) saveBtn.addEventListener('click', saveReflection);
+        if (newBtn) newBtn.addEventListener('click', newExpression);
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (currentPromptIndex > 0) {
+                    currentPromptIndex--;
+                    updatePromptDisplay();
+                }
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (currentPromptIndex < prompts.length - 1) {
+                    currentPromptIndex++;
+                    updatePromptDisplay();
+                }
+            });
+        }
+
+        // Initialize
+        updatePromptDisplay();
+    }
+
+    initializeClarityPrompts() {
+        // This could be expanded to include a prompts modal
+        console.log('🎤 Clarity prompts initialized');
     }
 
 }

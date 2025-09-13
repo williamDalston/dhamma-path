@@ -168,6 +168,9 @@ class DhammaPathApp {
                 case '3':
                     this.navigateToPage('workout');
                     break;
+                case '4':
+                    this.navigateToPage('clarity');
+                    break;
                 case 'h':
                 case 'H':
                     this.navigateToPage('home');
@@ -235,6 +238,9 @@ class DhammaPathApp {
                 break;
             case '3':
                 this.navigateToPage('workout');
+                break;
+            case '4':
+                this.navigateToPage('clarity');
                 break;
             case 'h':
             case 'H':
