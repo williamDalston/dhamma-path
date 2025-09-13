@@ -55,6 +55,10 @@ class DhammaPathApp {
         // Initialize non-critical features when browser is idle
         this.initializeAnimationSystem();
         this.initializeAnalytics();
+        this.initializeGestureManager();
+        this.initializePhysicsAnimations();
+        this.initializeHapticStorytelling();
+        this.initializeMotionSystem();
         this.setupPremiumFeatures();
     }
 
@@ -108,6 +112,38 @@ class DhammaPathApp {
             this.themeManager = new window.ThemeManager();
         } else {
             console.error('❌ ThemeManager not found');
+        }
+    }
+
+    initializeGestureManager() {
+        if (window.GestureManager) {
+            this.gestureManager = new window.GestureManager();
+        } else {
+            console.error('❌ GestureManager not found');
+        }
+    }
+
+    initializePhysicsAnimations() {
+        if (window.PhysicsAnimations) {
+            this.physicsAnimations = new window.PhysicsAnimations();
+        } else {
+            console.error('❌ PhysicsAnimations not found');
+        }
+    }
+
+    initializeHapticStorytelling() {
+        if (window.HapticStorytelling) {
+            this.hapticStorytelling = new window.HapticStorytelling();
+        } else {
+            console.error('❌ HapticStorytelling not found');
+        }
+    }
+
+    initializeMotionSystem() {
+        if (window.MotionSystem) {
+            this.motionSystem = new window.MotionSystem();
+        } else {
+            console.error('❌ MotionSystem not found');
         }
     }
 

@@ -3690,3 +3690,1129 @@ html {
         border: 2px solid currentColor;
     }
 }
+
+/* ========================================
+   GESTURE-FIRST NAVIGATION SYSTEM
+   ======================================== */
+
+/* Gesture Indicator Animations */
+@keyframes gesture-pulse {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes gesture-swipe {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1) rotate(5deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes gesture-circular {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    25% {
+        transform: scale(1.2) rotate(90deg);
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1.3) rotate(180deg);
+        opacity: 0.8;
+    }
+    75% {
+        transform: scale(1.2) rotate(270deg);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Gesture-Enabled Elements */
+.gesture-container {
+    touch-action: pan-x pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.swipeable {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.swipeable.swiping {
+    transition: none;
+}
+
+.swipeable.swipe-left {
+    transform: translateX(-100%);
+}
+
+.swipeable.swipe-right {
+    transform: translateX(100%);
+}
+
+.swipeable.swipe-up {
+    transform: translateY(-100%);
+}
+
+.swipeable.swipe-down {
+    transform: translateY(100%);
+}
+
+/* Circular Gesture Elements */
+.circular-gesture {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.circular-gesture:hover {
+    transform: scale(1.05);
+}
+
+.circular-gesture.rotating {
+    animation: rotate-gentle 2s ease-in-out infinite;
+}
+
+@keyframes rotate-gentle {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+/* Long Press Targets */
+.long-press-target {
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.long-press-target.long-pressing {
+    transform: scale(0.95);
+    animation: long-press-pulse 0.8s ease-in-out;
+}
+
+@keyframes long-press-pulse {
+    0%, 100% {
+        transform: scale(0.95);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(0.9);
+        opacity: 0.8;
+    }
+}
+
+/* Gesture Feedback Overlays */
+.gesture-feedback {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(26, 77, 58, 0.9);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    font-family: var(--font-family-ui);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-base);
+    z-index: 1000;
+    pointer-events: none;
+    animation: gesture-feedback-fade 2s ease-out;
+}
+
+@keyframes gesture-feedback-fade {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+}
+
+/* Swipe Navigation Indicators */
+.swipe-indicator {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.swipe-indicator-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: rgba(26, 77, 58, 0.3);
+    transition: all 0.3s ease;
+}
+
+.swipe-indicator-dot.active {
+    background: var(--forest-deep);
+    transform: scale(1.2);
+}
+
+/* Gesture Hints */
+.gesture-hint {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(26, 77, 58, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-small);
+    color: var(--charcoal);
+    z-index: 100;
+    animation: gesture-hint-fade 3s ease-out;
+}
+
+@keyframes gesture-hint-fade {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    20% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    80% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive Gesture Adjustments */
+@media (max-width: 768px) {
+    .gesture-container {
+        touch-action: manipulation;
+    }
+    
+    .swipeable {
+        transition-duration: 0.2s;
+    }
+    
+    .gesture-feedback {
+        font-size: var(--font-small);
+        padding: 0.75rem 1.5rem;
+    }
+    
+    .swipe-indicator {
+        bottom: 1rem;
+    }
+    
+    .gesture-hint {
+        top: 0.5rem;
+        right: 0.5rem;
+        font-size: var(--font-tiny);
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+/* Accessibility for Gestures */
+@media (prefers-reduced-motion: reduce) {
+    .swipeable,
+    .circular-gesture,
+    .long-press-target {
+        transition: none;
+    }
+    
+    .circular-gesture.rotating {
+        animation: none;
+    }
+    
+    .long-press-target.long-pressing {
+        animation: none;
+    }
+    
+    .gesture-feedback,
+    .gesture-hint {
+        animation: none;
+    }
+}
+
+/* High Contrast Gesture Indicators */
+@media (prefers-contrast: high) {
+    .gesture-feedback {
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        border: 2px solid white;
+    }
+    
+    .gesture-hint {
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        border: 2px solid white;
+    }
+    
+    .swipe-indicator-dot {
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid white;
+    }
+    
+    .swipe-indicator-dot.active {
+        background: white;
+    }
+}
+
+/* ========================================
+   PHYSICS-BASED SPRING ANIMATIONS
+   ======================================== */
+
+/* Spring Animation Keyframes */
+@keyframes spin-spring {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    25% {
+        transform: rotate(90deg) scale(1.1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1);
+    }
+    75% {
+        transform: rotate(270deg) scale(1.1);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+@keyframes spring-bounce {
+    0% {
+        transform: scale(0.8) translateY(0);
+    }
+    20% {
+        transform: scale(1.1) translateY(-10px);
+    }
+    40% {
+        transform: scale(0.95) translateY(5px);
+    }
+    60% {
+        transform: scale(1.05) translateY(-3px);
+    }
+    80% {
+        transform: scale(0.98) translateY(2px);
+    }
+    100% {
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes spring-overshoot {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.15) rotate(2deg);
+    }
+    70% {
+        transform: scale(0.95) rotate(-1deg);
+    }
+    85% {
+        transform: scale(1.05) rotate(0.5deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes spring-settle {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    30% {
+        transform: translateY(-8px) scale(1.02);
+    }
+    60% {
+        transform: translateY(4px) scale(0.98);
+    }
+    80% {
+        transform: translateY(-2px) scale(1.01);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes spring-wobble {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    15% {
+        transform: rotate(5deg) scale(1.05);
+    }
+    30% {
+        transform: rotate(-3deg) scale(0.98);
+    }
+    45% {
+        transform: rotate(2deg) scale(1.02);
+    }
+    60% {
+        transform: rotate(-1deg) scale(0.99);
+    }
+    75% {
+        transform: rotate(0.5deg) scale(1.01);
+    }
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+/* Physics-Based Element Classes */
+.spring-gentle {
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.spring-medium {
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.spring-strong {
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.spring-bouncy {
+    transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.spring-wobbly {
+    transition: transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Physics Hover Effects */
+.physics-hover:hover {
+    transform: translateY(-4px) scale(1.02);
+}
+
+.physics-hover:active {
+    transform: translateY(2px) scale(0.98);
+}
+
+/* Physics Magnetic Effects */
+.physics-magnetic {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.physics-magnetic:hover {
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Physics Button Interactions */
+.physics-button {
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.physics-button:active {
+    transform: scale(0.95);
+}
+
+.physics-button:hover {
+    transform: scale(1.05);
+}
+
+/* Physics Card Interactions */
+.physics-card {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.physics-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Physics Navigation Items */
+.physics-nav {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.physics-nav:hover {
+    transform: translateX(4px) scale(1.05);
+}
+
+/* Physics Loading States */
+.physics-loading {
+    animation: spin-spring 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.physics-pulse {
+    animation: spring-pulse 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+@keyframes spring-pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+/* Physics Page Transitions */
+.physics-page-transition {
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.physics-page-transition.slide-left {
+    transform: translateX(-100%);
+}
+
+.physics-page-transition.slide-right {
+    transform: translateX(100%);
+}
+
+.physics-page-transition.slide-up {
+    transform: translateY(-100%);
+}
+
+.physics-page-transition.slide-down {
+    transform: translateY(100%);
+}
+
+/* Physics Notification Animations */
+.physics-notification {
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.physics-notification.slide-in {
+    animation: spring-slide-in 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.physics-notification.bounce-in {
+    animation: spring-bounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes spring-slide-in {
+    0% {
+        transform: translateX(100%) scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(-10px) scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Physics Progress Bars */
+.physics-progress {
+    transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.physics-progress-fill {
+    transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Physics Form Elements */
+.physics-input {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.physics-input:focus {
+    transform: scale(1.02);
+}
+
+.physics-input:invalid {
+    animation: spring-wobble 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Physics Modal Animations */
+.physics-modal {
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.physics-modal.show {
+    animation: spring-scale-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes spring-scale-in {
+    0% {
+        transform: scale(0.8) translateY(20px);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05) translateY(-5px);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Physics Tooltip Animations */
+.physics-tooltip {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.physics-tooltip.show {
+    animation: spring-bounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Physics Parallax Elements */
+.physics-parallax {
+    transition: transform 0.1s ease-out;
+}
+
+/* Physics Intersection Animations */
+.physics-intersection {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.physics-intersection.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive Physics Adjustments */
+@media (max-width: 768px) {
+    .physics-hover:hover {
+        transform: translateY(-2px) scale(1.01);
+    }
+    
+    .physics-card:hover {
+        transform: translateY(-4px) scale(1.01);
+    }
+    
+    .physics-nav:hover {
+        transform: translateX(2px) scale(1.02);
+    }
+    
+    .spring-gentle,
+    .spring-medium,
+    .spring-strong,
+    .spring-bouncy,
+    .spring-wobbly {
+        transition-duration: 0.4s;
+    }
+}
+
+/* Accessibility for Physics Animations */
+@media (prefers-reduced-motion: reduce) {
+    .spring-gentle,
+    .spring-medium,
+    .spring-strong,
+    .spring-bouncy,
+    .spring-wobbly,
+    .physics-hover,
+    .physics-magnetic,
+    .physics-button,
+    .physics-card,
+    .physics-nav,
+    .physics-loading,
+    .physics-pulse,
+    .physics-page-transition,
+    .physics-notification,
+    .physics-progress,
+    .physics-progress-fill,
+    .physics-input,
+    .physics-modal,
+    .physics-tooltip,
+    .physics-parallax,
+    .physics-intersection {
+        transition: none;
+        animation: none;
+    }
+    
+    .physics-hover:hover,
+    .physics-magnetic:hover,
+    .physics-button:hover,
+    .physics-card:hover,
+    .physics-nav:hover {
+        transform: none;
+    }
+}
+
+/* High Contrast Physics Elements */
+@media (prefers-contrast: high) {
+    .physics-card:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        border: 2px solid currentColor;
+    }
+    
+    .physics-button:hover {
+        border: 2px solid currentColor;
+    }
+    
+    .physics-nav:hover {
+        border: 1px solid currentColor;
+    }
+}
+
+/* ========================================
+   HAPTIC STORYTELLING & AMBIENT FEEDBACK
+   ======================================== */
+
+/* Ambient Feedback Container */
+.ambient-feedback {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Breathing Pattern Animation */
+.ambient-breathing {
+    animation: ambient-breathe 4s ease-in-out infinite;
+}
+
+@keyframes ambient-breathe {
+    0%, 100% {
+        opacity: 0.05;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.1;
+        transform: scale(1.02);
+    }
+}
+
+/* Writing Rhythm Animation */
+.ambient-writing {
+    animation: ambient-write 2s ease-in-out infinite;
+}
+
+@keyframes ambient-write {
+    0%, 100% {
+        opacity: 0.03;
+        transform: translateX(0);
+    }
+    50% {
+        opacity: 0.06;
+        transform: translateX(2px);
+    }
+}
+
+/* Energy Pattern Animation */
+.ambient-energy {
+    animation: ambient-energize 1.5s ease-in-out infinite;
+}
+
+@keyframes ambient-energize {
+    0%, 100% {
+        opacity: 0.08;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.15;
+        transform: scale(1.05);
+    }
+}
+
+/* Focus Pattern Animation */
+.ambient-focus {
+    animation: ambient-focus 1s ease-in-out infinite;
+}
+
+@keyframes ambient-focus {
+    0%, 100% {
+        opacity: 0.04;
+        transform: rotate(0deg);
+    }
+    50% {
+        opacity: 0.08;
+        transform: rotate(180deg);
+    }
+}
+
+/* Haptic Feedback Visual Indicators */
+.haptic-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(26, 77, 58, 0.1);
+    pointer-events: none;
+    z-index: 1001;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.haptic-indicator.active {
+    opacity: 1;
+    animation: haptic-pulse 0.5s ease-out;
+}
+
+@keyframes haptic-pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Haptic Intensity Indicators */
+.haptic-intensity-gentle {
+    background: rgba(26, 77, 58, 0.05);
+    border: 1px solid rgba(26, 77, 58, 0.1);
+}
+
+.haptic-intensity-medium {
+    background: rgba(26, 77, 58, 0.1);
+    border: 1px solid rgba(26, 77, 58, 0.2);
+}
+
+.haptic-intensity-strong {
+    background: rgba(26, 77, 58, 0.15);
+    border: 1px solid rgba(26, 77, 58, 0.3);
+}
+
+/* Activity-Specific Ambient Effects */
+.meditation-ambient {
+    background: radial-gradient(circle, rgba(26, 77, 58, 0.08) 0%, transparent 70%);
+    animation: meditation-flow 6s ease-in-out infinite;
+}
+
+@keyframes meditation-flow {
+    0%, 100% {
+        opacity: 0.05;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.1;
+        transform: scale(1.03);
+    }
+}
+
+.journal-ambient {
+    background: linear-gradient(45deg, rgba(26, 77, 58, 0.06) 0%, transparent 50%);
+    animation: journal-rhythm 3s ease-in-out infinite;
+}
+
+@keyframes journal-rhythm {
+    0%, 100% {
+        opacity: 0.04;
+        transform: translateX(0);
+    }
+    50% {
+        opacity: 0.08;
+        transform: translateX(1px);
+    }
+}
+
+.workout-ambient {
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    animation: workout-energy 2s ease-in-out infinite;
+}
+
+@keyframes workout-energy {
+    0%, 100% {
+        opacity: 0.08;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.15;
+        transform: scale(1.04);
+    }
+}
+
+.clarity-ambient {
+    background: conic-gradient(from 0deg, rgba(26, 77, 58, 0.06) 0%, transparent 50%);
+    animation: clarity-focus 2.5s ease-in-out infinite;
+}
+
+@keyframes clarity-focus {
+    0%, 100% {
+        opacity: 0.05;
+        transform: rotate(0deg);
+    }
+    50% {
+        opacity: 0.1;
+        transform: rotate(180deg);
+    }
+}
+
+/* Haptic Feedback States */
+.haptic-success {
+    background: rgba(26, 77, 58, 0.2);
+    animation: haptic-success 0.8s ease-out;
+}
+
+@keyframes haptic-success {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.3);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+    }
+}
+
+.haptic-error {
+    background: rgba(139, 69, 19, 0.2);
+    animation: haptic-error 0.6s ease-out;
+}
+
+@keyframes haptic-error {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    25% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.8;
+    }
+    75% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+    }
+}
+
+.haptic-warning {
+    background: rgba(212, 175, 55, 0.2);
+    animation: haptic-warning 0.7s ease-out;
+}
+
+@keyframes haptic-warning {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Haptic Feedback Controls */
+.haptic-controls {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 100;
+}
+
+.haptic-control-button {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(26, 77, 58, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.haptic-control-button:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+
+.haptic-control-button.active {
+    background: rgba(26, 77, 58, 0.1);
+    border-color: rgba(26, 77, 58, 0.3);
+}
+
+/* Haptic Intensity Selector */
+.haptic-intensity-selector {
+    position: fixed;
+    bottom: 6rem;
+    right: 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(26, 77, 58, 0.2);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.haptic-intensity-selector.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.haptic-intensity-option {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.haptic-intensity-option:hover {
+    background: rgba(26, 77, 58, 0.1);
+}
+
+.haptic-intensity-option.active {
+    background: rgba(26, 77, 58, 0.2);
+    color: var(--forest-deep);
+}
+
+/* Responsive Haptic Adjustments */
+@media (max-width: 768px) {
+    .haptic-indicator {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .haptic-controls {
+        bottom: 1rem;
+        right: 1rem;
+    }
+    
+    .haptic-control-button {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+    }
+    
+    .haptic-intensity-selector {
+        bottom: 5rem;
+        right: 1rem;
+        padding: 0.75rem;
+    }
+    
+    .haptic-intensity-option {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Accessibility for Haptic Feedback */
+@media (prefers-reduced-motion: reduce) {
+    .ambient-feedback,
+    .ambient-breathing,
+    .ambient-writing,
+    .ambient-energy,
+    .ambient-focus,
+    .meditation-ambient,
+    .journal-ambient,
+    .workout-ambient,
+    .clarity-ambient,
+    .haptic-indicator,
+    .haptic-success,
+    .haptic-error,
+    .haptic-warning {
+        animation: none;
+        transition: none;
+    }
+    
+    .haptic-control-button:hover {
+        transform: none;
+    }
+}
+
+/* High Contrast Haptic Indicators */
+@media (prefers-contrast: high) {
+    .ambient-feedback {
+        background: rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .haptic-indicator {
+        background: rgba(0, 0, 0, 0.2);
+        border: 2px solid white;
+    }
+    
+    .haptic-control-button {
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        border: 2px solid white;
+    }
+    
+    .haptic-intensity-selector {
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        border: 2px solid white;
+    }
+}
