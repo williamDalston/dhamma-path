@@ -6975,6 +6975,7 @@
     // Update display function
     function updateTimerDisplay() {
         console.log('🔄 updateTimerDisplay called');
+        alert('UPDATE DISPLAY CALLED!'); // TEMPORARY DEBUG
         const display = document.getElementById('timer-display');
         console.log('🔄 Display element found:', !!display);
         console.log('🔄 Timer state:', window.timer);
@@ -7132,6 +7133,7 @@
         console.log('🚀 attachTimerLogic() called');
         console.log('🚀 Current page:', currentPage);
         console.log('🚀 Timer page visible:', document.getElementById('timer-page')?.style.display !== 'none');
+        alert('TIMER LOGIC CALLED!'); // TEMPORARY DEBUG
         // Attaching enhanced timer logic
         
         // Ensure welcome overlay is hidden
