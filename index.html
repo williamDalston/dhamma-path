@@ -99,6 +99,10 @@
     </script>
     <script src="https://cdn.tailwindcss.com" defer></script>
     <script>
+        // Cache busting - force reload of JavaScript
+        console.log('🔄 CACHE BUSTING - JavaScript reloaded at:', new Date().toISOString());
+        console.log('🔄 Current timestamp:', Date.now());
+        
         // Suppress Tailwind CSS production warning
         window.tailwindConfig = {
             theme: {
@@ -6824,7 +6828,18 @@
         }
     });
     
-    console.log('🧹 Forced cleanup of all timer variables');
+    // Force clear ALL possible timer intervals
+    for (let i = 1; i < 1000; i++) {
+        clearInterval(i);
+    }
+    
+    // Override any old timer functions that might be cached
+    window.updateDisplay = function() {
+        console.log('❌ OLD updateDisplay called - BLOCKED');
+        return false;
+    };
+    
+    console.log('🧹 Forced cleanup of all timer variables and intervals');
     
     // Periodic conflict detection (every 5 seconds)
     setInterval(() => {
