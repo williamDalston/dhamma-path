@@ -6689,9 +6689,13 @@
                 if (window.timeRemaining > 0) {
                     window.timeRemaining--;
                     console.log('timeRemaining after decrement:', window.timeRemaining);
-                    console.log('About to call updateDisplay...');
-                    window.updateDisplay();
-                    console.log('updateDisplay called');
+            console.log('About to call updateDisplay...');
+            try {
+                window.updateDisplay();
+                console.log('updateDisplay called successfully');
+            } catch (error) {
+                console.error('Error calling updateDisplay:', error);
+            }
                     
                     // Play bell at specific intervals
                     if (window.timeRemaining === 0) {
@@ -6766,10 +6770,14 @@
     };
 
     window.updateDisplay = function() {
-        console.log('=== UPDATE DISPLAY CALLED ===');
-        console.log('window.display:', window.display);
-        console.log('window.timeRemaining:', window.timeRemaining);
-        console.log('window.totalTime:', window.totalTime);
+        try {
+            console.log('=== UPDATE DISPLAY CALLED ===');
+            console.log('window.display:', window.display);
+            console.log('window.timeRemaining:', window.timeRemaining);
+            console.log('window.totalTime:', window.totalTime);
+        } catch (error) {
+            console.error('Error in updateDisplay start:', error);
+        }
         
         // Update timer display
         if (window.display) {
