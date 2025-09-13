@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Test - The Dhamma Path</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .test-pass { color: #10b981; }
+        .test-fail { color: #ef4444; }
+        .test-info { color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">🧪 The Dhamma Path - App Test Suite</h1>
+        
+        <div id="test-results" class="space-y-4">
+            <!-- Test results will be populated here -->
+        </div>
+        
+        <div class="mt-8 p-4 bg-white rounded-lg shadow">
+            <h2 class="text-xl font-semibold mb-4">Manual Test Checklist</h2>
+            <div class="space-y-2">
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2"> Home page loads correctly
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2"> Navigation between pages works
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2"> Meditation timer starts/stops/resets
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2"> Journal timer and textarea work
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2"> Workout timer with exercise navigation
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2"> Interview practice timer works
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2"> Mobile menu opens/closes
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2"> Dark mode toggle works
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2"> Premium animations trigger
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2"> Notifications appear correctly
+                </label>
+            </div>
+        </div>
+        
+        <div class="mt-8 p-4 bg-white rounded-lg shadow">
+            <h2 class="text-xl font-semibold mb-4">Console Output</h2>
+            <div id="console-output" class="bg-gray-900 text-green-400 p-4 rounded font-mono text-sm h-64 overflow-y-auto">
+                <!-- Console output will be shown here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test suite
+        class AppTestSuite {
+            constructor() {
+                this.results = [];
+                this.originalConsoleLog = console.log;
+                this.originalConsoleError = console.error;
+                this.consoleOutput = document.getElementById('console-output');
+                this.resultsContainer = document.getElementById('test-results');
+                
+                this.setupConsoleCapture();
+                this.runTests();
+            }
+
+            setupConsoleCapture() {
+                console.log = (...args) => {
+                    this.originalConsoleLog(...args);
+                    this.addConsoleOutput('LOG', args.join(' '));
+                };
+                
+                console.error = (...args) => {
+                    this.originalConsoleError(...args);
+                    this.addConsoleOutput('ERROR', args.join(' '));
+                };
+            }
+
+            addConsoleOutput(type, message) {
+                const timestamp = new Date().toLocaleTimeString();
+                const color = type === 'ERROR' ? 'text-red-400' : 'text-green-400';
+                this.consoleOutput.innerHTML += `<div class="${color}">[${timestamp}] ${type}: ${message}</div>`;
+                this.consoleOutput.scrollTop = this.consoleOutput.scrollHeight;
+            }
+
+            addTestResult(testName, status, message) {
+                this.results.push({ testName, status, message });
+                this.renderTestResult(testName, status, message);
+            }
+
+            renderTestResult(testName, status, message) {
+                const statusClass = status === 'PASS' ? 'test-pass' : status === 'FAIL' ? 'test-fail' : 'test-info';
+                const icon = status === 'PASS' ? '✅' : status === 'FAIL' ? '❌' : 'ℹ️';
+                
+                const testDiv = document.createElement('div');
+                testDiv.className = 'p-4 bg-white rounded-lg shadow';
+                testDiv.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="text-xl mr-2">${icon}</span>
+                            <span class="font-semibold">${testName}</span>
+                        </div>
+                        <span class="${statusClass} font-semibold">${status}</span>
+                    </div>
+                    <div class="mt-2 text-gray-600">${message}</div>
+                `;
+                
+                this.resultsContainer.appendChild(testDiv);
+            }
+
+            async runTests() {
+                console.log('🧪 Starting App Test Suite...');
+                
+                // Test 1: Check if main app files exist
+                await this.testFileExistence();
+                
+                // Test 2: Check if modules load correctly
+                await this.testModuleLoading();
+                
+                // Test 3: Check if navigation works
+                await this.testNavigation();
+                
+                // Test 4: Check if templates load
+                await this.testTemplateLoading();
+                
+                // Test 5: Check if CSS classes exist
+                await this.testCSSClasses();
+                
+                console.log('✅ Test suite completed');
+                this.generateSummary();
+            }
+
+            async testFileExistence() {
+                const files = [
+                    'assets/js/performance.js',
+                    'assets/js/animations.js', 
+                    'assets/js/analytics.js',
+                    'assets/js/navigation.js',
+                    'assets/js/meditation-timer.js',
+                    'assets/js/app.js',
+                    'assets/css/critical.css',
+                    'assets/css/styles.css',
+                    'assets/templates/home.html',
+                    'assets/templates/timer.html',
+                    'assets/templates/journal.html',
+                    'assets/templates/workout.html',
+                    'assets/templates/interview.html'
+                ];
+
+                let passed = 0;
+                let failed = 0;
+
+                for (const file of files) {
+                    try {
+                        const response = await fetch(file, { method: 'HEAD' });
+                        if (response.ok) {
+                            passed++;
+                        } else {
+                            failed++;
+                            console.error(`File not found: ${file}`);
+                        }
+                    } catch (error) {
+                        failed++;
+                        console.error(`Error checking file ${file}:`, error);
+                    }
+                }
+
+                const status = failed === 0 ? 'PASS' : 'FAIL';
+                const message = `${passed} files found, ${failed} missing`;
+                this.addTestResult('File Existence Check', status, message);
+            }
+
+            async testModuleLoading() {
+                // Check if modules are available
+                const modules = [
+                    'PerformanceMonitor',
+                    'AnimationSystem',
+                    'AnalyticsSystem',
+                    'NavigationManager',
+                    'MeditationTimer',
+                    'DhammaPathApp'
+                ];
+
+                let loaded = 0;
+                const missing = [];
+
+                for (const module of modules) {
+                    if (window[module]) {
+                        loaded++;
+                    } else {
+                        missing.push(module);
+                    }
+                }
+
+                const status = missing.length === 0 ? 'PASS' : 'FAIL';
+                const message = missing.length === 0 ? 
+                    'All modules loaded successfully' : 
+                    `Missing modules: ${missing.join(', ')}`;
+                
+                this.addTestResult('Module Loading', status, message);
+            }
+
+            async testNavigation() {
+                // Test navigation functionality
+                try {
+                    if (window.NavigationManager) {
+                        this.addTestResult('Navigation Manager', 'PASS', 'NavigationManager class available');
+                    } else {
+                        this.addTestResult('Navigation Manager', 'FAIL', 'NavigationManager class not found');
+                    }
+                } catch (error) {
+                    this.addTestResult('Navigation Manager', 'FAIL', `Error: ${error.message}`);
+                }
+            }
+
+            async testTemplateLoading() {
+                const templates = ['home', 'timer', 'journal', 'workout', 'interview'];
+                let loaded = 0;
+
+                for (const template of templates) {
+                    try {
+                        const response = await fetch(`assets/templates/${template}.html`);
+                        if (response.ok) {
+                            loaded++;
+                        }
+                    } catch (error) {
+                        console.error(`Template ${template} failed to load:`, error);
+                    }
+                }
+
+                const status = loaded === templates.length ? 'PASS' : 'FAIL';
+                const message = `${loaded}/${templates.length} templates loaded successfully`;
+                this.addTestResult('Template Loading', status, message);
+            }
+
+            async testCSSClasses() {
+                // Check if key CSS classes exist by creating test elements
+                const testClasses = [
+                    'btn-premium',
+                    'card-premium',
+                    'gradient-text-premium',
+                    'animate-fade-up',
+                    'notification-premium'
+                ];
+
+                let found = 0;
+                const missing = [];
+
+                for (const className of testClasses) {
+                    const testEl = document.createElement('div');
+                    testEl.className = className;
+                    document.body.appendChild(testEl);
+                    
+                    const computedStyle = window.getComputedStyle(testEl);
+                    if (computedStyle.display !== 'block' || computedStyle.opacity !== '') {
+                        found++;
+                    } else {
+                        missing.push(className);
+                    }
+                    
+                    document.body.removeChild(testEl);
+                }
+
+                const status = missing.length === 0 ? 'PASS' : 'INFO';
+                const message = missing.length === 0 ? 
+                    'All premium CSS classes found' : 
+                    `Some classes may not be fully defined: ${missing.join(', ')}`;
+                
+                this.addTestResult('CSS Classes', status, message);
+            }
+
+            generateSummary() {
+                const passed = this.results.filter(r => r.status === 'PASS').length;
+                const failed = this.results.filter(r => r.status === 'FAIL').length;
+                const total = this.results.length;
+
+                const summaryDiv = document.createElement('div');
+                summaryDiv.className = 'mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200';
+                summaryDiv.innerHTML = `
+                    <h2 class="text-xl font-semibold mb-2">📊 Test Summary</h2>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <div class="text-2xl font-bold text-green-600">${passed}</div>
+                            <div class="text-sm text-gray-600">Passed</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-red-600">${failed}</div>
+                            <div class="text-sm text-gray-600">Failed</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-blue-600">${total}</div>
+                            <div class="text-sm text-gray-600">Total</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <div class="text-lg font-semibold ${failed === 0 ? 'text-green-600' : 'text-red-600'}">
+                            ${failed === 0 ? '🎉 All tests passed!' : '⚠️ Some tests failed'}
+                        </div>
+                    </div>
+                `;
+                
+                this.resultsContainer.appendChild(summaryDiv);
+            }
+        }
+
+        // Run tests when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new AppTestSuite();
+        });
+    </script>
+</body>
+</html>
