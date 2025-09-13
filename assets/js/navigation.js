@@ -455,6 +455,9 @@ class NavigationManager {
             case 'wisdom':
                 this.initializeWisdomPage();
                 break;
+            case 'analytics':
+                this.initializeAnalyticsPage();
+                break;
             case 'clarity':
                 this.initializeClarityPage();
                 break;
@@ -1056,6 +1059,101 @@ class NavigationManager {
                 page_location: window.location.href
             });
         }
+    }
+    
+    initializeAnalyticsPage() {
+        console.log('📊 Initializing Analytics Dashboard...');
+        
+        // Initialize the Analytics Engine
+        if (window.analyticsEngine) {
+            this.setupAnalyticsDashboard();
+        } else {
+            console.log('📊 Analytics Engine not yet initialized');
+            // Wait for initialization
+            setTimeout(() => {
+                if (window.analyticsEngine) {
+                    this.setupAnalyticsDashboard();
+                }
+            }, 1000);
+        }
+        
+        // Track analytics
+        if (window.gtag) {
+            window.gtag('event', 'page_view', {
+                page_title: 'Analytics Dashboard - Performance Monitoring',
+                page_location: window.location.href
+            });
+        }
+    }
+    
+    setupAnalyticsDashboard() {
+        // Setup chart period buttons
+        const periodButtons = document.querySelectorAll('.chart-period-btn');
+        periodButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                // Remove active class from all buttons
+                periodButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                e.target.classList.add('active');
+                
+                // Update charts based on selected period
+                this.updateCharts(e.target.dataset.period);
+            });
+        });
+        
+        // Setup refresh button
+        const refreshBtn = document.querySelector('.refresh-btn');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                this.refreshAnalyticsDashboard();
+            });
+        }
+        
+        // Initialize charts
+        this.initializeCharts();
+        
+        // Start real-time updates
+        this.startRealTimeUpdates();
+    }
+    
+    updateCharts(period) {
+        console.log(`📊 Updating charts for period: ${period}`);
+        // In a real implementation, you'd update the charts with new data
+        // based on the selected time period
+    }
+    
+    refreshAnalyticsDashboard() {
+        console.log('🔄 Refreshing analytics dashboard...');
+        
+        // Refresh the refresh icon
+        const refreshIcon = document.querySelector('.refresh-icon');
+        if (refreshIcon) {
+            refreshIcon.style.animation = 'spin 1s linear infinite';
+            setTimeout(() => {
+                refreshIcon.style.animation = '';
+            }, 1000);
+        }
+        
+        // Trigger analytics engine refresh
+        if (window.analyticsEngine) {
+            window.analyticsEngine.updateMetrics();
+            window.analyticsEngine.updateDashboard();
+        }
+    }
+    
+    initializeCharts() {
+        // Initialize chart placeholders
+        const chartPlaceholders = document.querySelectorAll('.chart-placeholder');
+        chartPlaceholders.forEach(placeholder => {
+            // In a real implementation, you'd initialize actual charts here
+            // using libraries like Chart.js, D3.js, or similar
+            console.log('📊 Initializing chart placeholder');
+        });
+    }
+    
+    startRealTimeUpdates() {
+        // Real-time updates are handled by the Analytics Engine
+        console.log('📊 Real-time analytics updates started');
     }
     
     displayWisdomCollection() {

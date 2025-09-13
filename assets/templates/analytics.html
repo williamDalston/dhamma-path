@@ -1,0 +1,281 @@
+<!-- Analytics Dashboard - Real-time Performance Monitoring -->
+<div class="analytics-dashboard min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header bg-white shadow-sm border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center">
+                    <div class="analytics-icon text-3xl mr-3">📊</div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-900">Analytics Dashboard</h1>
+                        <p class="text-sm text-slate-500">Real-time performance monitoring and optimization</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="status-indicator flex items-center">
+                        <div class="status-dot w-3 h-3 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                        <span class="text-sm text-slate-600">Live</span>
+                    </div>
+                    <button class="refresh-btn bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-2 rounded-lg transition-colors">
+                        <span class="refresh-icon">🔄</span> Refresh
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Metrics Grid -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Performance Score -->
+            <div class="metric-card bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600">Performance Score</p>
+                        <p class="text-3xl font-bold text-slate-900" id="performance-score">--</p>
+                        <p class="text-sm text-green-600 flex items-center mt-1">
+                            <span class="trend-up mr-1">📈</span>
+                            <span id="performance-trend">--</span>
+                        </p>
+                    </div>
+                    <div class="performance-gauge w-16 h-16">
+                        <svg class="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-slate-200" stroke="currentColor" stroke-width="3" fill="none"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path id="performance-gauge-fill" class="text-green-500" stroke="currentColor" stroke-width="3" fill="none"
+                                stroke-linecap="round" stroke-dasharray="100, 100" stroke-dashoffset="100"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-xs font-medium text-slate-600" id="performance-percentage">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Users -->
+            <div class="metric-card bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600">Active Users</p>
+                        <p class="text-3xl font-bold text-slate-900" id="active-users">--</p>
+                        <p class="text-sm text-blue-600 flex items-center mt-1">
+                            <span class="trend-up mr-1">👥</span>
+                            <span id="active-users-trend">--</span>
+                        </p>
+                    </div>
+                    <div class="text-3xl text-blue-500">👥</div>
+                </div>
+            </div>
+
+            <!-- Page Load Time -->
+            <div class="metric-card bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600">Avg Load Time</p>
+                        <p class="text-3xl font-bold text-slate-900" id="avg-load-time">--</p>
+                        <p class="text-sm text-purple-600 flex items-center mt-1">
+                            <span class="trend-up mr-1">⚡</span>
+                            <span id="load-time-trend">--</span>
+                        </p>
+                    </div>
+                    <div class="text-3xl text-purple-500">⚡</div>
+                </div>
+            </div>
+
+            <!-- Error Rate -->
+            <div class="metric-card bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600">Error Rate</p>
+                        <p class="text-3xl font-bold text-slate-900" id="error-rate">--</p>
+                        <p class="text-sm text-red-600 flex items-center mt-1">
+                            <span class="trend-down mr-1">🛡️</span>
+                            <span id="error-rate-trend">--</span>
+                        </p>
+                    </div>
+                    <div class="text-3xl text-red-500">🛡️</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Performance Trends Chart -->
+            <div class="chart-container bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-slate-900">Performance Trends</h3>
+                    <div class="flex space-x-2">
+                        <button class="chart-period-btn active" data-period="1h">1H</button>
+                        <button class="chart-period-btn" data-period="24h">24H</button>
+                        <button class="chart-period-btn" data-period="7d">7D</button>
+                    </div>
+                </div>
+                <div class="chart-placeholder h-64 bg-slate-50 rounded-lg flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-4xl text-slate-400 mb-2">📈</div>
+                        <p class="text-slate-500">Performance chart loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Engagement Chart -->
+            <div class="chart-container bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-slate-900">User Engagement</h3>
+                    <div class="flex space-x-2">
+                        <button class="chart-period-btn active" data-period="1h">1H</button>
+                        <button class="chart-period-btn" data-period="24h">24H</button>
+                        <button class="chart-period-btn" data-period="7d">7D</button>
+                    </div>
+                </div>
+                <div class="chart-placeholder h-64 bg-slate-50 rounded-lg flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-4xl text-slate-400 mb-2">🎯</div>
+                        <p class="text-slate-500">Engagement chart loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Metrics Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Core Web Vitals -->
+            <div class="metrics-section bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-semibold text-slate-900 mb-4">Core Web Vitals</h3>
+                <div class="space-y-4">
+                    <div class="metric-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-slate-600">Largest Contentful Paint</span>
+                            <span class="text-sm font-medium text-slate-900" id="lcp-value">--</span>
+                        </div>
+                        <div class="progress-bar bg-slate-200 rounded-full h-2">
+                            <div class="progress-fill bg-green-500 h-2 rounded-full transition-all duration-300" id="lcp-progress"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Target: &lt; 2.5s</p>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-slate-600">First Input Delay</span>
+                            <span class="text-sm font-medium text-slate-900" id="fid-value">--</span>
+                        </div>
+                        <div class="progress-bar bg-slate-200 rounded-full h-2">
+                            <div class="progress-fill bg-green-500 h-2 rounded-full transition-all duration-300" id="fid-progress"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Target: &lt; 100ms</p>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-slate-600">Cumulative Layout Shift</span>
+                            <span class="text-sm font-medium text-slate-900" id="cls-value">--</span>
+                        </div>
+                        <div class="progress-bar bg-slate-200 rounded-full h-2">
+                            <div class="progress-fill bg-green-500 h-2 rounded-full transition-all duration-300" id="cls-progress"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Target: &lt; 0.1</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Usage -->
+            <div class="metrics-section bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-semibold text-slate-900 mb-4">Resource Usage</h3>
+                <div class="space-y-4">
+                    <div class="metric-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-slate-600">Memory Usage</span>
+                            <span class="text-sm font-medium text-slate-900" id="memory-usage">--</span>
+                        </div>
+                        <div class="progress-bar bg-slate-200 rounded-full h-2">
+                            <div class="progress-fill bg-blue-500 h-2 rounded-full transition-all duration-300" id="memory-progress"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Current usage</p>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-slate-600">CPU Usage</span>
+                            <span class="text-sm font-medium text-slate-900" id="cpu-usage">--</span>
+                        </div>
+                        <div class="progress-bar bg-slate-200 rounded-full h-2">
+                            <div class="progress-fill bg-purple-500 h-2 rounded-full transition-all duration-300" id="cpu-progress"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Current usage</p>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-slate-600">Network Requests</span>
+                            <span class="text-sm font-medium text-slate-900" id="network-requests">--</span>
+                        </div>
+                        <div class="progress-bar bg-slate-200 rounded-full h-2">
+                            <div class="progress-fill bg-orange-500 h-2 rounded-full transition-all duration-300" id="network-progress"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Per session</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Behavior -->
+            <div class="metrics-section bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-semibold text-slate-900 mb-4">User Behavior</h3>
+                <div class="space-y-4">
+                    <div class="metric-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-slate-600">Session Duration</span>
+                            <span class="text-sm font-medium text-slate-900" id="session-duration">--</span>
+                        </div>
+                        <div class="progress-bar bg-slate-200 rounded-full h-2">
+                            <div class="progress-fill bg-green-500 h-2 rounded-full transition-all duration-300" id="session-progress"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Average time</p>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-slate-600">Page Views</span>
+                            <span class="text-sm font-medium text-slate-900" id="page-views">--</span>
+                        </div>
+                        <div class="progress-bar bg-slate-200 rounded-full h-2">
+                            <div class="progress-fill bg-blue-500 h-2 rounded-full transition-all duration-300" id="page-views-progress"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Per session</p>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-slate-600">Bounce Rate</span>
+                            <span class="text-sm font-medium text-slate-900" id="bounce-rate">--</span>
+                        </div>
+                        <div class="progress-bar bg-slate-200 rounded-full h-2">
+                            <div class="progress-fill bg-red-500 h-2 rounded-full transition-all duration-300" id="bounce-progress"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Single page sessions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts Section -->
+        <div class="mt-8">
+            <div class="alerts-section bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-semibold text-slate-900 mb-4">Performance Alerts</h3>
+                <div class="alerts-list space-y-3" id="alerts-list">
+                    <!-- Alerts will be dynamically generated here -->
+                    <div class="alert-item p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="alert-icon text-yellow-600 mr-3">⚠️</div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-yellow-800">High Memory Usage Detected</p>
+                                <p class="text-xs text-yellow-600">Memory usage has exceeded 100MB. Consider optimizing resources.</p>
+                            </div>
+                            <div class="alert-time text-xs text-yellow-600">2 min ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
