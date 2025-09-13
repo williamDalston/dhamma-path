@@ -6690,9 +6690,15 @@
                     window.timeRemaining--;
                     console.log('timeRemaining after decrement:', window.timeRemaining);
                     console.log('🔧 About to call updateDisplay... VERSION 2.0 🔧');
+                    console.log('🔧 updateDisplay function exists:', typeof window.updateDisplay);
+                    console.log('🔧 updateDisplay function:', window.updateDisplay);
                     try {
-                        window.updateDisplay();
-                        console.log('🔧 updateDisplay called successfully - VERSION 2.0 🔧');
+                        if (typeof window.updateDisplay === 'function') {
+                            window.updateDisplay();
+                            console.log('🔧 updateDisplay called successfully - VERSION 2.0 🔧');
+                        } else {
+                            console.error('🔧 updateDisplay is not a function!');
+                        }
                     } catch (error) {
                         console.error('Error calling updateDisplay:', error);
                     }
