@@ -6751,11 +6751,27 @@
     };
 
     window.updateDisplay = function() {
+        console.log('=== UPDATE DISPLAY CALLED ===');
+        console.log('window.display:', window.display);
+        console.log('window.timeRemaining:', window.timeRemaining);
+        
         if (window.display) {
             const minutes = Math.floor(window.timeRemaining / 60);
             const seconds = window.timeRemaining % 60;
             const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            console.log('Setting display to:', displayText);
+            console.log('Display element before update:', window.display.textContent);
             window.display.textContent = displayText;
+            console.log('Display element after update:', window.display.textContent);
+        } else {
+            console.error('Display element not found!');
+            console.log('Trying to find display element again...');
+            const displayElement = document.getElementById('timer-display');
+            console.log('Found display element:', displayElement);
+            if (displayElement) {
+                window.display = displayElement;
+                console.log('Updated window.display reference');
+            }
         }
         if (window.status) {
             if (window.isRunning) {
@@ -10273,6 +10289,12 @@
         
         // Auto-initialize when workout page loads
         function checkAndInitWorkout() {
+            // Only check for workout elements if we're on the workout page
+            const currentPage = document.getElementById('main-content');
+            if (!currentPage || !currentPage.innerHTML.includes('workout-timer-display')) {
+                return; // Not on workout page, don't check
+            }
+            
             const timerDisplay = document.getElementById('workout-timer-display');
             if (timerDisplay) {
                 console.log('Workout elements found, initializing...');
@@ -10297,8 +10319,10 @@
             }
         }
         
-        // Start checking for workout elements
-        checkAndInitWorkout();
+        // Only start checking for workout elements if we're on the workout page
+        if (document.getElementById('main-content') && document.getElementById('main-content').innerHTML.includes('workout-timer-display')) {
+            checkAndInitWorkout();
+        }
     </script>
 </body>
 </html>
