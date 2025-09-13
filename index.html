@@ -8764,6 +8764,11 @@
             
             // Enhanced navigation click handler with better debugging
             const handleNavigationClick = (e) => {
+                // Ignore mobile menu button clicks
+                if (e.target.closest('#mobile-menu-button') || e.target.closest('#mobile-menu')) {
+                    return;
+                }
+                
                 console.log('🔍 Click detected on:', e.target);
                 console.log('🔍 Target classes:', e.target.className);
                 console.log('🔍 Target tag:', e.target.tagName);
