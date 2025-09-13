@@ -125,20 +125,16 @@
             });
         }
         
-        // ULTRA NUCLEAR CACHE CLEAR - Force reload if ANY old system detected
+        // FINAL CACHE DESTROY - Force reload with query parameters
         setTimeout(() => {
-            // Check for old version indicators
-            const oldVersionDetected = 
-                window.location.href.includes('v20241220-004') ||
-                window.location.href.includes('v20241220-005') ||
-                !window.location.href.includes('v20241220-006');
+            console.log('💥 FINAL CACHE DESTROY - Forcing reload with query parameters...');
+            console.log('💥 Current URL:', window.location.href);
             
-            if (oldVersionDetected) {
-                console.log('🚨 OLD VERSION DETECTED - ULTRA NUCLEAR RELOAD');
-                console.log('🚨 Current URL:', window.location.href);
-                console.log('🚨 Reloading with cache bypass...');
-                window.location.href = window.location.href.split('?')[0] + '?v=' + Date.now() + '&cache=' + Math.random();
-            }
+            // Always reload with cache-busting query parameters
+            const baseUrl = window.location.href.split('?')[0];
+            const newUrl = baseUrl + '?v=' + Date.now() + '&cache=' + Math.random() + '&destroy=' + Math.random();
+            console.log('💥 New URL:', newUrl);
+            window.location.href = newUrl;
         }, 100);
         
         // Suppress Tailwind CSS production warning
