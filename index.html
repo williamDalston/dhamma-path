@@ -5534,17 +5534,25 @@
                             
                             <!-- Timer Controls - Mobile First Layout -->
                             <div class="flex flex-col space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-                                <!-- Duration Selection - Mobile Optimized -->
+                                <!-- Duration Selection with Previous/Next - Mobile Optimized -->
                                 <div class="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4">
                                     <label for="timer-duration" class="text-sm font-bold text-charcoal whitespace-nowrap">Duration:</label>
-                                    <select id="timer-duration" class="w-full sm:w-auto px-4 py-3 border-2 border-forest-green/30 rounded-xl focus:ring-2 focus:ring-forest-green focus:border-forest-green focus:outline-none bg-white text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-200 min-h-[48px]">
-                                        <option value="300">5 minutes</option>
-                                        <option value="600" selected>10 minutes</option>
-                                        <option value="900">15 minutes</option>
-                                        <option value="1200">20 minutes</option>
-                                        <option value="1800">30 minutes</option>
-                        </select>
-                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button id="timer-prev-btn" class="px-3 py-2 bg-forest-green/20 text-forest-green rounded-lg hover:bg-forest-green/30 transition-colors text-lg font-bold touch-manipulation" aria-label="Previous duration">
+                                            ◀
+                                        </button>
+                                        <select id="timer-duration" class="px-4 py-3 border-2 border-forest-green/30 rounded-xl focus:ring-2 focus:ring-forest-green focus:border-forest-green focus:outline-none bg-white text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-200 min-h-[48px]">
+                                            <option value="300">5 minutes</option>
+                                            <option value="600" selected>10 minutes</option>
+                                            <option value="900">15 minutes</option>
+                                            <option value="1200">20 minutes</option>
+                                            <option value="1800">30 minutes</option>
+                                        </select>
+                                        <button id="timer-next-btn" class="px-3 py-2 bg-forest-green/20 text-forest-green rounded-lg hover:bg-forest-green/30 transition-colors text-lg font-bold touch-manipulation" aria-label="Next duration">
+                                            ▶
+                                        </button>
+                                    </div>
+                                </div>
                                 
                                 <!-- Sound Options - Enhanced -->
                                 <div class="flex flex-col items-center space-y-3">
@@ -6648,6 +6656,12 @@
             window.isRunning = true;
             window.isPaused = false;
             
+            // Clear any existing interval first
+            if (window.timerInterval) {
+                clearInterval(window.timerInterval);
+                window.timerInterval = null;
+            }
+            
             // Haptic feedback for mobile
             if (typeof triggerHapticFeedback === 'function') {
                 triggerHapticFeedback('light');
@@ -6721,18 +6735,42 @@
     };
 
     window.pauseTimer = function() {
+        console.log('Pause timer called');
         if (window.isRunning) {
             window.isRunning = false;
             window.isPaused = true;
-            clearInterval(window.timerInterval);
+            if (window.timerInterval) {
+                clearInterval(window.timerInterval);
+                window.timerInterval = null;
+            }
             if (window.startBtn) window.startBtn.classList.remove('hidden');
             if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
             window.updateDisplay();
+            
+            // Remove pulsing effect
+            const timerContainer = document.querySelector('.relative.w-48, .relative.w-56, .relative.w-64, .relative.w-72, .relative.w-80');
+            if (timerContainer) {
+                timerContainer.classList.remove('timer-running');
+            }
+            
+            // Update status
+            if (window.statusDisplay) {
+                window.statusDisplay.textContent = 'Paused';
+            }
+            
+            // Haptic feedback for mobile
+            if (typeof triggerHapticFeedback === 'function') {
+                triggerHapticFeedback('light');
+            }
         }
     };
 
     window.resetTimer = function() {
-        clearInterval(window.timerInterval);
+        console.log('Reset timer called');
+        if (window.timerInterval) {
+            clearInterval(window.timerInterval);
+            window.timerInterval = null;
+        }
         window.isRunning = false;
         window.isPaused = false;
         if (window.durationSelect) {
@@ -6743,11 +6781,30 @@
             window.totalTime = 600;
         }
         window.updateDisplay();
+        window.updateProgress();
+        
+        // Update button visibility
         if (window.startBtn) {
             window.startBtn.classList.remove('hidden');
-            window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+            window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-4"><span class="text-3xl group-hover:scale-110 transition-transform duration-300">▶️</span><span class="font-bold text-xl sm:text-2xl group-hover:tracking-wide transition-all duration-300">Start Meditation</span></div>';
         }
         if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
+        
+        // Update status
+        if (window.statusDisplay) {
+            window.statusDisplay.textContent = 'Ready to begin';
+        }
+        
+        // Remove pulsing effect
+        const timerContainer = document.querySelector('.relative.w-48, .relative.w-56, .relative.w-64, .relative.w-72, .relative.w-80');
+        if (timerContainer) {
+            timerContainer.classList.remove('timer-running');
+        }
+        
+        // Haptic feedback for mobile
+        if (typeof triggerHapticFeedback === 'function') {
+            triggerHapticFeedback('light');
+        }
     };
 
     window.updateDisplay = function() {
@@ -6973,6 +7030,8 @@
             window.durationSelect = durationSelect;
             window.soundToggle = soundToggle;
             window.progressRing = progressRing;
+            window.prevBtn = document.getElementById('timer-prev-btn');
+            window.nextBtn = document.getElementById('timer-next-btn');
             
             // Initialize timer state
             window.timeRemaining = parseInt(durationSelect ? durationSelect.value : 600);
@@ -6991,19 +7050,73 @@
                 console.error('Start button not found!');
             }
             if (pauseBtn) {
-                pauseBtn.addEventListener('click', window.pauseTimer);
+                pauseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.pauseTimer();
+                });
             }
             if (resetBtn) {
-                resetBtn.addEventListener('click', window.resetTimer);
+                resetBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.resetTimer();
+                });
             }
             
             // Duration change
+            // Previous/Next buttons for duration
+            if (window.prevBtn) {
+                window.prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!window.isRunning && window.durationSelect) {
+                        const currentIndex = window.durationSelect.selectedIndex;
+                        if (currentIndex > 0) {
+                            window.durationSelect.selectedIndex = currentIndex - 1;
+                            window.timeRemaining = parseInt(window.durationSelect.value);
+                            window.totalTime = window.timeRemaining;
+                            window.updateDisplay();
+                            window.updateProgress();
+                            
+                            // Haptic feedback for mobile
+                            if (typeof triggerHapticFeedback === 'function') {
+                                triggerHapticFeedback('light');
+                            }
+                        }
+                    }
+                });
+            }
+            
+            if (window.nextBtn) {
+                window.nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!window.isRunning && window.durationSelect) {
+                        const currentIndex = window.durationSelect.selectedIndex;
+                        if (currentIndex < window.durationSelect.options.length - 1) {
+                            window.durationSelect.selectedIndex = currentIndex + 1;
+                            window.timeRemaining = parseInt(window.durationSelect.value);
+                            window.totalTime = window.timeRemaining;
+                            window.updateDisplay();
+                            window.updateProgress();
+                            
+                            // Haptic feedback for mobile
+                            if (typeof triggerHapticFeedback === 'function') {
+                                triggerHapticFeedback('light');
+                            }
+                        }
+                    }
+                });
+            }
+            
             if (durationSelect) {
                 durationSelect.addEventListener('change', () => {
                     if (!window.isRunning) {
                         window.timeRemaining = parseInt(durationSelect.value);
                         window.totalTime = window.timeRemaining;
                         window.updateDisplay();
+                        window.updateProgress();
                     }
                 });
             }
