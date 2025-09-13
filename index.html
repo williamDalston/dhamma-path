@@ -6800,6 +6800,32 @@
     // Clear any existing timers on page load
     window.clearAllTimers();
     
+    // Force clear any cached timer systems
+    if (window.timerInterval) {
+        clearInterval(window.timerInterval);
+        window.timerInterval = null;
+    }
+    if (window.timer) {
+        clearInterval(window.timer);
+        window.timer = null;
+    }
+    
+    // Force clear any old timer variables that might be cached
+    const oldTimerVars = ['isRunning', 'timeRemaining', 'totalTime', 'timerInterval', 'timer'];
+    oldTimerVars.forEach(varName => {
+        if (window[varName]) {
+            if (typeof window[varName] === 'number') {
+                window[varName] = 0;
+            } else if (typeof window[varName] === 'boolean') {
+                window[varName] = false;
+            } else {
+                window[varName] = null;
+            }
+        }
+    });
+    
+    console.log('🧹 Forced cleanup of all timer variables');
+    
     // Periodic conflict detection (every 5 seconds)
     setInterval(() => {
         window.detectTimerConflicts();
@@ -6829,6 +6855,22 @@
         
         // Clear any existing timers
         window.clearAllTimers();
+        
+        // Force clear any remaining timer variables
+        if (window.timerInterval) {
+            clearInterval(window.timerInterval);
+            window.timerInterval = null;
+        }
+        if (window.timer) {
+            clearInterval(window.timer);
+            window.timer = null;
+        }
+        if (window.isRunning) {
+            window.isRunning = false;
+        }
+        if (window.timeRemaining) {
+            window.timeRemaining = 0;
+        }
         
         // Check for conflicts before starting
         window.detectTimerConflicts();
