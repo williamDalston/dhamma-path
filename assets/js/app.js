@@ -64,6 +64,8 @@ class DhammaPathApp {
         this.initializeAdaptiveTiming();
         this.initializeHealthIntegration();
         this.initializeLearningSystem();
+        this.initializeMobileGestures();
+        this.initializeMobilePerformance();
         this.setupPremiumFeatures();
     }
 
@@ -189,6 +191,22 @@ class DhammaPathApp {
             this.learningSystem = new window.LearningSystem();
         } else {
             console.error('❌ LearningSystem not found');
+        }
+    }
+
+    initializeMobileGestures() {
+        if (window.MobileGestures) {
+            this.mobileGestures = new window.MobileGestures();
+        } else {
+            console.error('❌ MobileGestures not found');
+        }
+    }
+
+    initializeMobilePerformance() {
+        if (window.MobilePerformanceOptimizer) {
+            this.mobilePerformanceOptimizer = new window.MobilePerformanceOptimizer();
+        } else {
+            console.error('❌ MobilePerformanceOptimizer not found');
         }
     }
 
