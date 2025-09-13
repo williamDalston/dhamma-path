@@ -1,0 +1,20 @@
+<div class="text-center py-16">
+    <h1 class="text-4xl font-bold text-charcoal mb-8">🧘 Meditation Timer</h1>
+    <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-md mx-auto">
+        <div id="timer-display" class="text-6xl font-bold text-forest-green mb-6">10:00</div>
+        <div class="mb-6">
+            <select id="timer-duration" class="w-full px-4 py-3 border-2 border-forest-green/30 rounded-xl">
+                <option value="300">5 minutes</option>
+                <option value="600" selected>10 minutes</option>
+                <option value="900">15 minutes</option>
+                <option value="1200">20 minutes</option>
+            </select>
+        </div>
+        <div class="flex gap-4">
+            <button id="timer-start-btn" class="flex-1 px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Start</button>
+            <button id="timer-pause-btn" class="flex-1 px-6 py-3 bg-earth-gold text-white rounded-xl font-semibold hidden">Pause</button>
+            <button id="timer-reset-btn" class="flex-1 px-6 py-3 bg-charcoal/70 text-white rounded-xl font-semibold">Reset</button>
+        </div>
+        <div id="timer-status" class="mt-4 text-charcoal/70">Ready to begin</div>
+    </div>
+</div>

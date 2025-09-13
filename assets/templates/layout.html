@@ -1,0 +1,111 @@
+<body class="bg-linen-white text-charcoal transition-colors duration-300">
+    <a href="#main-content" id="skip-to-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-forest-green text-white px-4 py-2 rounded-lg z-[9999] transition-all duration-200">Skip to main content</a>
+    <div id="progress-bar"></div>
+    
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-gradient-to-r from-linen-white/90 via-linen-white/95 to-linen-white/90 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200/50 shadow-lg transition-all duration-300">
+        <nav class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8" role="navigation" aria-label="Main navigation">
+            <div class="flex items-center justify-between h-16 sm:h-20 transition-all duration-300">
+                <!-- Logo -->
+                <a href="#" data-page="home" class="flex items-center space-x-2 main-nav-link" aria-label="The Dhamma Path - Home">
+                    <svg width="32" height="32" class="sm:w-10 sm:h-10 fill-charcoal transition-colors duration-300" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="The Dhamma Path Logo" role="img">
+                        <defs>
+                            <lineargradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:currentColor;stop-opacity:0.8" />
+                                <stop offset="100%" style="stop-color:currentColor;stop-opacity:1" />
+                            </lineargradient>
+                        </defs>
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="url(#logoGradient)" stroke-width="2" opacity="0.3"/>
+                        <path class="logo-path" fill="url(#logoGradient)" stroke="none" d="M20 80 C 30 45, 50 30, 50 20 C 50 30, 60 40, 70 50 C 90 40, 80 70, 50 80 C 20 90, 30 50, 20 80 Z" />
+                        <circle cx="50" cy="50" r="3" fill="currentColor" opacity="0.6"/>
+                    </svg>
+                    <span class="font-lora text-sm font-bold text-charcoal">The Dhamma Path</span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div id="desktop-nav-links" class="hidden md:flex items-center space-x-1">
+                    <a href="#" data-page="timer" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm" aria-label="Start meditation timer and guided sessions">🧘 Meditate</a>
+                    <a href="#" data-page="journal" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm" aria-label="Access mindful journaling and reflection tools">✍️ Journal</a>
+                    <a href="#" data-page="workout" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm" aria-label="Begin 7-minute workout routine">💪 Exercise</a>
+                    <a href="#" data-page="interview" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm" aria-label="Practice confidence and interview skills">🎤 Practice</a>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-light-green/20 dark:hover:bg-charcoal/20 transition-colors border border-forest-green/20" style="display: inline-block !important; visibility: visible !important;">
+                        <!-- Sun Icon -->
+                        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Switch to dark mode" role="img"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                        <!-- Moon Icon -->
+                        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="Switch to light mode" role="img"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-3">
+                    <!-- Dark mode toggle for mobile -->
+                    <button id="dark-mode-toggle-mobile-header" class="btn btn-ghost btn-sm focus-ring" aria-label="Toggle dark mode" style="display: inline-block !important; visibility: visible !important;">
+                        <!-- Sun Icon -->
+                        <svg id="sun-icon-mobile" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-earthy-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                        <!-- Moon Icon -->
+                        <svg id="moon-icon-mobile" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forest-green hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                    </button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-button" class="btn btn-outline btn-sm focus-ring min-h-[48px] min-w-[48px]" aria-label="Open mobile menu" aria-expanded="false" aria-controls="mobile-menu" style="display: inline-flex !important; visibility: visible !important;">
+                        <svg id="hamburger-icon" class="h-6 w-6 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                        <svg id="close-icon" class="h-6 w-6 transition-transform duration-300 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gradient-to-b from-linen-white/95 to-linen-white/90 backdrop-blur-lg border-t border-gray-200/50 shadow-xl transform transition-all duration-300 ease-in-out" role="navigation" aria-label="Mobile navigation menu">
+            <!-- Mobile Menu Header -->
+            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200/30">
+                <h2 class="text-lg font-semibold text-charcoal">Navigation</h2>
+                <button id="mobile-menu-close" class="p-2 rounded-full hover:bg-light-green/20 transition-colors" aria-label="Close mobile menu">
+                    <svg class="h-5 w-5 text-charcoal" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation Links -->
+            <div id="mobile-nav-links" class="px-4 pt-4 pb-6 space-y-2">
+                <a href="#" data-page="timer" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-4 rounded-xl text-base font-medium hover:bg-gradient-to-r hover:from-forest-green/10 hover:to-light-green/10 hover:shadow-md transition-all duration-300 min-h-[52px] flex items-center group">
+                    <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300">🧘</span>
+                    <span>Meditate</span>
+                </a>
+                <a href="#" data-page="journal" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-4 rounded-xl text-base font-medium hover:bg-gradient-to-r hover:from-forest-green/10 hover:to-light-green/10 hover:shadow-md transition-all duration-300 min-h-[52px] flex items-center group">
+                    <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300">✍️</span>
+                    <span>Journal</span>
+                </a>
+                <a href="#" data-page="workout" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-4 rounded-xl text-base font-medium hover:bg-gradient-to-r hover:from-forest-green/10 hover:to-light-green/10 hover:shadow-md transition-all duration-300 min-h-[52px] flex items-center group">
+                    <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300">💪</span>
+                    <span>Exercise</span>
+                </a>
+                <a href="#" data-page="interview" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-4 rounded-xl text-base font-medium hover:bg-gradient-to-r hover:from-forest-green/10 hover:to-light-green/10 hover:shadow-md transition-all duration-300 min-h-[52px] flex items-center group">
+                    <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300">🎤</span>
+                    <span>Practice</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 page-transition">
+        <!-- Content will be loaded here dynamically -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-charcoal/5 to-charcoal/10 border-t border-gray-200/50 mt-auto">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-charcoal/60 text-sm">© 2024 The Dhamma Path. Transform your mornings, transform your life.</p>
+            </div>
+        </div>
+    </footer>
+</body>
