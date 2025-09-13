@@ -1,0 +1,78 @@
+    <template id="template-workout">
+        <div class="max-w-4xl mx-auto px-4">
+            <!-- Unified Workout Interface -->
+            <div class="bg-gradient-to-br from-forest-green/10 via-white to-light-green/20 rounded-3xl p-6 sm:p-8 shadow-2xl border border-forest-green/20 relative overflow-hidden">
+                
+                <!-- Header -->
+                <div class="text-center mb-6">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gradient font-lora mb-2">7-Minute Mindful Workout</h1>
+                    <p class="text-sm sm:text-base text-charcoal/80">Strengthen your body and mind</p>
+                </div>
+
+                <!-- Timer & Current Exercise -->
+                <div class="text-center mb-6">
+                    <div class="relative inline-block mb-4">
+                        <!-- Circular Progress Ring -->
+                        <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="54" stroke="#e5e7eb" stroke-width="8" fill="none"/>
+                            <circle id="progress-ring" cx="60" cy="60" r="54" stroke="#2d5016" stroke-width="8" fill="none" 
+                                    stroke-dasharray="339.292" stroke-dashoffset="339.292" stroke-linecap="round" 
+                                    class="transition-all duration-1000 ease-linear"/>
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <div id="workout-timer-display" class="text-3xl sm:text-4xl font-bold text-forest-green font-mono">30</div>
+                            <div id="workout-timer-label" class="text-xs text-charcoal/70">seconds</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Current Exercise Info -->
+                    <div class="bg-white/80 rounded-2xl p-4 mb-4">
+                        <div id="current-exercise-emoji" class="text-4xl mb-2">🤸</div>
+                        <div id="current-exercise-name" class="text-lg font-bold text-charcoal mb-1">Jumping Jacks</div>
+                        <div id="current-exercise-description" class="text-sm text-charcoal/70">Jump up spreading legs and arms</div>
+                        <div id="workout-progress-text" class="text-xs text-charcoal/60 mt-2">Exercise 1 of 12</div>
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="flex justify-center space-x-4 mb-6">
+                    <button id="prev-exercise-btn" class="px-4 py-2 bg-forest-green/20 text-forest-green rounded-xl hover:bg-forest-green/30 transition-colors">
+                        ⬅️ Previous
+                    </button>
+                    <button id="next-exercise-btn" class="px-4 py-2 bg-forest-green/20 text-forest-green rounded-xl hover:bg-forest-green/30 transition-colors">
+                        Next ➡️
+                    </button>
+                </div>
+
+                <!-- Main Controls -->
+                <div class="flex justify-center space-x-4 mb-6">
+                    <button id="workout-start-btn" class="px-8 py-4 bg-gradient-to-r from-forest-green to-forest-green/90 text-white font-bold rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg shadow-lg">
+                        <span class="flex items-center space-x-2">
+                            <span class="text-xl">▶️</span>
+                            <span>Start Workout</span>
+                        </span>
+                    </button>
+                    <button id="workout-pause-btn" class="px-6 py-4 bg-gradient-to-r from-earthy-gold to-earthy-gold/90 text-white font-bold rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg shadow-lg hidden">
+                        <span class="flex items-center space-x-2">
+                            <span class="text-xl">⏸️</span>
+                            <span>Pause</span>
+                        </span>
+                    </button>
+                    <button id="workout-reset-btn" class="px-6 py-4 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg shadow-lg">
+                        <span class="flex items-center space-x-2">
+                            <span class="text-xl">🔄</span>
+                            <span>Reset</span>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Exercise List -->
+                <div class="bg-white/60 rounded-2xl p-4">
+                    <h3 class="text-sm font-bold text-charcoal mb-3 text-center">Exercise Circuit</h3>
+                    <div id="exercise-list" class="grid grid-cols-3 sm:grid-cols-4 gap-2 text-xs">
+                        <!-- Exercises will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
