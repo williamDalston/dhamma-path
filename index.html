@@ -6861,22 +6861,7 @@
         console.error('updateDisplay test failed:', error);
     }
     
-    // Test timer display element immediately
-    console.log('🔧 TESTING TIMER DISPLAY ELEMENT 🔧');
-    const testDisplay = document.getElementById('timer-display');
-    console.log('Timer display element found:', testDisplay);
-    if (testDisplay) {
-        console.log('Timer display element text:', testDisplay.textContent);
-        console.log('Timer display element classes:', testDisplay.className);
-        // Test direct update
-        testDisplay.textContent = 'TEST: 05:00';
-        console.log('Direct update test - new text:', testDisplay.textContent);
-    } else {
-        console.error('Timer display element not found!');
-        // Search for all elements with timer in the ID
-        const allTimerElements = document.querySelectorAll('[id*="timer"]');
-        console.log('All elements with timer in ID:', allTimerElements);
-    }
+    // REMOVED test that was overwriting timer display
     
     // ===== SIMPLE TIMER IMPLEMENTATION =====
     // Completely new, simple timer that we know will work
@@ -7236,21 +7221,74 @@
                 console.log('Available buttons:', document.querySelectorAll('button[id*="timer"]'));
             }
             if (pauseBtn) {
-                pauseBtn.addEventListener('click', window.simplePauseTimer);
+                pauseBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Pause button clicked!');
+                    
+                    if (window.directTimerInterval) {
+                        clearInterval(window.directTimerInterval);
+                        window.directIsRunning = false;
+                        console.log('Direct timer paused');
+                        
+                        // Show start button, hide pause button
+                        const startBtn = document.getElementById('timer-start-btn');
+                        if (startBtn) startBtn.classList.remove('hidden');
+                        if (pauseBtn) pauseBtn.classList.add('hidden');
+                    }
+                });
             }
             if (resetBtn) {
-                resetBtn.addEventListener('click', window.simpleResetTimer);
+                resetBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Reset button clicked!');
+                    
+                    // Clear timer
+                    if (window.directTimerInterval) {
+                        clearInterval(window.directTimerInterval);
+                    }
+                    
+                    // Reset values
+                    const durationSelect = document.getElementById('timer-duration');
+                    const duration = durationSelect ? parseInt(durationSelect.value) : 600;
+                    window.directTimeRemaining = duration;
+                    window.directIsRunning = false;
+                    
+                    // Update display
+                    const display = document.getElementById('timer-display');
+                    if (display) {
+                        const minutes = Math.floor(duration / 60);
+                        const seconds = duration % 60;
+                        const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        display.textContent = displayText;
+                        console.log('Reset display to:', displayText);
+                    }
+                    
+                    // Reset buttons
+                    const startBtn = document.getElementById('timer-start-btn');
+                    if (startBtn) startBtn.classList.remove('hidden');
+                    if (pauseBtn) pauseBtn.classList.add('hidden');
+                });
             }
             
-            // Duration change
+            // Duration change - UPDATED TO USE DIRECT TIMER
             if (durationSelect) {
                 durationSelect.addEventListener('change', () => {
-                    if (!window.isRunning) {
-                        window.timeRemaining = parseInt(durationSelect.value);
-                        window.totalTime = window.timeRemaining;
-                        console.log('Duration changed to:', window.timeRemaining, 'seconds');
-                        console.log('Total time set to:', window.totalTime, 'seconds');
-                        window.updateDisplay();
+                    if (!window.directIsRunning) {
+                        const newDuration = parseInt(durationSelect.value);
+                        window.directTimeRemaining = newDuration;
+                        console.log('Duration changed to:', newDuration, 'seconds');
+                        
+                        // Update display directly
+                        const display = document.getElementById('timer-display');
+                        if (display) {
+                            const minutes = Math.floor(newDuration / 60);
+                            const seconds = newDuration % 60;
+                            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                            display.textContent = displayText;
+                            console.log('Updated display to:', displayText);
+                        }
                     }
                 });
             }
