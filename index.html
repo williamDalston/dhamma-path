@@ -6892,6 +6892,91 @@
     window.timerState = undefined;
     window.isPaused = undefined;
     
+    // Block ALL other timer functions that might interfere
+    window.pauseTimer = function() {
+        console.log('⏸️ NEW PAUSE TIMER CALLED');
+        if (window.timer.interval) {
+            clearInterval(window.timer.interval);
+            window.timer.interval = null;
+        }
+        window.timer.isRunning = false;
+        
+        // Show start button, hide pause button
+        const startBtn = document.getElementById('timer-start-btn');
+        const pauseBtn = document.getElementById('timer-pause-btn');
+        if (startBtn) startBtn.classList.remove('hidden');
+        if (pauseBtn) pauseBtn.classList.add('hidden');
+        
+        console.log('✅ Timer paused');
+    };
+    
+    window.resetTimer = function() {
+        console.log('🔄 NEW RESET TIMER CALLED');
+        if (window.timer.interval) {
+            clearInterval(window.timer.interval);
+            window.timer.interval = null;
+        }
+        window.timer.isRunning = false;
+        
+        // Get duration from select
+        const durationSelect = document.getElementById('timer-duration');
+        const duration = durationSelect ? parseInt(durationSelect.value) : 600;
+        window.timer.timeRemaining = duration;
+        
+        // Update display
+        updateTimerDisplay();
+        
+        // Show start button, hide pause button
+        const startBtn = document.getElementById('timer-start-btn');
+        const pauseBtn = document.getElementById('timer-pause-btn');
+        if (startBtn) startBtn.classList.remove('hidden');
+        if (pauseBtn) pauseBtn.classList.add('hidden');
+        
+        console.log('✅ Timer reset to', duration, 'seconds');
+    };
+    
+    // Block any other timer-related functions
+    window.simpleStartTimer = function() {
+        console.log('🚫 BLOCKED: simpleStartTimer called - redirecting to new system');
+        window.startTimer();
+    };
+    
+    window.simplePauseTimer = function() {
+        console.log('🚫 BLOCKED: simplePauseTimer called - redirecting to new system');
+        window.pauseTimer();
+    };
+    
+    window.simpleResetTimer = function() {
+        console.log('🚫 BLOCKED: simpleResetTimer called - redirecting to new system');
+        window.resetTimer();
+    };
+    
+    // Function to disable all other timer displays
+    function disableAllOtherTimers() {
+        console.log('🚫 Disabling all other timer displays...');
+        
+        // Find all timer display elements and disable them
+        const allTimerDisplays = document.querySelectorAll('[id*="timer"], [id*="Timer"], [class*="timer"], [class*="Timer"]');
+        allTimerDisplays.forEach(element => {
+            if (element.id !== 'timer-display') {
+                console.log('🚫 Disabling timer element:', element.id || element.className);
+                element.style.display = 'none';
+                element.style.visibility = 'hidden';
+                element.style.opacity = '0';
+            }
+        });
+        
+        // Override any other updateDisplay functions
+        const originalUpdateDisplay = window.updateDisplay;
+        window.updateDisplay = function() {
+            console.log('🚫 BLOCKED: Other updateDisplay called - only our timer should run');
+            return false;
+        };
+    }
+    
+    // Run the disable function immediately
+    disableAllOtherTimers();
+    
     // Override the old timer system completely
     window.startTimer = function() {
         console.log('🚀 NEW TIMER SYSTEM OVERRIDE CALLED!');
@@ -6946,11 +7031,30 @@
     
     console.log('🧹 Forced cleanup of all timer variables and intervals');
     
-    // Periodic conflict detection (every 5 seconds)
+    // Periodic conflict detection and cleanup (every 2 seconds)
     setInterval(() => {
+        // Clear any old timer intervals that might be running
+        for (let i = 1; i < 1000; i++) {
+            clearInterval(i);
+        }
+        
+        // Ensure only our timer is running
+        if (window.timer && window.timer.interval) {
+            // Our timer is running, clear any others
+            console.log('✅ Our timer is running, clearing others');
+        } else {
+            // No timer running, clear any old variables
+            window.timeRemaining = undefined;
+            window.timerInterval = undefined;
+            window.isRunning = undefined;
+            window.totalTime = undefined;
+            window.timerState = undefined;
+            window.isPaused = undefined;
+        }
+        
         window.detectTimerConflicts();
         window.detectEventListenerConflicts();
-    }, 5000);
+    }, 2000);
     
     // REMOVED test that was overwriting timer display
     
