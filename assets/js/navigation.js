@@ -449,6 +449,9 @@ class NavigationManager {
             case 'workout':
                 this.initializeWorkoutPage();
                 break;
+            case 'gratitude':
+                this.initializeGratitudePage();
+                break;
             case 'clarity':
                 this.initializeClarityPage();
                 break;
@@ -1007,6 +1010,26 @@ class NavigationManager {
         console.log('💪 Workout page initialized');
     }
 
+    initializeGratitudePage() {
+        console.log('✨ Initializing Gratitude Sanctuary...');
+        
+        // Initialize the Sanctuary System
+        if (window.sanctuarySystem) {
+            console.log('🏛️ Sanctuary System already initialized');
+        } else {
+            console.log('🏛️ Initializing new Sanctuary System...');
+            // The SanctuarySystem class will auto-initialize when DOM is ready
+        }
+        
+        // Track analytics
+        if (window.gtag) {
+            window.gtag('event', 'page_view', {
+                page_title: 'Three Points of Light - Gratitude Sanctuary',
+                page_location: window.location.href
+            });
+        }
+    }
+    
     initializeClarityPage() {
         console.log('🎤 Initializing Clarity Sanctuary...');
         

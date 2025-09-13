@@ -1,171 +1,106 @@
-<div class="text-center py-6 md:py-8 relative overflow-hidden">
-    <!-- Ultra-Premium Background Elements -->
-    <div class="absolute inset-0 morphing-premium opacity-5 pointer-events-none"></div>
+<!-- Timer Sanctuary - The Principle of Assumed Continuity -->
+<div class="timer-sanctuary min-h-screen flex flex-col relative overflow-hidden">
+    <!-- Subtle Background Elements -->
+    <div class="absolute inset-0 morphing-premium opacity-3 pointer-events-none"></div>
     
-    <div class="relative z-10 px-4 sm:px-6">
-        <div class="animate-fade-up scroll-reveal" data-animate="fade-up">
-            <div class="text-center mb-8 md:mb-10">
-                <h1 class="hero-title text-4xl md:text-6xl font-bold mb-4 md:mb-6 leading-tight" style="background: var(--text-gradient-calm); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">🧘 Wellness Timer</h1>
-                <p class="body-text text-xl md:text-2xl text-charcoal-medium max-w-4xl mx-auto leading-relaxed font-medium px-4">Take a moment to center yourself with guided meditation</p>
-            </div>
+    <!-- Golden Thread Integration -->
+    <div class="golden-thread-header absolute top-6 left-6 right-6 z-20">
+        <div class="thread-label text-center">
+            <span class="thread-text text-sm font-medium text-charcoal/60" id="timer-thread-label">
+                Meditating on: <span class="thread-word text-sage-deep font-semibold" id="timer-thread-word">Focus</span>
+            </span>
         </div>
     </div>
     
-        <div class="card-premium glass-premium hover-glow shimmer-premium scroll-reveal max-w-lg md:max-w-xl mx-auto p-8 md:p-10" data-animate="scale-in" data-delay="200" style="background: var(--gradient-warm); border: 2px solid var(--sage-medium);">
-        <!-- Enhanced Timer Display with Progress Ring -->
-        <div class="relative mb-8 md:mb-12">
-            <!-- Outer Glow Ring -->
-            <div class="absolute inset-0 flex items-center justify-center">
-                <div class="w-40 h-40 md:w-56 md:h-56 rounded-full bg-gradient-to-r from-forest-deep/15 to-sage-medium/15 blur-2xl animate-pulse"></div>
-            </div>
-            
-            <!-- Progress Ring -->
-            <svg class="w-40 h-40 md:w-56 md:h-56 mx-auto transform -rotate-90 relative z-10" viewBox="0 0 100 100">
-                <!-- Background Circle -->
-                <circle cx="50" cy="50" r="45" stroke="rgba(156, 175, 136, 0.2)" stroke-width="8" fill="none"/>
-                <!-- Progress Circle -->
-                <circle id="progress-circle" cx="50" cy="50" r="45" stroke="url(#progressGradient)" stroke-width="8" fill="none" 
-                        stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round" 
-                        class="transition-all duration-1000 ease-in-out drop-shadow-lg"/>
-                <!-- Gradient Definition -->
-                <defs>
-                    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#1A4D3A;stop-opacity:1" />
-                        <stop offset="50%" style="stop-color:#7A9B7A;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-            </svg>
-            
-            <!-- Timer Display with Enhanced Typography -->
-            <div class="absolute inset-0 flex flex-col items-center justify-center z-20">
-                <div id="timer-display" class="text-3xl md:text-5xl font-bold mb-2 md:mb-3" style="background: var(--text-gradient-calm); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">10:00</div>
-                <div id="timer-status" class="text-base md:text-xl text-charcoal-medium font-medium">Ready to begin</div>
-            </div>
-        </div>
-        
-        <!-- Breathing Guide -->
-        <div class="mb-8" id="breathing-guide" style="display: none;">
-            <div class="bg-gradient-to-r from-sage-pale/40 to-forest-pale/40 backdrop-blur-sm rounded-2xl p-6 border border-sage-medium/20">
-                <h4 class="font-semibold mb-4 text-center text-forest-deep text-lg">Breathe with the circle</h4>
-                <div class="flex items-center justify-center space-x-6">
-                    <div class="text-base text-charcoal-medium font-medium">Inhale</div>
-                    <div class="w-20 h-20 bg-gradient-to-r from-forest-deep/30 to-sage-medium/30 rounded-full animate-pulse shadow-medium"></div>
-                    <div class="text-base text-charcoal-medium font-medium">Exhale</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Smart Meditation Tips -->
-        <div class="mb-6" id="meditation-tips" style="display: none;">
-            <div class="bg-gradient-to-r from-forest-green/5 to-earthy-gold/5 rounded-xl p-4 border border-forest-green/20">
-                <h4 class="font-semibold mb-3 text-center text-forest-green">💡 Meditation Tip</h4>
-                <p class="text-sm text-charcoal/70 text-center" id="meditation-tip-text">
-                    Focus on your breath. When your mind wanders, gently return your attention to breathing.
+    <!-- Main Timer Content -->
+    <div class="timer-content flex-1 flex items-center justify-center px-4 py-8">
+        <div class="timer-container max-w-lg mx-auto text-center">
+            <!-- Sanctuary Title -->
+            <div class="sanctuary-title mb-8">
+                <h1 class="sanctuary-heading text-3xl md:text-4xl font-serif text-forest-deep mb-3 leading-tight">
+                    Meditation Sanctuary
+                </h1>
+                <p class="sanctuary-subtitle text-lg text-charcoal/70 font-medium">
+                    A space for inner peace and reflection
                 </p>
             </div>
-        </div>
+    
+            <!-- Assumed Continuity Timer Display -->
+            <div class="timer-display-container mb-8">
+                <!-- Breathing Circle (Assumed Active State) -->
+                <div class="breathing-circle-container mb-6">
+                    <div class="breathing-circle w-48 h-48 mx-auto relative">
+                        <!-- Outer Glow -->
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-sage-deep/20 to-forest-deep/20 blur-xl animate-pulse"></div>
+                        
+                        <!-- Breathing Ring -->
+                        <div class="breathing-ring absolute inset-4 rounded-full border-4 border-sage-deep/40 animate-breathing"></div>
+                        
+                        <!-- Inner Circle -->
+                        <div class="inner-circle absolute inset-8 rounded-full bg-gradient-to-r from-sage-deep/10 to-forest-deep/10 flex items-center justify-center">
+                            <div id="timer-display" class="text-2xl md:text-3xl font-serif text-forest-deep font-medium">10:00</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Assumed Continuity Status -->
+                <div class="continuity-status">
+                    <div id="timer-status" class="text-lg text-charcoal/70 font-medium mb-4">Ready to begin meditation</div>
+                    
+                    <!-- Subtle Duration Adjustments -->
+                    <div class="duration-adjustments flex justify-center space-x-6 text-sm text-charcoal/50">
+                        <button class="duration-adjust-btn hover:text-sage-deep transition-colors duration-200" data-adjust="-60">
+                            -1 min
+                        </button>
+                        <span class="text-xs">|</span>
+                        <button class="duration-adjust-btn hover:text-sage-deep transition-colors duration-200" data-adjust="60">
+                            +1 min
+                        </button>
+                    </div>
+                </div>
+            </div>
         
-        <!-- Progress Tracking -->
-        <div class="mb-6" id="progress-tracking" style="display: none;">
-            <div class="bg-white/30 backdrop-blur-sm rounded-xl p-4">
-                <h4 class="font-semibold mb-3 text-center">📊 Your Progress</h4>
-                <div class="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                        <div class="text-2xl font-bold text-forest-green" id="sessions-count">0</div>
-                        <div class="text-xs text-charcoal/70">Sessions</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold text-forest-green" id="total-time">0m</div>
-                        <div class="text-xs text-charcoal/70">Total Time</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold text-forest-green" id="streak-days">0</div>
-                        <div class="text-xs text-charcoal/70">Day Streak</div>
+            <!-- Single Hero Action - Assumed Continuity -->
+            <div class="hero-action">
+                <button id="timer-start-btn" class="sacred-flow-button w-64 h-16 bg-gradient-to-r from-sage-deep to-forest-deep text-white text-xl font-semibold rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300">
+                    <span class="button-text">Begin Meditation</span>
+                    <div class="button-pulse absolute inset-0 rounded-2xl bg-gradient-to-r from-sage-deep to-forest-deep opacity-20 animate-pulse"></div>
+                </button>
+                
+                <!-- Hidden Controls for Active State -->
+                <div class="hidden-controls hidden" id="hidden-controls">
+                    <div class="flex justify-center space-x-4 mt-4">
+                        <button id="timer-pause-btn" class="control-btn w-12 h-12 bg-white/20 backdrop-blur-sm border border-sage-deep/30 rounded-full flex items-center justify-center text-sage-deep hover:bg-white/30 transition-all duration-200">
+                            <span class="text-lg">⏸️</span>
+                        </button>
+                        <button id="timer-reset-btn" class="control-btn w-12 h-12 bg-white/20 backdrop-blur-sm border border-sage-deep/30 rounded-full flex items-center justify-center text-sage-deep hover:bg-white/30 transition-all duration-200">
+                            <span class="text-lg">🔄</span>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Premium Duration Selector -->
-        <div class="mb-8 md:mb-10" data-animate="fade-up" data-delay="300">
-            <div class="flex items-center justify-between mb-4 md:mb-6">
-                <label class="card-title text-lg md:text-xl font-semibold text-charcoal-rich">Session Duration</label>
-                <span class="caption-text text-sm md:text-base text-charcoal-muted">Choose your focus time</span>
-            </div>
-            <div class="grid grid-cols-4 gap-3">
-                <button class="duration-btn btn-premium btn-sm btn-outline ripple-premium hover-scale rounded-xl" data-duration="300" style="background: transparent; color: var(--forest-deep); border-color: var(--sage-medium);">
-                    <div class="text-base md:text-lg font-bold">5</div>
-                    <div class="text-xs opacity-80">min</div>
-                    <div class="text-xs opacity-60 mt-1 hidden sm:block">Quick</div>
-                </button>
-                <button class="duration-btn btn-premium btn-sm btn-primary ripple-premium hover-scale active rounded-xl" data-duration="600" style="background: var(--gradient-calm); color: var(--cream-rich); border-color: var(--sage-medium);">
-                    <div class="text-base md:text-lg font-bold">10</div>
-                    <div class="text-xs opacity-80">min</div>
-                    <div class="text-xs opacity-60 mt-1 hidden sm:block">Best</div>
-                </button>
-                <button class="duration-btn btn-premium btn-sm btn-outline ripple-premium hover-scale rounded-xl" data-duration="900" style="background: transparent; color: var(--forest-deep); border-color: var(--sage-medium);">
-                    <div class="text-base md:text-lg font-bold">15</div>
-                    <div class="text-xs opacity-80">min</div>
-                    <div class="text-xs opacity-60 mt-1 hidden sm:block">Deep</div>
-                </button>
-                <button class="duration-btn btn-premium btn-sm btn-outline ripple-premium hover-scale rounded-xl" data-duration="1200" style="background: transparent; color: var(--forest-deep); border-color: var(--sage-medium);">
-                    <div class="text-base md:text-lg font-bold">20</div>
-                    <div class="text-xs opacity-80">min</div>
-                    <div class="text-xs opacity-60 mt-1 hidden sm:block">Long</div>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Premium Control Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 mb-6 md:mb-8" data-animate="fade-up" data-delay="400">
-            <button id="timer-start-btn" class="flex-1 btn-premium btn-lg rounded-2xl" style="background: var(--gradient-growth); color: var(--cream-rich); border: 2px solid var(--forest-medium);">
-                <span class="text-lg md:text-xl mr-3">▶️</span>Start
-            </button>
-            <button id="timer-pause-btn" class="flex-1 btn-premium btn-lg rounded-2xl hidden" style="background: var(--gradient-energy); color: var(--charcoal-rich); border: 2px solid var(--gold-medium);">
-                <span class="text-lg md:text-xl mr-3">⏸️</span>Pause
-            </button>
-            <button id="timer-reset-btn" class="flex-1 btn-premium btn-lg rounded-2xl" style="background: transparent; color: var(--forest-deep); border: 2px solid var(--sage-medium);">
-                <span class="text-lg md:text-xl mr-3">🔄</span>Reset
-            </button>
-        </div>
-        
-        <!-- Premium Status Display -->
-        <div id="timer-status" class="text-charcoal/70 font-medium mb-4">Ready to begin your meditation journey</div>
-        
-        <!-- Premium Stats -->
-        <div class="grid grid-cols-3 gap-4 text-center pt-6 border-t border-gray-200">
-            <div>
-                <div class="text-2xl font-bold text-forest-green">0</div>
-                <div class="text-sm text-charcoal/60">Sessions</div>
-            </div>
-            <div>
-                <div class="text-2xl font-bold text-earth-gold">0m</div>
-                <div class="text-sm text-charcoal/60">Total Time</div>
-            </div>
-            <div>
-                <div class="text-2xl font-bold text-forest-green">0</div>
-                <div class="text-sm text-charcoal/60">Streak</div>
-            </div>
+    </div>
+    
+    <!-- Pre-Meditation Tips (Hidden by default) -->
+    <div class="pre-meditation-tips absolute bottom-6 left-6 right-6 hidden" id="pre-meditation-tips">
+        <div class="tips-container bg-white/80 backdrop-blur-sm rounded-2xl p-4 border border-sage-deep/20 max-w-md mx-auto">
+            <h4 class="text-sm font-semibold text-forest-deep mb-2 text-center">💡 Meditation Tip</h4>
+            <p class="text-xs text-charcoal/70 text-center" id="meditation-tip-text">
+                Focus on your breath. When your mind wanders, gently return your attention to breathing.
+            </p>
         </div>
     </div>
     
-    <!-- Premium Tips -->
-    <div class="mt-12 max-w-2xl mx-auto" data-animate="fade-up" data-delay="500">
-        <h3 class="text-xl font-semibold text-charcoal mb-4">💡 Meditation Tips</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-charcoal/70">
-            <div class="bg-white/50 rounded-lg p-4">
-                <strong>Find Your Space:</strong> Choose a quiet, comfortable spot
-            </div>
-            <div class="bg-white/50 rounded-lg p-4">
-                <strong>Breathe Naturally:</strong> Don't force your breathing
-            </div>
-            <div class="bg-white/50 rounded-lg p-4">
-                <strong>Be Patient:</strong> It's normal for your mind to wander
-            </div>
-            <div class="bg-white/50 rounded-lg p-4">
-                <strong>Consistency:</strong> Even 5 minutes daily makes a difference
-            </div>
+    <!-- Post-Meditation Reflection (Hidden by default) -->
+    <div class="post-meditation-reflection absolute bottom-6 left-6 right-6 hidden" id="post-meditation-reflection">
+        <div class="reflection-container bg-gradient-to-r from-sage-deep/10 to-forest-deep/10 backdrop-blur-sm rounded-2xl p-6 border border-sage-deep/20 max-w-lg mx-auto text-center">
+            <div class="reflection-icon text-3xl mb-3">✨</div>
+            <h4 class="text-lg font-semibold text-forest-deep mb-2">Meditation Complete</h4>
+            <p class="text-sm text-charcoal/70 mb-4">How do you feel after this moment of stillness?</p>
+            <button class="continue-flow-btn bg-gradient-to-r from-sage-deep to-forest-deep text-white px-6 py-2 rounded-xl text-sm font-medium hover:shadow-lg transition-all duration-200">
+                Continue Your Flow
+            </button>
         </div>
     </div>
 </div>

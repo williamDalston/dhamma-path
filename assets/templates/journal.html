@@ -1,176 +1,123 @@
-<!-- Premium Journal Page -->
-<div class="text-center py-8">
-    <div class="animate-fade-up" data-animate="fade-up">
-        <div class="text-center mb-12">
-            <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight" style="background: var(--text-gradient-premium); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">✍️ Mindful Journaling</h1>
-            <p class="text-xl md:text-2xl text-charcoal-medium max-w-4xl mx-auto leading-relaxed font-medium">Reflect, write, and grow through mindful practice</p>
+<!-- Journal Sanctuary - Your Sacred Thoughts -->
+<div class="journal-sanctuary min-h-screen flex flex-col relative overflow-hidden">
+    <!-- Subtle Background Elements -->
+    <div class="absolute inset-0 morphing-premium opacity-3 pointer-events-none"></div>
+    
+    <!-- Golden Thread Integration -->
+    <div class="golden-thread-header absolute top-6 left-6 right-6 z-20">
+        <div class="thread-label text-center">
+            <span class="thread-text text-sm font-medium text-charcoal/60" id="journal-thread-label">
+                Reflecting on: <span class="thread-word text-sage-deep font-semibold" id="journal-thread-word">Focus</span>
+            </span>
         </div>
     </div>
     
-    <div class="max-w-3xl mx-auto">
-        <!-- Premium Journaling Timer -->
-        <div class="card-premium p-8 mb-8" data-animate="scale-in" data-delay="200" style="background: var(--gradient-warm); border: 2px solid var(--sage-medium);">
-            <h2 class="text-2xl font-semibold mb-6 text-forest-deep">Journaling Session</h2>
-            
-            <!-- Premium Timer Display with Progress Ring -->
-            <div class="relative mb-8">
-                <svg class="w-32 h-32 mx-auto transform -rotate-90" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" stroke="rgba(156, 175, 136, 0.2)" stroke-width="8" fill="none"/>
-                    <circle id="journal-progress-circle" cx="50" cy="50" r="45" stroke="url(#journalProgressGradient)" stroke-width="8" fill="none"
-                            stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"
-                            class="transition-all duration-1000 ease-in-out"/>
-                    <defs>
-                        <linearGradient id="journalProgressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#1A4D3A;stop-opacity:1" />
-                            <stop offset="50%" style="stop-color:#7A9B7A;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                </svg>
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <div id="journal-display" class="text-3xl font-bold" style="background: var(--text-gradient-calm); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">10:00</div>
+    <!-- Breathing Preparation (3-second emotional prep) -->
+    <div class="breathing-preparation absolute inset-0 bg-gradient-to-br from-sage-deep/5 to-forest-deep/5 flex items-center justify-center z-30" id="breathing-preparation">
+        <div class="breathing-content text-center">
+            <div class="breathing-circle w-32 h-32 mx-auto mb-6 relative">
+                <div class="absolute inset-0 rounded-full border-4 border-sage-deep/40 animate-breathing"></div>
+                <div class="absolute inset-4 rounded-full bg-sage-deep/10 flex items-center justify-center">
+                    <span class="text-2xl">🫁</span>
                 </div>
             </div>
-            
-            <!-- Premium Duration Selector -->
-            <div class="mb-8" data-animate="fade-up" data-delay="300">
-                <label class="block text-lg font-semibold text-charcoal-rich mb-4">Choose Duration</label>
-                <div class="grid grid-cols-4 gap-3">
-                    <button class="journal-duration-btn btn-premium btn-sm rounded-xl" data-duration="300" style="background: transparent; color: var(--forest-deep); border: 2px solid var(--sage-medium);">
-                        <div class="text-base font-bold">5</div><div class="text-xs">min</div>
-                    </button>
-                    <button class="journal-duration-btn btn-premium btn-sm rounded-xl active" data-duration="600" style="background: var(--gradient-calm); color: var(--cream-rich); border: 2px solid var(--sage-medium);">
-                        <div class="text-base font-bold">10</div><div class="text-xs">min</div>
-                    </button>
-                    <button class="journal-duration-btn btn-premium btn-sm rounded-xl" data-duration="900" style="background: transparent; color: var(--forest-deep); border: 2px solid var(--sage-medium);">
-                        <div class="text-base font-bold">15</div><div class="text-xs">min</div>
-                    </button>
-                    <button class="journal-duration-btn btn-premium btn-sm rounded-xl" data-duration="1200" style="background: transparent; color: var(--forest-deep); border: 2px solid var(--sage-medium);">
-                        <div class="text-base font-bold">20</div><div class="text-xs">min</div>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Premium Control Buttons -->
-            <div class="flex gap-4 mb-6" data-animate="fade-up" data-delay="400">
-                <button id="journal-start-btn" class="flex-1 btn-premium btn-lg rounded-2xl" style="background: var(--gradient-growth); color: var(--cream-rich); border: 2px solid var(--forest-medium);">
-                    <span class="text-lg mr-3">✍️</span>Start Writing
-                </button>
-                <button id="journal-pause-btn" class="flex-1 btn-premium btn-lg rounded-2xl hidden" style="background: var(--gradient-energy); color: var(--charcoal-rich); border: 2px solid var(--gold-medium);">
-                    <span class="text-lg mr-3">⏸️</span>Pause
-                </button>
-                <button id="journal-reset-btn" class="flex-1 btn-premium btn-lg rounded-2xl" style="background: transparent; color: var(--forest-deep); border: 2px solid var(--sage-medium);">
-                    <span class="text-lg mr-3">🔄</span>Reset
-                </button>
-            </div>
-            
-            <div id="journal-status" class="text-lg text-charcoal-medium pulse-premium">Ready to begin your mindful writing practice</div>
+            <h2 class="text-2xl font-serif text-forest-deep mb-2">Prepare Your Heart</h2>
+            <p class="text-lg text-charcoal/70">Take three deep breaths to center yourself</p>
         </div>
-        
-        <!-- Premium Writing Area -->
-        <div class="card-premium p-6" data-animate="fade-up" data-delay="500">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-semibold gradient-text-premium">Your Thoughts</h3>
-                <button id="prompt-btn" class="btn-premium btn-sm ripple-premium">
-                    <span class="text-sm mr-2">💡</span>Get Prompt
-                </button>
-            </div>
-            
-            <!-- Writing Prompts -->
-            <div id="writing-prompts" class="mb-4 p-4 bg-forest-green/5 rounded-lg border border-forest-green/20" style="display: none;">
-                <h4 class="font-semibold mb-2 text-forest-green">Today's Prompts:</h4>
-                <div class="space-y-2">
-                    <div class="text-sm text-charcoal/70">• What are you grateful for today?</div>
-                    <div class="text-sm text-charcoal/70">• What's one thing you want to accomplish?</div>
-                    <div class="text-sm text-charcoal/70">• How are you feeling right now?</div>
-                </div>
-            </div>
-            
-            <!-- Smart Writing Assistant -->
-            <div class="mb-4 p-4 bg-gradient-to-r from-forest-green/5 to-earthy-gold/5 rounded-lg border border-forest-green/20" id="writing-assistant" style="display: none;">
-                <div class="flex items-center space-x-2 mb-3">
-                    <span class="text-lg">🤖</span>
-                    <h4 class="font-semibold text-forest-green">Writing Assistant</h4>
-                </div>
-                <div class="space-y-2">
-                    <button class="w-full text-left p-2 hover:bg-white/20 rounded-lg transition-colors" onclick="insertPrompt('gratitude')">
-                        <span class="text-sm text-charcoal/70">✨ Start with gratitude</span>
+    </div>
+    
+    <!-- Main Journal Content -->
+    <div class="journal-content flex-1 flex flex-col px-6 py-8 pt-20">
+        <!-- Sanctuary Title -->
+        <div class="sanctuary-title mb-8 text-center">
+            <h1 class="sanctuary-heading text-3xl md:text-4xl font-serif text-forest-deep mb-3 leading-tight">
+                Your Sacred Thoughts
+            </h1>
+            <p class="sanctuary-subtitle text-lg text-charcoal/70 font-medium">
+                A space for pure, introspective quiet
+            </p>
+        </div>
+    
+        <!-- Enhanced Emotion Wheel -->
+        <div class="emotion-wheel-container mb-8">
+            <div class="emotion-wheel-wrapper bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-sage-deep/20 max-w-md mx-auto">
+                <h3 class="text-lg font-serif text-forest-deep mb-4 text-center">How are you feeling right now?</h3>
+                <div class="emotion-wheel grid grid-cols-3 gap-4">
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105" data-emotion="joy">
+                        <div class="text-2xl mb-2">😊</div>
+                        <div class="text-sm font-medium text-forest-deep">Joy</div>
                     </button>
-                    <button class="w-full text-left p-2 hover:bg-white/20 rounded-lg transition-colors" onclick="insertPrompt('goals')">
-                        <span class="text-sm text-charcoal/70">🎯 Set today's intention</span>
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105" data-emotion="peace">
+                        <div class="text-2xl mb-2">😌</div>
+                        <div class="text-sm font-medium text-forest-deep">Peace</div>
                     </button>
-                    <button class="w-full text-left p-2 hover:bg-white/20 rounded-lg transition-colors" onclick="insertPrompt('reflection')">
-                        <span class="text-sm text-charcoal/70">💭 Reflect on yesterday</span>
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105" data-emotion="gratitude">
+                        <div class="text-2xl mb-2">🙏</div>
+                        <div class="text-sm font-medium text-forest-deep">Gratitude</div>
                     </button>
-                </div>
-            </div>
-            
-            <!-- Mood Tracker -->
-            <div class="mb-4 p-4 bg-white/30 backdrop-blur-sm rounded-lg border border-forest-green/20">
-                <h4 class="font-semibold mb-3 text-center text-forest-green">How are you feeling?</h4>
-                <div class="flex justify-center space-x-2 mb-3">
-                    <button class="mood-btn p-2 rounded-full hover:bg-forest-green/10 transition-all duration-200 transform hover:scale-110" data-mood="😊" title="Happy">
-                        <span class="text-2xl">😊</span>
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105" data-emotion="curiosity">
+                        <div class="text-2xl mb-2">🤔</div>
+                        <div class="text-sm font-medium text-forest-deep">Curiosity</div>
                     </button>
-                    <button class="mood-btn p-2 rounded-full hover:bg-forest-green/10 transition-all duration-200 transform hover:scale-110" data-mood="😌" title="Calm">
-                        <span class="text-2xl">😌</span>
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105" data-emotion="determination">
+                        <div class="text-2xl mb-2">💪</div>
+                        <div class="text-sm font-medium text-forest-deep">Determination</div>
                     </button>
-                    <button class="mood-btn p-2 rounded-full hover:bg-forest-green/10 transition-all duration-200 transform hover:scale-110" data-mood="🤔" title="Thoughtful">
-                        <span class="text-2xl">🤔</span>
-                    </button>
-                    <button class="mood-btn p-2 rounded-full hover:bg-forest-green/10 transition-all duration-200 transform hover:scale-110" data-mood="😴" title="Tired">
-                        <span class="text-2xl">😴</span>
-                    </button>
-                    <button class="mood-btn p-2 rounded-full hover:bg-forest-green/10 transition-all duration-200 transform hover:scale-110" data-mood="😤" title="Frustrated">
-                        <span class="text-2xl">😤</span>
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105" data-emotion="love">
+                        <div class="text-2xl mb-2">❤️</div>
+                        <div class="text-sm font-medium text-forest-deep">Love</div>
                     </button>
                 </div>
-                <!-- Current Mood Display -->
-                <div id="mood-display" class="text-center" style="display: none;">
-                    <div class="inline-flex items-center bg-forest-green/10 px-3 py-2 rounded-full">
-                        <span class="text-sm text-charcoal/70">Today's mood: </span>
-                        <span class="text-lg ml-1"></span>
+                <div class="selected-emotion mt-4 text-center hidden" id="selected-emotion">
+                    <div class="inline-flex items-center bg-sage-deep/10 px-4 py-2 rounded-full">
+                        <span class="text-sm text-forest-deep font-medium">Feeling: </span>
+                        <span class="text-lg ml-2" id="emotion-display"></span>
                     </div>
                 </div>
-                <!-- Mood Stats -->
-                <div id="mood-stats" class="mt-3"></div>
-            </div>
-            <div class="relative">
-                <textarea 
-                    id="journal-textarea" 
-                    placeholder="Begin writing your thoughts, reflections, or whatever comes to mind..."
-                    class="w-full h-48 p-4 border-2 border-forest-green/30 rounded-xl focus:ring-2 focus:ring-forest-green focus:border-forest-green focus:outline-none resize-none text-base leading-relaxed transition-all duration-300 hover:shadow-lg focus:shadow-xl"
-                    disabled
-                ></textarea>
-                <div class="absolute top-2 right-2">
-                    <div class="loading-premium hidden" id="journal-saving"></div>
-                </div>
-            </div>
-            
-            <div class="flex justify-between items-center mt-4">
-                <div class="flex items-center space-x-4">
-                    <div class="text-sm text-charcoal/60">
-                        <span id="word-count" class="font-semibold text-forest-green">0</span> words
-                    </div>
-                    <div class="text-sm text-charcoal/60">
-                        <span id="char-count" class="font-semibold text-forest-green">0</span> characters
-                    </div>
-                </div>
-                <button id="journal-save-btn" class="btn-premium btn-sm ripple-premium" disabled>
-                    <span class="text-sm mr-2">💾</span>Save Entry
-                </button>
             </div>
         </div>
         
-        <!-- Premium Journal Entries -->
-        <div class="card-premium p-6 mt-6" data-animate="fade-up" data-delay="600">
-            <h3 class="text-lg font-semibold mb-4 gradient-text-premium">Recent Entries</h3>
-            <div id="journal-entries" class="space-y-4">
-                <div class="text-center text-charcoal/60 py-6">
-                    <div class="text-3xl mb-3">📝</div>
-                    <p>No entries yet. Start writing to see your thoughts here!</p>
+        <!-- Sacred Writing Area -->
+        <div class="writing-area-container flex-1 max-w-4xl mx-auto">
+            <div class="writing-area bg-white/90 backdrop-blur-sm rounded-2xl p-8 border border-sage-deep/20 shadow-lg">
+                <!-- Golden Thread Watermark -->
+                <div class="golden-thread-watermark absolute top-4 right-4 opacity-30" id="golden-thread-watermark">
+                    <span class="text-xs text-sage-deep font-medium" id="watermark-text">Focus</span>
+                </div>
+                
+                <!-- Writing Area -->
+                <div class="relative">
+                    <textarea 
+                        id="journal-textarea" 
+                        placeholder="Begin writing your sacred thoughts... Let your heart speak freely."
+                        class="w-full h-64 p-6 bg-transparent border-none focus:outline-none resize-none text-lg leading-relaxed font-serif text-forest-deep placeholder-charcoal/40 transition-all duration-300"
+                        style="background: rgba(255, 254, 247, 0.8);"
+                    ></textarea>
+                    
+                    <!-- Writing Stats -->
+                    <div class="absolute bottom-4 right-4 flex items-center space-x-4 text-sm text-charcoal/50">
+                        <span id="word-count" class="font-medium">0 words</span>
+                        <span>•</span>
+                        <span id="char-count" class="font-medium">0 characters</span>
+                    </div>
+                </div>
+                
+                <!-- Completion Actions -->
+                <div class="completion-actions mt-6 flex justify-center">
+                    <button id="journal-complete-btn" class="sacred-flow-button w-48 h-12 bg-gradient-to-r from-sage-deep to-forest-deep text-white text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                        <span class="button-text">Complete Reflection</span>
+                    </button>
                 </div>
             </div>
+        </div>
+        
+    </div>
+    
+    <!-- Selah Completion Ritual (4-second fade to black) -->
+    <div class="selah-completion absolute inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 hidden" id="selah-completion">
+        <div class="selah-content text-center">
+            <div class="selah-word text-6xl font-serif text-white mb-4 animate-fade-in">Selah</div>
+            <p class="text-lg text-white/80 font-medium">A sacred boundary before the next thought-space</p>
         </div>
     </div>
 </div>
