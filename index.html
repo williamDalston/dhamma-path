@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-    <!-- CACHE BUSTING VERSION: v20241220-007 - FINAL CACHE DESTROY -->
-    <!-- TIMESTAMP: 2025-01-13T13:05:00Z -->
+    <!-- CACHE BUSTING VERSION: v20241220-008 - NUCLEAR OPTION -->
+    <!-- TIMESTAMP: 2025-01-13T13:10:00Z -->
+    <!-- UNIQUE ID: CACHE_DESTROY_20250113_131000 -->
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -125,13 +126,49 @@
             });
         }
         
-        // IMMEDIATE CACHE DESTROY - Force reload immediately
-        console.log('💥 IMMEDIATE CACHE DESTROY - Forcing reload immediately...');
+        // NUCLEAR CACHE DESTROY - Clear everything and force reload
+        console.log('💥 NUCLEAR CACHE DESTROY - Clearing everything...');
         console.log('💥 Current URL:', window.location.href);
         
-        // Always reload with cache-busting query parameters
+        // Clear localStorage
+        try {
+            localStorage.clear();
+            console.log('💥 localStorage cleared');
+        } catch (e) {
+            console.log('💥 localStorage clear failed:', e);
+        }
+        
+        // Clear sessionStorage
+        try {
+            sessionStorage.clear();
+            console.log('💥 sessionStorage cleared');
+        } catch (e) {
+            console.log('💥 sessionStorage clear failed:', e);
+        }
+        
+        // Clear service worker cache
+        if ('caches' in window) {
+            caches.keys().then(cacheNames => {
+                cacheNames.forEach(cacheName => {
+                    console.log('💥 Deleting cache:', cacheName);
+                    caches.delete(cacheName);
+                });
+            });
+        }
+        
+        // Clear service worker registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                registrations.forEach(registration => {
+                    console.log('💥 Unregistering service worker:', registration);
+                    registration.unregister();
+                });
+            });
+        }
+        
+        // Force reload with cache-busting query parameters
         const baseUrl = window.location.href.split('?')[0];
-        const newUrl = baseUrl + '?v=' + Date.now() + '&cache=' + Math.random() + '&destroy=' + Math.random();
+        const newUrl = baseUrl + '?v=' + Date.now() + '&cache=' + Math.random() + '&destroy=' + Math.random() + '&nuclear=' + Math.random();
         console.log('💥 New URL:', newUrl);
         window.location.href = newUrl;
         
@@ -8748,7 +8785,7 @@
         DataManager.init();
         
         // Test script loading
-        console.log('🚀 SCRIPT LOADED - VERSION 6.0 - FINAL CACHE DESTROY 🚀');
+        console.log('🚀 SCRIPT LOADED - VERSION 7.0 - NUCLEAR OPTION 🚀');
         console.log('🔥 CACHE BUST TIMESTAMP:', Date.now());
         console.log('💥 FORCE RELOAD:', Math.random());
         
