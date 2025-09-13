@@ -6777,11 +6777,14 @@
             const seconds = window.timeRemaining % 60;
             const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             console.log('Setting display to:', displayText);
+            console.log('Display element before update:', window.display.textContent);
             window.display.textContent = displayText;
+            console.log('Display element after update:', window.display.textContent);
         } else {
             console.error('Display element not found!');
             // Try to find it again
             const displayElement = document.getElementById('timer-display');
+            console.log('Looking for timer-display element:', displayElement);
             if (displayElement) {
                 window.display = displayElement;
                 console.log('Updated window.display reference');
@@ -6789,7 +6792,14 @@
                 const minutes = Math.floor(window.timeRemaining / 60);
                 const seconds = window.timeRemaining % 60;
                 const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                console.log('Setting display to (retry):', displayText);
                 window.display.textContent = displayText;
+                console.log('Display element after retry:', window.display.textContent);
+            } else {
+                console.error('timer-display element not found in DOM!');
+                // Try to find any element with timer-display in the ID
+                const allElements = document.querySelectorAll('[id*="timer-display"]');
+                console.log('All elements with timer-display in ID:', allElements);
             }
         }
         
