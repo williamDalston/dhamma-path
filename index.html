@@ -7171,10 +7171,65 @@
             if (startBtn) {
                 console.log('🔧 Adding click listener to start button - USING SIMPLE TIMER - VERSION 3.0 🔧');
                 startBtn.addEventListener('click', (e) => {
-                    console.log('Start button clicked! Using simple timer');
+                    console.log('Start button clicked! Using DIRECT timer');
                     e.preventDefault();
                     e.stopPropagation();
-                    window.simpleStartTimer();
+                    
+                    // DIRECT TIMER IMPLEMENTATION - NO COMPLEX FUNCTIONS
+                    const display = document.getElementById('timer-display');
+                    const durationSelect = document.getElementById('timer-duration');
+                    const duration = durationSelect ? parseInt(durationSelect.value) : 600;
+                    
+                    console.log('Direct timer - display element:', display);
+                    console.log('Direct timer - duration:', duration);
+                    
+                    if (!display) {
+                        console.error('Display element not found!');
+                        return;
+                    }
+                    
+                    // Clear any existing timer
+                    if (window.directTimerInterval) {
+                        clearInterval(window.directTimerInterval);
+                    }
+                    
+                    // Set initial values
+                    window.directTimeRemaining = duration;
+                    window.directIsRunning = true;
+                    
+                    // Update display immediately
+                    const minutes = Math.floor(window.directTimeRemaining / 60);
+                    const seconds = window.directTimeRemaining % 60;
+                    const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    display.textContent = displayText;
+                    console.log('Direct timer - set display to:', displayText);
+                    
+                    // Hide start button, show pause button
+                    const pauseBtn = document.getElementById('timer-pause-btn');
+                    if (startBtn) startBtn.classList.add('hidden');
+                    if (pauseBtn) pauseBtn.classList.remove('hidden');
+                    
+                    // Start the timer
+                    window.directTimerInterval = setInterval(() => {
+                        if (window.directTimeRemaining > 0) {
+                            window.directTimeRemaining--;
+                            const minutes = Math.floor(window.directTimeRemaining / 60);
+                            const seconds = window.directTimeRemaining % 60;
+                            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                            display.textContent = displayText;
+                            console.log('Direct timer tick:', displayText);
+                        } else {
+                            // Timer finished
+                            clearInterval(window.directTimerInterval);
+                            window.directIsRunning = false;
+                            display.textContent = '00:00';
+                            console.log('Direct timer finished!');
+                            
+                            // Reset buttons
+                            if (startBtn) startBtn.classList.remove('hidden');
+                            if (pauseBtn) pauseBtn.classList.add('hidden');
+                        }
+                    }, 1000);
                 });
             } else {
                 console.error('Start button not found!');
