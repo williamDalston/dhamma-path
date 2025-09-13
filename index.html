@@ -10319,9 +10319,19 @@
         }
         
         // Auto-initialize when workout page loads
-        if (document.getElementById('workout-timer-display')) {
-            initWorkout();
+        function checkAndInitWorkout() {
+            const timerDisplay = document.getElementById('workout-timer-display');
+            if (timerDisplay) {
+                console.log('Workout elements found, initializing...');
+                initWorkout();
+            } else {
+                console.log('Workout elements not found yet, retrying...');
+                setTimeout(checkAndInitWorkout, 100);
+            }
         }
+        
+        // Start checking for workout elements
+        checkAndInitWorkout();
     </script>
 </body>
 </html>
