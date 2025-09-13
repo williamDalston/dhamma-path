@@ -6892,19 +6892,17 @@
     window.timerState = undefined;
     window.isPaused = undefined;
     
-    // IMPROVED PAUSE AND RESET
+    // CLEAN PAUSE AND RESET
     window.pauseTimer = function() {
         console.log('⏸️ PAUSE TIMER CALLED');
         
         // Clear existing timer
-        if (window.currentTimerId) {
-            clearInterval(window.currentTimerId);
-            window.currentTimerId = null;
+        if (timerId !== null) {
+            clearInterval(timerId);
+            timerId = null;
         }
         
         // Show start button, hide pause button
-        const startBtn = document.getElementById('timer-start-btn');
-        const pauseBtn = document.getElementById('timer-pause-btn');
         if (startBtn) startBtn.classList.remove('hidden');
         if (pauseBtn) pauseBtn.classList.add('hidden');
         
@@ -6915,28 +6913,21 @@
         console.log('🔄 RESET TIMER CALLED');
         
         // Clear existing timer
-        if (window.currentTimerId) {
-            clearInterval(window.currentTimerId);
-            window.currentTimerId = null;
+        if (timerId !== null) {
+            clearInterval(timerId);
+            timerId = null;
         }
         
         // Get duration from select
-        const durationSelect = document.getElementById('timer-duration');
-        const duration = durationSelect ? parseInt(durationSelect.value) : 600;
+        const duration = durationSelect ? parseInt(durationSelect.value, 10) : 600;
         
         // Update display
-        const display = document.getElementById('timer-display');
-        if (display) {
-            const minutes = Math.floor(duration / 60);
-            const seconds = duration % 60;
-            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            display.textContent = displayText;
-            console.log('📱 Display reset to:', displayText);
+        if (displayEl) {
+            displayEl.textContent = fmt(duration);
+            console.log('📱 Display reset to:', displayEl.textContent);
         }
         
         // Show start button, hide pause button
-        const startBtn = document.getElementById('timer-start-btn');
-        const pauseBtn = document.getElementById('timer-pause-btn');
         if (startBtn) startBtn.classList.remove('hidden');
         if (pauseBtn) pauseBtn.classList.add('hidden');
         
@@ -6985,99 +6976,53 @@
     // Run the disable function immediately
     disableAllOtherTimers();
     
-    // Store the timer ID globally
-    window.currentTimerId = null;
+    // CLEAN TIMER IMPLEMENTATION - FIXED SYNTAX
+    let timerId = null;
     
-    // Test function to verify display can be updated
-    window.testDisplay = function() {
-        const display = document.getElementById('timer-display');
-        if (display) {
-            display.textContent = 'TEST';
-            console.log('Test display set to:', display.textContent);
-            console.log('Display element:', display);
-            console.log('Display innerHTML:', display.innerHTML);
-            console.log('Display computed styles:', window.getComputedStyle(display));
-        } else {
-            console.error('Display element not found for test');
-        }
+    const displayEl = document.getElementById('timer-display');
+    const durationSelect = document.getElementById('timer-duration');
+    const startBtn = document.getElementById('timer-start-btn');
+    const pauseBtn = document.getElementById('timer-pause-btn');
+    
+    const fmt = s => {
+        const m = Math.floor(s / 60).toString().padStart(2, '0');
+        const sec = (s % 60).toString().padStart(2, '0');
+        return `${m}:${sec}`;
     };
     
-    // IMPROVED DIRECT TIMER - WITH DEBUGGING
-    window.startTimer = function() {
-        console.log('🚀 TIMER STARTING - Debug info:');
-        
-        // Debug element finding
-        const durationSelect = document.getElementById('timer-duration');
-        const display = document.getElementById('timer-display');
-        const startBtn = document.getElementById('timer-start-btn');
-        const pauseBtn = document.getElementById('timer-pause-btn');
-        
-        console.log('Elements found:', {
-            durationSelect: !!durationSelect,
-            display: !!display,
-            startBtn: !!startBtn,
-            pauseBtn: !!pauseBtn
-        });
-        
-        if (!display) {
+    window.startTimer = function () {
+        console.log('🚀 SIMPLE DIRECT TIMER STARTING!');
+        const duration = durationSelect ? parseInt(durationSelect.value, 10) : 600;
+
+        // clear any prior timer
+        if (timerId !== null) clearInterval(timerId);
+
+        if (!displayEl) {
             console.error('❌ Timer display not found!');
             return;
         }
-        
-        const duration = durationSelect ? parseInt(durationSelect.value) : 600;
-        console.log('Duration:', duration);
-        
-        // Clear existing timer
-        if (window.currentTimerId) {
-            clearInterval(window.currentTimerId);
-            window.currentTimerId = null;
-        }
-        
-        console.log('🚀 Display element found:', display);
-        
-        // Set initial time
+
         let timeLeft = duration;
-        
-        // Update display immediately with debugging
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-        const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        display.textContent = displayText;
-        
-        console.log('📱 Initial display set to:', displayText);
-        console.log('Display element after update:', display);
-        console.log('Display innerHTML after update:', display.innerHTML);
-        console.log('Display textContent after update:', display.textContent);
-        
-        // Hide start button, show pause button
+        displayEl.textContent = fmt(timeLeft);
+        console.log('📱 Initial display set to:', displayEl.textContent);
+
+        // toggle buttons
         if (startBtn) startBtn.classList.add('hidden');
         if (pauseBtn) pauseBtn.classList.remove('hidden');
-        
-        // Start simple countdown
-        window.currentTimerId = setInterval(() => {
-            timeLeft--;
-            
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            display.textContent = displayText;
-            
-            console.log('⏰ Timer tick:', displayText);
-            console.log('Display textContent after tick:', display.textContent);
-            
+
+        timerId = setInterval(() => {
+            timeLeft -= 1;
+            displayEl.textContent = fmt(Math.max(0, timeLeft));
+            console.log('⏰ Timer tick:', displayEl.textContent);
+
             if (timeLeft <= 0) {
-                clearInterval(window.currentTimerId);
-                window.currentTimerId = null;
-                display.textContent = '00:00';
+                clearInterval(timerId);
+                timerId = null;
                 console.log('✅ Timer finished!');
-                
-                // Reset buttons
                 if (startBtn) startBtn.classList.remove('hidden');
                 if (pauseBtn) pauseBtn.classList.add('hidden');
             }
         }, 1000);
-        
-        console.log('✅ Simple timer started with', duration, 'seconds');
     };
     
     console.log('🧹 Forced cleanup of all timer variables and intervals');
