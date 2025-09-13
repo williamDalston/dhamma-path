@@ -7059,6 +7059,7 @@
             console.log('Initializing timer display...');
             console.log('Initial timeRemaining:', window.timeRemaining);
             console.log('Initial totalTime:', window.totalTime);
+            console.log('Display element reference:', window.display);
             
             // Force update display
             if (window.display) {
@@ -7067,6 +7068,21 @@
                 const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 window.display.textContent = displayText;
                 console.log('Set display to:', displayText);
+            } else {
+                console.error('Display element is null during initialization!');
+                // Try to find it again
+                const displayElement = document.getElementById('timer-display');
+                if (displayElement) {
+                    window.display = displayElement;
+                    console.log('Found display element during init:', displayElement);
+                    const minutes = Math.floor(window.timeRemaining / 60);
+                    const seconds = window.timeRemaining % 60;
+                    const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    window.display.textContent = displayText;
+                    console.log('Set display to (init retry):', displayText);
+                } else {
+                    console.error('timer-display element not found during initialization!');
+                }
             }
             
             // Update status
