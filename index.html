@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-    <!-- CACHE BUSTING VERSION: v20241220-005 - NUCLEAR CACHE BUST -->
+    <!-- CACHE BUSTING VERSION: v20241220-006 - ULTRA NUCLEAR CACHE BUST -->
+    <!-- TIMESTAMP: 2025-01-13T12:35:00Z -->
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -107,7 +108,7 @@
         console.log('🔄 CACHE BUSTING - JavaScript reloaded at:', new Date().toISOString());
         console.log('🔄 Current timestamp:', Date.now());
         console.log('🔄 Version:', 'v' + Date.now());
-        console.log('🔄 HTML Version: v20241220-005 - NUCLEAR CACHE BUST');
+        console.log('🔄 HTML Version: v20241220-006 - ULTRA NUCLEAR CACHE BUST');
         
         // Force clear ALL intervals immediately
         for (let i = 1; i < 10000; i++) {
@@ -124,27 +125,19 @@
             });
         }
         
-        // NUCLEAR CACHE CLEAR - Force reload if ANY old timer system detected
+        // ULTRA NUCLEAR CACHE CLEAR - Force reload if ANY old system detected
         setTimeout(() => {
-            // Check for any old timer variables
-            const oldTimerVars = [
-                'timeRemaining', 'timerInterval', 'isRunning', 'totalTime',
-                'timerState', 'timerInterval', 'isPaused'
-            ];
+            // Check for old version indicators
+            const oldVersionDetected = 
+                window.location.href.includes('v20241220-004') ||
+                window.location.href.includes('v20241220-005') ||
+                !window.location.href.includes('v20241220-006');
             
-            let oldSystemDetected = false;
-            oldTimerVars.forEach(varName => {
-                if (window[varName] !== undefined) {
-                    console.log('🚨 OLD TIMER VARIABLE DETECTED:', varName, '=', window[varName]);
-                    oldSystemDetected = true;
-                }
-            });
-            
-            if (oldSystemDetected) {
-                console.log('🚨 OLD TIMER SYSTEM DETECTED - NUCLEAR RELOAD');
+            if (oldVersionDetected) {
+                console.log('🚨 OLD VERSION DETECTED - ULTRA NUCLEAR RELOAD');
                 console.log('🚨 Current URL:', window.location.href);
                 console.log('🚨 Reloading with cache bypass...');
-                window.location.href = window.location.href + '?v=' + Date.now();
+                window.location.href = window.location.href.split('?')[0] + '?v=' + Date.now() + '&cache=' + Math.random();
             }
         }, 100);
         
@@ -8757,7 +8750,7 @@
         DataManager.init();
         
         // Test script loading
-        console.log('🚀 SCRIPT LOADED - VERSION 4.0 - NUCLEAR CACHE BUST 🚀');
+        console.log('🚀 SCRIPT LOADED - VERSION 5.0 - ULTRA NUCLEAR CACHE BUST 🚀');
         console.log('🔥 CACHE BUST TIMESTAMP:', Date.now());
         console.log('💥 FORCE RELOAD:', Math.random());
         
