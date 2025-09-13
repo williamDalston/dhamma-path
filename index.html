@@ -6645,8 +6645,20 @@
         console.log('Current state:', { isRunning: window.isRunning, isPaused: window.isPaused, timeRemaining: window.timeRemaining, totalTime: window.totalTime });
         if (!window.isRunning) {
             console.log('Starting timer...');
+            
+            // Ensure we have the latest duration from the select
+            if (window.durationSelect) {
+                window.timeRemaining = parseInt(window.durationSelect.value);
+                window.totalTime = window.timeRemaining;
+                console.log('Updated timeRemaining from select:', window.timeRemaining);
+                console.log('Updated totalTime from select:', window.totalTime);
+            }
+            
             window.isRunning = true;
             window.isPaused = false;
+            
+            // Update display immediately before starting
+            window.updateDisplay();
             
             // Haptic feedback for mobile
             if (typeof triggerHapticFeedback === 'function') {
@@ -6732,12 +6744,15 @@
     };
 
     window.resetTimer = function() {
+        console.log('Resetting timer...');
         clearInterval(window.timerInterval);
         window.isRunning = false;
         window.isPaused = false;
         if (window.durationSelect) {
             window.timeRemaining = parseInt(window.durationSelect.value);
             window.totalTime = window.timeRemaining;
+            console.log('Reset timeRemaining to:', window.timeRemaining);
+            console.log('Reset totalTime to:', window.totalTime);
         } else {
             window.timeRemaining = 600;
             window.totalTime = 600;
@@ -6745,7 +6760,7 @@
         window.updateDisplay();
         if (window.startBtn) {
             window.startBtn.classList.remove('hidden');
-            window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-2"><span class="text-xl">▶️</span><span>Start Meditation</span></div>';
+            window.startBtn.innerHTML = '<div class="flex items-center justify-center space-x-4"><span class="text-3xl group-hover:scale-110 transition-transform duration-300">▶️</span><span class="font-bold text-xl sm:text-2xl group-hover:tracking-wide transition-all duration-300">Start Meditation</span></div>';
         }
         if (window.pauseBtn) window.pauseBtn.classList.add('hidden');
     };
@@ -7014,6 +7029,8 @@
                     if (!window.isRunning) {
                         window.timeRemaining = parseInt(durationSelect.value);
                         window.totalTime = window.timeRemaining;
+                        console.log('Duration changed to:', window.timeRemaining, 'seconds');
+                        console.log('Total time set to:', window.totalTime, 'seconds');
                         window.updateDisplay();
                     }
                 });
