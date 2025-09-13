@@ -9044,6 +9044,13 @@
         // Load home page by default
         navigateToPage('home');
         
+        // TEST: Try to navigate to timer page directly
+        console.log('🧪 TEST: Attempting direct navigation to timer page...');
+        setTimeout(() => {
+            console.log('🧪 TEST: Navigating to timer page now...');
+            navigateToPage('timer');
+        }, 2000);
+        
         // Handle welcome overlay
         const welcomeOverlay = document.getElementById('welcome-overlay');
         const welcomeTryDemo = document.getElementById('welcome-try-demo');
