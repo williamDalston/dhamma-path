@@ -828,61 +828,22 @@ class NavigationManager {
     }
 
     initializeHomePage() {
-        console.log('🏠 Initializing Flow Start home page...');
+        console.log('🏠 Initializing Sacred Gateway...');
         
-        // Show navigation for home page
+        // Hide navigation for sacred gateway (singular focus)
         const navigation = document.querySelector('.main-nav');
         if (navigation) {
-            navigation.style.display = 'flex';
+            navigation.style.display = 'none';
         }
         
-        // Begin Flow button - starts seamless flow
-        const beginFlowBtn = document.querySelector('.begin-flow-btn, #begin-flow-btn');
-        if (beginFlowBtn) {
-            beginFlowBtn.addEventListener('click', () => {
-                console.log('🚀 Begin Flow clicked');
-                // Start seamless flow instead of just navigating to timer
-                if (window.seamlessFlowEngine) {
-                    window.seamlessFlowEngine.startFlow();
-                } else {
-                    // Fallback to timer if seamless flow not available
-                    this.navigateToPage('timer');
-                }
-            });
+        // Initialize Sacred Gateway
+        if (window.sacredGateway) {
+            console.log('🌅 Sacred Gateway already initialized');
+        } else {
+            console.log('🌅 Initializing new Sacred Gateway...');
+            // The SacredGateway class will auto-initialize when DOM is ready
         }
         
-        // Customize Flow button
-        const customizeFlowBtn = document.querySelector('.customize-flow-btn, #customize-flow-btn');
-        if (customizeFlowBtn) {
-            customizeFlowBtn.addEventListener('click', () => {
-                console.log('⚙️ Customize Flow clicked');
-                this.showFlowBuilder();
-            });
-        }
-        
-        // View Progress button
-        const viewProgressBtn = document.querySelector('.view-progress-btn, #view-progress-btn');
-        if (viewProgressBtn) {
-            viewProgressBtn.addEventListener('click', () => {
-                console.log('📊 View Progress clicked');
-                this.showProgressView();
-            });
-        }
-        
-        // Follow Recommendation button
-        const followRecommendationBtn = document.querySelector('#follow-recommendation');
-        if (followRecommendationBtn) {
-            followRecommendationBtn.addEventListener('click', () => {
-                console.log('✨ Follow Recommendation clicked');
-                this.navigateToPage('timer');
-            });
-        }
-        
-        // Flow Builder Modal handlers
-        this.setupFlowBuilderModal();
-        
-        // Generate smart recommendation
-        this.generateSmartRecommendation();
     }
     
     showFlowBuilder() {

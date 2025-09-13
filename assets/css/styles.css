@@ -7923,3 +7923,302 @@ html {
         width: 14rem;
     }
 }
+
+/* ==========================================================================
+   SACRED GATEWAY - THE PATH OF LEAST RESISTANCE
+   ========================================================================== */
+
+/* Sacred Gateway Layout */
+.sacred-gateway {
+    background: linear-gradient(135deg, 
+        rgba(122, 155, 122, 0.02) 0%, 
+        rgba(26, 77, 58, 0.03) 50%, 
+        rgba(122, 155, 122, 0.02) 100%);
+    min-height: 100vh;
+}
+
+/* Zone 1: Gentle Greeting */
+.greeting-zone {
+    padding-top: 2rem;
+}
+
+.greeting-content {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.greeting-text {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--charcoal);
+    text-shadow: 0 1px 2px rgba(60, 60, 60, 0.1);
+}
+
+.greeting-subtitle {
+    font-weight: 500;
+    color: var(--charcoal);
+    opacity: 0.6;
+    letter-spacing: 0.01em;
+}
+
+/* Zone 2: Day's Intention */
+.intention-zone {
+    padding: 2rem 0;
+}
+
+.intention-container {
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.intention-title {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    color: var(--forest-deep);
+    text-shadow: 0 1px 2px rgba(26, 77, 58, 0.1);
+}
+
+.intention-input {
+    font-family: inherit;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 4px 12px rgba(26, 77, 58, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.intention-input:focus {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 24px rgba(26, 77, 58, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.intention-suggestions {
+    animation: slideDown 0.3s ease-out;
+    z-index: 10;
+}
+
+.suggestion-item {
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(122, 155, 122, 0.1);
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    transform: translateX(4px);
+}
+
+/* Golden Thread Display */
+.golden-thread-display {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.thread-container {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(122, 155, 122, 0.2);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.thread-icon {
+    animation: gentleFloat 3s ease-in-out infinite;
+}
+
+.thread-word {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--forest-deep);
+    text-shadow: 0 1px 2px rgba(26, 77, 58, 0.1);
+}
+
+/* Zone 3: Single Path Forward */
+.flow-zone {
+    padding-bottom: 2rem;
+}
+
+.flow-container {
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+/* Sacred Flow Button */
+.sacred-flow-button {
+    position: relative;
+    background: linear-gradient(135deg, 
+        var(--sage-deep) 0%, 
+        var(--forest-deep) 100%);
+    box-shadow: 
+        0 20px 40px rgba(26, 77, 58, 0.2),
+        0 8px 16px rgba(122, 155, 122, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.sacred-flow-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent);
+    transition: left 0.8s;
+}
+
+.sacred-flow-button:hover::before {
+    left: 100%;
+}
+
+.sacred-flow-button:hover:not(:disabled) {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 
+        0 32px 64px rgba(26, 77, 58, 0.3),
+        0 16px 32px rgba(122, 155, 122, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.sacred-flow-button:active:not(:disabled) {
+    transform: translateY(-2px) scale(1.02);
+    transition: all 0.1s;
+}
+
+.button-pulse {
+    animation: sacredPulse 2s ease-in-out infinite;
+}
+
+@keyframes sacredPulse {
+    0%, 100% { 
+        opacity: 0.2;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.4;
+        transform: scale(1.02);
+    }
+}
+
+/* Flow Preview */
+.flow-preview {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.flow-steps {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.flow-step {
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.flow-step:hover {
+    opacity: 1;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gentleFloat {
+    0%, 100% { 
+        transform: translateY(0px);
+    }
+    50% { 
+        transform: translateY(-8px);
+    }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .greeting-text {
+        font-size: 2.5rem;
+        line-height: 1.3;
+    }
+    
+    .intention-title {
+        font-size: 1.5rem;
+        line-height: 1.4;
+    }
+    
+    .intention-input {
+        font-size: 1rem;
+        padding: 1rem 1.5rem;
+    }
+    
+    .sacred-flow-button {
+        width: 14rem;
+        height: 3.5rem;
+        font-size: 1.125rem;
+    }
+    
+    .thread-container {
+        padding: 1.5rem;
+    }
+    
+    .thread-word {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .greeting-zone {
+        padding-top: 1.5rem;
+    }
+    
+    .greeting-text {
+        font-size: 2rem;
+    }
+    
+    .intention-title {
+        font-size: 1.25rem;
+    }
+    
+    .intention-input {
+        font-size: 0.9rem;
+        padding: 0.875rem 1.25rem;
+    }
+    
+    .sacred-flow-button {
+        width: 12rem;
+        height: 3rem;
+        font-size: 1rem;
+    }
+    
+    .flow-steps {
+        font-size: 0.7rem;
+    }
+}
