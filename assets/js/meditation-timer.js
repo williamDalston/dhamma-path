@@ -278,13 +278,20 @@ class MeditationTimer {
     }
 
     // Cleanup method
+    cleanup() {
+        this.destroy();
+    }
+    
     destroy() {
         if (this.intervalId) {
             clearInterval(this.intervalId);
+            this.intervalId = null;
         }
         if (this.audioContext) {
             this.audioContext.close();
+            this.audioContext = null;
         }
+        this.isRunning = false;
     }
 }
 

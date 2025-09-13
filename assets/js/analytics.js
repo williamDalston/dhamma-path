@@ -348,7 +348,12 @@ class AnalyticsSystem {
         };
 
         this.events.push(event);
-        console.log('📊 Event Tracked:', event);
+        
+        // Only log important events to reduce console spam
+        const importantEvents = ['navigation', 'timer_start', 'timer_complete', 'error', 'performance_metrics'];
+        if (importantEvents.includes(eventType)) {
+            console.log('📊 Event Tracked:', event);
+        }
 
         // Update user journey
         this.userJourney.push({

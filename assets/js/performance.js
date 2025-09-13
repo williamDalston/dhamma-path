@@ -40,6 +40,7 @@ class PerformanceMonitor {
             this.observers.push(lcpObserver);
 
             // Measure Cumulative Layout Shift
+            let lastClsLog = 0;
             const clsObserver = new PerformanceObserver((entryList) => {
                 let clsValue = 0;
                 for (const entry of entryList.getEntries()) {
@@ -48,7 +49,12 @@ class PerformanceMonitor {
                     }
                 }
                 this.metrics.cumulativeLayoutShift = clsValue;
-                console.log('🎯 CLS:', clsValue);
+                
+                // Only log CLS if it's significant (>0.01) and not logged recently (throttle)
+                if (clsValue > 0.01 && Date.now() - lastClsLog > 2000) {
+                    console.log('🎯 CLS:', clsValue);
+                    lastClsLog = Date.now();
+                }
             });
             clsObserver.observe({ entryTypes: ['layout-shift'] });
             this.observers.push(clsObserver);
@@ -105,6 +111,14 @@ class PerformanceMonitor {
         setTimeout(() => {
             // Process task in smaller chunks
             console.log('🔧 Long task split and processed');
+            
+            // Force a microtask to yield control
+            Promise.resolve().then(() => {
+                // Additional processing if needed
+                if (window.gc) {
+                    window.gc(); // Force garbage collection if available
+                }
+            });
         }, 0);
     }
 
@@ -183,7 +197,7 @@ class PerformanceMonitor {
                 const used = memory.usedJSHeapSize / 1024 / 1024;
                 const total = memory.totalJSHeapSize / 1024 / 1024;
                 
-                if (used > 80) { // More than 80MB
+                if (used > 100) { // More than 100MB - more realistic threshold
                     console.warn('⚠️ High memory usage:', used.toFixed(2) + 'MB');
                     this.triggerGarbageCollection();
                 }
