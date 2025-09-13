@@ -59,6 +59,11 @@ class DhammaPathApp {
         this.initializePhysicsAnimations();
         this.initializeHapticStorytelling();
         this.initializeMotionSystem();
+        this.initializeContextualActions();
+        this.initializeSmartRecommendations();
+        this.initializeAdaptiveTiming();
+        this.initializeHealthIntegration();
+        this.initializeLearningSystem();
         this.setupPremiumFeatures();
     }
 
@@ -144,6 +149,46 @@ class DhammaPathApp {
             this.motionSystem = new window.MotionSystem();
         } else {
             console.error('❌ MotionSystem not found');
+        }
+    }
+
+    initializeContextualActions() {
+        if (window.ContextualActions) {
+            this.contextualActions = new window.ContextualActions();
+        } else {
+            console.error('❌ ContextualActions not found');
+        }
+    }
+
+    initializeSmartRecommendations() {
+        if (window.SmartRecommendationEngine) {
+            this.smartRecommendationEngine = new window.SmartRecommendationEngine();
+        } else {
+            console.error('❌ SmartRecommendationEngine not found');
+        }
+    }
+
+    initializeAdaptiveTiming() {
+        if (window.AdaptiveTimingSystem) {
+            this.adaptiveTimingSystem = new window.AdaptiveTimingSystem();
+        } else {
+            console.error('❌ AdaptiveTimingSystem not found');
+        }
+    }
+
+    initializeHealthIntegration() {
+        if (window.HealthIntegrationSystem) {
+            this.healthIntegrationSystem = new window.HealthIntegrationSystem();
+        } else {
+            console.error('❌ HealthIntegrationSystem not found');
+        }
+    }
+
+    initializeLearningSystem() {
+        if (window.LearningSystem) {
+            this.learningSystem = new window.LearningSystem();
+        } else {
+            console.error('❌ LearningSystem not found');
         }
     }
 
