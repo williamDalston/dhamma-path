@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-    <!-- CACHE BUSTING VERSION: v20241220-006 - ULTRA NUCLEAR CACHE BUST -->
-    <!-- TIMESTAMP: 2025-01-13T12:35:00Z -->
+    <!-- CACHE BUSTING VERSION: v20241220-007 - FINAL CACHE DESTROY -->
+    <!-- TIMESTAMP: 2025-01-13T13:05:00Z -->
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -108,7 +108,7 @@
         console.log('🔄 CACHE BUSTING - JavaScript reloaded at:', new Date().toISOString());
         console.log('🔄 Current timestamp:', Date.now());
         console.log('🔄 Version:', 'v' + Date.now());
-        console.log('🔄 HTML Version: v20241220-006 - ULTRA NUCLEAR CACHE BUST');
+        console.log('🔄 HTML Version: v20241220-007 - FINAL CACHE DESTROY');
         
         // Force clear ALL intervals immediately
         for (let i = 1; i < 10000; i++) {
@@ -8750,7 +8750,7 @@
         DataManager.init();
         
         // Test script loading
-        console.log('🚀 SCRIPT LOADED - VERSION 5.0 - ULTRA NUCLEAR CACHE BUST 🚀');
+        console.log('🚀 SCRIPT LOADED - VERSION 6.0 - FINAL CACHE DESTROY 🚀');
         console.log('🔥 CACHE BUST TIMESTAMP:', Date.now());
         console.log('💥 FORCE RELOAD:', Math.random());
         
@@ -8811,8 +8811,25 @@
         console.log('🧪 TEST: Attempting direct navigation to timer page...');
         setTimeout(() => {
             console.log('🧪 TEST: Navigating to timer page now...');
-            navigateToPage('timer');
+            try {
+                navigateToPage('timer');
+                console.log('🧪 TEST: Navigation command sent successfully');
+            } catch (error) {
+                console.error('🧪 TEST: Navigation failed:', error);
+            }
         }, 2000);
+        
+        // FORCE TIMER PAGE LOAD - Nuclear option
+        setTimeout(() => {
+            console.log('💥 FORCE: Attempting to force timer page load...');
+            const timerLink = document.querySelector('[data-page="timer"]');
+            if (timerLink) {
+                console.log('💥 FORCE: Found timer link, clicking it...');
+                timerLink.click();
+            } else {
+                console.error('💥 FORCE: Timer link not found!');
+            }
+        }, 3000);
         
         // Handle welcome overlay
         const welcomeOverlay = document.getElementById('welcome-overlay');
