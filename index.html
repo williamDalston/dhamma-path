@@ -6907,10 +6907,12 @@
     // Start timer function
     window.startTimer = function() {
         console.log('🚀 Starting timer...');
+        console.log('🚀 NEW TIMER SYSTEM CALLED!');
         
         // Get duration from select
         const durationSelect = document.getElementById('timer-duration');
         const duration = durationSelect ? parseInt(durationSelect.value) : 600;
+        console.log('🚀 Duration selected:', duration);
         
         // Clear any existing timer
         if (window.timer.interval) {
@@ -6920,8 +6922,10 @@
         // Set up timer
         window.timer.isRunning = true;
         window.timer.timeRemaining = duration;
+        console.log('🚀 Timer state set:', window.timer);
         
         // Update display immediately
+        console.log('🚀 Calling updateTimerDisplay...');
         updateTimerDisplay();
         
         // Hide start button, show pause button
@@ -7001,15 +7005,20 @@
     // Update display function
     function updateTimerDisplay() {
         console.log('🔄 updateTimerDisplay called');
+        console.log('🔄 Current timeRemaining:', window.timer.timeRemaining);
         const display = document.getElementById('timer-display');
         console.log('🔄 Display element found:', !!display);
+        console.log('🔄 Display element:', display);
+        console.log('🔄 Current display text:', display ? display.textContent : 'N/A');
         console.log('🔄 Timer state:', window.timer);
         if (display) {
             const minutes = Math.floor(window.timer.timeRemaining / 60);
             const seconds = window.timer.timeRemaining % 60;
             const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            console.log('🔄 About to set display text to:', displayText);
             display.textContent = displayText;
             console.log('📱 Display updated:', displayText);
+            console.log('📱 Display text after update:', display.textContent);
         } else {
             console.error('❌ Timer display element not found!');
         }
