@@ -125,17 +125,15 @@
             });
         }
         
-        // FINAL CACHE DESTROY - Force reload with query parameters
-        setTimeout(() => {
-            console.log('💥 FINAL CACHE DESTROY - Forcing reload with query parameters...');
-            console.log('💥 Current URL:', window.location.href);
-            
-            // Always reload with cache-busting query parameters
-            const baseUrl = window.location.href.split('?')[0];
-            const newUrl = baseUrl + '?v=' + Date.now() + '&cache=' + Math.random() + '&destroy=' + Math.random();
-            console.log('💥 New URL:', newUrl);
-            window.location.href = newUrl;
-        }, 100);
+        // IMMEDIATE CACHE DESTROY - Force reload immediately
+        console.log('💥 IMMEDIATE CACHE DESTROY - Forcing reload immediately...');
+        console.log('💥 Current URL:', window.location.href);
+        
+        // Always reload with cache-busting query parameters
+        const baseUrl = window.location.href.split('?')[0];
+        const newUrl = baseUrl + '?v=' + Date.now() + '&cache=' + Math.random() + '&destroy=' + Math.random();
+        console.log('💥 New URL:', newUrl);
+        window.location.href = newUrl;
         
         // Suppress Tailwind CSS production warning
         window.tailwindConfig = {
