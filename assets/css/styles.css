@@ -80,23 +80,82 @@
     --backdrop-blur: blur(16px);
     --backdrop-blur-strong: blur(24px);
     
-    /* iOS-Optimized Spacing Scale */
-    --space-micro: 0.125rem;
-    --space-tiny: 0.25rem;
-    --space-small: 0.5rem;
-    --space-base: 1rem;
-    --space-large: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 2.5rem;
-    --space-3xl: 3rem;
-    --space-4xl: 4rem;
+    /* DYNAMIC ADAPTIVE THEMES */
+    /* Morning Theme (5AM - 10AM) - Warm Golds */
+    --morning-primary: #D4AF37;
+    --morning-secondary: #E6C547;
+    --morning-accent: #F4E19C;
+    --morning-background: #FDF6E3;
+    --morning-text: #2C3E50;
+    
+    /* Day Theme (10AM - 6PM) - Forest Greens */
+    --day-primary: #1A4D3A;
+    --day-secondary: #2D6B47;
+    --day-accent: #4A8B6A;
+    --day-background: #FDFCF8;
+    --day-text: #2C3E50;
+    
+    /* Evening Theme (6PM - 10PM) - Cool Sages */
+    --evening-primary: #7A9B7A;
+    --evening-secondary: #9CAF88;
+    --evening-accent: #B8C9A8;
+    --evening-background: #F0F8F0;
+    --evening-text: #34495E;
+    
+    /* Night Theme (10PM - 5AM) - Deep Charcoals */
+    --night-primary: #2C3E50;
+    --night-secondary: #34495E;
+    --night-accent: #5D6D7E;
+    --night-background: #1A1A1A;
+    --night-text: #E8E8E8;
+    
+    /* Mood-Based Themes */
+    /* Energized - High Energy, Pleasant */
+    --energized-primary: #D4AF37;
+    --energized-secondary: #E6C547;
+    --energized-accent: #F4E19C;
+    
+    /* Calm - Low Energy, Pleasant */
+    --calm-primary: #7A9B7A;
+    --calm-secondary: #9CAF88;
+    --calm-accent: #B8C9A8;
+    
+    /* Focused - High Energy, Neutral */
+    --focused-primary: #1A4D3A;
+    --focused-secondary: #2D6B47;
+    --focused-accent: #4A8B6A;
+    
+    /* Restful - Low Energy, Neutral */
+    --restful-primary: #5D6D7E;
+    --restful-secondary: #85929E;
+    --restful-accent: #A0A0A0;
+    
+    /* PROPORTIONAL SPACING SYSTEM - Intentional Asymmetry */
+    --space-micro: 0.125rem;    /* 2px - Fine details */
+    --space-tiny: 0.25rem;      /* 4px - Micro spacing */
+    --space-small: 0.5rem;      /* 8px - Small spacing */
+    --space-base: 1rem;         /* 16px - Base spacing */
+    --space-large: 1.5rem;      /* 24px - Large spacing */
+    --space-xl: 2rem;           /* 32px - Extra large */
+    --space-2xl: 2.5rem;        /* 40px - Double XL */
+    --space-3xl: 3rem;          /* 48px - Triple XL */
+    --space-4xl: 4rem;          /* 64px - Quadruple XL */
+    --space-5xl: 6rem;          /* 96px - Massive */
+    --space-6xl: 8rem;          /* 128px - Hero spacing */
+    
+    /* ASYMMETRICAL LAYOUT VARIABLES */
+    --asymmetry-offset: 2rem;   /* Intentional offset for visual interest */
+    --asymmetry-offset-large: 4rem;
+    --asymmetry-offset-small: 1rem;
+    --golden-ratio: 1.618;
+    --golden-ratio-inverse: 0.618;
     
     /* iOS Touch Targets */
     --touch-target-min: 44px;
     --touch-target-comfortable: 48px;
     --touch-target-large: 56px;
     
-    /* DELIGHT-FOCUSED TYPOGRAPHY SCALE */
+    /* VARIABLE & EXPRESSIVE TYPOGRAPHY SCALE */
     --font-tiny: 0.75rem;      /* 12px - Fine print */
     --font-small: 0.875rem;    /* 14px - Captions */
     --font-base: 1rem;         /* 16px - Body text */
@@ -108,6 +167,26 @@
     --font-5xl: 2.75rem;       /* 44px - Hero titles */
     --font-6xl: 3.25rem;       /* 52px - Large hero */
     --font-7xl: 3.75rem;       /* 60px - Massive hero */
+    
+    /* FONT FAMILIES - UI vs Content */
+    --font-family-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-family-content: 'Lora', 'Georgia', 'Times New Roman', serif;
+    --font-family-display: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+    --font-family-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    
+    /* DYNAMIC FONT EXPRESSIONS */
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    
+    /* FONT OPTICAL SIZING */
+    --font-optical-sizing: auto;
+    
+    /* VARIABLE FONT FEATURES */
+    --font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
     
     /* Border Radius Scale */
     --radius-none: 0;
@@ -2454,5 +2533,1160 @@ html {
         border: 2px solid var(--glass-border-strong);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
+    }
+}
+
+/* ========================================
+   DYNAMIC ADAPTIVE THEMES
+   ======================================== */
+
+/* Theme Application Classes */
+.theme-morning {
+    --color-primary: var(--morning-primary);
+    --color-secondary: var(--morning-secondary);
+    --color-accent: var(--morning-accent);
+    --color-background: var(--morning-background);
+    --color-text: var(--morning-text);
+}
+
+.theme-day {
+    --color-primary: var(--day-primary);
+    --color-secondary: var(--day-secondary);
+    --color-accent: var(--day-accent);
+    --color-background: var(--day-background);
+    --color-text: var(--day-text);
+}
+
+.theme-evening {
+    --color-primary: var(--evening-primary);
+    --color-secondary: var(--evening-secondary);
+    --color-accent: var(--evening-accent);
+    --color-background: var(--evening-background);
+    --color-text: var(--evening-text);
+}
+
+.theme-night {
+    --color-primary: var(--night-primary);
+    --color-secondary: var(--night-secondary);
+    --color-accent: var(--night-accent);
+    --color-background: var(--night-background);
+    --color-text: var(--night-text);
+}
+
+/* Mood-Based Theme Classes */
+.theme-energized {
+    --color-primary: var(--energized-primary);
+    --color-secondary: var(--energized-secondary);
+    --color-accent: var(--energized-accent);
+}
+
+.theme-calm {
+    --color-primary: var(--calm-primary);
+    --color-secondary: var(--calm-secondary);
+    --color-accent: var(--calm-accent);
+}
+
+.theme-focused {
+    --color-primary: var(--focused-primary);
+    --color-secondary: var(--focused-secondary);
+    --color-accent: var(--focused-accent);
+}
+
+.theme-restful {
+    --color-primary: var(--restful-primary);
+    --color-secondary: var(--restful-secondary);
+    --color-accent: var(--restful-accent);
+}
+
+/* Dynamic Theme Transitions */
+.theme-transition {
+    transition: 
+        background-color 0.8s ease-in-out,
+        color 0.8s ease-in-out,
+        border-color 0.8s ease-in-out,
+        box-shadow 0.8s ease-in-out;
+}
+
+/* Theme-Aware Elements */
+.theme-aware {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    border-color: var(--color-secondary);
+}
+
+.theme-aware-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.theme-aware-secondary {
+    background-color: var(--color-secondary);
+    color: white;
+}
+
+.theme-aware-accent {
+    background-color: var(--color-accent);
+    color: var(--color-text);
+}
+
+/* Theme-Aware Glassmorphism */
+.theme-glass {
+    background: color-mix(in srgb, var(--color-background) 15%, transparent);
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+    border: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+    box-shadow: 0 8px 32px color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+
+.theme-glass-strong {
+    background: color-mix(in srgb, var(--color-background) 25%, transparent);
+    backdrop-filter: var(--backdrop-blur-strong);
+    -webkit-backdrop-filter: var(--backdrop-blur-strong);
+    border: 2px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
+    box-shadow: 0 12px 40px color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+/* Theme-Aware Gradients */
+.theme-gradient-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
+}
+
+.theme-gradient-secondary {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+}
+
+/* Theme-Aware Text Gradients */
+.theme-text-gradient {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Theme-Aware Shadows */
+.theme-shadow {
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+
+.theme-shadow-strong {
+    box-shadow: 0 8px 30px color-mix(in srgb, var(--color-primary) 12%, transparent);
+}
+
+.theme-shadow-hover {
+    box-shadow: 0 12px 40px color-mix(in srgb, var(--color-primary) 18%, transparent);
+}
+
+/* Theme-Aware Interactive Elements */
+.theme-interactive {
+    background-color: var(--color-primary);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.theme-interactive:hover {
+    background-color: var(--color-secondary);
+    transform: translateY(-2px);
+    box-shadow: var(--theme-shadow-hover);
+}
+
+.theme-interactive:active {
+    transform: translateY(0);
+    box-shadow: var(--theme-shadow);
+}
+
+/* Theme-Aware Form Elements */
+.theme-input {
+    background-color: color-mix(in srgb, var(--color-background) 80%, transparent);
+    border: 2px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+    color: var(--color-text);
+    transition: all 0.3s ease;
+}
+
+.theme-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+    outline: none;
+}
+
+/* Theme-Aware Progress Bars */
+.theme-progress {
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.theme-progress-fill {
+    background: var(--theme-gradient-primary);
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.5s ease;
+}
+
+/* Theme-Aware Notifications */
+.theme-notification {
+    background-color: color-mix(in srgb, var(--color-background) 95%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
+    color: var(--color-text);
+    box-shadow: var(--theme-shadow-strong);
+}
+
+/* Responsive Theme Adjustments */
+@media (max-width: 768px) {
+    .theme-transition {
+        transition-duration: 0.6s;
+    }
+}
+
+/* Accessibility for Dynamic Themes */
+@media (prefers-reduced-motion: reduce) {
+    .theme-transition {
+        transition: none;
+    }
+}
+
+/* High Contrast Mode for Dynamic Themes */
+@media (prefers-contrast: high) {
+    .theme-morning,
+    .theme-day,
+    .theme-evening,
+    .theme-night {
+        --color-primary: #000000;
+        --color-secondary: #333333;
+        --color-accent: #666666;
+        --color-background: #FFFFFF;
+        --color-text: #000000;
+    }
+}
+
+/* ========================================
+   ASYMMETRICAL & SPACED LAYOUTS
+   ======================================== */
+
+/* Asymmetrical Layout System */
+.asymmetrical-left {
+    margin-left: var(--asymmetry-offset);
+    margin-right: 0;
+}
+
+.asymmetrical-right {
+    margin-right: var(--asymmetry-offset);
+    margin-left: 0;
+}
+
+.asymmetrical-top {
+    margin-top: var(--asymmetry-offset);
+    margin-bottom: 0;
+}
+
+.asymmetrical-bottom {
+    margin-bottom: var(--asymmetry-offset);
+    margin-top: 0;
+}
+
+/* Golden Ratio Layouts */
+.golden-ratio-left {
+    width: calc(100% * var(--golden-ratio-inverse));
+    margin-right: var(--space-large);
+}
+
+.golden-ratio-right {
+    width: calc(100% * var(--golden-ratio-inverse));
+    margin-left: var(--space-large);
+}
+
+/* Intentional Offset Layouts */
+.offset-left {
+    transform: translateX(calc(var(--asymmetry-offset) * -1));
+}
+
+.offset-right {
+    transform: translateX(var(--asymmetry-offset));
+}
+
+.offset-top {
+    transform: translateY(calc(var(--asymmetry-offset) * -1));
+}
+
+.offset-bottom {
+    transform: translateY(var(--asymmetry-offset));
+}
+
+/* Asymmetrical Grid Systems */
+.asymmetrical-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-large);
+    align-items: start;
+}
+
+.asymmetrical-grid-reverse {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-large);
+    align-items: start;
+}
+
+.asymmetrical-grid-three {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: var(--space-large);
+    align-items: start;
+}
+
+/* Proportional Spacing Classes */
+.space-micro { margin: var(--space-micro); }
+.space-tiny { margin: var(--space-tiny); }
+.space-small { margin: var(--space-small); }
+.space-base { margin: var(--space-base); }
+.space-large { margin: var(--space-large); }
+.space-xl { margin: var(--space-xl); }
+.space-2xl { margin: var(--space-2xl); }
+.space-3xl { margin: var(--space-3xl); }
+.space-4xl { margin: var(--space-4xl); }
+.space-5xl { margin: var(--space-5xl); }
+.space-6xl { margin: var(--space-6xl); }
+
+/* Directional Spacing */
+.space-x-micro { margin-left: var(--space-micro); margin-right: var(--space-micro); }
+.space-x-tiny { margin-left: var(--space-tiny); margin-right: var(--space-tiny); }
+.space-x-small { margin-left: var(--space-small); margin-right: var(--space-small); }
+.space-x-base { margin-left: var(--space-base); margin-right: var(--space-base); }
+.space-x-large { margin-left: var(--space-large); margin-right: var(--space-large); }
+.space-x-xl { margin-left: var(--space-xl); margin-right: var(--space-xl); }
+
+.space-y-micro { margin-top: var(--space-micro); margin-bottom: var(--space-micro); }
+.space-y-tiny { margin-top: var(--space-tiny); margin-bottom: var(--space-tiny); }
+.space-y-small { margin-top: var(--space-small); margin-bottom: var(--space-small); }
+.space-y-base { margin-top: var(--space-base); margin-bottom: var(--space-base); }
+.space-y-large { margin-top: var(--space-large); margin-bottom: var(--space-large); }
+.space-y-xl { margin-top: var(--space-xl); margin-bottom: var(--space-xl); }
+
+/* Eye Movement Optimization */
+.f-pattern {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-2xl);
+    align-items: start;
+}
+
+.z-pattern {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+}
+
+.diagonal-flow {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: var(--space-large);
+    align-items: start;
+}
+
+.diagonal-flow > *:nth-child(2) {
+    transform: translateY(var(--asymmetry-offset-small));
+}
+
+/* Visual Hierarchy with Asymmetry */
+.hierarchy-primary {
+    margin-bottom: var(--space-3xl);
+    padding-left: var(--asymmetry-offset-small);
+}
+
+.hierarchy-secondary {
+    margin-bottom: var(--space-xl);
+    padding-right: var(--asymmetry-offset-small);
+}
+
+.hierarchy-tertiary {
+    margin-bottom: var(--space-large);
+    padding-left: var(--asymmetry-offset);
+}
+
+/* Timer Page Asymmetrical Layout */
+.timer-asymmetrical {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-4xl);
+    align-items: center;
+    min-height: 60vh;
+}
+
+.timer-controls-left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-large);
+    padding-right: var(--asymmetry-offset);
+}
+
+.timer-visual-right {
+    position: relative;
+    padding-left: var(--asymmetry-offset);
+}
+
+/* Journal Page Asymmetrical Layout */
+.journal-asymmetrical {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-4xl);
+    align-items: start;
+}
+
+.journal-editor-left {
+    padding-right: var(--asymmetry-offset);
+}
+
+.journal-prompts-right {
+    padding-left: var(--asymmetry-offset-small);
+    position: sticky;
+    top: var(--space-2xl);
+}
+
+/* Workout Page Asymmetrical Layout */
+.workout-asymmetrical {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: var(--space-3xl);
+    align-items: start;
+}
+
+.workout-controls-left {
+    padding-right: var(--asymmetry-offset-small);
+}
+
+.workout-main-center {
+    text-align: center;
+}
+
+.workout-progress-right {
+    padding-left: var(--asymmetry-offset-small);
+    position: sticky;
+    top: var(--space-2xl);
+}
+
+/* Clarity Page Asymmetrical Layout */
+.clarity-asymmetrical {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-4xl);
+    align-items: center;
+}
+
+.clarity-prompt-left {
+    padding-right: var(--asymmetry-offset);
+}
+
+.clarity-recording-right {
+    padding-left: var(--asymmetry-offset);
+}
+
+/* Responsive Asymmetrical Adjustments */
+@media (max-width: 1024px) {
+    .asymmetrical-grid,
+    .asymmetrical-grid-reverse,
+    .asymmetrical-grid-three {
+        grid-template-columns: 1fr;
+        gap: var(--space-large);
+    }
+    
+    .timer-asymmetrical,
+    .journal-asymmetrical,
+    .workout-asymmetrical,
+    .clarity-asymmetrical {
+        grid-template-columns: 1fr;
+        gap: var(--space-2xl);
+    }
+    
+    .asymmetrical-left,
+    .asymmetrical-right,
+    .asymmetrical-top,
+    .asymmetrical-bottom {
+        margin: var(--space-base);
+    }
+    
+    .offset-left,
+    .offset-right,
+    .offset-top,
+    .offset-bottom {
+        transform: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .asymmetry-offset {
+        --asymmetry-offset: var(--space-small);
+    }
+    
+    .space-4xl,
+    .space-5xl,
+    .space-6xl {
+        margin: var(--space-2xl);
+    }
+    
+    .hierarchy-primary,
+    .hierarchy-secondary,
+    .hierarchy-tertiary {
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: var(--space-large);
+    }
+}
+
+/* Accessibility for Asymmetrical Layouts */
+@media (prefers-reduced-motion: reduce) {
+    .offset-left,
+    .offset-right,
+    .offset-top,
+    .offset-bottom {
+        transform: none;
+    }
+    
+    .diagonal-flow > *:nth-child(2) {
+        transform: none;
+    }
+}
+
+/* ========================================
+   VARIABLE & EXPRESSIVE TYPOGRAPHY
+   ======================================== */
+
+/* Font Loading and Optimization */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2') format('woff2');
+    font-feature-settings: var(--font-feature-settings);
+    font-optical-sizing: var(--font-optical-sizing);
+}
+
+@font-face {
+    font-family: 'Lora';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('https://fonts.gstatic.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787weuxJBkqg.woff2') format('woff2');
+    font-feature-settings: var(--font-feature-settings);
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXDTzYhA.woff2') format('woff2');
+    font-feature-settings: var(--font-feature-settings);
+}
+
+/* Typography System Classes */
+.font-ui {
+    font-family: var(--font-family-ui);
+    font-feature-settings: var(--font-feature-settings);
+    font-optical-sizing: var(--font-optical-sizing);
+}
+
+.font-content {
+    font-family: var(--font-family-content);
+    font-feature-settings: var(--font-feature-settings);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+}
+
+.font-display {
+    font-family: var(--font-family-display);
+    font-feature-settings: var(--font-feature-settings);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.font-mono {
+    font-family: var(--font-family-mono);
+    font-feature-settings: 'kern' 1;
+    font-variant-ligatures: none;
+}
+
+/* Dynamic Font Expressions */
+.font-expressive {
+    font-variation-settings: 'wght' var(--font-weight-medium, 500);
+    transition: font-variation-settings 0.3s ease;
+}
+
+.font-expressive:hover {
+    font-variation-settings: 'wght' var(--font-weight-bold, 700);
+}
+
+.font-expressive:active {
+    font-variation-settings: 'wght' var(--font-weight-extrabold, 800);
+}
+
+/* Timer Number Dynamic Expression */
+.timer-expressive {
+    font-family: var(--font-family-ui);
+    font-variation-settings: 'wght' 400;
+    transition: font-variation-settings 0.5s ease;
+    font-feature-settings: 'tnum' 1, 'kern' 1;
+}
+
+.timer-expressive.counting {
+    font-variation-settings: 'wght' 600;
+}
+
+.timer-expressive.final-countdown {
+    font-variation-settings: 'wght' 800;
+    animation: pulse-expressive 1s ease-in-out infinite;
+}
+
+@keyframes pulse-expressive {
+    0%, 100% { font-variation-settings: 'wght' 800; }
+    50% { font-variation-settings: 'wght' 900; }
+}
+
+/* Heading Typography */
+.heading-hero {
+    font-family: var(--font-family-display);
+    font-size: var(--font-7xl);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-feature-settings: var(--font-feature-settings);
+}
+
+.heading-page {
+    font-family: var(--font-family-display);
+    font-size: var(--font-5xl);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.heading-section {
+    font-family: var(--font-family-display);
+    font-size: var(--font-3xl);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.heading-subsection {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-xl);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.4;
+}
+
+/* Body Typography */
+.body-hero {
+    font-family: var(--font-family-content);
+    font-size: var(--font-xl);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.7;
+    letter-spacing: -0.005em;
+}
+
+.body-content {
+    font-family: var(--font-family-content);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.7;
+    letter-spacing: -0.005em;
+}
+
+.body-caption {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-small);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+}
+
+/* UI Typography */
+.ui-button {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
+
+.ui-label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-small);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.ui-caption {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-tiny);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    color: var(--text-muted);
+}
+
+/* Typography Responsive Scaling */
+@media (max-width: 768px) {
+    .heading-hero {
+        font-size: var(--font-5xl);
+        line-height: 1.1;
+    }
+    
+    .heading-page {
+        font-size: var(--font-3xl);
+        line-height: 1.2;
+    }
+    
+    .heading-section {
+        font-size: var(--font-2xl);
+        line-height: 1.3;
+    }
+    
+    .body-hero {
+        font-size: var(--font-large);
+        line-height: 1.6;
+    }
+}
+
+/* Typography Theme Integration */
+.theme-aware .font-content {
+    color: var(--color-text);
+}
+
+.theme-aware .heading-hero,
+.theme-aware .heading-page,
+.theme-aware .heading-section {
+    color: var(--color-text);
+}
+
+.theme-aware .ui-caption {
+    color: var(--color-text);
+    opacity: 0.7;
+}
+
+/* Typography Animations */
+.typography-fade-in {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.typography-scale-in {
+    animation: scaleIn 0.6s ease-out;
+}
+
+.typography-slide-in {
+    animation: slideInLeft 0.7s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Typography Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .typography-fade-in,
+    .typography-scale-in,
+    .typography-slide-in {
+        animation: none;
+    }
+    
+    .font-expressive,
+    .timer-expressive {
+        transition: none;
+    }
+}
+
+/* High Contrast Typography */
+@media (prefers-contrast: high) {
+    .font-content,
+    .body-content {
+        font-weight: var(--font-weight-medium);
+    }
+    
+    .ui-caption {
+        opacity: 1;
+    }
+}
+
+/* ========================================
+   ORGANIC ICONOGRAPHY SYSTEM
+   ======================================== */
+
+/* Organic Icon Base Styles */
+.icon-organic {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Organic Icon Sizes */
+.icon-organic-sm {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+}
+
+.icon-organic-md {
+    font-size: 1.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.icon-organic-lg {
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.icon-organic-xl {
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+}
+
+.icon-organic-2xl {
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Organic Icon Animations */
+.icon-organic:hover {
+    transform: scale(1.1) rotate(2deg);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+.icon-organic:active {
+    transform: scale(0.95) rotate(-1deg);
+}
+
+/* Flowing Icon Animations */
+.icon-flowing {
+    animation: flow-gentle 3s ease-in-out infinite;
+}
+
+.icon-floating {
+    animation: float-organic 4s ease-in-out infinite;
+}
+
+.icon-breathing {
+    animation: breathe-icon 2s ease-in-out infinite;
+}
+
+@keyframes flow-gentle {
+    0%, 100% { 
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    25% { 
+        transform: translateX(2px) rotate(1deg);
+        opacity: 0.9;
+    }
+    50% { 
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    75% { 
+        transform: translateX(-2px) rotate(-1deg);
+        opacity: 0.9;
+    }
+}
+
+@keyframes float-organic {
+    0%, 100% { 
+        transform: translateY(0) rotate(0deg);
+    }
+    33% { 
+        transform: translateY(-3px) rotate(1deg);
+    }
+    66% { 
+        transform: translateY(0) rotate(-1deg);
+    }
+}
+
+@keyframes breathe-icon {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+/* Organic Icon States */
+.icon-organic-active {
+    color: var(--forest-deep);
+    transform: scale(1.1);
+    filter: drop-shadow(0 3px 6px rgba(26, 77, 58, 0.2));
+}
+
+.icon-organic-inactive {
+    color: var(--charcoal-light);
+    opacity: 0.6;
+}
+
+.icon-organic-success {
+    color: var(--forest-green);
+    animation: pulse-success 1s ease-in-out;
+}
+
+.icon-organic-warning {
+    color: var(--gold-rich);
+    animation: pulse-warning 1s ease-in-out;
+}
+
+.icon-organic-error {
+    color: var(--sage-deep);
+    animation: shake-gentle 0.5s ease-in-out;
+}
+
+@keyframes pulse-success {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+@keyframes pulse-warning {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(2deg); }
+    50% { transform: scale(1.2) rotate(0deg); }
+    75% { transform: scale(1.1) rotate(-2deg); }
+}
+
+@keyframes shake-gentle {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+}
+
+/* Organic Icon Groups */
+.icon-group-organic {
+    display: flex;
+    gap: var(--space-small);
+    align-items: center;
+}
+
+.icon-group-organic .icon-organic {
+    transition-delay: calc(var(--i) * 0.1s);
+}
+
+.icon-group-organic:hover .icon-organic {
+    animation-delay: calc(var(--i) * 0.1s);
+    animation: flow-gentle 2s ease-in-out infinite;
+}
+
+/* Theme-Aware Organic Icons */
+.theme-aware .icon-organic-active {
+    color: var(--color-primary);
+}
+
+.theme-aware .icon-organic-inactive {
+    color: var(--color-text);
+    opacity: 0.6;
+}
+
+.theme-aware .icon-organic-success {
+    color: var(--color-primary);
+}
+
+/* Organic Icon Container */
+.icon-container-organic {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-small);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.icon-container-organic:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.icon-container-organic .icon-organic {
+    filter: none;
+}
+
+/* Organic Icon with Text */
+.icon-text-organic {
+    display: flex;
+    align-items: center;
+    gap: var(--space-small);
+    font-family: var(--font-family-ui);
+    font-weight: var(--font-weight-medium);
+    color: var(--charcoal);
+    transition: all 0.3s ease;
+}
+
+.icon-text-organic:hover {
+    color: var(--forest-deep);
+    transform: translateX(2px);
+}
+
+.icon-text-organic .icon-organic {
+    transition: all 0.3s ease;
+}
+
+/* Organic Icon Navigation */
+.nav-icon-organic {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.nav-icon-organic::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.nav-icon-organic:hover::before {
+    transform: translateX(100%);
+}
+
+.nav-icon-organic:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nav-icon-organic .icon-organic {
+    font-size: 1.5rem;
+    filter: none;
+}
+
+/* Organic Icon Loading States */
+.icon-organic-loading {
+    animation: spin-organic 2s linear infinite;
+}
+
+@keyframes spin-organic {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.icon-organic-pulse {
+    animation: pulse-organic 2s ease-in-out infinite;
+}
+
+@keyframes pulse-organic {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: scale(1.1);
+        opacity: 0.7;
+    }
+}
+
+/* Responsive Organic Icons */
+@media (max-width: 768px) {
+    .icon-organic-2xl {
+        font-size: 2.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    
+    .nav-icon-organic {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    
+    .nav-icon-organic .icon-organic {
+        font-size: 1.25rem;
+    }
+}
+
+/* Accessibility for Organic Icons */
+@media (prefers-reduced-motion: reduce) {
+    .icon-organic,
+    .icon-flowing,
+    .icon-floating,
+    .icon-breathing,
+    .icon-organic-loading,
+    .icon-organic-pulse {
+        animation: none;
+        transition: none;
+    }
+    
+    .icon-organic:hover {
+        transform: none;
+    }
+    
+    .icon-container-organic:hover {
+        transform: none;
+    }
+}
+
+/* High Contrast Organic Icons */
+@media (prefers-contrast: high) {
+    .icon-organic {
+        filter: none;
+        text-shadow: 0 0 0 currentColor;
+    }
+    
+    .icon-container-organic {
+        background: rgba(0, 0, 0, 0.1);
+        border: 2px solid currentColor;
     }
 }

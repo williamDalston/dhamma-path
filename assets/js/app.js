@@ -31,6 +31,7 @@ class DhammaPathApp {
             this.setupErrorHandling();
             this.initializePerformanceMonitoring();
             this.initializeNavigation();
+            this.initializeThemeManager();
             this.setupGlobalEventListeners();
             
             // Use requestIdleCallback for non-critical features
@@ -99,6 +100,14 @@ class DhammaPathApp {
             this.navigationManager = new window.NavigationManager();
         } else {
             console.error('❌ NavigationManager not found');
+        }
+    }
+
+    initializeThemeManager() {
+        if (window.ThemeManager) {
+            this.themeManager = new window.ThemeManager();
+        } else {
+            console.error('❌ ThemeManager not found');
         }
     }
 
