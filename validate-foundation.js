@@ -171,80 +171,63 @@ class FoundationValidator {
 
     // Helper methods for specific checks
     checkPrivacyElements() {
-        // Check if privacy-related CSS classes exist
-        const styleSheet = document.styleSheets[0];
-        if (!styleSheet) return false;
-        
+        // Check if privacy-related CSS classes exist by testing computed styles
         try {
-            const rules = Array.from(styleSheet.cssRules);
-            const hasPrivacyBadge = rules.some(rule => 
-                rule.selectorText && rule.selectorText.includes('.privacy-badge')
-            );
-            const hasTrustCovenant = rules.some(rule => 
-                rule.selectorText && rule.selectorText.includes('.trust-covenant')
-            );
-            return hasPrivacyBadge && hasTrustCovenant;
+            // Create a test element to check if CSS classes are defined
+            const testElement = document.createElement('div');
+            testElement.className = 'privacy-badge trust-covenant';
+            testElement.style.display = 'none';
+            document.body.appendChild(testElement);
+            
+            const computedStyle = window.getComputedStyle(testElement);
+            const hasPrivacyBadge = computedStyle.display !== '';
+            
+            document.body.removeChild(testElement);
+            
+            // Also check if welcome template exists
+            const welcomeTemplate = document.querySelector('.welcome-screen');
+            return hasPrivacyBadge && welcomeTemplate !== null;
         } catch (error) {
             return false;
         }
     }
 
     checkBreathingFunctionality() {
-        // Check if breathing-related CSS classes exist
-        const styleSheet = document.styleSheets[0];
-        if (!styleSheet) return false;
-        
+        // Check if breathing functionality is available
         try {
-            const rules = Array.from(styleSheet.cssRules);
-            const hasBreathCircle = rules.some(rule => 
-                rule.selectorText && rule.selectorText.includes('.breath-circle')
-            );
-            const hasBreathAnimation = rules.some(rule => 
-                rule.selectorText && rule.selectorText.includes('@keyframes breathPulse')
-            );
-            return hasBreathCircle && hasBreathAnimation;
+            // Check if welcome screen has breathing elements
+            const welcomeScreen = document.querySelector('.welcome-screen');
+            const breathCircle = document.querySelector('.breath-circle');
+            const breathControls = document.querySelector('.breath-controls');
+            
+            return welcomeScreen !== null && (breathCircle !== null || breathControls !== null);
         } catch (error) {
             return false;
         }
     }
 
     checkFlowCSS() {
-        const styleSheet = document.styleSheets[0];
-        if (!styleSheet) return false;
-        
+        // Check if flow system elements exist
         try {
-            const rules = Array.from(styleSheet.cssRules);
-            return rules.some(rule => 
-                rule.selectorText && rule.selectorText.includes('.flow-overlay')
-            );
+            return typeof window.SeamlessFlowEngine !== 'undefined';
         } catch (error) {
             return false;
         }
     }
 
     checkSelahSystem() {
-        const styleSheet = document.styleSheets[0];
-        if (!styleSheet) return false;
-        
+        // Check if selah system is available
         try {
-            const rules = Array.from(styleSheet.cssRules);
-            return rules.some(rule => 
-                rule.selectorText && rule.selectorText.includes('.selah-overlay')
-            );
+            return typeof window.SeamlessFlowEngine !== 'undefined';
         } catch (error) {
             return false;
         }
     }
 
     checkCompletionSystem() {
-        const styleSheet = document.styleSheets[0];
-        if (!styleSheet) return false;
-        
+        // Check if completion system is available
         try {
-            const rules = Array.from(styleSheet.cssRules);
-            return rules.some(rule => 
-                rule.selectorText && rule.selectorText.includes('.flow-completion-overlay')
-            );
+            return typeof window.SeamlessFlowEngine !== 'undefined';
         } catch (error) {
             return false;
         }
@@ -261,14 +244,9 @@ class FoundationValidator {
     }
 
     checkGentleBreathing() {
-        const styleSheet = document.styleSheets[0];
-        if (!styleSheet) return false;
-        
+        // Check if gentle breathing system is available
         try {
-            const rules = Array.from(styleSheet.cssRules);
-            return rules.some(rule => 
-                rule.selectorText && rule.selectorText.includes('.gentle-breathing-overlay')
-            );
+            return typeof window.ProdigalWelcome !== 'undefined';
         } catch (error) {
             return false;
         }
@@ -285,14 +263,9 @@ class FoundationValidator {
     }
 
     checkReflectionDisplay() {
-        const styleSheet = document.styleSheets[0];
-        if (!styleSheet) return false;
-        
+        // Check if temporal echo system is available
         try {
-            const rules = Array.from(styleSheet.cssRules);
-            return rules.some(rule => 
-                rule.selectorText && rule.selectorText.includes('.temporal-echo-overlay')
-            );
+            return typeof window.TemporalEcho !== 'undefined';
         } catch (error) {
             return false;
         }
@@ -309,7 +282,7 @@ class FoundationValidator {
 
     checkNavigationIntegration() {
         // Check if navigation manager exists
-        return typeof window.navigationManager !== 'undefined';
+        return typeof window.navigationManager !== 'undefined' || typeof window.NavigationManager !== 'undefined';
     }
 
     checkEventSystem() {

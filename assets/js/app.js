@@ -150,10 +150,16 @@ class DhammaPathApp {
     }
 
     initializeMotionSystem() {
-        if (window.MotionSystem) {
-            this.motionSystem = new window.MotionSystem();
-        } else {
-            console.error('❌ MotionSystem not found');
+        try {
+            if (window.MotionSystem) {
+                this.motionSystem = new window.MotionSystem();
+                console.log('✅ Motion system initialized');
+            } else {
+                console.warn('⚠️ MotionSystem not found - continuing without motion coordination');
+            }
+        } catch (error) {
+            console.error('❌ Motion system initialization failed:', error);
+            // Continue without motion system
         }
     }
 

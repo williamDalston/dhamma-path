@@ -25,7 +25,42 @@ class GestureManager {
         this.setupMouseEvents();
         this.setupKeyboardGestures();
         this.setupGestureRecognition();
+        this.setupEventListeners();
         console.log('✅ Gesture Manager initialized');
+    }
+
+    setupEventListeners() {
+        this.eventListeners = new Map();
+    }
+
+    addEventListener(eventType, callback) {
+        if (!this.eventListeners.has(eventType)) {
+            this.eventListeners.set(eventType, []);
+        }
+        this.eventListeners.get(eventType).push(callback);
+    }
+
+    removeEventListener(eventType, callback) {
+        if (this.eventListeners.has(eventType)) {
+            const callbacks = this.eventListeners.get(eventType);
+            const index = callbacks.indexOf(callback);
+            if (index > -1) {
+                callbacks.splice(index, 1);
+            }
+        }
+    }
+
+    dispatchEvent(eventType, detail) {
+        if (this.eventListeners.has(eventType)) {
+            const callbacks = this.eventListeners.get(eventType);
+            callbacks.forEach(callback => {
+                try {
+                    callback({ detail });
+                } catch (error) {
+                    console.error('Error in gesture event listener:', error);
+                }
+            });
+        }
     }
 
     setupTouchEvents() {
@@ -286,6 +321,9 @@ class GestureManager {
         window.dispatchEvent(new CustomEvent('gestureExecuted', {
             detail: gesture
         }));
+        
+        // Dispatch local event for motion system coordination
+        this.dispatchEvent('gestureExecuted', gesture);
         
         // Haptic feedback
         this.provideHapticFeedback(gesture);
