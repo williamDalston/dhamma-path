@@ -7416,3 +7416,510 @@ html {
         font-size: var(--font-sm);
     }
 }
+
+/* ==========================================================================
+   CLARITY - A SANCTUARY FOR YOUR VOICE
+   ========================================================================== */
+
+/* Clarity Sanctuary Layout */
+.clarity-sanctuary {
+    background: linear-gradient(135deg, 
+        rgba(122, 155, 122, 0.03) 0%, 
+        rgba(26, 77, 58, 0.05) 50%, 
+        rgba(122, 155, 122, 0.03) 100%);
+    min-height: 100vh;
+}
+
+/* Prompt Hero - The Center of Attention */
+.prompt-hero {
+    padding: 2rem 0;
+}
+
+.prompt-container {
+    max-width: 56rem; /* 896px */
+}
+
+.prompt-text {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--forest-deep);
+    text-shadow: 0 1px 2px rgba(26, 77, 58, 0.1);
+}
+
+.prompt-subtitle {
+    font-weight: 500;
+    color: var(--charcoal);
+    opacity: 0.6;
+    letter-spacing: 0.02em;
+}
+
+/* Recording Interface */
+.recording-interface {
+    margin-top: 3rem;
+}
+
+/* Record Button - The Invitation */
+.record-button {
+    background: linear-gradient(135deg, 
+        var(--sage-deep) 0%, 
+        var(--forest-deep) 100%);
+    box-shadow: 
+        0 20px 40px rgba(26, 77, 58, 0.2),
+        0 8px 16px rgba(122, 155, 122, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.record-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent);
+    transition: left 0.6s;
+}
+
+.record-button:hover::before {
+    left: 100%;
+}
+
+.record-button:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 
+        0 32px 64px rgba(26, 77, 58, 0.3),
+        0 16px 32px rgba(122, 155, 122, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.record-button:active {
+    transform: translateY(-2px) scale(1.02);
+    transition: all 0.1s;
+}
+
+/* Stop Button - The Completion */
+.stop-button {
+    background: linear-gradient(135deg, 
+        #ef4444 0%, 
+        #dc2626 100%);
+    box-shadow: 
+        0 20px 40px rgba(239, 68, 68, 0.2),
+        0 8px 16px rgba(220, 38, 38, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stop-button:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 
+        0 32px 64px rgba(239, 68, 68, 0.3),
+        0 16px 32px rgba(220, 38, 38, 0.2);
+}
+
+/* Waveform Visualizer */
+.waveform-container {
+    margin: 2rem 0;
+}
+
+.waveform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.wave-bar {
+    height: 1rem;
+    background: linear-gradient(to top, 
+        var(--sage-deep) 0%, 
+        var(--forest-deep) 100%);
+    border-radius: 0.125rem;
+    transition: all 0.1s ease;
+    animation: wavePulse 1.5s ease-in-out infinite;
+}
+
+.wave-bar:nth-child(odd) {
+    animation-delay: 0.1s;
+}
+
+.wave-bar:nth-child(even) {
+    animation-delay: 0.2s;
+}
+
+@keyframes wavePulse {
+    0%, 100% { 
+        height: 1rem; 
+        opacity: 0.6;
+    }
+    50% { 
+        height: 2.5rem; 
+        opacity: 1;
+    }
+}
+
+/* Breath Pacer - The Anti-Timer */
+.breath-pacer-container {
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+
+.breath-pacer-track {
+    height: 0.25rem;
+    background: rgba(122, 155, 122, 0.2);
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+}
+
+.breath-pacer-fill {
+    height: 100%;
+    background: linear-gradient(90deg, 
+        var(--sage-deep) 0%, 
+        var(--forest-deep) 100%);
+    border-radius: 9999px;
+    transition: width 90s linear;
+    position: relative;
+}
+
+.breath-pacer-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0.5rem;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        transparent 100%);
+    animation: breathPacerShimmer 2s ease-in-out infinite;
+}
+
+@keyframes breathPacerShimmer {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* Playback & Reflection State */
+.playback-state {
+    margin-top: 3rem;
+}
+
+.audio-player {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(122, 155, 122, 0.1);
+    border-radius: 1rem;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.play-button {
+    background: linear-gradient(135deg, 
+        var(--sage-deep) 0%, 
+        var(--forest-deep) 100%);
+    box-shadow: 
+        0 8px 16px rgba(26, 77, 58, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.play-button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 
+        0 12px 24px rgba(26, 77, 58, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Progress Bar */
+.progress-container {
+    margin-bottom: 1rem;
+}
+
+.progress-track {
+    height: 0.5rem;
+    background: rgba(122, 155, 122, 0.2);
+    border-radius: 9999px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, 
+        var(--sage-deep) 0%, 
+        var(--forest-deep) 100%);
+    border-radius: 9999px;
+    transition: width 0.1s ease;
+}
+
+/* Reflection Input */
+.reflection-input {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(122, 155, 122, 0.1);
+    border-radius: 1rem;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.reflection-textarea {
+    background: transparent;
+    border: 1px solid rgba(122, 155, 122, 0.2);
+    border-radius: 0.5rem;
+    color: var(--charcoal);
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.6;
+    resize: none;
+    transition: all 0.3s ease;
+}
+
+.reflection-textarea:focus {
+    outline: none;
+    border-color: var(--sage-deep);
+    box-shadow: 
+        0 0 0 3px rgba(122, 155, 122, 0.1),
+        inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.reflection-textarea::placeholder {
+    color: rgba(60, 60, 60, 0.5);
+}
+
+/* Privacy Toggle */
+.privacy-toggle {
+    background: rgba(122, 155, 122, 0.2);
+    border-radius: 9999px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.privacy-toggle-handle {
+    background: var(--sage-deep);
+    border-radius: 9999px;
+    position: absolute;
+    top: 0.125rem;
+    left: 0.125rem;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#privacy-checkbox:checked + .privacy-toggle {
+    background: var(--sage-deep);
+}
+
+#privacy-checkbox:checked + .privacy-toggle .privacy-toggle-handle {
+    transform: translateX(1.5rem);
+    background: white;
+}
+
+/* Save Button */
+.save-button {
+    background: linear-gradient(135deg, 
+        var(--sage-deep) 0%, 
+        var(--forest-deep) 100%);
+    box-shadow: 
+        0 8px 16px rgba(26, 77, 58, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.save-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 
+        0 12px 24px rgba(26, 77, 58, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Gentle Guidance */
+.gentle-guidance {
+    margin-top: 2rem;
+}
+
+.guidance-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(122, 155, 122, 0.08);
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.guidance-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(122, 155, 122, 0.15);
+    transform: translateY(-2px);
+}
+
+.guidance-icon {
+    opacity: 0.8;
+}
+
+/* Prompt Navigation */
+.prompt-navigation {
+    margin-top: 2rem;
+}
+
+.navigation-hint {
+    color: rgba(60, 60, 60, 0.5);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.nav-button {
+    background: rgba(122, 155, 122, 0.1);
+    border: 1px solid rgba(122, 155, 122, 0.1);
+    transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+    background: rgba(122, 155, 122, 0.2);
+    border-color: rgba(122, 155, 122, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Prompt Selection Modal */
+.prompts-modal {
+    z-index: 50;
+}
+
+.glass-modal {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(122, 155, 122, 0.1);
+    border-radius: 1.5rem;
+    box-shadow: 
+        0 32px 64px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.prompt-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(122, 155, 122, 0.08);
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.prompt-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(122, 155, 122, 0.15);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 
+        0 16px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.close-button {
+    background: rgba(122, 155, 122, 0.1);
+    border: 1px solid rgba(122, 155, 122, 0.1);
+    transition: all 0.3s ease;
+}
+
+.close-button:hover {
+    background: rgba(122, 155, 122, 0.2);
+    border-color: rgba(122, 155, 122, 0.2);
+    transform: scale(1.1);
+}
+
+.cancel-button {
+    background: rgba(122, 155, 122, 0.1);
+    border: 1px solid rgba(122, 155, 122, 0.1);
+    transition: all 0.3s ease;
+}
+
+.cancel-button:hover {
+    background: rgba(122, 155, 122, 0.2);
+    border-color: rgba(122, 155, 122, 0.2);
+    transform: translateY(-1px);
+}
+
+.select-button {
+    background: linear-gradient(135deg, 
+        var(--sage-deep) 0%, 
+        var(--forest-deep) 100%);
+    box-shadow: 
+        0 8px 16px rgba(26, 77, 58, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.select-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 12px 24px rgba(26, 77, 58, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .prompt-text {
+        font-size: 2rem;
+        line-height: 1.3;
+    }
+    
+    .record-button {
+        width: 8rem;
+        height: 8rem;
+    }
+    
+    .stop-button {
+        width: 8rem;
+        height: 8rem;
+    }
+    
+    .waveform {
+        width: 16rem;
+    }
+    
+    .breath-pacer-container {
+        padding: 0 2rem;
+    }
+    
+    .guidance-cards {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .prompts-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .prompt-hero {
+        padding: 1rem 0;
+    }
+    
+    .prompt-text {
+        font-size: 1.75rem;
+    }
+    
+    .record-button {
+        width: 7rem;
+        height: 7rem;
+    }
+    
+    .stop-button {
+        width: 7rem;
+        height: 7rem;
+    }
+    
+    .waveform {
+        width: 14rem;
+    }
+}

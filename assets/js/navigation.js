@@ -1047,9 +1047,23 @@ class NavigationManager {
     }
 
     initializeClarityPage() {
-        console.log('🎤 Initializing Clarity page...');
-        this.initializeClarityLogic();
-        this.initializeClarityPrompts();
+        console.log('🎤 Initializing Clarity Sanctuary...');
+        
+        // Initialize the Clarity Sanctuary
+        if (window.claritySanctuary) {
+            console.log('🎤 Clarity Sanctuary already initialized');
+        } else {
+            console.log('🎤 Initializing new Clarity Sanctuary...');
+            // The ClaritySanctuary class will auto-initialize when DOM is ready
+        }
+        
+        // Track analytics
+        if (window.gtag) {
+            window.gtag('event', 'page_view', {
+                page_title: 'Clarity - A Sanctuary for Your Voice',
+                page_location: window.location.href
+            });
+        }
     }
 
     initializeClarityLogic() {
