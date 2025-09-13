@@ -6889,13 +6889,17 @@
         if (pauseBtn) pauseBtn.classList.remove('hidden');
         
         // Start the timer
+        console.log('🚀 Starting simple timer interval...');
         window.simpleTimerInterval = setInterval(() => {
+            console.log('⏰ Timer tick - simpleTimeRemaining:', window.simpleTimeRemaining);
             if (window.simpleTimeRemaining > 0) {
                 window.simpleTimeRemaining--;
+                console.log('⏰ Decremented to:', window.simpleTimeRemaining);
                 updateSimpleDisplay();
                 console.log('Simple timer tick:', window.simpleTimeRemaining);
             } else {
                 // Timer finished
+                console.log('🏁 Timer finished!');
                 clearInterval(window.simpleTimerInterval);
                 window.simpleIsRunning = false;
                 updateSimpleDisplay(); // Use the proper function instead of direct display access
@@ -6906,17 +6910,23 @@
                 if (pauseBtn) pauseBtn.classList.add('hidden');
             }
         }, 1000);
+        
+        console.log('✅ Timer interval set:', window.simpleTimerInterval);
     };
     
     // Simple display update function
     function updateSimpleDisplay() {
+        console.log('🔄 updateSimpleDisplay called - simpleTimeRemaining:', window.simpleTimeRemaining);
         const updateDisplay = document.getElementById('timer-display');
+        console.log('🔄 Display element found:', !!updateDisplay);
         if (updateDisplay && window.simpleTimeRemaining !== undefined) {
             const minutes = Math.floor(window.simpleTimeRemaining / 60);
             const seconds = window.simpleTimeRemaining % 60;
             const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             updateDisplay.textContent = displayText;
-            console.log('Updated simple display to:', displayText);
+            console.log('✅ Updated simple display to:', displayText);
+        } else {
+            console.log('❌ updateSimpleDisplay failed - display:', !!updateDisplay, 'timeRemaining:', window.simpleTimeRemaining);
         }
     }
     
