@@ -60,6 +60,8 @@ class DhammaPathApp {
         this.initializeHapticStorytelling();
         this.initializeMotionSystem();
         this.initializeSeamlessFlow();
+        this.initializeProdigalWelcome();
+        this.initializeTemporalEcho();
         this.initializeContextualActions();
         this.initializeSmartRecommendations();
         this.initializeAdaptiveTiming();
@@ -218,6 +220,28 @@ class DhammaPathApp {
                 console.log('✅ Seamless flow engine initialized');
             } catch (error) {
                 console.error('❌ Failed to initialize seamless flow engine:', error);
+            }
+        }
+    }
+
+    initializeProdigalWelcome() {
+        if (window.ProdigalWelcome) {
+            try {
+                window.prodigalWelcome = new window.ProdigalWelcome();
+                console.log('✅ Prodigal welcome system initialized');
+            } catch (error) {
+                console.error('❌ Failed to initialize prodigal welcome system:', error);
+            }
+        }
+    }
+
+    initializeTemporalEcho() {
+        if (window.TemporalEcho) {
+            try {
+                window.temporalEcho = new window.TemporalEcho();
+                console.log('✅ Temporal echo system initialized');
+            } catch (error) {
+                console.error('❌ Failed to initialize temporal echo system:', error);
             }
         }
     }

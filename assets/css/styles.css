@@ -6581,3 +6581,838 @@ html {
         font-size: var(--font-lg);
     }
 }
+
+/* ========================================
+   PRODIGAL CHILD WELCOME - THE OPEN ARMS
+   ======================================== */
+
+/* Prodigal Welcome Overlay */
+.prodigal-welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(248, 249, 250, 0.95);
+    backdrop-filter: blur(15px);
+    z-index: 1400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.4s ease;
+}
+
+.prodigal-welcome-overlay.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.prodigal-welcome-overlay.hide {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.prodigal-welcome-content {
+    background: white;
+    border-radius: 2rem;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 25px 80px rgba(26, 77, 58, 0.2);
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid rgba(26, 77, 58, 0.1);
+    animation: prodigalSlideIn 0.6s ease;
+}
+
+@keyframes prodigalSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.prodigal-welcome-icon {
+    margin-bottom: 1.5rem;
+    animation: prodigalFloat 3s ease-in-out infinite;
+}
+
+@keyframes prodigalFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+.prodigal-welcome-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--forest-deep);
+    margin: 0 0 1rem 0;
+}
+
+.prodigal-welcome-message {
+    font-family: var(--font-family-content);
+    font-size: var(--font-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--charcoal-rich);
+    margin: 0 0 1rem 0;
+    line-height: 1.6;
+}
+
+.prodigal-welcome-encouragement {
+    font-family: var(--font-family-content);
+    font-size: var(--font-base);
+    color: var(--charcoal-light);
+    margin: 0 0 2rem 0;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.prodigal-welcome-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.prodigal-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(26, 77, 58, 0.1);
+    border-radius: 1rem;
+    border: 1px solid rgba(26, 77, 58, 0.2);
+}
+
+.stat-icon {
+    font-size: var(--font-lg);
+}
+
+.stat-text {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--forest-deep);
+}
+
+.prodigal-welcome-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.prodigal-continue-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage-deep) 100%);
+    color: white;
+    border: none;
+    border-radius: 1.5rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 48px;
+    box-shadow: 0 8px 24px rgba(26, 77, 58, 0.3);
+}
+
+.prodigal-continue-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(26, 77, 58, 0.4);
+}
+
+.prodigal-continue-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(26, 77, 58, 0.3);
+}
+
+.btn-icon {
+    transition: transform 0.3s ease;
+}
+
+.prodigal-continue-btn:hover .btn-icon {
+    transform: translateX(4px);
+}
+
+.prodigal-gentle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 2rem;
+    background: rgba(26, 77, 58, 0.1);
+    color: var(--forest-deep);
+    border: 1px solid rgba(26, 77, 58, 0.2);
+    border-radius: 1.5rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 44px;
+}
+
+.prodigal-gentle-btn:hover {
+    background: rgba(26, 77, 58, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Gentle Breathing Overlay */
+.gentle-breathing-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(248, 249, 250, 0.95);
+    backdrop-filter: blur(15px);
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.4s ease;
+}
+
+.gentle-breathing-overlay.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.gentle-breathing-overlay.hide {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.gentle-breathing-content {
+    background: white;
+    border-radius: 2rem;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 25px 80px rgba(26, 77, 58, 0.2);
+    max-width: 400px;
+    width: 100%;
+    border: 1px solid rgba(26, 77, 58, 0.1);
+}
+
+.gentle-breathing-icon {
+    margin-bottom: 1.5rem;
+    color: var(--forest-deep);
+    animation: gentleBreathe 4s ease-in-out infinite;
+}
+
+@keyframes gentleBreathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.gentle-breathing-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--forest-deep);
+    margin: 0 0 0.5rem 0;
+}
+
+.gentle-breathing-message {
+    font-family: var(--font-family-content);
+    font-size: var(--font-base);
+    color: var(--charcoal-light);
+    margin: 0 0 2rem 0;
+}
+
+.gentle-breathing-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(26, 77, 58, 0.1) 0%, rgba(122, 155, 122, 0.1) 100%);
+    border: 3px solid rgba(26, 77, 58, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem auto;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.gentle-breathing-circle.breathing {
+    animation: gentleBreathPulse 4s ease-in-out infinite;
+}
+
+@keyframes gentleBreathPulse {
+    0%, 100% { 
+        transform: scale(1);
+        border-color: rgba(26, 77, 58, 0.2);
+    }
+    50% { 
+        transform: scale(1.1);
+        border-color: rgba(26, 77, 58, 0.4);
+    }
+}
+
+.gentle-breathing-inner {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage-deep) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.gentle-breathing-inner.breathing {
+    animation: gentleBreathInner 4s ease-in-out infinite;
+}
+
+@keyframes gentleBreathInner {
+    0%, 100% { 
+        transform: scale(1);
+    }
+    50% { 
+        transform: scale(0.9);
+    }
+}
+
+.gentle-breathing-text {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-semibold);
+    color: white;
+    text-align: center;
+}
+
+.gentle-breathing-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.gentle-breathing-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage-deep) 100%);
+    color: white;
+    border: none;
+    border-radius: 1.5rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 48px;
+    box-shadow: 0 8px 24px rgba(26, 77, 58, 0.3);
+}
+
+.gentle-breathing-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(26, 77, 58, 0.4);
+}
+
+.gentle-skip-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 2rem;
+    background: rgba(26, 77, 58, 0.1);
+    color: var(--forest-deep);
+    border: 1px solid rgba(26, 77, 58, 0.2);
+    border-radius: 1.5rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 44px;
+}
+
+.gentle-skip-btn:hover {
+    background: rgba(26, 77, 58, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Mobile Optimizations for Prodigal Welcome */
+@media screen and (max-width: 768px) {
+    .prodigal-welcome-overlay {
+        padding: 1rem;
+    }
+    
+    .prodigal-welcome-content {
+        padding: 2rem;
+        border-radius: 1.5rem;
+    }
+    
+    .prodigal-welcome-title {
+        font-size: var(--font-xl);
+    }
+    
+    .prodigal-welcome-message {
+        font-size: var(--font-base);
+    }
+    
+    .prodigal-welcome-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .prodigal-stat {
+        padding: 0.625rem 1.25rem;
+    }
+    
+    .prodigal-continue-btn {
+        padding: 0.875rem 1.75rem;
+        font-size: var(--font-sm);
+    }
+    
+    .prodigal-gentle-btn {
+        padding: 0.75rem 1.75rem;
+        font-size: var(--font-sm);
+    }
+    
+    .gentle-breathing-overlay {
+        padding: 1rem;
+    }
+    
+    .gentle-breathing-content {
+        padding: 2rem;
+        border-radius: 1.5rem;
+    }
+    
+    .gentle-breathing-circle {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .gentle-breathing-inner {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .gentle-breathing-text {
+        font-size: var(--font-sm);
+    }
+    
+    .gentle-breathing-btn {
+        padding: 0.875rem 1.75rem;
+        font-size: var(--font-sm);
+    }
+    
+    .gentle-skip-btn {
+        padding: 0.75rem 1.75rem;
+        font-size: var(--font-sm);
+    }
+}
+
+/* iPhone-specific Prodigal Welcome Optimizations */
+@media screen and (max-width: 428px) {
+    .prodigal-welcome-content {
+        padding: 1.5rem;
+    }
+    
+    .prodigal-welcome-title {
+        font-size: var(--font-lg);
+    }
+    
+    .prodigal-welcome-message {
+        font-size: var(--font-sm);
+    }
+    
+    .prodigal-welcome-encouragement {
+        font-size: var(--font-sm);
+    }
+    
+    .prodigal-stat {
+        padding: 0.5rem 1rem;
+    }
+    
+    .stat-icon {
+        font-size: var(--font-base);
+    }
+    
+    .stat-text {
+        font-size: var(--font-xs);
+    }
+    
+    .prodigal-continue-btn {
+        padding: 0.75rem 1.5rem;
+        font-size: var(--font-sm);
+    }
+    
+    .prodigal-gentle-btn {
+        padding: 0.625rem 1.5rem;
+        font-size: var(--font-sm);
+    }
+    
+    .gentle-breathing-content {
+        padding: 1.5rem;
+    }
+    
+    .gentle-breathing-title {
+        font-size: var(--font-lg);
+    }
+    
+    .gentle-breathing-circle {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .gentle-breathing-inner {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .gentle-breathing-text {
+        font-size: var(--font-xs);
+    }
+}
+
+/* ========================================
+   TEMPORAL ECHO - THE GENTLE MIRROR
+   ======================================== */
+
+/* Temporal Echo Overlay */
+.temporal-echo-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(248, 249, 250, 0.95);
+    backdrop-filter: blur(15px);
+    z-index: 1600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.4s ease;
+}
+
+.temporal-echo-overlay.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.temporal-echo-overlay.hide {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.temporal-echo-content {
+    background: white;
+    border-radius: 2rem;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 25px 80px rgba(26, 77, 58, 0.2);
+    max-width: 600px;
+    width: 100%;
+    border: 1px solid rgba(26, 77, 58, 0.1);
+    animation: temporalEchoSlideIn 0.6s ease;
+}
+
+@keyframes temporalEchoSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.temporal-echo-header {
+    margin-bottom: 2rem;
+}
+
+.temporal-echo-icon {
+    margin-bottom: 1.5rem;
+    animation: temporalEchoFloat 3s ease-in-out infinite;
+}
+
+@keyframes temporalEchoFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+.temporal-echo-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--forest-deep);
+    margin: 0 0 0.5rem 0;
+}
+
+.temporal-echo-subtitle {
+    font-family: var(--font-family-content);
+    font-size: var(--font-base);
+    color: var(--charcoal-light);
+    margin: 0;
+    font-style: italic;
+}
+
+.temporal-echo-body {
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+/* Journal Entry Echo */
+.journal-echo-content {
+    background: rgba(26, 77, 58, 0.05);
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid rgba(26, 77, 58, 0.1);
+}
+
+.journal-echo-date {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-sm);
+    color: var(--charcoal-light);
+    margin-bottom: 1rem;
+    text-align: center;
+    font-style: italic;
+}
+
+.journal-echo-text {
+    font-family: var(--font-family-content);
+    font-size: var(--font-lg);
+    color: var(--charcoal-rich);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    text-align: center;
+}
+
+.journal-echo-mood,
+.journal-echo-gratitude {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(26, 77, 58, 0.1);
+    border-radius: 0.5rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-sm);
+}
+
+.mood-label,
+.gratitude-label {
+    font-weight: var(--font-weight-medium);
+    color: var(--forest-deep);
+}
+
+.mood-value,
+.gratitude-value {
+    color: var(--charcoal-rich);
+}
+
+/* Curated Quote Echo */
+.quote-echo-content {
+    background: rgba(26, 77, 58, 0.05);
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid rgba(26, 77, 58, 0.1);
+}
+
+.quote-echo-text {
+    font-family: var(--font-family-content);
+    font-size: var(--font-xl);
+    color: var(--charcoal-rich);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    text-align: center;
+}
+
+.quote-echo-author {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    color: var(--forest-deep);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.quote-echo-category {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-sm);
+    color: var(--charcoal-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    opacity: 0.8;
+}
+
+/* Temporal Echo Actions */
+.temporal-echo-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.temporal-echo-continue-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage-deep) 100%);
+    color: white;
+    border: none;
+    border-radius: 1.5rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 48px;
+    box-shadow: 0 8px 24px rgba(26, 77, 58, 0.3);
+}
+
+.temporal-echo-continue-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(26, 77, 58, 0.4);
+}
+
+.temporal-echo-continue-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(26, 77, 58, 0.3);
+}
+
+.temporal-echo-reflect-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    background: rgba(26, 77, 58, 0.1);
+    color: var(--forest-deep);
+    border: 1px solid rgba(26, 77, 58, 0.2);
+    border-radius: 1.5rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 44px;
+}
+
+.temporal-echo-reflect-btn:hover {
+    background: rgba(26, 77, 58, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Mobile Optimizations for Temporal Echo */
+@media screen and (max-width: 768px) {
+    .temporal-echo-overlay {
+        padding: 1rem;
+    }
+    
+    .temporal-echo-content {
+        padding: 2rem;
+        border-radius: 1.5rem;
+    }
+    
+    .temporal-echo-title {
+        font-size: var(--font-xl);
+    }
+    
+    .temporal-echo-subtitle {
+        font-size: var(--font-sm);
+    }
+    
+    .journal-echo-content,
+    .quote-echo-content {
+        padding: 1.5rem;
+    }
+    
+    .journal-echo-text {
+        font-size: var(--font-base);
+    }
+    
+    .quote-echo-text {
+        font-size: var(--font-lg);
+    }
+    
+    .temporal-echo-continue-btn {
+        padding: 0.875rem 1.75rem;
+        font-size: var(--font-sm);
+    }
+    
+    .temporal-echo-reflect-btn {
+        padding: 0.75rem 1.75rem;
+        font-size: var(--font-sm);
+    }
+}
+
+/* iPhone-specific Temporal Echo Optimizations */
+@media screen and (max-width: 428px) {
+    .temporal-echo-content {
+        padding: 1.5rem;
+    }
+    
+    .temporal-echo-title {
+        font-size: var(--font-lg);
+    }
+    
+    .temporal-echo-subtitle {
+        font-size: var(--font-xs);
+    }
+    
+    .journal-echo-content,
+    .quote-echo-content {
+        padding: 1rem;
+    }
+    
+    .journal-echo-date {
+        font-size: var(--font-xs);
+    }
+    
+    .journal-echo-text {
+        font-size: var(--font-sm);
+    }
+    
+    .quote-echo-text {
+        font-size: var(--font-base);
+    }
+    
+    .quote-echo-author {
+        font-size: var(--font-sm);
+    }
+    
+    .quote-echo-category {
+        font-size: var(--font-xs);
+    }
+    
+    .journal-echo-mood,
+    .journal-echo-gratitude {
+        padding: 0.375rem 0.75rem;
+        font-size: var(--font-xs);
+    }
+    
+    .temporal-echo-continue-btn {
+        padding: 0.75rem 1.5rem;
+        font-size: var(--font-sm);
+    }
+    
+    .temporal-echo-reflect-btn {
+        padding: 0.625rem 1.5rem;
+        font-size: var(--font-sm);
+    }
+}
