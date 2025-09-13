@@ -1,23 +1,23 @@
-<div class="text-center py-16 relative overflow-hidden">
+<div class="text-center py-8 relative overflow-hidden">
     <!-- Ultra-Premium Background Elements -->
     <div class="absolute inset-0 morphing-premium opacity-5 pointer-events-none"></div>
     
     <div class="relative z-10">
         <div class="animate-fade-up scroll-reveal" data-animate="fade-up">
-            <h1 class="text-7xl font-bold gradient-text-premium text-premium mb-8 breathing-premium">🧘 Wellness Timer</h1>
+            <h1 class="text-4xl font-bold gradient-text-premium text-premium mb-6 breathing-premium">🧘 Wellness Timer</h1>
         </div>
     </div>
     
-    <div class="card-premium glass-premium hover-glow shimmer-premium scroll-reveal max-w-lg mx-auto" data-animate="scale-in" data-delay="200">
+        <div class="card-premium glass-premium hover-glow shimmer-premium scroll-reveal max-w-md mx-auto" data-animate="scale-in" data-delay="200">
         <!-- Enhanced Timer Display with Progress Ring -->
         <div class="relative mb-8">
             <!-- Outer Glow Ring -->
             <div class="absolute inset-0 flex items-center justify-center">
-                <div class="w-64 h-64 rounded-full bg-gradient-to-r from-forest-green/10 to-earthy-gold/10 blur-xl animate-pulse"></div>
+                <div class="w-48 h-48 rounded-full bg-gradient-to-r from-forest-green/10 to-earthy-gold/10 blur-xl animate-pulse"></div>
             </div>
             
             <!-- Progress Ring -->
-            <svg class="w-64 h-64 mx-auto transform -rotate-90 relative z-10" viewBox="0 0 100 100">
+            <svg class="w-48 h-48 mx-auto transform -rotate-90 relative z-10" viewBox="0 0 100 100">
                 <!-- Background Circle -->
                 <circle cx="50" cy="50" r="45" stroke="rgba(74, 108, 85, 0.1)" stroke-width="6" fill="none"/>
                 <!-- Progress Circle -->
@@ -36,7 +36,7 @@
             
             <!-- Timer Display with Enhanced Typography -->
             <div class="absolute inset-0 flex flex-col items-center justify-center z-20">
-                <div id="timer-display" class="text-6xl font-bold gradient-text-premium mb-2">10:00</div>
+                <div id="timer-display" class="text-4xl font-bold gradient-text-premium mb-2">10:00</div>
                 <div id="timer-status" class="text-lg text-charcoal/70 font-medium">Ready to begin</div>
             </div>
         </div>
@@ -47,40 +47,40 @@
                 <label class="text-lg font-semibold text-charcoal">Session Duration</label>
                 <span class="text-sm text-charcoal/60">Choose your focus time</span>
             </div>
-            <div class="grid grid-cols-2 gap-3">
-                <button class="duration-btn btn-premium btn-outline ripple-premium hover-scale" data-duration="300">
-                    <div class="text-2xl font-bold">5</div>
-                    <div class="text-sm opacity-80">minutes</div>
-                    <div class="text-xs opacity-60 mt-1">Quick Focus</div>
+            <div class="grid grid-cols-4 gap-2">
+                <button class="duration-btn btn-premium btn-sm btn-outline ripple-premium hover-scale" data-duration="300">
+                    <div class="text-lg font-bold">5</div>
+                    <div class="text-xs opacity-80">min</div>
+                    <div class="text-xs opacity-60 mt-1">Quick</div>
                 </button>
-                <button class="duration-btn btn-premium btn-primary ripple-premium hover-scale active" data-duration="600">
-                    <div class="text-2xl font-bold">10</div>
-                    <div class="text-sm opacity-80">minutes</div>
-                    <div class="text-xs opacity-60 mt-1">Recommended</div>
+                <button class="duration-btn btn-premium btn-sm btn-primary ripple-premium hover-scale active" data-duration="600">
+                    <div class="text-lg font-bold">10</div>
+                    <div class="text-xs opacity-80">min</div>
+                    <div class="text-xs opacity-60 mt-1">Best</div>
                 </button>
-                <button class="duration-btn btn-premium btn-outline ripple-premium hover-scale" data-duration="900">
-                    <div class="text-2xl font-bold">15</div>
-                    <div class="text-sm opacity-80">minutes</div>
-                    <div class="text-xs opacity-60 mt-1">Deep Practice</div>
+                <button class="duration-btn btn-premium btn-sm btn-outline ripple-premium hover-scale" data-duration="900">
+                    <div class="text-lg font-bold">15</div>
+                    <div class="text-xs opacity-80">min</div>
+                    <div class="text-xs opacity-60 mt-1">Deep</div>
                 </button>
-                <button class="duration-btn btn-premium btn-outline ripple-premium hover-scale" data-duration="1200">
-                    <div class="text-2xl font-bold">20</div>
-                    <div class="text-sm opacity-80">minutes</div>
-                    <div class="text-xs opacity-60 mt-1">Extended Session</div>
+                <button class="duration-btn btn-premium btn-sm btn-outline ripple-premium hover-scale" data-duration="1200">
+                    <div class="text-lg font-bold">20</div>
+                    <div class="text-xs opacity-80">min</div>
+                    <div class="text-xs opacity-60 mt-1">Long</div>
                 </button>
             </div>
         </div>
         
         <!-- Premium Control Buttons -->
-        <div class="flex gap-4 mb-6" data-animate="fade-up" data-delay="400">
-            <button id="timer-start-btn" class="flex-1 btn-premium ripple-premium glow-premium">
-                <span class="text-xl mr-2">▶️</span>Start
+        <div class="flex gap-3 mb-6" data-animate="fade-up" data-delay="400">
+            <button id="timer-start-btn" class="flex-1 btn-premium btn-lg ripple-premium glow-premium">
+                <span class="text-lg mr-2">▶️</span>Start
             </button>
-            <button id="timer-pause-btn" class="flex-1 btn-premium ripple-premium hidden">
-                <span class="text-xl mr-2">⏸️</span>Pause
+            <button id="timer-pause-btn" class="flex-1 btn-premium btn-lg ripple-premium hidden">
+                <span class="text-lg mr-2">⏸️</span>Pause
             </button>
-            <button id="timer-reset-btn" class="flex-1 btn-premium ripple-premium">
-                <span class="text-xl mr-2">🔄</span>Reset
+            <button id="timer-reset-btn" class="flex-1 btn-premium btn-lg ripple-premium">
+                <span class="text-lg mr-2">🔄</span>Reset
             </button>
         </div>
         
