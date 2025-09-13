@@ -6637,12 +6637,154 @@
     // Make navigation globally accessible
     window.navigateTo = navigateToPage;
     window.navigateToPage = navigateToPage;
+    
+    // Enhanced navigation with timer cleanup
+    const originalNavigateToPageFunc = navigateToPage;
+    window.navigateToPage = function(pageId) {
+        // Clear all timers before navigating
+        window.clearAllTimers();
+        // Call original navigation function
+        originalNavigateToPageFunc(pageId);
+    };
 
     // ===== GLOBAL TIMER FUNCTIONS =====
     // REMOVED - Using direct timer system instead
     window.updateDisplay = function() {
         // DISABLED - Using direct timer system instead
         console.log('Old updateDisplay called - DISABLED');
+    };
+    
+    // Global timer cleanup function
+    window.clearAllTimers = function() {
+        console.log('Clearing all timers...');
+        
+        // Clear all possible timer intervals
+        const timerIds = [
+            'simpleTimerInterval',
+            'directTimerInterval', 
+            'timerInterval',
+            'workoutTimer',
+            'practiceTimer',
+            'workoutInterval',
+            'timer'
+        ];
+        
+        timerIds.forEach(timerId => {
+            if (window[timerId]) {
+                clearInterval(window[timerId]);
+                window[timerId] = null;
+                console.log(`Cleared ${timerId}`);
+            }
+        });
+        
+        // Clear any local timer variables that might exist
+        if (typeof workoutInterval !== 'undefined') {
+            clearInterval(workoutInterval);
+        }
+        if (typeof practiceTimer !== 'undefined') {
+            clearInterval(practiceTimer);
+        }
+        if (typeof timer !== 'undefined') {
+            clearInterval(timer);
+        }
+        
+        console.log('All timers cleared');
+        
+        // Also remove all timer event listeners
+        window.removeAllTimerEventListeners();
+    };
+    
+    // Timer conflict detection function
+    window.detectTimerConflicts = function() {
+        console.log('🔍 Checking for timer conflicts...');
+        const activeTimers = [];
+        
+        const timerIds = [
+            'simpleTimerInterval',
+            'directTimerInterval', 
+            'timerInterval',
+            'workoutTimer',
+            'practiceTimer',
+            'workoutInterval',
+            'timer'
+        ];
+        
+        timerIds.forEach(timerId => {
+            if (window[timerId]) {
+                activeTimers.push(timerId);
+            }
+        });
+        
+        if (activeTimers.length > 1) {
+            console.warn('⚠️ Multiple timers detected:', activeTimers);
+            return true;
+        } else if (activeTimers.length === 1) {
+            console.log('✅ Single timer active:', activeTimers[0]);
+        } else {
+            console.log('✅ No timers active');
+        }
+        
+        return false;
+    };
+    
+    // Event listener management
+    window.eventListeners = new Map();
+    
+    window.addTimerEventListener = function(element, event, handler, options = {}) {
+        if (!element) return;
+        
+        const key = `${element.id || 'unknown'}_${event}`;
+        
+        // Remove existing listener if it exists
+        if (window.eventListeners.has(key)) {
+            const { handler: oldHandler, options: oldOptions } = window.eventListeners.get(key);
+            element.removeEventListener(event, oldHandler, oldOptions);
+        }
+        
+        // Add new listener
+        element.addEventListener(event, handler, options);
+        window.eventListeners.set(key, { handler, options });
+        
+        console.log(`✅ Added event listener: ${key}`);
+    };
+    
+    window.removeAllTimerEventListeners = function() {
+        console.log('🧹 Removing all timer event listeners...');
+        window.eventListeners.forEach(({ handler, options }, key) => {
+            const [elementId, event] = key.split('_');
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.removeEventListener(event, handler, options);
+                console.log(`🗑️ Removed listener: ${key}`);
+            }
+        });
+        window.eventListeners.clear();
+    };
+    
+    window.detectEventListenerConflicts = function() {
+        console.log('🔍 Checking for event listener conflicts...');
+        const timerButtons = [
+            'timer-start-btn',
+            'timer-pause-btn', 
+            'timer-reset-btn',
+            'workout-start-btn',
+            'workout-pause-btn',
+            'workout-reset-btn',
+            'start-practice-btn',
+            'stop-practice-btn'
+        ];
+        
+        timerButtons.forEach(buttonId => {
+            const element = document.getElementById(buttonId);
+            if (element) {
+                const clickListeners = window.eventListeners.get(`${buttonId}_click`);
+                if (clickListeners) {
+                    console.log(`✅ ${buttonId}: Managed listener found`);
+                } else {
+                    console.warn(`⚠️ ${buttonId}: No managed listener found - may have unmanaged listeners`);
+                }
+            }
+        });
     };
     
     // Test the function immediately
@@ -6654,6 +6796,15 @@
     } catch (error) {
         console.error('updateDisplay test failed:', error);
     }
+    
+    // Clear any existing timers on page load
+    window.clearAllTimers();
+    
+    // Periodic conflict detection (every 5 seconds)
+    setInterval(() => {
+        window.detectTimerConflicts();
+        window.detectEventListenerConflicts();
+    }, 5000);
     
     // REMOVED test that was overwriting timer display
     
@@ -6667,19 +6818,20 @@
         const duration = durationSelect ? parseInt(durationSelect.value) : 600;
         
         // Get display element
-        const display = document.getElementById('timer-display');
-        if (!display) {
+        const simpleDisplay = document.getElementById('timer-display');
+        if (!simpleDisplay) {
             console.error('Timer display element not found!');
             return;
         }
         
-        console.log('Timer display element found:', display);
+        console.log('Timer display element found:', simpleDisplay);
         console.log('Starting timer with duration:', duration, 'seconds');
         
-        // Clear any existing timer
-        if (window.simpleTimerInterval) {
-            clearInterval(window.simpleTimerInterval);
-        }
+        // Clear any existing timers
+        window.clearAllTimers();
+        
+        // Check for conflicts before starting
+        window.detectTimerConflicts();
         
         // Set initial values
         window.simpleTimeRemaining = duration;
@@ -6704,7 +6856,7 @@
                 // Timer finished
                 clearInterval(window.simpleTimerInterval);
                 window.simpleIsRunning = false;
-                display.textContent = '00:00';
+                updateSimpleDisplay(); // Use the proper function instead of direct display access
                 console.log('Simple timer finished!');
                 
                 // Reset buttons
@@ -6716,12 +6868,12 @@
     
     // Simple display update function
     function updateSimpleDisplay() {
-        const display = document.getElementById('timer-display');
-        if (display && window.simpleTimeRemaining !== undefined) {
+        const updateDisplay = document.getElementById('timer-display');
+        if (updateDisplay && window.simpleTimeRemaining !== undefined) {
             const minutes = Math.floor(window.simpleTimeRemaining / 60);
             const seconds = window.simpleTimeRemaining % 60;
             const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            display.textContent = displayText;
+            updateDisplay.textContent = displayText;
             console.log('Updated simple display to:', displayText);
         }
     }
@@ -6906,9 +7058,9 @@
             const startBtn = document.getElementById('timer-start-btn');
             const pauseBtn = document.getElementById('timer-pause-btn');
             const resetBtn = document.getElementById('timer-reset-btn');
-            const display = document.getElementById('timer-display');
+            const attachDisplay = document.getElementById('timer-display');
             const status = document.getElementById('timer-status');
-            const durationSelect = document.getElementById('timer-duration');
+            const attachDurationSelect = document.getElementById('timer-duration');
             const soundToggle = document.getElementById('timer-sound');
             const progressRing = document.getElementById('progress-ring');
             
@@ -6917,17 +7069,17 @@
                 startBtn: !!startBtn,
                 pauseBtn: !!pauseBtn,
                 resetBtn: !!resetBtn,
-                display: !!display,
+                display: !!attachDisplay,
                 status: !!status,
-                durationSelect: !!durationSelect,
+                durationSelect: !!attachDurationSelect,
                 soundToggle: !!soundToggle,
                 progressRing: !!progressRing
             });
             
             // Additional debugging
             console.log('Start button element:', startBtn);
-            console.log('Display element:', display);
-            console.log('Duration select element:', durationSelect);
+            console.log('Display element:', attachDisplay);
+            console.log('Duration select element:', attachDurationSelect);
             console.log('Current page:', currentPage);
             
             // Set global variables
@@ -6936,7 +7088,7 @@
             window.resetBtn = resetBtn;
             window.display = display;
             window.status = status;
-            window.durationSelect = durationSelect;
+            window.durationSelect = attachDurationSelect;
             window.soundToggle = soundToggle;
             window.progressRing = progressRing;
             
@@ -6946,165 +7098,65 @@
             // Event listeners with debugging - USING SIMPLE TIMER
             if (startBtn) {
                 console.log('🔧 Adding click listener to start button - USING SIMPLE TIMER - VERSION 3.0 🔧');
-                startBtn.addEventListener('click', (e) => {
-                    console.log('Start button clicked! Using DIRECT timer');
+                window.addTimerEventListener(startBtn, 'click', (e) => {
+                    console.log('Start button clicked! Using SIMPLE timer');
                     e.preventDefault();
                     e.stopPropagation();
                     
-                    // DIRECT TIMER IMPLEMENTATION - NO COMPLEX FUNCTIONS
-                    const display = document.getElementById('timer-display');
-                    const durationSelect = document.getElementById('timer-duration');
-                    const duration = durationSelect ? parseInt(durationSelect.value) : 600;
-                    
-                    console.log('Direct timer - display element:', display);
-                    console.log('Direct timer - duration:', duration);
-                    
-                    if (!display) {
-                        console.error('Display element not found!');
-                        return;
-                    }
-                    
-                    // Clear any existing timer
-                    if (window.directTimerInterval) {
-                        clearInterval(window.directTimerInterval);
-                    }
-                    
-                    // Set initial values
-                    window.directTimeRemaining = duration;
-                    window.directIsRunning = true;
-                    
-                    // Update display immediately
-                    const minutes = Math.floor(window.directTimeRemaining / 60);
-                    const seconds = window.directTimeRemaining % 60;
-                    const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    display.textContent = displayText;
-                    console.log('Direct timer - set display to:', displayText);
-                    
-                    // Hide start button, show pause button
-                    const pauseBtn = document.getElementById('timer-pause-btn');
-                    if (startBtn) startBtn.classList.add('hidden');
-                    if (pauseBtn) pauseBtn.classList.remove('hidden');
-                    
-                    // Start the timer
-                    window.directTimerInterval = setInterval(() => {
-                        if (window.directTimeRemaining > 0) {
-                            window.directTimeRemaining--;
-                            const minutes = Math.floor(window.directTimeRemaining / 60);
-                            const seconds = window.directTimeRemaining % 60;
-                            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                            display.textContent = displayText;
-                            console.log('Direct timer tick:', displayText);
-                        } else {
-                            // Timer finished
-                            clearInterval(window.directTimerInterval);
-                            window.directIsRunning = false;
-                            display.textContent = '00:00';
-                            console.log('Direct timer finished!');
-                            
-                            // Reset buttons
-                            if (startBtn) startBtn.classList.remove('hidden');
-                            if (pauseBtn) pauseBtn.classList.add('hidden');
-                        }
-                    }, 1000);
+                    // Call the simple timer function
+                    window.simpleStartTimer();
                 });
             } else {
                 console.error('Start button not found!');
                 console.log('Available buttons:', document.querySelectorAll('button[id*="timer"]'));
             }
             if (pauseBtn) {
-                pauseBtn.addEventListener('click', (e) => {
+                window.addTimerEventListener(pauseBtn, 'click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     console.log('Pause button clicked!');
                     
-                    if (window.directTimerInterval) {
-                        clearInterval(window.directTimerInterval);
-                        window.directIsRunning = false;
-                        console.log('Direct timer paused');
-                        
-                        // Show start button, hide pause button
-                        const startBtn = document.getElementById('timer-start-btn');
-                        if (startBtn) startBtn.classList.remove('hidden');
-                        if (pauseBtn) pauseBtn.classList.add('hidden');
-                    }
+                    // Call the simple pause timer function
+                    window.simplePauseTimer();
                 });
             }
             if (resetBtn) {
-                resetBtn.addEventListener('click', (e) => {
+                window.addTimerEventListener(resetBtn, 'click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     console.log('Reset button clicked!');
                     
-                    // Clear timer
-                    if (window.directTimerInterval) {
-                        clearInterval(window.directTimerInterval);
-                    }
-                    
-                    // Reset values
-                    const durationSelect = document.getElementById('timer-duration');
-                    const duration = durationSelect ? parseInt(durationSelect.value) : 600;
-                    window.directTimeRemaining = duration;
-                    window.directIsRunning = false;
-                    
-                    // Update display
-                    const display = document.getElementById('timer-display');
-                    if (display) {
-                        const minutes = Math.floor(duration / 60);
-                        const seconds = duration % 60;
-                        const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                        display.textContent = displayText;
-                        console.log('Reset display to:', displayText);
-                    }
-                    
-                    // Reset buttons
-                    const startBtn = document.getElementById('timer-start-btn');
-                    if (startBtn) startBtn.classList.remove('hidden');
-                    if (pauseBtn) pauseBtn.classList.add('hidden');
+                    // Call the simple reset timer function
+                    window.simpleResetTimer();
                 });
             }
             
-            // Duration change - UPDATED TO USE DIRECT TIMER
-            if (durationSelect) {
-                durationSelect.addEventListener('change', () => {
-                    if (!window.directIsRunning) {
-                        const newDuration = parseInt(durationSelect.value);
-                        window.directTimeRemaining = newDuration;
+            // Duration change - UPDATED TO USE SIMPLE TIMER
+            if (attachDurationSelect) {
+                window.addTimerEventListener(attachDurationSelect, 'change', () => {
+                    if (!window.simpleIsRunning) {
+                        const newDuration = parseInt(attachDurationSelect.value);
+                        window.simpleTimeRemaining = newDuration;
                         console.log('Duration changed to:', newDuration, 'seconds');
                         
-                        // Update display directly
-                        const display = document.getElementById('timer-display');
-                        if (display) {
-                            const minutes = Math.floor(newDuration / 60);
-                            const seconds = newDuration % 60;
-                            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                            display.textContent = displayText;
-                            console.log('Updated display to:', displayText);
-                        }
+                        // Update display using simple timer function
+                        updateSimpleDisplay();
                     }
                 });
             }
             
-            // Initialize display properly - USING DIRECT TIMER SYSTEM
+            // Initialize display properly - USING SIMPLE TIMER SYSTEM
             console.log('Initializing timer display...');
-            console.log('Using direct timer system - no old timer variables');
+            console.log('Using simple timer system');
             
-            // Initialize direct timer variables
-            const durationSelect = document.getElementById('timer-duration');
-            const initialDuration = durationSelect ? parseInt(durationSelect.value) : 600;
-            window.directTimeRemaining = initialDuration;
-            window.directIsRunning = false;
+            // Initialize simple timer variables
+            const initDurationSelect = document.getElementById('timer-duration');
+            const initialDuration = initDurationSelect ? parseInt(initDurationSelect.value) : 600;
+            window.simpleTimeRemaining = initialDuration;
+            window.simpleIsRunning = false;
             
-            // Force update display using direct timer system
-            const display = document.getElementById('timer-display');
-            if (display) {
-                const minutes = Math.floor(initialDuration / 60);
-                const seconds = initialDuration % 60;
-                const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                display.textContent = displayText;
-                console.log('Set display to:', displayText);
-            } else {
-                console.error('Timer display element not found during initialization!');
-            }
+            // Force update display using simple timer system
+            updateSimpleDisplay();
             
             // Update status
             if (window.status) {
@@ -7228,6 +7280,9 @@
 
     // Global workout functions
     window.startWorkout = function() {
+        // Clear any existing timers before starting workout
+        window.clearAllTimers();
+        
         if (!workoutIsRunning && workoutExerciseSelect && workoutExerciseSelect.value) {
             const exercise = exercises.find(e => e.id === workoutExerciseSelect.value);
             if (exercise) {
@@ -7485,6 +7540,9 @@
 
         function startWorkout() {
             console.log('Start workout function called!');
+            // Clear any existing timers before starting workout
+            window.clearAllTimers();
+            
             if (!isWorkoutRunning) {
                 isWorkoutRunning = true;
                 isWorkoutPaused = false;
@@ -7831,12 +7889,12 @@
         quickPresetBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const duration = parseInt(btn.dataset.duration);
-                if (durationSelect) {
-                    durationSelect.value = duration;
+                if (window.durationSelect) {
+                    window.durationSelect.value = duration;
                 }
                 // Trigger change event
-                if (durationSelect) {
-                    durationSelect.dispatchEvent(new Event('change'));
+                if (window.durationSelect) {
+                    window.durationSelect.dispatchEvent(new Event('change'));
                 }
             });
         });
@@ -7999,19 +8057,19 @@
             // Event listeners
             if (startBtn) {
                 console.log('Adding start button event listener');
-                startBtn.addEventListener('click', startWorkout);
+                window.addTimerEventListener(startBtn, 'click', startWorkout);
             } else {
                 console.error('Start button not found!');
             }
             if (pauseBtn) {
                 console.log('Adding pause button event listener');
-                pauseBtn.addEventListener('click', pauseWorkout);
+                window.addTimerEventListener(pauseBtn, 'click', pauseWorkout);
             } else {
                 console.error('Pause button not found!');
             }
             if (resetBtn) {
                 console.log('Adding reset button event listener');
-                resetBtn.addEventListener('click', resetWorkout);
+                window.addTimerEventListener(resetBtn, 'click', resetWorkout);
             } else {
                 console.error('Reset button not found!');
             }
@@ -8963,10 +9021,10 @@
     });
     
     // Track navigation
-    const originalNavigateToPage = navigateToPage;
+    const originalNavigateToPageAnalytics = navigateToPage;
     navigateToPage = (pageName, id = null) => {
         analytics.track('page_navigation', { page: pageName, id });
-        return originalNavigateToPage(pageName, id);
+        return originalNavigateToPageAnalytics(pageName, id);
     };
     
     // Enhanced Workout Features
@@ -9089,11 +9147,11 @@
         
         function initializeWorkout() {
             // Set up event listeners
-            if (startBtn) startBtn.addEventListener('click', startWorkout);
-            if (pauseBtn) pauseBtn.addEventListener('click', pauseWorkout);
-            if (resetBtn) resetBtn.addEventListener('click', resetWorkout);
-            if (doubleModeCheckbox) doubleModeCheckbox.addEventListener('change', toggleDoubleMode);
-            if (soundSelect) soundSelect.addEventListener('change', toggleSound);
+            if (startBtn) window.addTimerEventListener(startBtn, 'click', startWorkout);
+            if (pauseBtn) window.addTimerEventListener(pauseBtn, 'click', pauseWorkout);
+            if (resetBtn) window.addTimerEventListener(resetBtn, 'click', resetWorkout);
+            if (doubleModeCheckbox) window.addTimerEventListener(doubleModeCheckbox, 'change', toggleDoubleMode);
+            if (soundSelect) window.addTimerEventListener(soundSelect, 'change', toggleSound);
             
             // Load workout history
             loadWorkoutHistory();
@@ -9103,6 +9161,9 @@
         }
         
         function startWorkout() {
+            // Clear any existing timers before starting workout
+            window.clearAllTimers();
+            
             if (!isWorkoutRunning) {
                 isWorkoutRunning = true;
                 isWorkoutPaused = false;
@@ -9622,8 +9683,8 @@
             if (nextQuestionBtn) nextQuestionBtn.addEventListener('click', showNextQuestion);
             
             // Practice controls
-            if (startPracticeBtn) startPracticeBtn.addEventListener('click', startPractice);
-            if (stopPracticeBtn) stopPracticeBtn.addEventListener('click', stopPractice);
+            if (startPracticeBtn) window.addTimerEventListener(startPracticeBtn, 'click', startPractice);
+            if (stopPracticeBtn) window.addTimerEventListener(stopPracticeBtn, 'click', stopPractice);
             
             // Recording controls
             if (startCameraBtn) startCameraBtn.addEventListener('click', startCamera);
@@ -9690,6 +9751,9 @@
         }
         
         function startPractice() {
+            // Clear any existing timers before starting practice
+            window.clearAllTimers();
+            
             if (!isPracticeRunning) {
                 isPracticeRunning = true;
                 practiceTimeRemaining = parseInt(timerSelect.value) * 60;
@@ -10169,6 +10233,9 @@
         }
         
         function startWorkout() {
+            // Clear any existing timers before starting workout
+            window.clearAllTimers();
+            
             if (!isRunning) {
                 isRunning = true;
                 const startBtn = document.getElementById('workout-start-btn');
@@ -10247,11 +10314,11 @@
             const prevBtn = document.getElementById('prev-exercise-btn');
             const nextBtn = document.getElementById('next-exercise-btn');
             
-            if (startBtn) startBtn.addEventListener('click', startWorkout);
-            if (pauseBtn) pauseBtn.addEventListener('click', pauseWorkout);
-            if (resetBtn) resetBtn.addEventListener('click', resetWorkout);
-            if (prevBtn) prevBtn.addEventListener('click', prevExercise);
-            if (nextBtn) nextBtn.addEventListener('click', nextExercise);
+            if (startBtn) window.addTimerEventListener(startBtn, 'click', startWorkout);
+            if (pauseBtn) window.addTimerEventListener(pauseBtn, 'click', pauseWorkout);
+            if (resetBtn) window.addTimerEventListener(resetBtn, 'click', resetWorkout);
+            if (prevBtn) window.addTimerEventListener(prevBtn, 'click', prevExercise);
+            if (nextBtn) window.addTimerEventListener(nextBtn, 'click', nextExercise);
         }
         
         // Workout initialization is handled by the navigation system
