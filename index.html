@@ -7090,11 +7090,8 @@
             window.soundToggle = soundToggle;
             window.progressRing = progressRing;
             
-            // Initialize timer state
-            window.timeRemaining = parseInt(durationSelect ? durationSelect.value : 600);
-            window.totalTime = window.timeRemaining;
-            window.isRunning = false;
-            window.isPaused = false;
+            // Initialize timer state - USING DIRECT TIMER SYSTEM
+            // Old timer variables disabled - using direct timer system instead
             
             // Event listeners with debugging - USING SIMPLE TIMER
             if (startBtn) {
@@ -7462,21 +7459,7 @@
 
     
     // Timer variables - DISABLED - Using direct timer system instead
-    /*
-    window.timerInterval = null;
-    window.timeRemaining = 600; // 10 minutes default
-    window.totalTime = 600;
-    window.isRunning = false;
-    window.isPaused = false;
-    window.display = null;
-    window.status = null;
-    window.progressRing = null;
-    window.startBtn = null;
-    window.pauseBtn = null;
-    window.resetBtn = null;
-    window.durationSelect = null;
-    window.soundToggle = null;
-    */
+    // All old timer variables removed - using direct timer system instead
 
     // Timer functions - defined globally so they can be accessed by event listeners
     // REMOVED DUPLICATE updateDisplay function - using window.updateDisplay instead
