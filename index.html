@@ -7172,11 +7172,11 @@
 
     function startTimer() {
         // Start timer called
-        console.log('Current state:', { isRunning, isPaused, timeRemaining, totalTime });
-        if (!isRunning) {
+        console.log('Current state:', { isRunning: window.isRunning, isPaused: window.isPaused, timeRemaining: window.timeRemaining, totalTime: window.totalTime });
+        if (!window.isRunning) {
             console.log('Starting timer...');
-            isRunning = true;
-            isPaused = false;
+            window.isRunning = true;
+            window.isPaused = false;
             
             // Haptic feedback for mobile
             triggerHapticFeedback('light');
@@ -7193,42 +7193,42 @@
                 }, 1500);
             }
             
-            if (startBtn) startBtn.classList.add('hidden');
-            if (pauseBtn) pauseBtn.classList.remove('hidden');
+            if (window.startBtn) window.startBtn.classList.add('hidden');
+            if (window.pauseBtn) window.pauseBtn.classList.remove('hidden');
                 
             console.log('Setting up setInterval...');
-            timerInterval = setInterval(() => {
+            window.timerInterval = setInterval(() => {
                 console.log('=== SETINTERVAL TICK ===');
-                console.log('timeRemaining before decrement:', timeRemaining);
-                console.log('isRunning:', isRunning);
-                console.log('timerInterval:', timerInterval);
-                if (timeRemaining > 0) {
-                    timeRemaining--;
-                    console.log('timeRemaining after decrement:', timeRemaining);
+                console.log('timeRemaining before decrement:', window.timeRemaining);
+                console.log('isRunning:', window.isRunning);
+                console.log('timerInterval:', window.timerInterval);
+                if (window.timeRemaining > 0) {
+                    window.timeRemaining--;
+                    console.log('timeRemaining after decrement:', window.timeRemaining);
                     console.log('About to call updateDisplay...');
-                    updateDisplay();
+                    window.updateDisplay();
                     console.log('updateDisplay called');
                     
                     // Play bell at specific intervals
-                    if (timeRemaining === 0) {
+                    if (window.timeRemaining === 0) {
                         // Final bell - play sound if enabled
-                        if (soundToggle && soundToggle.checked) {
+                        if (window.soundToggle && window.soundToggle.checked) {
                             console.log('Playing final bell');
                         }
-                    } else if (timeRemaining === 60 && totalTime > 120) {
+                    } else if (window.timeRemaining === 60 && window.totalTime > 120) {
                         // 1 minute warning
-                        if (soundToggle && soundToggle.checked) {
+                        if (window.soundToggle && window.soundToggle.checked) {
                             console.log('Playing 1 minute warning');
                         }
-                    } else if (timeRemaining === 300 && totalTime > 600) {
+                    } else if (window.timeRemaining === 300 && window.totalTime > 600) {
                         // 5 minute warning
-                        if (soundToggle && soundToggle.checked) {
+                        if (window.soundToggle && window.soundToggle.checked) {
                             console.log('Playing 5 minute warning');
                         }
                     }
                 } else {
-                    clearInterval(timerInterval);
-                    isRunning = false;
+                    clearInterval(window.timerInterval);
+                    window.isRunning = false;
                     
                     // Remove pulsing effect
                     const timerContainerStop = document.querySelector('.relative.w-56');
@@ -10323,6 +10323,20 @@
             const timerDisplay = document.getElementById('workout-timer-display');
             if (timerDisplay) {
                 console.log('Workout elements found, initializing...');
+                
+                // Remove any existing event listeners to prevent conflicts
+                const startBtn = document.getElementById('workout-start-btn');
+                const pauseBtn = document.getElementById('workout-pause-btn');
+                const resetBtn = document.getElementById('workout-reset-btn');
+                const prevBtn = document.getElementById('prev-exercise-btn');
+                const nextBtn = document.getElementById('next-exercise-btn');
+                
+                if (startBtn) {
+                    // Clone the button to remove all event listeners
+                    const newStartBtn = startBtn.cloneNode(true);
+                    startBtn.parentNode.replaceChild(newStartBtn, startBtn);
+                }
+                
                 initWorkout();
             } else {
                 console.log('Workout elements not found yet, retrying...');
