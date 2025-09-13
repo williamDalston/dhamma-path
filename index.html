@@ -6513,6 +6513,131 @@
     window.navigateTo = navigateToPage;
     window.navigateToPage = navigateToPage;
 
+    // ===== DATA MANAGER =====
+    class DataManager {
+        static KEYS = {
+            TIMER_SETTINGS: 'timerSettings',
+            WORKOUT_PROGRESS: 'workoutProgress',
+            JOURNAL_ENTRIES: 'journalEntries',
+            JOURNAL_DRAFT: 'journalDraft',
+            USER_PREFERENCES: 'userPreferences'
+        };
+
+        static DEFAULTS = {
+            timerSettings: {
+                totalSessions: 0,
+                totalTime: 0,
+                lastSession: null
+            },
+            workoutProgress: {
+                totalWorkouts: 0,
+                lastWorkout: null,
+                bestTime: null
+            }
+        };
+
+        static init() {
+            // Initialize data manager
+            console.log('DataManager initialized');
+        }
+
+        static get(key, defaultValue = null) {
+            try {
+                const item = localStorage.getItem(key);
+                return item ? JSON.parse(item) : defaultValue;
+            } catch (error) {
+                console.error('Error getting data:', error);
+                return defaultValue;
+            }
+        }
+
+        static set(key, value) {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+                return true;
+            } catch (error) {
+                console.error('Error setting data:', error);
+                return false;
+            }
+        }
+
+        static remove(key) {
+            try {
+                localStorage.removeItem(key);
+                return true;
+            } catch (error) {
+                console.error('Error removing data:', error);
+                return false;
+            }
+        }
+
+        static clearAll() {
+            try {
+                localStorage.clear();
+                return true;
+            } catch (error) {
+                console.error('Error clearing data:', error);
+                return false;
+            }
+        }
+
+        static getStorageInfo() {
+            let totalSize = 0;
+            for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    totalSize += localStorage[key].length;
+                }
+            }
+            
+            return {
+                totalSize: totalSize,
+                totalSizeFormatted: this.formatBytes(totalSize),
+                itemCount: localStorage.length
+            };
+        }
+
+        static formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        static exportData() {
+            const data = {};
+            for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    try {
+                        data[key] = JSON.parse(localStorage[key]);
+                    } catch (e) {
+                        data[key] = localStorage[key];
+                    }
+                }
+            }
+            return data;
+        }
+
+        static importData(data) {
+            let importedCount = 0;
+            try {
+                for (let key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        localStorage.setItem(key, JSON.stringify(data[key]));
+                        importedCount++;
+                    }
+                }
+                return { success: true, importedCount: importedCount };
+            } catch (error) {
+                console.error('Error importing data:', error);
+                return { success: false, error: error.message };
+            }
+        }
+    }
+
+    // Make DataManager globally available
+    window.DataManager = DataManager;
+
     // ===== GLOBAL TIMER FUNCTIONS =====
     // These are defined at the top so they're available everywhere
     window.startTimer = function() {
