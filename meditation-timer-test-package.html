@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation Timer Test Package</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-4xl mx-auto px-2 sm:px-4 py-8">
+        <h1 class="text-4xl font-bold text-center mb-8">Meditation Timer Test Package</h1>
+        
+        <!-- Timer HTML Template -->
+        <div class="bg-white rounded-xl p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">Timer HTML Template</h2>
+            <pre class="bg-gray-100 p-4 rounded text-sm overflow-x-auto"><code>&lt;template id="template-timer"&gt;
+    &lt;div class="max-w-4xl mx-auto px-2 sm:px-4"&gt;
+        &lt;div class="text-center mb-6"&gt;
+            &lt;h1 class="text-4xl font-bold text-green-600 mb-4"&gt;Meditation Timer&lt;/h1&gt;
+            &lt;p class="text-gray-600"&gt;Find your center with our fully functional timer&lt;/p&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="bg-white rounded-xl p-6 shadow-xl"&gt;
+            &lt;div class="text-center"&gt;
+                &lt;h2 class="text-2xl font-bold mb-6"&gt;Your Meditation Timer&lt;/h2&gt;
+                
+                &lt;!-- Timer Display with Progress Ring --&gt;
+                &lt;div class="relative w-80 h-80 mx-auto mb-8"&gt;
+                    &lt;svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100"&gt;
+                        &lt;circle cx="50" cy="50" r="45" stroke="#e5e7eb" stroke-width="6" fill="none" opacity="0.3"/&gt;
+                        &lt;circle id="progress-ring" cx="50" cy="50" r="45" stroke="#4A6C55" stroke-width="6" fill="none" 
+                                stroke-dasharray="283" stroke-dashoffset="283" 
+                                class="transition-all duration-1000 ease-linear"/&gt;
+                    &lt;/svg&gt;
+                    
+                    &lt;div class="absolute inset-0 flex flex-col items-center justify-center"&gt;
+                        &lt;div id="timer-display" class="text-8xl font-bold text-green-600 mb-4"&gt;10:00&lt;/div&gt;
+                        &lt;div id="timer-status" class="text-xl text-gray-600 mb-4"&gt;Ready to begin&lt;/div&gt;
+                        &lt;div class="text-6xl"&gt;🧘‍♀️&lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                
+                &lt;!-- Duration Selection --&gt;
+                &lt;div class="mb-6"&gt;
+                    &lt;label for="timer-duration" class="block text-sm font-bold mb-2"&gt;Duration:&lt;/label&gt;
+                    &lt;select id="timer-duration" class="px-4 py-3 border-2 border-green-300 rounded-xl"&gt;
+                        &lt;option value="300"&gt;5 minutes&lt;/option&gt;
+                        &lt;option value="600" selected&gt;10 minutes&lt;/option&gt;
+                        &lt;option value="900"&gt;15 minutes&lt;/option&gt;
+                        &lt;option value="1200"&gt;20 minutes&lt;/option&gt;
+                        &lt;option value="1800"&gt;30 minutes&lt;/option&gt;
+                    &lt;/select&gt;
+                &lt;/div&gt;
+                
+                &lt;!-- Sound Options --&gt;
+                &lt;div class="mb-6"&gt;
+                    &lt;label class="flex items-center space-x-3 cursor-pointer"&gt;
+                        &lt;input type="checkbox" id="timer-sound" class="h-5 w-5 rounded text-green-600" checked&gt;
+                        &lt;span class="font-bold"&gt;🔔 Sound&lt;/span&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                
+                &lt;!-- Control Buttons --&gt;
+                &lt;div class="flex justify-center space-x-6"&gt;
+                    &lt;button id="timer-start-btn" class="px-8 py-6 bg-green-600 text-white font-bold rounded-3xl text-2xl"&gt;
+                        ▶️ Start Meditation
+                    &lt;/button&gt;
+                    &lt;button id="timer-pause-btn" class="px-8 py-6 bg-yellow-500 text-white font-bold rounded-3xl text-2xl hidden"&gt;
+                        ⏸️ Pause
+                    &lt;/button&gt;
+                    &lt;button id="timer-reset-btn" class="px-8 py-6 bg-gray-500 text-white font-bold rounded-3xl text-2xl"&gt;
+                        🔄 Reset
+                    &lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+        </div>
+
+        <!-- Current JavaScript Functions -->
+        <div class="bg-white rounded-xl p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">Current JavaScript Functions</h2>
+            <pre class="bg-gray-100 p-4 rounded text-sm overflow-x-auto"><code>// ===== CLEAN MEDITATION TIMER FUNCTIONS =====
+window.updateDisplay = function() {
+    if (window.display) {
+        const minutes = Math.floor(window.timeRemaining / 60);
+        const seconds = window.timeRemaining % 60;
+        const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        window.display.textContent = displayText;
+        console.log('✅ Display updated to:', displayText);
+    }
+    if (window.status) {
+        if (window.isRunning) {
+            window.status.textContent = 'Meditating...';
+        } else if (window.isPaused) {
+            window.status.textContent = 'Paused';
+        } else {
+            window.status.textContent = 'Ready to begin';
+        }
+    }
+    
+    // Update progress ring
+    if (window.progressRing && window.totalTime > 0) {
+        const progress = (window.timeRemaining / window.totalTime) * 283;
+        window.progressRing.style.strokeDashoffset = progress;
+    }
+};
+
+// Timer logic
+function attachTimerLogic() {
+    console.log('🚀 attachTimerLogic() called');
+    
+    setTimeout(() => {
+        const startBtn = document.getElementById('timer-start-btn');
+        const pauseBtn = document.getElementById('timer-pause-btn');
+        const resetBtn = document.getElementById('timer-reset-btn');
+        const display = document.getElementById('timer-display');
+        const status = document.getElementById('timer-status');
+        const durationSelect = document.getElementById('timer-duration');
+        const soundToggle = document.getElementById('timer-sound');
+        const progressRing = document.getElementById('progress-ring');
+        
+        console.log('Timer elements found:', {
+            startBtn: !!startBtn,
+            pauseBtn: !!pauseBtn,
+            resetBtn: !!resetBtn,
+            display: !!display,
+            status: !!status,
+            durationSelect: !!durationSelect,
+            soundToggle: !!soundToggle,
+            progressRing: !!progressRing
+        });
+        
+        // Set global variables
+        window.startBtn = startBtn;
+        window.pauseBtn = pauseBtn;
+        window.resetBtn = resetBtn;
+        window.display = display;
+        window.status = status;
+        window.durationSelect = durationSelect;
+        window.soundToggle = soundToggle;
+        window.progressRing = progressRing;
+        
+        // Initialize timer state
+        window.timeRemaining = parseInt(durationSelect ? durationSelect.value : 600);
+        window.totalTime = window.timeRemaining;
+        window.isRunning = false;
+        window.isPaused = false;
+        
+        // Event listeners
+        if (startBtn) {
+            startBtn.addEventListener('click', (e) => {
+                console.log('Start button clicked!', e);
+                e.preventDefault();
+                e.stopPropagation();
+                window.startTimer();
+            });
+        }
+        
+        if (pauseBtn) {
+            pauseBtn.addEventListener('click', window.pauseTimer);
+        }
+        
+        if (resetBtn) {
+            resetBtn.addEventListener('click', window.resetTimer);
+        }
+        
+        // Duration change
+        if (durationSelect) {
+            durationSelect.addEventListener('change', () => {
+                if (!window.isRunning) {
+                    window.timeRemaining = parseInt(durationSelect.value);
+                    window.totalTime = window.timeRemaining;
+                    window.updateDisplay();
+                }
+            });
+        }
+        
+        // Initialize display
+        window.updateDisplay();
+    }, 100);
+}</code></pre>
+        </div>
+
+        <!-- Console Logs -->
+        <div class="bg-white rounded-xl p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">Current Console Logs</h2>
+            <pre class="bg-gray-100 p-4 rounded text-sm overflow-x-auto"><code>dhamma-path/:6969 Start button clicked! PointerEvent {isTrusted: true, pointerId: 6, width: 1, height: 1, pressure: 0, …}
+dhamma-path/:6645 Current state: {isRunning: false, isPaused: false, timeRemaining: 1200, totalTime: 1200}
+dhamma-path/:6647 Starting timer...
+dhamma-path/:6671 Setting up setInterval...
+dhamma-path/:6673 === SETINTERVAL TICK ===
+dhamma-path/:6674 timeRemaining before decrement: 1200
+dhamma-path/:6675 isRunning: true
+dhamma-path/:6676 timerInterval: 277
+dhamma-path/:6679 timeRemaining after decrement: 1199
+dhamma-path/:6680 About to call updateDisplay...
+dhamma-path/:6682 updateDisplay called
+dhamma-path/:6673 === SETINTERVAL TICK ===
+dhamma-path/:6674 timeRemaining before decrement: 1199
+dhamma-path/:6675 isRunning: true
+dhamma-path/:6676 timerInterval: 277
+dhamma-path/:6679 timeRemaining after decrement: 1198
+dhamma-path/:6680 About to call updateDisplay...
+dhamma-path/:6682 updateDisplay called</code></pre>
+        </div>
+
+        <!-- Problem Description -->
+        <div class="bg-red-50 border border-red-200 rounded-xl p-6 mb-8">
+            <h2 class="text-2xl font-bold text-red-600 mb-4">🚨 The Problem</h2>
+            <div class="space-y-4 text-red-700">
+                <p><strong>Issue:</strong> The meditation timer is counting down internally (logs show timeRemaining going from 1200 to 1199 to 1198...), but the visual display is NOT updating.</p>
+                <p><strong>What works:</strong></p>
+                <ul class="list-disc list-inside ml-4">
+                    <li>Timer starts when button is clicked</li>
+                    <li>Timer counts down internally (setInterval is working)</li>
+                    <li>updateDisplay() function is being called</li>
+                    <li>All DOM elements are found correctly</li>
+                </ul>
+                <p><strong>What doesn't work:</strong></p>
+                <ul class="list-disc list-inside ml-4">
+                    <li>Timer display text doesn't change visually</li>
+                    <li>Progress ring doesn't move</li>
+                    <li>Status text doesn't update</li>
+                    <li>Duration dropdown doesn't affect timer</li>
+                </ul>
+                <p><strong>Key observation:</strong> The logs show "updateDisplay called" but the display text remains "10:00" and never changes, even though timeRemaining is decreasing.</p>
+            </div>
+        </div>
+
+        <!-- Test Instructions -->
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-6">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">🧪 Test Instructions</h2>
+            <div class="space-y-4 text-blue-700">
+                <p><strong>To reproduce the issue:</strong></p>
+                <ol class="list-decimal list-inside ml-4 space-y-2">
+                    <li>Load the meditation timer page</li>
+                    <li>Click "Start Meditation" button</li>
+                    <li>Observe that timer display stays at "10:00"</li>
+                    <li>Check console logs - timer is counting down internally</li>
+                    <li>Try changing duration dropdown - no effect</li>
+                    <li>Try pause/reset buttons - may or may not work</li>
+                </ol>
+                <p><strong>Expected behavior:</strong> Timer should count down visually from 10:00 to 09:59 to 09:58, etc., with progress ring moving.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

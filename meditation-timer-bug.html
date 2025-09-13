@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation Timer Bug</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: sans-serif; background-color: #f0f2f5; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <div class="text-center p-8 bg-white rounded-2xl shadow-xl max-w-md w-full">
+        <div id="timer-display" class="text-8xl font-bold text-gray-800 mb-6">10:00</div>
+
+        <div class="mb-6">
+            <select id="timer-duration" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                <option value="300">5 minutes</option>
+                <option value="600" selected>10 minutes</option>
+                <option value="900">15 minutes</option>
+                <option value="1200">20 minutes</option>
+            </select>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+            <button id="timer-start-btn" class="w-full px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition">Start</button>
+            <button id="timer-pause-btn" class="w-full px-8 py-4 bg-yellow-500 text-white font-bold rounded-xl hover:bg-yellow-600 transition hidden">Pause</button>
+            <button id="timer-reset-btn" class="w-full px-8 py-4 bg-gray-600 text-white font-bold rounded-xl hover:bg-gray-700 transition">Reset</button>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- DOM Element References ---
+    const displayElement = document.getElementById('timer-display');
+    const durationSelect = document.getElementById('timer-duration');
+    const startBtn = document.getElementById('timer-start-btn');
+    const pauseBtn = document.getElementById('timer-pause-btn');
+    const resetBtn = document.getElementById('timer-reset-btn');
+
+    // --- State Management ---
+    let timerInterval = null;
+    const state = {
+        isRunning: false,
+        isPaused: false,
+        totalTime: parseInt(durationSelect.value, 10),
+        timeRemaining: parseInt(durationSelect.value, 10),
+    };
+
+    // --- THE BUGGY FUNCTION ---
+    // This function is called every second, but fails to update the display.
+    const updateDisplay = () => {
+        console.log('updateDisplay called');
+        const minutes = Math.floor(state.timeRemaining / 60);
+        const seconds = state.timeRemaining % 60;
+        
+        // BUG: The following line is missing, so the DOM is never updated.
+        // displayElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    };
+
+    // --- Timer Controls ---
+    const startTimer = () => {
+        if (state.isRunning) return;
+        console.log('Starting timer...');
+
+        state.isRunning = true;
+        state.isPaused = false;
+        startBtn.classList.add('hidden');
+        pauseBtn.classList.remove('hidden');
+
+        timerInterval = setInterval(() => {
+            console.log('=== SETINTERVAL TICK ===');
+            console.log(`timeRemaining before decrement: ${state.timeRemaining}`);
+            
+            state.timeRemaining--;
+            updateDisplay(); // This gets called, but doesn't work correctly.
+
+            if (state.timeRemaining < 0) {
+                resetTimer();
+                alert('Meditation Complete!');
+            }
+        }, 1000);
+    };
+
+    const pauseTimer = () => {
+        if (!state.isRunning || state.isPaused) return;
+        console.log('Pausing timer...');
+        
+        state.isPaused = true;
+        state.isRunning = false;
+        clearInterval(timerInterval);
+        pauseBtn.textContent = 'Resume';
+    };
+
+    const resumeTimer = () => {
+        if (!state.isPaused) return;
+        console.log('Resuming timer...');
+
+        state.isPaused = false;
+        startTimer(); // Re-use start logic to begin the interval again
+        pauseBtn.textContent = 'Pause';
+    };
+
+    const resetTimer = () => {
+        console.log('Resetting timer...');
+        clearInterval(timerInterval);
+        timerInterval = null;
+        state.isRunning = false;
+        state.isPaused = false;
+        state.totalTime = parseInt(durationSelect.value, 10);
+        state.timeRemaining = state.totalTime;
+        updateDisplay(); // Call once to set the initial display
+        displayElement.textContent = `${String(state.totalTime / 60).padStart(2, '0')}:00`; // Manual reset
+        
+        startBtn.classList.remove('hidden');
+        pauseBtn.classList.add('hidden');
+        pauseBtn.textContent = 'Pause';
+    };
+
+    // --- Event Listeners ---
+    durationSelect.addEventListener('change', () => {
+        if (!state.isRunning && !state.isPaused) {
+            resetTimer();
+        }
+    });
+
+    startBtn.addEventListener('click', startTimer);
+    pauseBtn.addEventListener('click', () => {
+        if (state.isPaused) {
+            resumeTimer();
+        } else {
+            pauseTimer();
+        }
+    });
+    resetBtn.addEventListener('click', resetTimer);
+
+    // Initial setup
+    resetTimer(); 
+});
+</script>
+
+</body>
+</html>

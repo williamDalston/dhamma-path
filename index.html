@@ -6696,11 +6696,31 @@
         originalNavigateToPageFunc(pageId);
     };
 
-    // ===== GLOBAL TIMER FUNCTIONS =====
-    // REMOVED - Using direct timer system instead
+    // ===== CLEAN MEDITATION TIMER FUNCTIONS =====
+    // Simple, working timer implementation
     window.updateDisplay = function() {
-        // DISABLED - Using direct timer system instead
-        console.log('Old updateDisplay called - DISABLED');
+        if (window.display) {
+            const minutes = Math.floor(window.timeRemaining / 60);
+            const seconds = window.timeRemaining % 60;
+            const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            window.display.textContent = displayText;
+            console.log('✅ Display updated to:', displayText);
+        }
+        if (window.status) {
+            if (window.isRunning) {
+                window.status.textContent = 'Meditating...';
+            } else if (window.isPaused) {
+                window.status.textContent = 'Paused';
+            } else {
+                window.status.textContent = 'Ready to begin';
+            }
+        }
+        
+        // Update progress ring
+        if (window.progressRing && window.totalTime > 0) {
+            const progress = (window.timeRemaining / window.totalTime) * 283;
+            window.progressRing.style.strokeDashoffset = progress;
+        }
     };
     
     // Global timer cleanup function
@@ -6878,11 +6898,7 @@
         clearInterval(i);
     }
     
-    // Override any old timer functions that might be cached
-    window.updateDisplay = function() {
-        console.log('❌ OLD updateDisplay called - BLOCKED');
-        return false;
-    };
+    // Removed blocking updateDisplay function - using working version instead
     
     // Override old timer variables to prevent conflicts
     window.timeRemaining = undefined;
@@ -6965,12 +6981,7 @@
             }
         });
         
-        // Override any other updateDisplay functions
-        const originalUpdateDisplay = window.updateDisplay;
-        window.updateDisplay = function() {
-            console.log('🚫 BLOCKED: Other updateDisplay called - only our timer should run');
-            return false;
-        };
+        // Removed blocking updateDisplay override - using working version instead
     }
     
     // Run the disable function immediately
@@ -7325,23 +7336,6 @@
     // Timer logic
     function attachTimerLogic() {
         console.log('🚀 attachTimerLogic() called');
-        console.log('🚀 Current page:', currentPage);
-        console.log('🚀 Timer page visible:', document.getElementById('timer-page')?.style.display !== 'none');
-        
-        // AGGRESSIVE CACHE CLEAR - Force clear any old timer systems
-        console.log('🧹 AGGRESSIVE CACHE CLEAR - Clearing all possible timers...');
-        for (let i = 1; i <= 10000; i++) {
-            clearInterval(i);
-        }
-        
-        // Clear any old timer variables
-        if (window.timerState) delete window.timerState;
-        if (window.timerInterval) delete window.timerInterval;
-        if (window.isRunning) delete window.isRunning;
-        if (window.timeRemaining) delete window.timeRemaining;
-        if (window.totalTime) delete window.totalTime;
-        
-        // Attaching enhanced timer logic
         
         // Ensure welcome overlay is hidden
         const welcomeOverlay = document.getElementById('welcome-overlay');
@@ -7350,20 +7344,15 @@
             welcomeOverlay.style.opacity = '0';
         }
         
-        console.log('🚀 Welcome overlay handled');
-        
         // Add a small delay to ensure DOM is fully rendered
-        console.log('🚀 Setting up setTimeout for timer elements');
         setTimeout(() => {
-            console.log('🚀 setTimeout callback executed - looking for timer elements');
             // Looking for timer elements after delay
-            
             const startBtn = document.getElementById('timer-start-btn');
             const pauseBtn = document.getElementById('timer-pause-btn');
             const resetBtn = document.getElementById('timer-reset-btn');
-            const attachDisplay = document.getElementById('timer-display');
+            const display = document.getElementById('timer-display');
             const status = document.getElementById('timer-status');
-            const attachDurationSelect = document.getElementById('timer-duration');
+            const durationSelect = document.getElementById('timer-duration');
             const soundToggle = document.getElementById('timer-sound');
             const progressRing = document.getElementById('progress-ring');
             
@@ -7372,123 +7361,63 @@
                 startBtn: !!startBtn,
                 pauseBtn: !!pauseBtn,
                 resetBtn: !!resetBtn,
-                display: !!attachDisplay,
+                display: !!display,
                 status: !!status,
-                durationSelect: !!attachDurationSelect,
+                durationSelect: !!durationSelect,
                 soundToggle: !!soundToggle,
                 progressRing: !!progressRing
             });
-            
-            // Additional debugging
-            console.log('Start button element:', startBtn);
-            console.log('Display element:', attachDisplay);
-            console.log('Duration select element:', attachDurationSelect);
-            console.log('Current page:', currentPage);
             
             // Set global variables
             window.startBtn = startBtn;
             window.pauseBtn = pauseBtn;
             window.resetBtn = resetBtn;
-            window.display = attachDisplay;
+            window.display = display;
             window.status = status;
-            window.durationSelect = attachDurationSelect;
+            window.durationSelect = durationSelect;
             window.soundToggle = soundToggle;
             window.progressRing = progressRing;
             
-            // Initialize timer state - USING DIRECT TIMER SYSTEM
-            // Old timer variables disabled - using direct timer system instead
+            // Initialize timer state
+            window.timeRemaining = parseInt(durationSelect ? durationSelect.value : 600);
+            window.totalTime = window.timeRemaining;
+            window.isRunning = false;
+            window.isPaused = false;
             
-            // Event listeners - SIMPLE AND CLEAN
+            // Event listeners with debugging
             if (startBtn) {
-                console.log('🔧 Adding start button listener');
+                console.log('Adding click listener to start button');
                 startBtn.addEventListener('click', (e) => {
+                    console.log('Start button clicked!', e);
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('🚀 Start button clicked!');
                     window.startTimer();
                 });
+            } else {
+                console.error('Start button not found!');
             }
-            
             if (pauseBtn) {
-                console.log('🔧 Adding pause button listener');
-                pauseBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('⏸️ Pause button clicked!');
-                    window.pauseTimer();
-                });
+                pauseBtn.addEventListener('click', window.pauseTimer);
             }
-            
             if (resetBtn) {
-                console.log('🔧 Adding reset button listener');
-                resetBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('🔄 Reset button clicked!');
-                    window.resetTimer();
-                });
+                resetBtn.addEventListener('click', window.resetTimer);
             }
             
-            // Duration change - SIMPLE AND CLEAN
-            if (attachDurationSelect) {
-                attachDurationSelect.addEventListener('change', () => {
-                    if (!window.timer.isRunning) {
-                        const newDuration = parseInt(attachDurationSelect.value);
-                        window.timer.timeRemaining = newDuration;
-                        console.log('Duration changed to:', newDuration, 'seconds');
-                        updateTimerDisplay();
+            // Duration change
+            if (durationSelect) {
+                durationSelect.addEventListener('change', () => {
+                    if (!window.isRunning) {
+                        window.timeRemaining = parseInt(durationSelect.value);
+                        window.totalTime = window.timeRemaining;
+                        window.updateDisplay();
                     }
                 });
             }
             
-            // Initialize timer display
-            console.log('Initializing timer display...');
-            
-            // Initialize timer
-            const initDurationSelect = document.getElementById('timer-duration');
-            const initialDuration = initDurationSelect ? parseInt(initDurationSelect.value) : 600;
-            window.timer.timeRemaining = initialDuration;
-            window.timer.isRunning = false;
-            
-            // Update display
-            updateTimerDisplay();
-            
-            // Update status
-            if (window.status) {
-                window.status.textContent = 'Ready to begin';
-                console.log('Set status to: Ready to begin');
-            }
-            
-            // Update progress ring
-            if (window.progressRing && initialDuration > 0) {
-                const progress = (initialDuration / initialDuration) * 283;
-                window.progressRing.style.strokeDashoffset = progress;
-                console.log('Set progress ring to:', progress);
-            }
-            
-            // Ensure buttons are in correct state
-            if (window.startBtn) {
-                window.startBtn.classList.remove('hidden');
-                console.log('Start button made visible');
-            }
-            if (window.pauseBtn) {
-                window.pauseBtn.classList.add('hidden');
-                console.log('Pause button hidden');
-            }
-            
-            console.log('Timer initialization complete');
-            
-            // REMOVED test function that was overwriting display
+            // Initialize display
+            window.updateDisplay();
         }, 100);
-    }
-
-    // Journal logic
-    function attachJournalLogic() {
-        // Attaching journal logic
         
-        const saveBtn = document.getElementById('journal-save-btn');
-        const entryText = document.getElementById('journal-entry');
-        const entriesList = document.getElementById('journal-entries');
         
         function saveEntry() {
             if (entryText && entryText.value.trim()) {
