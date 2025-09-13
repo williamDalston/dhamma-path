@@ -4,20 +4,79 @@
     
     <div class="relative z-10">
         <div class="animate-fade-up scroll-reveal" data-animate="fade-up">
-            <h1 class="text-7xl font-bold gradient-text-premium text-premium mb-8 breathing-premium">Welcome to The Dhamma Path</h1>
-            <p class="text-2xl text-charcoal/70 mb-12 body-premium">Transform your mornings, transform your life</p>
+            <div class="mb-6">
+                <span class="inline-block px-4 py-2 bg-forest-green/10 text-forest-green text-sm font-semibold rounded-full border border-forest-green/20 mb-4">
+                    ✨ Premium Morning Routine Builder
+                </span>
+            </div>
+            <h1 class="text-7xl font-bold gradient-text-premium text-premium mb-6 breathing-premium">
+                Welcome to<br><span class="text-6xl">The Dhamma Path</span>
+            </h1>
+            <p class="text-2xl text-charcoal/70 mb-8 body-premium max-w-3xl mx-auto leading-relaxed">
+                Transform your mornings, transform your life through mindful practices and ancient wisdom
+            </p>
+            
+            <!-- Value Proposition -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <div class="flex items-center space-x-2 px-4 py-2 bg-white/50 rounded-full border border-forest-green/20">
+                    <span class="text-lg">🧘</span>
+                    <span class="text-sm font-medium text-charcoal">Mindful Meditation</span>
+                </div>
+                <div class="flex items-center space-x-2 px-4 py-2 bg-white/50 rounded-full border border-forest-green/20">
+                    <span class="text-lg">✍️</span>
+                    <span class="text-sm font-medium text-charcoal">Reflective Journaling</span>
+                </div>
+                <div class="flex items-center space-x-2 px-4 py-2 bg-white/50 rounded-full border border-forest-green/20">
+                    <span class="text-lg">💪</span>
+                    <span class="text-sm font-medium text-charcoal">Energy Movement</span>
+                </div>
+                <div class="flex items-center space-x-2 px-4 py-2 bg-white/50 rounded-full border border-forest-green/20">
+                    <span class="text-lg">🎤</span>
+                    <span class="text-sm font-medium text-charcoal">Confidence Practice</span>
+                </div>
+            </div>
         </div>
     </div>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-        <div class="card-premium hover-lift hover-glow magnetic-premium glass-premium shimmer-premium scroll-reveal" data-animate="fade-up" data-delay="100">
+        <div class="card-premium hover-lift hover-glow magnetic-premium glass-premium shimmer-premium scroll-reveal cursor-pointer" data-animate="fade-up" data-delay="100" data-page="timer">
             <div class="card-header">
-                <div class="text-6xl mb-6 float-premium liquid-premium">🧘</div>
-                <h3 class="card-title text-2xl font-semibold mb-3 text-forest-green heading-premium">Meditate</h3>
-                <p class="text-charcoal/70 mb-4 body-premium">Start your day with mindfulness</p>
-            </div>
-            <div class="progress-premium glass-premium-dark" style="width: 100%;">
-                <div class="progress-premium morphing-premium" style="width: 85%;"></div>
+                <div class="text-6xl mb-4 float-premium liquid-premium">🧘</div>
+                <div class="mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="card-title text-2xl font-semibold text-forest-green heading-premium">Meditate</h3>
+                        <span class="status-indicator success">
+                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                            Active
+                        </span>
+                    </div>
+                    <p class="text-charcoal/70 mb-3 body-premium">Start your day with mindfulness and inner peace</p>
+                    <div class="text-sm text-charcoal/50 mb-4">
+                        <span class="font-medium">5-20 minutes</span> • <span>Guided & Timed</span>
+                    </div>
+                </div>
+                
+                <!-- Enhanced Progress with Context -->
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-charcoal/60">Weekly Progress</span>
+                        <span class="font-medium text-forest-green">85%</span>
+                    </div>
+                    <div class="progress-premium glass-premium-dark" style="width: 100%;">
+                        <div class="progress-premium morphing-premium" style="width: 85%;"></div>
+                    </div>
+                    <div class="text-xs text-charcoal/50 text-center">6 of 7 days this week</div>
+                </div>
+                
+                <!-- Quick Action -->
+                <div class="mt-4 pt-4 border-t border-forest-green/10">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-charcoal/60">Last session: 12 min</span>
+                        <button class="btn-premium btn-sm ripple-premium">
+                            <span class="text-lg mr-2">▶️</span>Start Now
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         
