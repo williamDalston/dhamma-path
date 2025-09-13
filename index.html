@@ -6754,25 +6754,31 @@
         console.log('=== UPDATE DISPLAY CALLED ===');
         console.log('window.display:', window.display);
         console.log('window.timeRemaining:', window.timeRemaining);
+        console.log('window.totalTime:', window.totalTime);
         
+        // Update timer display
         if (window.display) {
             const minutes = Math.floor(window.timeRemaining / 60);
             const seconds = window.timeRemaining % 60;
             const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             console.log('Setting display to:', displayText);
-            console.log('Display element before update:', window.display.textContent);
             window.display.textContent = displayText;
-            console.log('Display element after update:', window.display.textContent);
         } else {
             console.error('Display element not found!');
-            console.log('Trying to find display element again...');
+            // Try to find it again
             const displayElement = document.getElementById('timer-display');
-            console.log('Found display element:', displayElement);
             if (displayElement) {
                 window.display = displayElement;
                 console.log('Updated window.display reference');
+                // Try again
+                const minutes = Math.floor(window.timeRemaining / 60);
+                const seconds = window.timeRemaining % 60;
+                const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                window.display.textContent = displayText;
             }
         }
+        
+        // Update status
         if (window.status) {
             if (window.isRunning) {
                 window.status.textContent = 'Meditating...';
@@ -6787,6 +6793,9 @@
         if (window.progressRing && window.totalTime > 0) {
             const progress = (window.timeRemaining / window.totalTime) * 283;
             window.progressRing.style.strokeDashoffset = progress;
+            console.log('Updated progress ring to:', progress);
+        } else {
+            console.log('Progress ring not found or totalTime is 0');
         }
     };
 
@@ -6977,6 +6986,8 @@
             // Initialize timer state
             window.timeRemaining = parseInt(durationSelect ? durationSelect.value : 600);
             window.totalTime = window.timeRemaining;
+            window.isRunning = false;
+            window.isPaused = false;
             
             // Event listeners with debugging
             if (startBtn) {
@@ -7008,8 +7019,44 @@
                 });
             }
             
-            // Initialize display
-            window.updateDisplay();
+            // Initialize display properly
+            console.log('Initializing timer display...');
+            console.log('Initial timeRemaining:', window.timeRemaining);
+            console.log('Initial totalTime:', window.totalTime);
+            
+            // Force update display
+            if (window.display) {
+                const minutes = Math.floor(window.timeRemaining / 60);
+                const seconds = window.timeRemaining % 60;
+                const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                window.display.textContent = displayText;
+                console.log('Set display to:', displayText);
+            }
+            
+            // Update status
+            if (window.status) {
+                window.status.textContent = 'Ready to begin';
+                console.log('Set status to: Ready to begin');
+            }
+            
+            // Update progress ring
+            if (window.progressRing && window.totalTime > 0) {
+                const progress = (window.timeRemaining / window.totalTime) * 283;
+                window.progressRing.style.strokeDashoffset = progress;
+                console.log('Set progress ring to:', progress);
+            }
+            
+            // Ensure buttons are in correct state
+            if (window.startBtn) {
+                window.startBtn.classList.remove('hidden');
+                console.log('Start button made visible');
+            }
+            if (window.pauseBtn) {
+                window.pauseBtn.classList.add('hidden');
+                console.log('Pause button hidden');
+            }
+            
+            console.log('Timer initialization complete');
         }, 100);
     }
 
@@ -10287,42 +10334,8 @@
             if (nextBtn) nextBtn.addEventListener('click', nextExercise);
         }
         
-        // Auto-initialize when workout page loads
-        function checkAndInitWorkout() {
-            // Only check for workout elements if we're on the workout page
-            const currentPage = document.getElementById('main-content');
-            if (!currentPage || !currentPage.innerHTML.includes('workout-timer-display')) {
-                return; // Not on workout page, don't check
-            }
-            
-            const timerDisplay = document.getElementById('workout-timer-display');
-            if (timerDisplay) {
-                console.log('Workout elements found, initializing...');
-                
-                // Remove any existing event listeners to prevent conflicts
-                const startBtn = document.getElementById('workout-start-btn');
-                const pauseBtn = document.getElementById('workout-pause-btn');
-                const resetBtn = document.getElementById('workout-reset-btn');
-                const prevBtn = document.getElementById('prev-exercise-btn');
-                const nextBtn = document.getElementById('next-exercise-btn');
-                
-                if (startBtn) {
-                    // Clone the button to remove all event listeners
-                    const newStartBtn = startBtn.cloneNode(true);
-                    startBtn.parentNode.replaceChild(newStartBtn, startBtn);
-                }
-                
-                initWorkout();
-            } else {
-                console.log('Workout elements not found yet, retrying...');
-                setTimeout(checkAndInitWorkout, 100);
-            }
-        }
-        
-        // Only start checking for workout elements if we're on the workout page
-        if (document.getElementById('main-content') && document.getElementById('main-content').innerHTML.includes('workout-timer-display')) {
-            checkAndInitWorkout();
-        }
+        // Workout initialization is handled by the navigation system
+        // when the workout page is actually loaded
     </script>
 </body>
 </html>
