@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-    <!-- CACHE BUSTING VERSION: v20241220-002 - AGGRESSIVE TIMER CLEAR -->
+    <!-- CACHE BUSTING VERSION: v20241220-004 - NUCLEAR CACHE CLEAR -->
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -107,7 +107,7 @@
         console.log('🔄 CACHE BUSTING - JavaScript reloaded at:', new Date().toISOString());
         console.log('🔄 Current timestamp:', Date.now());
         console.log('🔄 Version:', 'v' + Date.now());
-        console.log('🔄 HTML Version: v20241220-003 - SERVICE WORKER CACHE CLEAR');
+        console.log('🔄 HTML Version: v20241220-004 - NUCLEAR CACHE CLEAR');
         
         // Force clear ALL intervals immediately
         for (let i = 1; i < 10000; i++) {
@@ -124,11 +124,27 @@
             });
         }
         
-        // Check if old timer system is running and force reload
+        // NUCLEAR CACHE CLEAR - Force reload if ANY old timer system detected
         setTimeout(() => {
-            if (window.timeRemaining !== undefined || window.timerInterval !== undefined) {
-                console.log('🚨 OLD TIMER SYSTEM DETECTED - FORCING RELOAD');
-                window.location.reload(true);
+            // Check for any old timer variables
+            const oldTimerVars = [
+                'timeRemaining', 'timerInterval', 'isRunning', 'totalTime',
+                'timerState', 'timerInterval', 'isPaused'
+            ];
+            
+            let oldSystemDetected = false;
+            oldTimerVars.forEach(varName => {
+                if (window[varName] !== undefined) {
+                    console.log('🚨 OLD TIMER VARIABLE DETECTED:', varName, '=', window[varName]);
+                    oldSystemDetected = true;
+                }
+            });
+            
+            if (oldSystemDetected) {
+                console.log('🚨 OLD TIMER SYSTEM DETECTED - NUCLEAR RELOAD');
+                console.log('🚨 Current URL:', window.location.href);
+                console.log('🚨 Reloading with cache bypass...');
+                window.location.href = window.location.href + '?v=' + Date.now();
             }
         }, 100);
         
