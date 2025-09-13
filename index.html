@@ -6974,13 +6974,18 @@
     
     // Update display function
     function updateTimerDisplay() {
+        console.log('🔄 updateTimerDisplay called');
         const display = document.getElementById('timer-display');
+        console.log('🔄 Display element found:', !!display);
+        console.log('🔄 Timer state:', window.timer);
         if (display) {
             const minutes = Math.floor(window.timer.timeRemaining / 60);
             const seconds = window.timer.timeRemaining % 60;
             const displayText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             display.textContent = displayText;
             console.log('📱 Display updated:', displayText);
+        } else {
+            console.error('❌ Timer display element not found!');
         }
     }
 
@@ -7125,6 +7130,8 @@
     // Timer logic
     function attachTimerLogic() {
         console.log('🚀 attachTimerLogic() called');
+        console.log('🚀 Current page:', currentPage);
+        console.log('🚀 Timer page visible:', document.getElementById('timer-page')?.style.display !== 'none');
         // Attaching enhanced timer logic
         
         // Ensure welcome overlay is hidden
@@ -7173,7 +7180,7 @@
             window.startBtn = startBtn;
             window.pauseBtn = pauseBtn;
             window.resetBtn = resetBtn;
-            window.display = display;
+            window.display = attachDisplay;
             window.status = status;
             window.durationSelect = attachDurationSelect;
             window.soundToggle = soundToggle;
