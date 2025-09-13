@@ -6689,13 +6689,13 @@
                 if (window.timeRemaining > 0) {
                     window.timeRemaining--;
                     console.log('timeRemaining after decrement:', window.timeRemaining);
-            console.log('About to call updateDisplay...');
-            try {
-                window.updateDisplay();
-                console.log('updateDisplay called successfully');
-            } catch (error) {
-                console.error('Error calling updateDisplay:', error);
-            }
+                    console.log('About to call updateDisplay...');
+                    try {
+                        window.updateDisplay();
+                        console.log('updateDisplay called successfully');
+                    } catch (error) {
+                        console.error('Error calling updateDisplay:', error);
+                    }
                     
                     // Play bell at specific intervals
                     if (window.timeRemaining === 0) {
