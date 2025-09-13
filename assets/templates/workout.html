@@ -1,12 +1,174 @@
+<!-- Premium Workout Page -->
 <div class="text-center py-16">
-    <h1 class="text-4xl font-bold text-charcoal mb-8">💪 7-Minute Workout</h1>
-    <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-md mx-auto">
-        <div class="text-6xl mb-6">🏃‍♂️</div>
-        <h2 class="text-2xl font-semibold mb-4">Jumping Jacks</h2>
-        <div class="text-4xl font-bold text-forest-green mb-6">30</div>
-        <div class="flex gap-4">
-            <button id="workout-start-btn" class="flex-1 px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Start</button>
-            <button id="workout-pause-btn" class="flex-1 px-6 py-3 bg-earth-gold text-white rounded-xl font-semibold">Pause</button>
+    <div class="animate-fade-up" data-animate="fade-up">
+        <h1 class="text-5xl font-bold gradient-text-premium mb-8">💪 7-Minute Workout</h1>
+        <p class="text-xl text-charcoal/70 mb-12">Quick, effective exercises for a strong start to your day</p>
+    </div>
+    
+    <div class="max-w-4xl mx-auto">
+        <!-- Premium Workout Timer -->
+        <div class="card-premium p-8 mb-8" data-animate="scale-in" data-delay="200">
+            <h2 class="text-2xl font-semibold mb-6 gradient-text-premium">Current Exercise</h2>
+            
+            <!-- Premium Timer Display with Progress Ring -->
+            <div class="relative mb-8">
+                <svg class="w-48 h-48 mx-auto transform -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" stroke="rgba(74, 108, 85, 0.1)" stroke-width="8" fill="none"/>
+                    <circle id="workout-progress-circle" cx="50" cy="50" r="45" stroke="#4A6C55" stroke-width="8" fill="none"
+                            stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"
+                            class="transition-all duration-1000 ease-in-out"/>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div id="workout-display" class="text-4xl font-bold text-forest-green">30</div>
+                </div>
+            </div>
+            
+            <!-- Premium Exercise Info -->
+            <div class="mb-8" data-animate="fade-up" data-delay="300">
+                <div id="exercise-emoji" class="text-6xl mb-4 float-premium">🏃‍♂️</div>
+                <h3 id="exercise-name" class="text-2xl font-semibold mb-2 gradient-text-premium">Jumping Jacks</h3>
+                <p id="exercise-description" class="text-charcoal/70 mb-4">Start with feet together, arms at sides. Jump up spreading feet shoulder-width apart while bringing arms overhead.</p>
+            </div>
+            
+            <!-- Premium Navigation -->
+            <div class="flex gap-4 mb-6" data-animate="fade-up" data-delay="400">
+                <button id="prev-exercise-btn" class="btn-premium ripple-premium">
+                    <span class="text-xl mr-2">⬅️</span>Previous
+                </button>
+                <button id="next-exercise-btn" class="btn-premium ripple-premium">
+                    <span class="text-xl mr-2">➡️</span>Next
+                </button>
+            </div>
+            
+            <!-- Premium Control Buttons -->
+            <div class="flex gap-4 mb-6" data-animate="fade-up" data-delay="500">
+                <button id="workout-start-btn" class="flex-1 btn-premium ripple-premium glow-premium">
+                    <span class="text-xl mr-2">▶️</span>Start Workout
+                </button>
+                <button id="workout-pause-btn" class="flex-1 btn-premium ripple-premium hidden">
+                    <span class="text-xl mr-2">⏸️</span>Pause
+                </button>
+                <button id="workout-reset-btn" class="flex-1 btn-premium ripple-premium">
+                    <span class="text-xl mr-2">🔄</span>Reset
+                </button>
+            </div>
+            
+            <div id="workout-status" class="text-lg text-charcoal/70 pulse-premium">Ready to begin your workout</div>
+        </div>
+        
+        <!-- Premium Exercise List -->
+        <div class="card-premium p-8" data-animate="fade-up" data-delay="600">
+            <h3 class="text-xl font-semibold mb-6 gradient-text-premium">Workout Routine</h3>
+            <div id="exercise-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="exercise-item p-4 rounded-lg border-2 border-forest-green/20 bg-forest-green/5">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🏃‍♂️</span>
+                        <div>
+                            <h4 class="font-semibold">Jumping Jacks</h4>
+                            <p class="text-sm text-charcoal/60">30 seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-item p-4 rounded-lg border-2 border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🧘‍♂️</span>
+                        <div>
+                            <h4 class="font-semibold">Wall Sit</h4>
+                            <p class="text-sm text-charcoal/60">30 seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-item p-4 rounded-lg border-2 border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🦵</span>
+                        <div>
+                            <h4 class="font-semibold">Push-ups</h4>
+                            <p class="text-sm text-charcoal/60">30 seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-item p-4 rounded-lg border-2 border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">💺</span>
+                        <div>
+                            <h4 class="font-semibold">Abdominal Crunch</h4>
+                            <p class="text-sm text-charcoal/60">30 seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-item p-4 rounded-lg border-2 border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🪑</span>
+                        <div>
+                            <h4 class="font-semibold">Step-up onto Chair</h4>
+                            <p class="text-sm text-charcoal/60">30 seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-item p-4 rounded-lg border-2 border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🦵</span>
+                        <div>
+                            <h4 class="font-semibold">Squats</h4>
+                            <p class="text-sm text-charcoal/60">30 seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-item p-4 rounded-lg border-2 border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🪑</span>
+                        <div>
+                            <h4 class="font-semibold">Triceps Dip on Chair</h4>
+                            <p class="text-sm text-charcoal/60">30 seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-item p-4 rounded-lg border-2 border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🧘‍♂️</span>
+                        <div>
+                            <h4 class="font-semibold">Plank</h4>
+                            <p class="text-sm text-charcoal/60">30 seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-item p-4 rounded-lg border-2 border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🦵</span>
+                        <div>
+                            <h4 class="font-semibold">High Knees Running in Place</h4>
+                            <p class="text-sm text-charcoal/60">30 seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-item p-4 rounded-lg border-2 border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🦵</span>
+                        <div>
+                            <h4 class="font-semibold">Lunges</h4>
+                            <p class="text-sm text-charcoal/60">30 seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-item p-4 rounded-lg border-2 border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🦵</span>
+                        <div>
+                            <h4 class="font-semibold">Push-up and Rotation</h4>
+                            <p class="text-sm text-charcoal/60">30 seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-item p-4 rounded-lg border-2 border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🧘‍♂️</span>
+                        <div>
+                            <h4 class="font-semibold">Side Plank</h4>
+                            <p class="text-sm text-charcoal/60">30 seconds</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

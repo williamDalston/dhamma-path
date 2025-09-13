@@ -1,7 +1,102 @@
+<!-- Premium Journal Page -->
 <div class="text-center py-16">
-    <h1 class="text-4xl font-bold text-charcoal mb-8">✍️ Journal</h1>
-    <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
-        <textarea id="journal-textarea" class="w-full h-64 p-4 border-2 border-forest-green/30 rounded-xl resize-none" placeholder="What are you grateful for today? What did you learn? How are you feeling?"></textarea>
-        <button id="journal-save-btn" class="mt-4 px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Save Entry</button>
+    <div class="animate-fade-up" data-animate="fade-up">
+        <h1 class="text-5xl font-bold gradient-text-premium mb-8">✍️ Mindful Journaling</h1>
+        <p class="text-xl text-charcoal/70 mb-12">Reflect, write, and grow through mindful practice</p>
+    </div>
+    
+    <div class="max-w-4xl mx-auto">
+        <!-- Premium Journaling Timer -->
+        <div class="card-premium p-8 mb-8" data-animate="scale-in" data-delay="200">
+            <h2 class="text-2xl font-semibold mb-6 gradient-text-premium">Journaling Session</h2>
+            
+            <!-- Premium Timer Display with Progress Ring -->
+            <div class="relative mb-8">
+                <svg class="w-32 h-32 mx-auto transform -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" stroke="rgba(74, 108, 85, 0.1)" stroke-width="6" fill="none"/>
+                    <circle id="journal-progress-circle" cx="50" cy="50" r="45" stroke="#4A6C55" stroke-width="6" fill="none"
+                            stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"
+                            class="transition-all duration-1000 ease-in-out"/>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div id="journal-display" class="text-3xl font-bold text-forest-green">10:00</div>
+                </div>
+            </div>
+            
+            <!-- Premium Duration Selector -->
+            <div class="mb-8" data-animate="fade-up" data-delay="300">
+                <label class="block text-sm font-semibold text-charcoal mb-3">Choose Duration</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="journal-duration-btn btn-premium ripple-premium" data-duration="300">
+                        <div class="text-lg font-bold">5</div><div class="text-sm">minutes</div>
+                    </button>
+                    <button class="journal-duration-btn btn-premium ripple-premium active" data-duration="600">
+                        <div class="text-lg font-bold">10</div><div class="text-sm">minutes</div>
+                    </button>
+                    <button class="journal-duration-btn btn-premium ripple-premium" data-duration="900">
+                        <div class="text-lg font-bold">15</div><div class="text-sm">minutes</div>
+                    </button>
+                    <button class="journal-duration-btn btn-premium ripple-premium" data-duration="1200">
+                        <div class="text-lg font-bold">20</div><div class="text-sm">minutes</div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Premium Control Buttons -->
+            <div class="flex gap-4 mb-6" data-animate="fade-up" data-delay="400">
+                <button id="journal-start-btn" class="flex-1 btn-premium ripple-premium glow-premium">
+                    <span class="text-xl mr-2">✍️</span>Start Writing
+                </button>
+                <button id="journal-pause-btn" class="flex-1 btn-premium ripple-premium hidden">
+                    <span class="text-xl mr-2">⏸️</span>Pause
+                </button>
+                <button id="journal-reset-btn" class="flex-1 btn-premium ripple-premium">
+                    <span class="text-xl mr-2">🔄</span>Reset
+                </button>
+            </div>
+            
+            <div id="journal-status" class="text-lg text-charcoal/70 pulse-premium">Ready to begin your mindful writing practice</div>
+        </div>
+        
+        <!-- Premium Writing Area -->
+        <div class="card-premium p-8" data-animate="fade-up" data-delay="500">
+            <h3 class="text-xl font-semibold mb-4 gradient-text-premium">Your Thoughts</h3>
+            <div class="relative">
+                <textarea 
+                    id="journal-textarea" 
+                    placeholder="Begin writing your thoughts, reflections, or whatever comes to mind..."
+                    class="w-full h-64 p-4 border-2 border-forest-green/30 rounded-xl focus:ring-2 focus:ring-forest-green focus:border-forest-green focus:outline-none resize-none text-base leading-relaxed transition-all duration-300 hover:shadow-lg focus:shadow-xl"
+                    disabled
+                ></textarea>
+                <div class="absolute top-2 right-2">
+                    <div class="loading-premium hidden" id="journal-saving"></div>
+                </div>
+            </div>
+            
+            <div class="flex justify-between items-center mt-4">
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-charcoal/60">
+                        <span id="word-count" class="font-semibold text-forest-green">0</span> words
+                    </div>
+                    <div class="text-sm text-charcoal/60">
+                        <span id="char-count" class="font-semibold text-forest-green">0</span> characters
+                    </div>
+                </div>
+                <button id="journal-save-btn" class="btn-premium ripple-premium" disabled>
+                    <span class="text-lg mr-2">💾</span>Save Entry
+                </button>
+            </div>
+        </div>
+        
+        <!-- Premium Journal Entries -->
+        <div class="card-premium p-8 mt-8" data-animate="fade-up" data-delay="600">
+            <h3 class="text-xl font-semibold mb-6 gradient-text-premium">Recent Entries</h3>
+            <div id="journal-entries" class="space-y-4">
+                <div class="text-center text-charcoal/60 py-8">
+                    <div class="text-4xl mb-4">📝</div>
+                    <p>No entries yet. Start writing to see your thoughts here!</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

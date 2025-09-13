@@ -221,6 +221,45 @@ class MeditationTimer {
         if (this.elements.display) {
             this.elements.display.textContent = timeString;
         }
+
+        // Update progress circle
+        this.updateProgressCircle();
+        
+        // Update stats
+        this.updateStats();
+    }
+
+    updateProgressCircle() {
+        const progressCircle = document.getElementById('progress-circle');
+        if (!progressCircle) return;
+
+        const totalTime = this.totalTime;
+        const remainingTime = this.timeRemaining;
+        const progress = (totalTime - remainingTime) / totalTime;
+        const circumference = 2 * Math.PI * 45; // radius = 45
+        const offset = circumference - (progress * circumference);
+
+        progressCircle.style.strokeDashoffset = offset;
+        
+        // Change color based on progress
+        if (progress > 0.8) {
+            progressCircle.style.stroke = '#B98B4C'; // Gold for near completion
+        } else if (progress > 0.5) {
+            progressCircle.style.stroke = '#6B8E6B'; // Light green for halfway
+        } else {
+            progressCircle.style.stroke = '#4A6C55'; // Forest green for start
+        }
+    }
+
+    updateStats() {
+        // Update session stats
+        const sessionsElement = document.querySelector('.grid .text-2xl');
+        if (sessionsElement && !this.isRunning) {
+            const currentSessions = parseInt(sessionsElement.textContent) || 0;
+            if (this.timeRemaining === 0) {
+                sessionsElement.textContent = currentSessions + 1;
+            }
+        }
     }
 
     updateStatus(message) {

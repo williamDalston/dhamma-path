@@ -1,8 +1,163 @@
+<!-- Premium Interview Practice Page -->
 <div class="text-center py-16">
-    <h1 class="text-4xl font-bold text-charcoal mb-8">🎤 Interview Practice</h1>
-    <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
-        <h2 class="text-2xl font-semibold mb-4">Tell me about yourself</h2>
-        <p class="text-charcoal/70 mb-6">Practice your elevator pitch and build confidence</p>
-        <button id="interview-start-btn" class="px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Start Practice</button>
+    <div class="animate-fade-up" data-animate="fade-up">
+        <h1 class="text-5xl font-bold gradient-text-premium mb-8">🎤 Interview Practice</h1>
+        <p class="text-xl text-charcoal/70 mb-12">Build confidence and master your communication skills</p>
+    </div>
+    
+    <div class="max-w-4xl mx-auto">
+        <!-- Premium Practice Timer -->
+        <div class="card-premium p-8 mb-8" data-animate="scale-in" data-delay="200">
+            <h2 class="text-2xl font-semibold mb-6 gradient-text-premium">Practice Session</h2>
+            
+            <!-- Premium Timer Display with Progress Ring -->
+            <div class="relative mb-8">
+                <svg class="w-48 h-48 mx-auto transform -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" stroke="rgba(74, 108, 85, 0.1)" stroke-width="8" fill="none"/>
+                    <circle id="interview-progress-circle" cx="50" cy="50" r="45" stroke="#4A6C55" stroke-width="8" fill="none"
+                            stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"
+                            class="transition-all duration-1000 ease-in-out"/>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div id="interview-display" class="text-4xl font-bold text-forest-green">2:00</div>
+                </div>
+            </div>
+            
+            <!-- Premium Question Display -->
+            <div class="mb-8" data-animate="fade-up" data-delay="300">
+                <div id="question-emoji" class="text-6xl mb-4 float-premium">🎤</div>
+                <h3 id="question-title" class="text-2xl font-semibold mb-2 gradient-text-premium">Tell me about yourself</h3>
+                <p id="question-description" class="text-charcoal/70 mb-4">Practice your elevator pitch and build confidence in your communication skills.</p>
+            </div>
+            
+            <!-- Premium Navigation -->
+            <div class="flex gap-4 mb-6" data-animate="fade-up" data-delay="400">
+                <button id="prev-question-btn" class="btn-premium ripple-premium">
+                    <span class="text-xl mr-2">⬅️</span>Previous
+                </button>
+                <button id="next-question-btn" class="btn-premium ripple-premium">
+                    <span class="text-xl mr-2">➡️</span>Next
+                </button>
+            </div>
+            
+            <!-- Premium Control Buttons -->
+            <div class="flex gap-4 mb-6" data-animate="fade-up" data-delay="500">
+                <button id="interview-start-btn" class="flex-1 btn-premium ripple-premium glow-premium">
+                    <span class="text-xl mr-2">🎤</span>Start Practice
+                </button>
+                <button id="interview-pause-btn" class="flex-1 btn-premium ripple-premium hidden">
+                    <span class="text-xl mr-2">⏸️</span>Pause
+                </button>
+                <button id="interview-reset-btn" class="flex-1 btn-premium ripple-premium">
+                    <span class="text-xl mr-2">🔄</span>Reset
+                </button>
+            </div>
+            
+            <div id="interview-status" class="text-lg text-charcoal/70 pulse-premium">Ready to practice your interview skills</div>
+        </div>
+        
+        <!-- Premium Question Categories -->
+        <div class="card-premium p-8 mb-8" data-animate="fade-up" data-delay="600">
+            <h3 class="text-xl font-semibold mb-6 gradient-text-premium">Question Categories</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <button class="category-btn p-4 rounded-lg border-2 border-forest-green/20 bg-forest-green/5 hover:bg-forest-green/10 transition-colors text-left">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">👤</span>
+                        <div>
+                            <h4 class="font-semibold">Personal</h4>
+                            <p class="text-sm text-charcoal/60">About yourself</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="category-btn p-4 rounded-lg border-2 border-gray-200 hover:border-forest-green/20 hover:bg-forest-green/5 transition-colors text-left">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">💼</span>
+                        <div>
+                            <h4 class="font-semibold">Professional</h4>
+                            <p class="text-sm text-charcoal/60">Work experience</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="category-btn p-4 rounded-lg border-2 border-gray-200 hover:border-forest-green/20 hover:bg-forest-green/5 transition-colors text-left">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🎯</span>
+                        <div>
+                            <h4 class="font-semibold">Behavioral</h4>
+                            <p class="text-sm text-charcoal/60">Situational questions</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="category-btn p-4 rounded-lg border-2 border-gray-200 hover:border-forest-green/20 hover:bg-forest-green/5 transition-colors text-left">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🏢</span>
+                        <div>
+                            <h4 class="font-semibold">Company</h4>
+                            <p class="text-sm text-charcoal/60">About the role</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="category-btn p-4 rounded-lg border-2 border-gray-200 hover:border-forest-green/20 hover:bg-forest-green/5 transition-colors text-left">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">❓</span>
+                        <div>
+                            <h4 class="font-semibold">Technical</h4>
+                            <p class="text-sm text-charcoal/60">Skills & knowledge</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="category-btn p-4 rounded-lg border-2 border-gray-200 hover:border-forest-green/20 hover:bg-forest-green/5 transition-colors text-left">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🚀</span>
+                        <div>
+                            <h4 class="font-semibold">Future</h4>
+                            <p class="text-sm text-charcoal/60">Goals & aspirations</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Premium Tips Section -->
+        <div class="card-premium p-8" data-animate="fade-up" data-delay="700">
+            <h3 class="text-xl font-semibold mb-6 gradient-text-premium">Interview Tips</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="tip-item p-4 rounded-lg bg-gradient-to-br from-forest-green/5 to-light-green/5">
+                    <div class="flex items-start space-x-3">
+                        <span class="text-2xl">🎯</span>
+                        <div>
+                            <h4 class="font-semibold mb-2">Be Specific</h4>
+                            <p class="text-sm text-charcoal/70">Use concrete examples and quantify your achievements when possible.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tip-item p-4 rounded-lg bg-gradient-to-br from-forest-green/5 to-light-green/5">
+                    <div class="flex items-start space-x-3">
+                        <span class="text-2xl">👂</span>
+                        <div>
+                            <h4 class="font-semibold mb-2">Listen Actively</h4>
+                            <p class="text-sm text-charcoal/70">Pay attention to the question and ask for clarification if needed.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tip-item p-4 rounded-lg bg-gradient-to-br from-forest-green/5 to-light-green/5">
+                    <div class="flex items-start space-x-3">
+                        <span class="text-2xl">💪</span>
+                        <div>
+                            <h4 class="font-semibold mb-2">Stay Confident</h4>
+                            <p class="text-sm text-charcoal/70">Maintain good posture and speak clearly with conviction.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tip-item p-4 rounded-lg bg-gradient-to-br from-forest-green/5 to-light-green/5">
+                    <div class="flex items-start space-x-3">
+                        <span class="text-2xl">🤝</span>
+                        <div>
+                            <h4 class="font-semibold mb-2">Engage & Connect</h4>
+                            <p class="text-sm text-charcoal/70">Show genuine interest in the role and company culture.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

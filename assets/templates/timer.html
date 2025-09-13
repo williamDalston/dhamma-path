@@ -1,20 +1,96 @@
 <div class="text-center py-16">
-    <h1 class="text-4xl font-bold text-charcoal mb-8">🧘 Meditation Timer</h1>
-    <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-md mx-auto">
-        <div id="timer-display" class="text-6xl font-bold text-forest-green mb-6">10:00</div>
-        <div class="mb-6">
-            <select id="timer-duration" class="w-full px-4 py-3 border-2 border-forest-green/30 rounded-xl">
-                <option value="300">5 minutes</option>
-                <option value="600" selected>10 minutes</option>
-                <option value="900">15 minutes</option>
-                <option value="1200">20 minutes</option>
-            </select>
+    <div class="animate-fade-up" data-animate="fade-up">
+        <h1 class="text-5xl font-bold gradient-text-premium mb-8">🧘 Meditation Timer</h1>
+    </div>
+    
+    <div class="card-premium max-w-lg mx-auto" data-animate="scale-in" data-delay="200">
+        <!-- Premium Timer Display with Progress Ring -->
+        <div class="relative mb-8">
+            <svg class="w-48 h-48 mx-auto transform -rotate-90" viewBox="0 0 100 100">
+                <!-- Background Circle -->
+                <circle cx="50" cy="50" r="45" stroke="rgba(74, 108, 85, 0.1)" stroke-width="8" fill="none"/>
+                <!-- Progress Circle -->
+                <circle id="progress-circle" cx="50" cy="50" r="45" stroke="#4A6C55" stroke-width="8" fill="none" 
+                        stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round" 
+                        class="transition-all duration-1000 ease-in-out"/>
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div id="timer-display" class="text-4xl font-bold text-forest-green">10:00</div>
+            </div>
         </div>
-        <div class="flex gap-4">
-            <button id="timer-start-btn" class="flex-1 px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Start</button>
-            <button id="timer-pause-btn" class="flex-1 px-6 py-3 bg-earth-gold text-white rounded-xl font-semibold hidden">Pause</button>
-            <button id="timer-reset-btn" class="flex-1 px-6 py-3 bg-charcoal/70 text-white rounded-xl font-semibold">Reset</button>
+        
+        <!-- Premium Duration Selector -->
+        <div class="mb-8" data-animate="fade-up" data-delay="300">
+            <label class="block text-sm font-semibold text-charcoal mb-3">Choose Duration</label>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="duration-btn btn-premium ripple-premium" data-duration="300">
+                    <div class="text-lg font-bold">5</div>
+                    <div class="text-sm">minutes</div>
+                </button>
+                <button class="duration-btn btn-premium ripple-premium active" data-duration="600">
+                    <div class="text-lg font-bold">10</div>
+                    <div class="text-sm">minutes</div>
+                </button>
+                <button class="duration-btn btn-premium ripple-premium" data-duration="900">
+                    <div class="text-lg font-bold">15</div>
+                    <div class="text-sm">minutes</div>
+                </button>
+                <button class="duration-btn btn-premium ripple-premium" data-duration="1200">
+                    <div class="text-lg font-bold">20</div>
+                    <div class="text-sm">minutes</div>
+                </button>
+            </div>
         </div>
-        <div id="timer-status" class="mt-4 text-charcoal/70">Ready to begin</div>
+        
+        <!-- Premium Control Buttons -->
+        <div class="flex gap-4 mb-6" data-animate="fade-up" data-delay="400">
+            <button id="timer-start-btn" class="flex-1 btn-premium ripple-premium glow-premium">
+                <span class="text-xl mr-2">▶️</span>Start
+            </button>
+            <button id="timer-pause-btn" class="flex-1 btn-premium ripple-premium hidden">
+                <span class="text-xl mr-2">⏸️</span>Pause
+            </button>
+            <button id="timer-reset-btn" class="flex-1 btn-premium ripple-premium">
+                <span class="text-xl mr-2">🔄</span>Reset
+            </button>
+        </div>
+        
+        <!-- Premium Status Display -->
+        <div id="timer-status" class="text-charcoal/70 font-medium mb-4">Ready to begin your meditation journey</div>
+        
+        <!-- Premium Stats -->
+        <div class="grid grid-cols-3 gap-4 text-center pt-6 border-t border-gray-200">
+            <div>
+                <div class="text-2xl font-bold text-forest-green">0</div>
+                <div class="text-sm text-charcoal/60">Sessions</div>
+            </div>
+            <div>
+                <div class="text-2xl font-bold text-earth-gold">0m</div>
+                <div class="text-sm text-charcoal/60">Total Time</div>
+            </div>
+            <div>
+                <div class="text-2xl font-bold text-forest-green">0</div>
+                <div class="text-sm text-charcoal/60">Streak</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Premium Tips -->
+    <div class="mt-12 max-w-2xl mx-auto" data-animate="fade-up" data-delay="500">
+        <h3 class="text-xl font-semibold text-charcoal mb-4">💡 Meditation Tips</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-charcoal/70">
+            <div class="bg-white/50 rounded-lg p-4">
+                <strong>Find Your Space:</strong> Choose a quiet, comfortable spot
+            </div>
+            <div class="bg-white/50 rounded-lg p-4">
+                <strong>Breathe Naturally:</strong> Don't force your breathing
+            </div>
+            <div class="bg-white/50 rounded-lg p-4">
+                <strong>Be Patient:</strong> It's normal for your mind to wander
+            </div>
+            <div class="bg-white/50 rounded-lg p-4">
+                <strong>Consistency:</strong> Even 5 minutes daily makes a difference
+            </div>
+        </div>
     </div>
 </div>
