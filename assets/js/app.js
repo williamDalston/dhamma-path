@@ -403,8 +403,18 @@ class DhammaPathApp {
     }
 
     loadInitialPage() {
-        // Load home page by default
-        this.navigateToPage('home');
+        // Check if user is new or returning
+        const isFirstVisit = !localStorage.getItem('morningFlowUser');
+        
+        if (isFirstVisit) {
+            // Show welcome screen for new users
+            this.navigateToPage('welcome');
+            localStorage.setItem('morningFlowUser', 'true');
+            localStorage.setItem('morningFlowFirstVisit', Date.now().toString());
+        } else {
+            // Show home page for returning users
+            this.navigateToPage('home');
+        }
     }
 
     navigateToPage(pageName) {

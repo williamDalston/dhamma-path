@@ -5613,3 +5613,415 @@ html {
         color: white;
     }
 }
+
+/* ========================================
+   WELCOME SCREEN - THE TRUST COVENANT
+   ======================================== */
+
+/* Welcome Screen Container */
+.welcome-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Privacy-First Header */
+.welcome-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.privacy-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(26, 77, 58, 0.1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(26, 77, 58, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.privacy-icon {
+    color: var(--forest-deep);
+    flex-shrink: 0;
+}
+
+.privacy-text {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--forest-deep);
+}
+
+/* Welcome Content */
+.welcome-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.welcome-logo {
+    margin-bottom: 2rem;
+    animation: welcomeLogoFloat 3s ease-in-out infinite;
+}
+
+.welcome-logo-icon {
+    filter: drop-shadow(0 8px 24px rgba(26, 77, 58, 0.2));
+}
+
+@keyframes welcomeLogoFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+.welcome-title {
+    font-family: var(--font-family-display);
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    font-weight: var(--font-weight-bold);
+    color: var(--forest-deep);
+    margin: 0 0 2rem 0;
+    line-height: 1.1;
+    text-align: center;
+}
+
+/* Trust Covenant */
+.trust-covenant {
+    margin-bottom: 3rem;
+    max-width: 500px;
+}
+
+.trust-message {
+    font-family: var(--font-family-content);
+    font-size: var(--font-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--charcoal-light);
+    margin: 0 0 1rem 0;
+    line-height: 1.6;
+}
+
+/* Privacy Features */
+.privacy-features {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    width: 100%;
+    max-width: 400px;
+}
+
+.privacy-feature {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(26, 77, 58, 0.1);
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.privacy-feature:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(26, 77, 58, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26, 77, 58, 0.1);
+}
+
+.feature-icon {
+    color: var(--forest-deep);
+    flex-shrink: 0;
+}
+
+.privacy-feature span {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--forest-deep);
+}
+
+/* Welcome Breath Section */
+.welcome-breath-section {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.breath-intro {
+    margin-bottom: 2rem;
+}
+
+.breath-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--forest-deep);
+    margin: 0 0 0.5rem 0;
+}
+
+.breath-subtitle {
+    font-family: var(--font-family-content);
+    font-size: var(--font-base);
+    color: var(--charcoal-light);
+    margin: 0;
+}
+
+/* Breath Circle */
+.breath-circle-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.breath-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(26, 77, 58, 0.1) 0%, rgba(122, 155, 122, 0.1) 100%);
+    border: 3px solid rgba(26, 77, 58, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.breath-circle-inner {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage-deep) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.breath-circle.breathing {
+    animation: breathPulse 4s ease-in-out infinite;
+}
+
+.breath-circle.breathing .breath-circle-inner {
+    animation: breathInner 4s ease-in-out infinite;
+}
+
+@keyframes breathPulse {
+    0%, 100% { 
+        transform: scale(1);
+        border-color: rgba(26, 77, 58, 0.2);
+    }
+    50% { 
+        transform: scale(1.1);
+        border-color: rgba(26, 77, 58, 0.4);
+    }
+}
+
+@keyframes breathInner {
+    0%, 100% { 
+        transform: scale(1);
+    }
+    50% { 
+        transform: scale(0.9);
+    }
+}
+
+.breath-text {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-lg);
+    font-weight: var(--font-weight-semibold);
+    color: white;
+    text-align: center;
+}
+
+/* Breath Controls */
+.breath-controls {
+    margin-bottom: 2rem;
+}
+
+.breath-start-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage-deep) 100%);
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(26, 77, 58, 0.3);
+}
+
+.breath-start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(26, 77, 58, 0.4);
+}
+
+.breath-start-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(26, 77, 58, 0.3);
+}
+
+.breath-start-btn.breathing {
+    background: linear-gradient(135deg, var(--sage-deep) 0%, var(--forest-deep) 100%);
+}
+
+/* Welcome Actions */
+.welcome-actions {
+    margin-bottom: 2rem;
+}
+
+.begin-flow-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2.5rem;
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage-deep) 100%);
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-lg);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 12px 32px rgba(26, 77, 58, 0.3);
+    min-height: 56px;
+}
+
+.begin-flow-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(26, 77, 58, 0.4);
+}
+
+.begin-flow-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(26, 77, 58, 0.3);
+}
+
+.btn-icon {
+    transition: transform 0.3s ease;
+}
+
+.begin-flow-btn:hover .btn-icon {
+    transform: translateX(4px);
+}
+
+/* Welcome Footer */
+.welcome-footer {
+    text-align: center;
+    margin-top: auto;
+}
+
+.trust-footer-text {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-sm);
+    color: var(--charcoal-light);
+    margin: 0;
+    opacity: 0.8;
+}
+
+/* Mobile Optimizations for Welcome Screen */
+@media screen and (max-width: 768px) {
+    .welcome-screen {
+        padding: 1.5rem 1rem;
+    }
+    
+    .welcome-title {
+        font-size: clamp(1.75rem, 10vw, 2.5rem);
+        margin-bottom: 1.5rem;
+    }
+    
+    .trust-message {
+        font-size: var(--font-base);
+        margin-bottom: 0.75rem;
+    }
+    
+    .privacy-features {
+        margin-bottom: 2rem;
+    }
+    
+    .privacy-feature {
+        padding: 0.875rem 1.25rem;
+    }
+    
+    .breath-circle {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .breath-circle-inner {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .breath-text {
+        font-size: var(--font-base);
+    }
+    
+    .breath-start-btn {
+        padding: 0.875rem 1.75rem;
+        font-size: var(--font-base);
+    }
+    
+    .begin-flow-btn {
+        padding: 1rem 2rem;
+        font-size: var(--font-base);
+        min-height: 52px;
+    }
+}
+
+/* iPhone-specific Welcome Screen Optimizations */
+@media screen and (max-width: 428px) {
+    .welcome-screen {
+        padding: 1rem 0.75rem;
+    }
+    
+    .privacy-badge {
+        padding: 0.5rem 1rem;
+    }
+    
+    .privacy-text {
+        font-size: var(--font-xs);
+    }
+    
+    .welcome-title {
+        font-size: clamp(1.5rem, 12vw, 2rem);
+        margin-bottom: 1rem;
+    }
+    
+    .trust-message {
+        font-size: var(--font-sm);
+    }
+    
+    .privacy-feature {
+        padding: 0.75rem 1rem;
+    }
+    
+    .breath-circle {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .breath-circle-inner {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .breath-text {
+        font-size: var(--font-sm);
+    }
+}

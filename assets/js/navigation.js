@@ -437,6 +437,9 @@ class NavigationManager {
         
         // Initialize page-specific functionality
         switch (pageName) {
+            case 'welcome':
+                this.initializeWelcomePage();
+                break;
             case 'timer':
                 this.initializeTimerPage();
                 break;
@@ -809,8 +812,29 @@ class NavigationManager {
     }
 
 
+    initializeWelcomePage() {
+        console.log('🏠 Initializing welcome page features...');
+        
+        // Initialize welcome screen functionality
+        if (window.welcomeScreen) {
+            window.welcomeScreen.show();
+        }
+        
+        // Hide navigation for welcome screen
+        const navigation = document.querySelector('.main-nav');
+        if (navigation) {
+            navigation.style.display = 'none';
+        }
+    }
+
     initializeHomePage() {
         console.log('🏠 Initializing Flow Start home page...');
+        
+        // Show navigation for home page
+        const navigation = document.querySelector('.main-nav');
+        if (navigation) {
+            navigation.style.display = 'flex';
+        }
         
         // Begin Flow button - starts with recommended activity
         const beginFlowBtn = document.querySelector('.begin-flow-btn, #begin-flow-btn');
