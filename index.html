@@ -9015,22 +9015,31 @@
         requestAnimationFrame(() => {
             initSearch();
             
-            // Throttled global click handler for navigation links
-            const throttledNavigation = throttle((e) => {
-                console.log('Click detected on:', e.target);
+            // Enhanced navigation click handler with better debugging
+            const handleNavigationClick = (e) => {
+                console.log('🔍 Click detected on:', e.target);
+                console.log('🔍 Target classes:', e.target.className);
+                console.log('🔍 Target tag:', e.target.tagName);
+                
                 const link = e.target.closest('.main-nav-link');
+                console.log('🔍 Closest nav link:', link);
+                
                 if (link) {
-                    console.log('Navigation link clicked:', link.dataset.page);
+                    console.log('✅ Navigation link clicked:', link.dataset.page);
+                    console.log('✅ Link dataset:', link.dataset);
                     e.preventDefault();
+                    e.stopPropagation();
                     const page = link.dataset.page;
                     const id = link.dataset.articleId || link.dataset.pathId;
+                    console.log('✅ Navigating to page:', page, 'with id:', id);
                     navigateToPage(page, id);
                 } else {
-                    console.log('No navigation link found');
+                    console.log('❌ No navigation link found');
+                    console.log('❌ Available main-nav-links:', document.querySelectorAll('.main-nav-link').length);
                 }
-            }, 100);
+            };
             
-            document.body.addEventListener('click', throttledNavigation);
+            document.body.addEventListener('click', handleNavigationClick);
             
         // Load home page by default
         navigateToPage('home');
