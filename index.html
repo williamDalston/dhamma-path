@@ -107,11 +107,21 @@
         console.log('🔄 CACHE BUSTING - JavaScript reloaded at:', new Date().toISOString());
         console.log('🔄 Current timestamp:', Date.now());
         console.log('🔄 Version:', 'v' + Date.now());
-        console.log('🔄 HTML Version: v20241220-001');
+        console.log('🔄 HTML Version: v20241220-003 - SERVICE WORKER CACHE CLEAR');
         
         // Force clear ALL intervals immediately
         for (let i = 1; i < 10000; i++) {
             clearInterval(i);
+        }
+        
+        // Clear service worker cache
+        if ('caches' in window) {
+            caches.keys().then(cacheNames => {
+                cacheNames.forEach(cacheName => {
+                    console.log('🗑️ Deleting cache:', cacheName);
+                    caches.delete(cacheName);
+                });
+            });
         }
         
         // Check if old timer system is running and force reload

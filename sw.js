@@ -1,5 +1,5 @@
 // Service Worker for The Dhamma Path PWA
-const CACHE_NAME = 'dhamma-path-v1';
+const CACHE_NAME = 'dhamma-path-v2-timer-fix';
 const urlsToCache = [
   '/',
   '/index.html',
