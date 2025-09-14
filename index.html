@@ -72,6 +72,44 @@
       })();
     </script>
     
+    <!-- Comprehensive Path Normalization -->
+    <script>
+    (function normalizePaths(){
+      const PREFIX = '/dhamma-path/';
+      const absolutize = (u) => {
+        if (!u) return u;
+        if (/^https?:\/\//.test(u)) return u;
+        return u.startsWith('/') ? PREFIX + u.slice(1) : u;
+      };
+
+      // Fix existing <link> hrefs that start with '/'
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('link[href^="/"]').forEach(link => {
+          const raw = link.getAttribute('href');
+          link.setAttribute('href', absolutize(raw));
+        });
+      });
+
+      // Safety wrap Cache.add / addAll used by your precache code
+      const _add = Cache.prototype.add;
+      const _addAll = Cache.prototype.addAll;
+      Cache.prototype.add = function(u){ return _add.call(this, absolutize(u)); };
+      Cache.prototype.addAll = function(list){ return _addAll.call(this, list.map(absolutize)); };
+
+      // Optional: normalize string fetch() calls
+      const _fetch = window.fetch;
+      window.fetch = function(input, init){
+        if (typeof input === 'string') return _fetch(absolutize(input), init);
+        if (input instanceof Request) {
+          const url = absolutize(input.url);
+          if (url === input.url) return _fetch(input, init);
+          return _fetch(new Request(url, input), init);
+        }
+        return _fetch(input, init);
+      };
+    })();
+    </script>
+    
     <!-- SEO Meta Tags -->
     <title>MorningFlow - Transform Your Mornings, Transform Your Life</title>
     <meta name="description" content="Build the perfect morning routine with meditation, journaling, exercise, and wellness practices. Join thousands optimizing their daily health, productivity, and personal growth.">

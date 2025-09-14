@@ -81,7 +81,6 @@ class ProductionOptimizer {
             { rel: 'preload', href: 'assets/js/meditation-timer.js', as: 'script' },
             { rel: 'prefetch', href: 'assets/templates/journal.html' },
             { rel: 'prefetch', href: 'assets/templates/workout.html' },
-            { rel: 'prefetch', href: 'assets/templates/interview.html' }
         ];
 
         hints.forEach(hint => {
@@ -316,11 +315,12 @@ class ProductionOptimizer {
         document.body.appendChild(offlineIndicator);
 
         // Cache critical resources for offline use
+        function appURL(p){ return new URL(p.replace(/^\//,''), document.baseURI).toString(); }
         const criticalResources = [
-            window.appURL ? window.appURL('assets/css/styles.css') : '/dhamma-path/assets/css/styles.css',
-            window.appURL ? window.appURL('assets/js/navigation.js') : '/dhamma-path/assets/js/navigation.js',
-            window.appURL ? window.appURL('assets/js/meditation-timer.js') : '/dhamma-path/assets/js/meditation-timer.js',
-            window.appURL ? window.appURL('assets/templates/timer.html') : '/dhamma-path/assets/templates/timer.html'
+            appURL('assets/css/styles.css'),
+            appURL('assets/js/navigation.js'),
+            appURL('assets/js/meditation-timer.js'),
+            appURL('assets/templates/timer.html')
         ];
 
         if ('caches' in window) {

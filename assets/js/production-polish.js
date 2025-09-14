@@ -646,12 +646,13 @@ class OfflineSupport {
     async cacheCriticalResources() {
         if ('caches' in window) {
             try {
+                function appURL(p){ return new URL(p.replace(/^\//,''), document.baseURI).toString(); }
                 const criticalResources = [
-                    window.appURL ? window.appURL('') : '/dhamma-path/',
-                    window.appURL ? window.appURL('assets/css/styles.css') : '/dhamma-path/assets/css/styles.css',
-                    window.appURL ? window.appURL('assets/js/app.js') : '/dhamma-path/assets/js/app.js',
-                    window.appURL ? window.appURL('assets/js/navigation.js') : '/dhamma-path/assets/js/navigation.js',
-                    window.appURL ? window.appURL('offline.html') : '/dhamma-path/offline.html'
+                    appURL(''),
+                    appURL('offline.html'),
+                    appURL('assets/css/styles.css'),
+                    appURL('assets/js/app.js'),
+                    appURL('assets/js/navigation.js'),
                 ];
                 
                 // Use safe caching with proper base paths
