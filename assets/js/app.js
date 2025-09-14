@@ -36,11 +36,11 @@ class DhammaPathApp {
             
             // Use requestIdleCallback for non-critical features
             if (window.requestIdleCallback) {
-                requestIdleCallback(() => {
-                    this.initializeNonCriticalFeatures();
+                requestIdleCallback(async () => {
+                    await this.initializeNonCriticalFeatures();
                 });
             } else {
-                setTimeout(() => this.initializeNonCriticalFeatures(), 0);
+                setTimeout(async () => await this.initializeNonCriticalFeatures(), 0);
             }
             
             this.loadInitialPage();
@@ -51,7 +51,7 @@ class DhammaPathApp {
         }
     }
     
-    initializeNonCriticalFeatures() {
+    async initializeNonCriticalFeatures() {
         // Initialize non-critical features when browser is idle
         this.initializeAnimationSystem();
         this.initializeAnalytics();
@@ -66,7 +66,7 @@ class DhammaPathApp {
         this.initializeSmartRecommendations();
         this.initializeAdaptiveTiming();
         this.initializeHealthIntegration();
-        this.initializeWeatherIntegration();
+        await this.initializeWeatherIntegration();
         this.initializeLearningSystem();
         this.initializeMobileGestures();
         this.initializeMobilePerformance();
@@ -196,13 +196,17 @@ class DhammaPathApp {
         }
     }
 
-    initializeWeatherIntegration() {
-        if (window.WeatherIntegration) {
-            this.weatherIntegration = new window.WeatherIntegration();
-            console.log('🌤️ Weather integration initialized');
-        } else {
-            console.error('❌ WeatherIntegration not found');
+    async initializeWeatherIntegration() {
+        const start = performance.now();
+        while (!('WeatherIntegration' in window)) {
+            if (performance.now() - start > 5000) {
+                console.warn('WeatherIntegration still not available after 5s; skipping');
+                return;
+            }
+            await new Promise(r => setTimeout(r, 50));
         }
+        this.weatherIntegration = new window.WeatherIntegration();
+        console.log('🌤️ Weather integration initialized');
     }
 
     initializeLearningSystem() {

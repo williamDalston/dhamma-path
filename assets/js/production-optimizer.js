@@ -315,12 +315,15 @@ class ProductionOptimizer {
         document.body.appendChild(offlineIndicator);
 
         // Cache critical resources for offline use
-        function appURL(p){ return new URL(p.replace(/^\//,''), document.baseURI).toString(); }
+        const BASE = self.registration?.scope?.replace(location.origin, '') || '/';
+        const A = (p) => new URL(p.replace(/^\/+/,'') , BASE).toString();
         const criticalResources = [
-            appURL('assets/css/styles.css'),
-            appURL('assets/js/navigation.js'),
-            appURL('assets/js/meditation-timer.js'),
-            appURL('assets/templates/timer.html')
+            A('assets/css/styles.css'),
+            A('assets/js/app.js'),
+            A('assets/js/navigation.js'),
+            A('assets/js/meditation-timer.js'),
+            A('assets/templates/timer.html'),
+            A('offline.html')
         ];
 
         if ('caches' in window) {

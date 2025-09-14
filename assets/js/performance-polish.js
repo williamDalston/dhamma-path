@@ -88,14 +88,20 @@ class PerformancePolish {
     
     monitorLongTasks() {
         if ('PerformanceObserver' in window) {
+            const LONG_TASK_MS = 200;
+            let last = 0;
             new PerformanceObserver((list) => {
+                const now = performance.now();
+                if (now - last < 2000) return;           // 1 message / 2s
                 const entries = list.getEntries();
-                entries.forEach(entry => {
-                    if (entry.duration > 50) {
-                        console.warn(`⚠️ Long task detected: ${entry.duration.toFixed(2)}ms`);
+                for (const entry of entries) {
+                    if (entry.duration >= LONG_TASK_MS) {
+                        console.warn(`⚠️ Long task detected: ${entry.duration.toFixed(0)}ms`);
                         this.optimizeLongTask(entry);
+                        last = now;
+                        break;
                     }
-                });
+                }
             }).observe({ entryTypes: ['longtask'] });
         }
     }
