@@ -1240,6 +1240,9 @@ class WeatherIntegration {
     }
 }
 
+// Expose WeatherIntegration to global scope
+window.WeatherIntegration = WeatherIntegration;
+
 // Initialize weather integration
 document.addEventListener('DOMContentLoaded', () => {
     window.weatherIntegration = new WeatherIntegration();
