@@ -647,7 +647,21 @@ class OfflineSupport {
                     '/offline.html'
                 ];
                 
-                await window.__cacheAddAll('mf-critical-v1', criticalResources);
+                // Use fallback if __cacheAddAll not available
+                if (typeof window.__cacheAddAll === 'function') {
+                    await window.__cacheAddAll('mf-critical-v1', criticalResources);
+                } else {
+                    // Fallback implementation
+                    const cache = await caches.open('mf-critical-v1');
+                    for (const url of criticalResources) {
+                        try { 
+                            await cache.add(url); 
+                            console.log('✅ Cached:', url);
+                        } catch (e) { 
+                            console.warn('⚠️ Skipped cache:', url, e.message); 
+                        }
+                    }
+                }
                 console.log('📦 Critical resources cached');
             } catch (error) {
                 console.error('❌ Failed to cache resources:', error);

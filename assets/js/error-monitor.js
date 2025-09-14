@@ -246,20 +246,26 @@ class ErrorMonitor {
             };
 
             // Send to error tracking service (graceful fallback if endpoint doesn't exist)
-            const response = await fetch('./api/errors', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Error-Report': 'true'
-                },
-                body: JSON.stringify(enrichedError)
-            });
+            try {
+                const response = await fetch('./api/errors', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Error-Report': 'true'
+                    },
+                    body: JSON.stringify(enrichedError)
+                });
 
-            if (!response.ok) {
-                throw new Error(`Error reporting failed: ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`Error reporting failed: ${response.status}`);
+                }
+
+                console.log('✅ Error reported successfully');
+            } catch (fetchError) {
+                // If endpoint doesn't exist or fails, just log locally
+                console.warn('⚠️ Error reporting endpoint not available:', fetchError.message);
+                return; // Don't throw, just return gracefully
             }
-
-            console.log('✅ Error reported successfully');
         } catch (error) {
             console.error('❌ Failed to report error:', error);
             // Store in localStorage for later retry
