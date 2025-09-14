@@ -8526,6 +8526,96 @@ html {
 *:focus-visible {
     outline: 2px solid var(--sage-deep);
     outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Enhanced Focus for Interactive Elements */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--sage-deep);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(139, 169, 93, 0.1);
+}
+
+/* Skip Links for Accessibility */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--sage-deep);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 1000;
+}
+
+.skip-link:focus {
+    top: 6px;
+}
+
+/* Tooltip System */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: var(--charcoal);
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    padding: 8px 12px;
+    position: absolute;
+    z-index: 1000;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.875rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--charcoal) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Enhanced Button States */
+.btn-loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn-loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
 /* Enhanced Scrollbar */
@@ -8549,17 +8639,33 @@ html {
 
 /* Smooth Page Transitions */
 .page-transition {
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
 }
 
 .page-transition.entering {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(20px) scale(0.98);
 }
 
 .page-transition.entered {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+}
+
+/* Enhanced Page Load Animation */
+@keyframes pageSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.page-slide-in {
+    animation: pageSlideIn 0.5s ease-out;
 }
 
 /* Enhanced Loading States */
@@ -8576,6 +8682,38 @@ html {
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
     background-size: 200px 100%;
     animation: shimmer-loading 1.5s infinite;
+}
+
+/* Content Loading States */
+.content-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.content-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background-size: 200px 100%;
+    animation: shimmer-loading 1.5s infinite;
+}
+
+/* Subtle Pulse for Interactive Elements */
+.interactive-pulse {
+    animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+@keyframes gentle-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
 }
 
 /* Improved Selection */
@@ -8601,6 +8739,11 @@ html {
 
 .flow-step-indicator {
     transition: all 0.3s ease-in-out;
+}
+
+.flow-step-indicator:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Mobile Optimizations for Sanctuaries */

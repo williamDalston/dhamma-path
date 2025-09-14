@@ -122,7 +122,10 @@ class FlowNavigation {
     }
 
     getCurrentPage() {
-        // Get current page from URL or navigation state
+        // Get current page from navigation manager or URL
+        if (window.navigationManager && window.navigationManager.currentPage) {
+            return window.navigationManager.currentPage;
+        }
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('page') || 'home';
     }
