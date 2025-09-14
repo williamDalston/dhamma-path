@@ -1,19 +1,21 @@
 // Robust Service Worker for GitHub Pages
+const SCOPE = self.registration.scope; // e.g. https://.../dhamma-path/
+const toURL = (u) => new URL(u.replace(/^\//, ''), SCOPE).toString();
+
 self.addEventListener('install', (event) => {
-  const base = self.registration.scope; // e.g. https://.../dhamma-path/
-  const urls = [
-    `${base}index.html`,
-    `${base}offline.html`,
-    `${base}assets/css/styles.css`,
-    `${base}assets/js/app.js`,
-    `${base}assets/js/navigation.js`,
-  ];
+  const CRITICAL = [
+    '',                 // index
+    'offline.html',
+    'assets/css/styles.css',
+    'assets/js/app.js',
+    'assets/js/navigation.js',
+  ].map(toURL);
 
   event.waitUntil((async () => {
-    const cache = await caches.open('mf-critical-v1');
-    const results = await Promise.allSettled(urls.map(u => cache.add(u)));
+    const cache = await caches.open('app-v1');
+    const results = await Promise.allSettled(CRITICAL.map(u => cache.add(u)));
     results.forEach((r, i) => {
-      if (r.status === 'rejected') console.warn('[SW] skipped', urls[i], r.reason);
+      if (r.status === 'rejected') console.warn('[SW] skipped', CRITICAL[i], r.reason);
     });
     self.skipWaiting();
   })());
@@ -21,24 +23,19 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(self.clients.claim());
+  self.skipWaiting();
 });
 
 self.addEventListener('fetch', (event) => {
-  const req = event.request;
-  event.respondWith((async () => {
-    try {
-      const net = await fetch(req);
-      return net;
-    } catch {
-      // Offline fallback for navigations
-      if (req.mode === 'navigate') {
-        const cache = await caches.open('mf-critical-v1');
-        const base = self.registration.scope;
-        return (await cache.match(`${base}offline.html`)) || Response.error();
-      }
-      // Try cache for other requests
-      const cached = await caches.match(req);
-      return cached || Response.error();
-    }
-  })());
+  const url = new URL(event.request.url);
+
+  // ✅ Never intercept cross-origin (fixes Tailwind CDN fetch below)
+  if (url.origin !== self.location.origin) return;
+
+  event.respondWith(
+    caches.match(event.request).then((hit) =>
+      hit ||
+      fetch(event.request).catch(() => caches.match(toURL('offline.html')))
+    )
+  );
 });

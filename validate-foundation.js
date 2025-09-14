@@ -34,7 +34,7 @@ class FoundationValidator {
         
         try {
             // Test 1: Welcome screen template exists
-            const welcomeTemplate = await fetch('/assets/templates/welcome.html');
+            const welcomeTemplate = await fetch('assets/templates/welcome.html');
             this.addTestResult('trustCovenant', 'Welcome template exists', welcomeTemplate.ok);
             
             // Test 2: Welcome screen script loaded

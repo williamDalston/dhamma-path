@@ -148,13 +148,15 @@ class ProductionTestSuite {
         
         for (const script of scripts) {
             try {
-                const response = await fetch(script.src, { method: 'HEAD' });
-                const contentLength = response.headers.get('content-length');
+                const res = await fetch(script.src, { method: 'HEAD', mode: 'cors' });
+                if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
+                const contentLength = res.headers.get('content-length');
                 if (contentLength) {
                     totalSize += parseInt(contentLength);
                 }
-            } catch (error) {
-                // Ignore errors for external scripts
+            } catch (e) {
+                console.warn('[PerfTest] Skipping size check for', script.src, e.message);
+                // Don't fail the suite on network hiccups
             }
         }
         
