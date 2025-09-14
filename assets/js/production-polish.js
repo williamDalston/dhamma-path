@@ -5,6 +5,13 @@
  * app manifest, and production-ready optimizations.
  */
 
+// Guard against double-load
+if (window.__PRODUCTION_POLISH_LOADED__) {
+    console.warn('[polish] already loaded, skipping');
+    throw new Error('ProductionPolish already loaded');
+}
+window.__PRODUCTION_POLISH_LOADED__ = true;
+
 class ProductionPolish {
     constructor() {
         this.serviceWorker = null;

@@ -269,10 +269,11 @@
       // Web Audio resume on gesture (autoplay policy)
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-      window.addEventListener('pointerdown', async () => {
-        if (audioCtx.state === 'suspended') {
-          try { await audioCtx.resume(); } catch (e) { console.warn('Audio resume failed', e); }
-        }
+      window.addEventListener('pointerdown', () => {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        const ctx = (window.__ac = window.__ac || new AC());
+        if (ctx.state === 'suspended') ctx.resume().catch(()=>{});
       }, { once: true });
     </script>
 </head>

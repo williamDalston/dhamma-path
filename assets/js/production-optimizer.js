@@ -324,10 +324,16 @@ class ProductionOptimizer {
         ];
 
         if ('caches' in window) {
-            caches.open('critical-v1').then(cache => {
-                return cache.addAll(criticalResources);
-            });
+            this.addAllSafe(criticalResources, 'critical-v1');
         }
+    }
+
+    async addAllSafe(urls, cacheName) {
+        const store = await caches.open(cacheName);
+        const results = await Promise.allSettled(urls.map(u => store.add(u)));
+        results.forEach((r, i) => {
+            if (r.status === 'rejected') console.warn('[SW] skipped', urls[i], r.reason);
+        });
     }
 
     showUpdateNotification() {
