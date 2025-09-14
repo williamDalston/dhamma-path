@@ -83,7 +83,7 @@ class EnhancedInteractions {
         document.addEventListener('keydown', (e) => {
             // ESC key to close modals
             if (e.key === 'Escape') {
-                const openModal = document.querySelector('.modal:not(.hidden)');
+                const openModal = document.querySelector('.modal:not(.hidden), #wisdom-modal:not(.hidden), #export-modal:not(.hidden), #prompts-modal:not(.hidden)');
                 if (openModal) {
                     this.closeModal(openModal);
                 }
@@ -92,6 +92,59 @@ class EnhancedInteractions {
             // Enter key on focused buttons
             if (e.key === 'Enter' && e.target.matches('button:not(:disabled)')) {
                 e.target.click();
+            }
+        });
+        
+        // Setup modal close handlers
+        this.setupModalHandlers();
+    }
+    
+    setupModalHandlers() {
+        // Wisdom modal handlers
+        const wisdomModal = document.getElementById('wisdom-modal');
+        const addWisdomBtn = document.getElementById('add-wisdom-btn');
+        const addFirstWisdomBtn = document.getElementById('add-first-wisdom-btn');
+        const cancelWisdomBtn = document.getElementById('cancel-wisdom-btn');
+        
+        if (addWisdomBtn) {
+            addWisdomBtn.addEventListener('click', () => {
+                if (wisdomModal) wisdomModal.classList.remove('hidden');
+            });
+        }
+        
+        if (addFirstWisdomBtn) {
+            addFirstWisdomBtn.addEventListener('click', () => {
+                if (wisdomModal) wisdomModal.classList.remove('hidden');
+            });
+        }
+        
+        if (cancelWisdomBtn) {
+            cancelWisdomBtn.addEventListener('click', () => {
+                if (wisdomModal) wisdomModal.classList.add('hidden');
+            });
+        }
+        
+        // Export modal handlers
+        const exportModal = document.getElementById('export-modal');
+        const exportDataBtn = document.getElementById('export-data-btn');
+        const cancelExportBtn = document.getElementById('cancel-export-btn');
+        
+        if (exportDataBtn) {
+            exportDataBtn.addEventListener('click', () => {
+                if (exportModal) exportModal.classList.remove('hidden');
+            });
+        }
+        
+        if (cancelExportBtn) {
+            cancelExportBtn.addEventListener('click', () => {
+                if (exportModal) exportModal.classList.add('hidden');
+            });
+        }
+        
+        // Click outside to close modals
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('#wisdom-modal, #export-modal')) {
+                this.closeModal(e.target);
             }
         });
     }

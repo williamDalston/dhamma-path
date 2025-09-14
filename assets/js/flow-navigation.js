@@ -66,6 +66,15 @@ class FlowNavigation {
                 const targetPage = e.target.getAttribute('data-page');
                 this.navigateToPage(targetPage);
             }
+            
+            // Handle individual skip buttons
+            if (e.target.matches('#skip-meditation-btn')) {
+                this.navigateToPage('journal');
+            } else if (e.target.matches('#skip-journal-btn')) {
+                this.navigateToPage('workout');
+            } else if (e.target.matches('#skip-workout-btn')) {
+                this.navigateToPage('home');
+            }
         });
     }
 
