@@ -76,10 +76,49 @@
             <!-- Flow Preview (Hidden until intention is set) -->
             <div class="flow-preview mt-8 hidden" id="flow-preview">
                 <p class="preview-text text-sm text-charcoal/70 mb-2">Your flow today:</p>
-                <div class="flow-steps flex justify-center space-x-4 text-xs text-charcoal/70">
-                    <span class="flow-step bg-white/50 px-3 py-1 rounded-full backdrop-blur-sm border border-sage-deep/20 hover:bg-sage-deep/10 transition-all duration-300">🧘 Meditation</span>
-                    <span class="flow-step bg-white/50 px-3 py-1 rounded-full backdrop-blur-sm border border-sage-deep/20 hover:bg-sage-deep/10 transition-all duration-300">✍️ Journal</span>
-                    <span class="flow-step bg-white/50 px-3 py-1 rounded-full backdrop-blur-sm border border-sage-deep/20 hover:bg-sage-deep/10 transition-all duration-300">💪 Workout</span>
+                <div class="flow-steps flex justify-center space-x-4 text-xs text-charcoal/70 mb-4">
+                    <span class="flow-step bg-white/50 px-3 py-1 rounded-full backdrop-blur-sm border border-sage-deep/20 hover:bg-sage-deep/10 transition-all duration-300" data-step="meditation">🧘 Meditation</span>
+                    <span class="flow-step bg-white/50 px-3 py-1 rounded-full backdrop-blur-sm border border-sage-deep/20 hover:bg-sage-deep/10 transition-all duration-300" data-step="journal">✍️ Journal</span>
+                    <span class="flow-step bg-white/50 px-3 py-1 rounded-full backdrop-blur-sm border border-sage-deep/20 hover:bg-sage-deep/10 transition-all duration-300" data-step="workout">💪 Workout</span>
+                </div>
+                
+                <!-- Flow Customization -->
+                <div class="flow-customization mt-4">
+                    <button id="customize-flow-btn" class="text-xs text-sage-deep hover:text-forest-deep transition-colors px-3 py-1 rounded-lg hover:bg-sage-deep/10">
+                        ✨ Customize your flow
+                    </button>
+                </div>
+                
+                <!-- Flow Customization Panel (Hidden) -->
+                <div id="flow-customization-panel" class="hidden mt-4 p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-sage-deep/20">
+                    <h4 class="text-sm font-semibold text-forest-deep mb-3 text-center">Choose Your Flow</h4>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" class="flow-option" data-step="meditation" checked>
+                            <span class="text-sm text-charcoal/70">🧘 Meditation</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" class="flow-option" data-step="journal" checked>
+                            <span class="text-sm text-charcoal/70">✍️ Journal</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" class="flow-option" data-step="workout" checked>
+                            <span class="text-sm text-charcoal/70">💪 Workout</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" class="flow-option" data-step="clarity">
+                            <span class="text-sm text-charcoal/70">🎤 Clarity Practice</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" class="flow-option" data-step="gratitude">
+                            <span class="text-sm text-charcoal/70">🙏 Gratitude</span>
+                        </label>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <button id="save-flow-btn" class="text-xs bg-sage-deep text-white px-4 py-2 rounded-lg hover:bg-forest-deep transition-colors">
+                            Save Flow
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

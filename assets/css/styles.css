@@ -8589,6 +8589,20 @@ html {
     color: white;
 }
 
+/* Flow Progress Indicator */
+.flow-step-indicator.active {
+    background: var(--sage-deep);
+    transform: scale(1.2);
+}
+
+.flow-step-indicator.completed {
+    background: var(--forest-deep);
+}
+
+.flow-step-indicator {
+    transition: all 0.3s ease-in-out;
+}
+
 /* Mobile Optimizations for Sanctuaries */
 @media (max-width: 768px) {
     .sanctuary-heading {

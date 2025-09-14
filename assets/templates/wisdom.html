@@ -9,6 +9,34 @@
         <p class="wisdom-subtitle text-center max-w-2xl mx-auto px-4">
             Insights and reflections that have resonated with your journey
         </p>
+        
+        <!-- Search and Filter Controls -->
+        <div class="mt-6 max-w-2xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+                <!-- Search Input -->
+                <div class="flex-1 w-full md:w-auto">
+                    <input type="text" id="wisdom-search" class="w-full px-4 py-3 border border-sage-deep/30 rounded-xl focus:outline-none focus:border-sage-deep focus:ring-2 focus:ring-sage-deep/20" placeholder="Search wisdom...">
+                </div>
+                
+                <!-- Category Filter -->
+                <div class="w-full md:w-auto">
+                    <select id="wisdom-filter" class="w-full md:w-40 px-4 py-3 border border-sage-deep/30 rounded-xl focus:outline-none focus:border-sage-deep focus:ring-2 focus:ring-sage-deep/20">
+                        <option value="all">All Categories</option>
+                        <option value="general">General</option>
+                        <option value="meditation">Meditation</option>
+                        <option value="journaling">Journaling</option>
+                        <option value="workout">Workout</option>
+                        <option value="gratitude">Gratitude</option>
+                        <option value="clarity">Clarity</option>
+                    </select>
+                </div>
+                
+                <!-- Add Wisdom Button -->
+                <button id="add-wisdom-btn" class="bg-gradient-to-r from-sage-deep to-forest-deep text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    ✨ Add Wisdom
+                </button>
+            </div>
+        </div>
     </div>
     
     <!-- Wisdom Cards Container -->
@@ -24,6 +52,49 @@
         </div>
     </div>
     
+    <!-- Add Wisdom Modal -->
+    <div id="wisdom-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 max-w-lg mx-4 border border-sage-deep/20 shadow-2xl">
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-serif text-forest-deep mb-2">Add New Wisdom</h3>
+                <p class="text-charcoal/70">Share an insight that has resonated with your journey</p>
+            </div>
+            
+            <form id="wisdom-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-forest-deep mb-2">Wisdom Title</label>
+                    <input type="text" id="wisdom-title" class="w-full px-4 py-3 border border-sage-deep/30 rounded-xl focus:outline-none focus:border-sage-deep focus:ring-2 focus:ring-sage-deep/20" placeholder="Enter a title for this wisdom...">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-forest-deep mb-2">Wisdom Content</label>
+                    <textarea id="wisdom-content" rows="4" class="w-full px-4 py-3 border border-sage-deep/30 rounded-xl focus:outline-none focus:border-sage-deep focus:ring-2 focus:ring-sage-deep/20" placeholder="Share your insight, reflection, or wisdom..."></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-forest-deep mb-2">Category</label>
+                    <select id="wisdom-category" class="w-full px-4 py-3 border border-sage-deep/30 rounded-xl focus:outline-none focus:border-sage-deep focus:ring-2 focus:ring-sage-deep/20">
+                        <option value="general">General Wisdom</option>
+                        <option value="meditation">Meditation</option>
+                        <option value="journaling">Journaling</option>
+                        <option value="workout">Workout</option>
+                        <option value="gratitude">Gratitude</option>
+                        <option value="clarity">Clarity</option>
+                    </select>
+                </div>
+                
+                <div class="flex items-center space-x-4 pt-4">
+                    <button type="submit" class="flex-1 bg-gradient-to-r from-sage-deep to-forest-deep text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105">
+                        Save Wisdom
+                    </button>
+                    <button type="button" id="cancel-wisdom-btn" class="flex-1 bg-charcoal/10 text-charcoal px-6 py-3 rounded-xl font-semibold hover:bg-charcoal/20 transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Floating Elements for Visual Interest -->
     <div class="absolute top-20 left-10 w-4 h-4 bg-gold-rich/20 rounded-full float-premium" style="animation-delay: 1s;"></div>
     <div class="absolute top-40 right-16 w-6 h-6 bg-gold-medium/20 rounded-full float-premium" style="animation-delay: 2s;"></div>

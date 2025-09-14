@@ -123,10 +123,18 @@
                         </label>
                     </div>
                     
-                    <button class="save-button px-8 py-3 bg-gradient-to-r from-sage-deep to-forest-deep text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 relative overflow-hidden group" id="save-button" aria-label="Save your recording">
-                        <span class="relative z-10">Save Reflection</span>
-                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
-                    </button>
+                    <!-- Playback and Save Actions -->
+                    <div class="flex items-center space-x-4">
+                        <button id="playback-button" class="px-6 py-3 bg-gradient-to-r from-forest-deep to-sage-deep text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 relative overflow-hidden group" aria-label="Play back your recording">
+                            <span class="relative z-10">▶️ Play Back</span>
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
+                        </button>
+                        
+                        <button class="save-button px-6 py-3 bg-gradient-to-r from-sage-deep to-forest-deep text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 relative overflow-hidden group" id="save-button" aria-label="Save your recording">
+                            <span class="relative z-10">Save Reflection</span>
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
