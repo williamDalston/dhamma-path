@@ -177,11 +177,17 @@ class FoundationValidator {
             const privacySection = document.getElementById('privacy');
             const privacyLink = document.getElementById('privacy-link');
             
+            // Also check if elements exist anywhere in the document
+            const allPrivacySections = document.querySelectorAll('[id*="privacy"]');
+            const allPrivacyLinks = document.querySelectorAll('[id*="privacy"]');
+            
             console.log('🔍 Privacy validation:', {
                 privacySection: !!privacySection,
                 privacyLink: !!privacyLink,
                 sectionContent: privacySection?.textContent,
-                linkHref: privacyLink?.href
+                linkHref: privacyLink?.href,
+                allPrivacyElements: allPrivacySections.length + allPrivacyLinks.length,
+                documentBody: document.body?.innerHTML?.includes('privacy') || false
             });
             
             return privacySection !== null && privacyLink !== null;
@@ -197,10 +203,15 @@ class FoundationValidator {
             // Check for breathing button element
             const breathingButton = document.getElementById('breathing-start');
             
+            // Also check if elements exist anywhere in the document
+            const allBreathingElements = document.querySelectorAll('[id*="breathing"]');
+            
             console.log('🔍 Breathing validation:', {
                 breathingButton: !!breathingButton,
                 buttonText: breathingButton?.textContent,
-                buttonId: breathingButton?.id
+                buttonId: breathingButton?.id,
+                allBreathingElements: allBreathingElements.length,
+                documentBody: document.body?.innerHTML?.includes('breathing') || false
             });
             
             return breathingButton !== null;

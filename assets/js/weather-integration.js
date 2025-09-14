@@ -114,7 +114,7 @@ class WeatherIntegration {
     
     setupWeatherAPI() {
         // Use real weather API - OpenWeatherMap
-        this.apiKey = 'e4b5f17998ad0477558acd5d3ac25255'; // Your OpenWeatherMap API key
+        this.apiKey = 'e4b5f17998ad0477558acd5d3ac25255'; // ✅ Active API key
         this.baseURL = 'https://api.openweathermap.org/data/2.5';
         this.currentWeather = null;
         this.forecastData = null;
@@ -336,7 +336,14 @@ class WeatherIntegration {
             );
             
             if (!currentResponse.ok) {
-                throw new Error(`Weather API error: ${currentResponse.status}`);
+                const errorText = await currentResponse.text();
+                console.error('🌤️ Weather API error details:', {
+                    status: currentResponse.status,
+                    statusText: currentResponse.statusText,
+                    response: errorText,
+                    url: currentResponse.url
+                });
+                throw new Error(`Weather API error: ${currentResponse.status} - ${errorText}`);
             }
             
             const currentData = await currentResponse.json();
