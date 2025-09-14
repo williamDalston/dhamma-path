@@ -202,6 +202,42 @@
 
           console.log('✅ Early Boot Shim loaded');
         })();
+
+      // Resilient cache.addAll replacement (call this instead of addAll)
+      window.__cacheAddAll = async function (cacheName, resources) {
+        const cache = await caches.open(cacheName);
+        for (const url of resources) {
+          try { 
+            await cache.add(url); 
+            console.log('✅ Cached:', url);
+          } catch (e) { 
+            console.warn('⚠️ Skipped cache:', url, e.message); 
+          }
+        }
+      };
+
+      // Improved error logging
+      window.addEventListener('error', (e) => {
+        console.error('GlobalError:', e.message, e.filename, e.lineno, e.colno, e.error?.stack);
+      });
+      window.addEventListener('unhandledrejection', (e) => {
+        const r = e.reason;
+        console.error('UnhandledRejection:', r?.message || r, r?.stack || r);
+      });
+
+      // Web Audio resume on gesture (autoplay policy)
+      (function gateAudioContext() {
+        const resume = () => {
+          try {
+            const Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
+            const ctx = window.__audioCtx || new Ctx(); window.__audioCtx = ctx;
+            if (ctx.state === 'suspended') ctx.resume();
+          } catch (e) { /* ignore */ }
+        };
+        ['pointerdown', 'touchstart', 'keydown'].forEach(ev => {
+          document.addEventListener(ev, resume, { once: true, passive: true });
+        });
+      })();
     </script>
 </head>
 
@@ -504,7 +540,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', async () => {
                 try {
-                    const registration = await navigator.serviceWorker.register('/sw.js');
+                    const registration = await navigator.serviceWorker.register('./sw.js', { scope: './' });
                     console.log('🚀 Premium Service Worker registered successfully:', registration.scope);
                     
                     // Handle updates

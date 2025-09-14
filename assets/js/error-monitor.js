@@ -245,8 +245,8 @@ class ErrorMonitor {
                 language: navigator.language
             };
 
-            // Send to error tracking service
-            const response = await fetch('/api/errors', {
+            // Send to error tracking service (graceful fallback if endpoint doesn't exist)
+            const response = await fetch('./api/errors', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
