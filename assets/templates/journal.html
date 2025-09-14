@@ -43,28 +43,28 @@
             <div class="emotion-wheel-wrapper bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-sage-deep/20 max-w-md mx-auto">
                 <h3 class="text-lg font-serif text-forest-deep mb-4 text-center">What lives in your heart today?</h3>
                 <div class="emotion-wheel grid grid-cols-3 gap-4">
-                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105 text-center" data-emotion="joy">
-                        <div class="text-2xl mb-2">😊</div>
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-300 transform hover:scale-105 text-center group border border-transparent hover:border-sage-deep/20 hover:shadow-md" data-emotion="joy">
+                        <div class="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">😊</div>
                         <div class="text-sm font-medium text-forest-deep">Joy</div>
                     </button>
-                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105 text-center" data-emotion="peace">
-                        <div class="text-2xl mb-2">😌</div>
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-300 transform hover:scale-105 text-center group border border-transparent hover:border-sage-deep/20 hover:shadow-md" data-emotion="peace">
+                        <div class="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">😌</div>
                         <div class="text-sm font-medium text-forest-deep">Peace</div>
                     </button>
-                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105 text-center" data-emotion="gratitude">
-                        <div class="text-2xl mb-2">🙏</div>
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-300 transform hover:scale-105 text-center group border border-transparent hover:border-sage-deep/20 hover:shadow-md" data-emotion="gratitude">
+                        <div class="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">🙏</div>
                         <div class="text-sm font-medium text-forest-deep">Gratitude</div>
                     </button>
-                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105 text-center" data-emotion="curiosity">
-                        <div class="text-2xl mb-2">🤔</div>
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-300 transform hover:scale-105 text-center group border border-transparent hover:border-sage-deep/20 hover:shadow-md" data-emotion="curiosity">
+                        <div class="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">🤔</div>
                         <div class="text-sm font-medium text-forest-deep">Curiosity</div>
                     </button>
-                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105 text-center" data-emotion="determination">
-                        <div class="text-2xl mb-2">💪</div>
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-300 transform hover:scale-105 text-center group border border-transparent hover:border-sage-deep/20 hover:shadow-md" data-emotion="determination">
+                        <div class="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">💪</div>
                         <div class="text-sm font-medium text-forest-deep">Determination</div>
                     </button>
-                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105 text-center" data-emotion="love">
-                        <div class="text-2xl mb-2">❤️</div>
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-300 transform hover:scale-105 text-center group border border-transparent hover:border-sage-deep/20 hover:shadow-md" data-emotion="love">
+                        <div class="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">❤️</div>
                         <div class="text-sm font-medium text-forest-deep">Love</div>
                     </button>
                 </div>
@@ -97,7 +97,7 @@
                     <textarea 
                         id="journal-textarea" 
                         placeholder="Begin writing your sacred thoughts... Let your heart speak freely."
-                        class="w-full h-64 p-6 bg-transparent border-none focus:outline-none resize-none text-lg leading-relaxed font-serif text-forest-deep placeholder-charcoal/40 transition-all duration-300"
+                        class="w-full h-64 p-6 bg-transparent border-none focus:outline-none resize-none text-lg leading-relaxed font-serif text-forest-deep placeholder-charcoal/40 transition-all duration-500 focus:bg-white/90 hover:bg-white/85 rounded-lg"
                         style="background: rgba(255, 254, 247, 0.8);"
                     ></textarea>
                     
@@ -111,8 +111,9 @@
                 
                 <!-- Completion Actions -->
                 <div class="completion-actions mt-6 flex justify-center">
-                    <button id="journal-complete-btn" class="sacred-flow-button w-48 h-14 bg-gradient-to-r from-sage-deep to-forest-deep text-white text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300" aria-label="Complete journal entry">
-                        <span class="button-text">Complete Reflection</span>
+                    <button id="journal-complete-btn" class="sacred-flow-button w-48 h-14 bg-gradient-to-r from-sage-deep to-forest-deep text-white text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group" aria-label="Complete journal entry">
+                        <span class="button-text relative z-10">Complete Reflection</span>
+                        <div class="button-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
                     </button>
                 </div>
             </div>

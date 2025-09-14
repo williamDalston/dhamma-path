@@ -32,30 +32,30 @@
             <div class="gratitude-inputs space-y-6">
                 <!-- First Point of Light -->
                 <div class="gratitude-input-container opacity-0 transform translate-y-4 transition-all duration-500" id="gratitude-1">
-                    <div class="light-point w-4 h-4 bg-gradient-to-r from-gold-rich to-gold-medium rounded-full mx-auto mb-4 animate-pulse"></div>
+                    <div class="light-point w-5 h-5 bg-gradient-to-r from-gold-rich to-gold-medium rounded-full mx-auto mb-4 animate-pulse shadow-sm"></div>
                     <label class="block text-lg font-serif text-forest-deep mb-3">First Light</label>
                     <input type="text" 
-                           class="gratitude-input w-full px-6 py-4 text-center text-lg font-medium text-forest-deep bg-white/80 backdrop-blur-sm border-2 border-gold-rich/30 rounded-2xl focus:outline-none focus:border-gold-rich focus:bg-white/90 transition-all duration-300 placeholder-charcoal/40" 
+                           class="gratitude-input w-full px-6 py-4 text-center text-lg font-medium text-forest-deep bg-white/80 backdrop-blur-sm border-2 border-gold-rich/30 rounded-2xl focus:outline-none focus:border-gold-rich focus:bg-white/95 focus:shadow-xl focus:shadow-gold-rich/25 focus:ring-4 focus:ring-gold-rich/10 transition-all duration-500 ease-out placeholder-charcoal/40 hover:border-gold-rich/40 hover:bg-white/85" 
                            placeholder="What are you grateful for?"
                            id="gratitude-input-1">
                 </div>
                 
                 <!-- Second Point of Light -->
                 <div class="gratitude-input-container opacity-0 transform translate-y-4 transition-all duration-500" id="gratitude-2">
-                    <div class="light-point w-4 h-4 bg-gradient-to-r from-gold-rich to-gold-medium rounded-full mx-auto mb-4 animate-pulse"></div>
+                    <div class="light-point w-5 h-5 bg-gradient-to-r from-gold-rich to-gold-medium rounded-full mx-auto mb-4 animate-pulse shadow-sm"></div>
                     <label class="block text-lg font-serif text-forest-deep mb-3">Second Light</label>
                     <input type="text" 
-                           class="gratitude-input w-full px-6 py-4 text-center text-lg font-medium text-forest-deep bg-white/80 backdrop-blur-sm border-2 border-gold-rich/30 rounded-2xl focus:outline-none focus:border-gold-rich focus:bg-white/90 transition-all duration-300 placeholder-charcoal/40" 
+                           class="gratitude-input w-full px-6 py-4 text-center text-lg font-medium text-forest-deep bg-white/80 backdrop-blur-sm border-2 border-gold-rich/30 rounded-2xl focus:outline-none focus:border-gold-rich focus:bg-white/95 focus:shadow-xl focus:shadow-gold-rich/25 focus:ring-4 focus:ring-gold-rich/10 transition-all duration-500 ease-out placeholder-charcoal/40 hover:border-gold-rich/40 hover:bg-white/85" 
                            placeholder="What brought you joy?"
                            id="gratitude-input-2">
                 </div>
                 
                 <!-- Third Point of Light -->
                 <div class="gratitude-input-container opacity-0 transform translate-y-4 transition-all duration-500" id="gratitude-3">
-                    <div class="light-point w-4 h-4 bg-gradient-to-r from-gold-rich to-gold-medium rounded-full mx-auto mb-4 animate-pulse"></div>
+                    <div class="light-point w-5 h-5 bg-gradient-to-r from-gold-rich to-gold-medium rounded-full mx-auto mb-4 animate-pulse shadow-sm"></div>
                     <label class="block text-lg font-serif text-forest-deep mb-3">Third Light</label>
                     <input type="text" 
-                           class="gratitude-input w-full px-6 py-4 text-center text-lg font-medium text-forest-deep bg-white/80 backdrop-blur-sm border-2 border-gold-rich/30 rounded-2xl focus:outline-none focus:border-gold-rich focus:bg-white/90 transition-all duration-300 placeholder-charcoal/40" 
+                           class="gratitude-input w-full px-6 py-4 text-center text-lg font-medium text-forest-deep bg-white/80 backdrop-blur-sm border-2 border-gold-rich/30 rounded-2xl focus:outline-none focus:border-gold-rich focus:bg-white/95 focus:shadow-xl focus:shadow-gold-rich/25 focus:ring-4 focus:ring-gold-rich/10 transition-all duration-500 ease-out placeholder-charcoal/40 hover:border-gold-rich/40 hover:bg-white/85" 
                            placeholder="What made you smile?"
                            id="gratitude-input-3">
                 </div>
@@ -63,10 +63,11 @@
             
             <!-- Illuminate Button -->
             <div class="illuminate-action mt-12">
-                <button id="illuminate-btn" class="illuminate-button w-72 h-20 bg-gradient-to-r from-gold-rich to-gold-medium text-white text-xl font-semibold rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100" 
+                <button id="illuminate-btn" class="illuminate-button w-72 h-20 bg-gradient-to-r from-gold-rich to-gold-medium text-white text-xl font-semibold rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden group" 
                         disabled>
-                    <span class="button-text">Illuminate</span>
+                    <span class="button-text relative z-10">Illuminate</span>
                     <div class="button-pulse absolute inset-0 rounded-2xl bg-gradient-to-r from-gold-rich to-gold-medium opacity-20 animate-pulse"></div>
+                    <div class="button-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
                 </button>
             </div>
             

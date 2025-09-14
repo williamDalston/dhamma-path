@@ -8517,6 +8517,78 @@ html {
     animation: wave-pulse 1.5s ease-in-out infinite;
 }
 
+/* Enhanced Global Micro-interactions */
+.button-shimmer {
+    pointer-events: none;
+}
+
+/* Improved Focus States */
+*:focus-visible {
+    outline: 2px solid var(--sage-deep);
+    outline-offset: 2px;
+}
+
+/* Enhanced Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sage-deep);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--forest-deep);
+}
+
+/* Smooth Page Transitions */
+.page-transition {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.page-transition.entering {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.page-transition.entered {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Enhanced Loading States */
+@keyframes shimmer-loading {
+    0% {
+        background-position: -200px 0;
+    }
+    100% {
+        background-position: calc(200px + 100%) 0;
+    }
+}
+
+.loading-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background-size: 200px 100%;
+    animation: shimmer-loading 1.5s infinite;
+}
+
+/* Improved Selection */
+::selection {
+    background: var(--sage-deep);
+    color: white;
+}
+
+::-moz-selection {
+    background: var(--sage-deep);
+    color: white;
+}
+
 /* Mobile Optimizations for Sanctuaries */
 @media (max-width: 768px) {
     .sanctuary-heading {

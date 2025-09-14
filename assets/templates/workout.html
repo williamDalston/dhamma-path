@@ -69,14 +69,17 @@
             
             <!-- Premium Control Buttons -->
             <div class="flex gap-4 mb-6" data-animate="fade-up" data-delay="500">
-                <button id="workout-start-btn" class="flex-1 btn-premium btn-lg rounded-2xl min-h-[3rem]" style="background: var(--gradient-energy); color: var(--charcoal-rich); border: 2px solid var(--gold-medium);">
-                    <span class="text-lg mr-3">▶️</span>Start Workout
+                <button id="workout-start-btn" class="flex-1 btn-premium btn-lg rounded-2xl min-h-[3rem] relative overflow-hidden group" style="background: var(--gradient-energy); color: var(--charcoal-rich); border: 2px solid var(--gold-medium);">
+                    <span class="text-lg mr-3 relative z-10">▶️</span><span class="relative z-10">Start Workout</span>
+                    <div class="button-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
                 </button>
-                <button id="workout-pause-btn" class="flex-1 btn-premium btn-lg rounded-2xl min-h-[3rem] hidden" style="background: var(--gradient-growth); color: var(--cream-rich); border: 2px solid var(--forest-medium);">
-                    <span class="text-lg mr-3">⏸️</span>Pause
+                <button id="workout-pause-btn" class="flex-1 btn-premium btn-lg rounded-2xl min-h-[3rem] hidden relative overflow-hidden group" style="background: var(--gradient-growth); color: var(--cream-rich); border: 2px solid var(--forest-medium);">
+                    <span class="text-lg mr-3 relative z-10">⏸️</span><span class="relative z-10">Pause</span>
+                    <div class="button-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
                 </button>
-                <button id="workout-reset-btn" class="flex-1 btn-premium btn-lg rounded-2xl min-h-[3rem]" style="background: transparent; color: var(--forest-deep); border: 2px solid var(--sage-medium);">
-                    <span class="text-lg mr-3">🔄</span>Reset
+                <button id="workout-reset-btn" class="flex-1 btn-premium btn-lg rounded-2xl min-h-[3rem] relative overflow-hidden group hover:bg-sage-deep/5" style="background: transparent; color: var(--forest-deep); border: 2px solid var(--sage-medium);">
+                    <span class="text-lg mr-3 relative z-10">🔄</span><span class="relative z-10">Reset</span>
+                    <div class="button-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-sage-deep/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
                 </button>
             </div>
             
@@ -86,13 +89,13 @@
             <div class="mt-6 p-4 bg-white/30 backdrop-blur-sm rounded-lg border border-forest-green/20">
                 <h4 class="font-semibold mb-3 text-center text-forest-green">🏃‍♂️ Workout Intensity</h4>
                 <div class="flex justify-center space-x-2 mb-4">
-                    <button class="intensity-btn p-2 rounded-full border-2 border-forest-green/30 hover:bg-forest-green/10 transition-colors" data-intensity="low">
+                    <button class="intensity-btn p-3 px-4 rounded-full border-2 border-forest-green/30 hover:bg-forest-green/10 hover:border-forest-green/50 transition-all duration-300 hover:scale-105" data-intensity="low">
                         <span class="text-sm font-medium">Low</span>
                     </button>
-                    <button class="intensity-btn p-2 rounded-full border-2 border-forest-green/30 hover:bg-forest-green/10 transition-colors active" data-intensity="medium">
+                    <button class="intensity-btn p-3 px-4 rounded-full border-2 border-forest-green/30 hover:bg-forest-green/10 hover:border-forest-green/50 transition-all duration-300 hover:scale-105 active bg-forest-green/15 border-forest-green/60" data-intensity="medium">
                         <span class="text-sm font-medium">Medium</span>
                     </button>
-                    <button class="intensity-btn p-2 rounded-full border-2 border-forest-green/30 hover:bg-forest-green/10 transition-colors" data-intensity="high">
+                    <button class="intensity-btn p-3 px-4 rounded-full border-2 border-forest-green/30 hover:bg-forest-green/10 hover:border-forest-green/50 transition-all duration-300 hover:scale-105" data-intensity="high">
                         <span class="text-sm font-medium">High</span>
                     </button>
                 </div>
