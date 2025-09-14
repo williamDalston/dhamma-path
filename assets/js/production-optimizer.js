@@ -136,8 +136,8 @@ class ProductionOptimizer {
     setupAdvancedCaching() {
         // Service Worker for aggressive caching
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js', {
-                scope: './',
+            navigator.serviceWorker.register('/dhamma-path/sw.js', {
+                scope: '/dhamma-path/',
                 updateViaCache: 'none'
             }).then(registration => {
                 console.log('🚀 Production Service Worker registered');

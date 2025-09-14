@@ -38,7 +38,7 @@ class ProductionPolish {
     
     setupServiceWorker() {
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js', { scope: './' })
+            navigator.serviceWorker.register('/dhamma-path/sw.js', { scope: '/dhamma-path/' })
                 .then(registration => {
                     this.serviceWorker = registration;
                     console.log('📦 Service Worker registered successfully');
