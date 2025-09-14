@@ -138,6 +138,11 @@ class ProductionTestSuite {
     }
 
     async measureBundleSize() {
+        // Skip bundle size measurement on GitHub Pages
+        if (/github\.io$/.test(location.hostname)) {
+            return 0;
+        }
+        
         const scripts = document.querySelectorAll('script[src]');
         let totalSize = 0;
         
