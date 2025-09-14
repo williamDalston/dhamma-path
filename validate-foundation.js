@@ -187,7 +187,9 @@ class FoundationValidator {
                 sectionContent: privacySection?.textContent,
                 linkHref: privacyLink?.href,
                 allPrivacyElements: allPrivacySections.length + allPrivacyLinks.length,
-                documentBody: document.body?.innerHTML?.includes('privacy') || false
+                documentBody: document.body?.innerHTML?.includes('privacy') || false,
+                documentReadyState: document.readyState,
+                timestamp: new Date().toISOString()
             });
             
             return privacySection !== null && privacyLink !== null;
@@ -211,7 +213,9 @@ class FoundationValidator {
                 buttonText: breathingButton?.textContent,
                 buttonId: breathingButton?.id,
                 allBreathingElements: allBreathingElements.length,
-                documentBody: document.body?.innerHTML?.includes('breathing') || false
+                documentBody: document.body?.innerHTML?.includes('breathing') || false,
+                documentReadyState: document.readyState,
+                timestamp: new Date().toISOString()
             });
             
             return breathingButton !== null;
