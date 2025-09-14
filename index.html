@@ -10,7 +10,10 @@
     <script>
       // Works on local root AND GitHub Pages project path
       window.APP_BASE = location.pathname.includes('/dhamma-path/') ? '/dhamma-path/' : '/';
-      window.assetPath = (p) => new URL(p.replace(/^\/+/,'') , window.APP_BASE).pathname;
+      window.assetPath = (p) => {
+        const base = window.APP_BASE.endsWith('/') ? window.APP_BASE : window.APP_BASE + '/';
+        return base + p.replace(/^\/+/,'');
+      };
     </script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
@@ -168,13 +171,13 @@
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"></noscript>
     
     <!-- Critical CSS -->
-    <link rel="stylesheet" href="" onload="this.href = assetPath('assets/css/critical.css?v=1757892007000')">
+    <link rel="stylesheet" href="/dhamma-path/assets/css/critical.css?v=1757892007000">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com" defer></script>
     
     <!-- Main Styles -->
-    <link rel="stylesheet" href="" onload="this.href = assetPath('assets/css/styles.css?v=1757892007000')">
+    <link rel="stylesheet" href="/dhamma-path/assets/css/styles.css?v=1757892007000">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -545,7 +548,7 @@
     <script src="assets/js/journal-system.js?v=175787554197000"></script>
     
     <!-- Core Systems -->
-    <script defer src="" onload="this.src = assetPath('assets/js/navigation.js?v=1757892007000')"></script>
+    <script defer src="/dhamma-path/assets/js/navigation.js?v=1757892007000"></script>
     <script src="assets/js/theme-manager.js?v=175787554178000"></script>
     <script src="assets/js/animations.js"></script>
     <script src="assets/js/gesture-manager.js?v=1757876093"></script>
@@ -619,7 +622,7 @@
           s.hidden = true;
           s.innerHTML = `
             <p>Your data stays on your device.</p>
-            <a id="privacy-link" href="${window.assetPath ? window.assetPath('privacy.html') : 'privacy.html'}" rel="noopener">Privacy & Terms</a>`;
+            <a id="privacy-link" href="${window.assetPath ? window.assetPath('privacy.html') : '/dhamma-path/privacy.html'}" rel="noopener">Privacy & Terms</a>`;
           document.body.appendChild(s);
         }
         if (!document.getElementById('breathing-button')) {
@@ -660,7 +663,7 @@
     </script>
     
     <!-- Main Application (Loaded Last) -->
-    <script defer src="" onload="this.src = assetPath('assets/js/app.js?v=1757892007000')"></script>
+    <script defer src="/dhamma-path/assets/js/app.js?v=1757892007000"></script>
     
     <!-- Foundation Validation -->
     <script src="validate-foundation.js?v=1757876093"></script>

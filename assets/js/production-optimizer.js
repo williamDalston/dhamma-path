@@ -316,7 +316,10 @@ class ProductionOptimizer {
 
         // Cache critical resources for offline use
         const BASE = self.registration?.scope?.replace(location.origin, '') || '/';
-        const A = (p) => new URL(p.replace(/^\/+/,'') , BASE).toString();
+        const A = (p) => {
+            const base = BASE.endsWith('/') ? BASE : BASE + '/';
+            return base + p.replace(/^\/+/,'');
+        };
         const criticalResources = [
             A('assets/css/styles.css'),
             A('assets/js/app.js'),
