@@ -10873,9 +10873,11 @@ input[type="range"]::-moz-range-thumb:hover {
     backdrop-filter: blur(20px);
     border: 1px solid var(--sage-deep)/20;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
     transition: all 0.3s ease;
     max-width: 320px;
     min-width: 280px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
 }
 
 /* Responsive weather widget positioning */

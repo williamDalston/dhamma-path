@@ -114,11 +114,15 @@ class WeatherIntegration {
     
     setupWeatherAPI() {
         // Use real weather API - OpenWeatherMap
+        // Note: In production, this should be stored securely
         this.apiKey = 'e4b5f17998ad0477558acd5d3ac25255'; // ✅ Active API key
         this.baseURL = 'https://api.openweathermap.org/data/2.5';
         this.currentWeather = null;
         this.forecastData = null;
         this.dailyTemperatures = null;
+        this.apiCallCount = 0;
+        this.lastApiCall = 0;
+        this.rateLimitDelay = 1000; // 1 second between calls
         
         // Fallback to mock data if API fails
         this.mockWeatherData = {
@@ -241,9 +245,9 @@ class WeatherIntegration {
                 icon: '☀️',
                 mood: 'energetic',
                 recommendations: [
-                    'Perfect day for outdoor meditation!',
-                    'Consider a morning walk before your routine',
-                    'Great weather for positive energy'
+                    'The sun blesses your sacred practice today',
+                    'Nature invites you to breathe deeply outdoors',
+                    'Golden light amplifies your inner radiance'
                 ],
                 activitySuggestions: ['outdoor meditation', 'morning walk', 'gratitude practice']
             },
@@ -252,9 +256,9 @@ class WeatherIntegration {
                 icon: '🌧️',
                 mood: 'calm',
                 recommendations: [
-                    'Rainy days are perfect for deep reflection',
-                    'The sound of rain can enhance meditation',
-                    'Cozy indoor journaling session ahead'
+                    'Rain whispers wisdom to your soul today',
+                    'The gentle rhythm of water deepens your practice',
+                    'Sacred stillness awaits in your indoor sanctuary'
                 ],
                 activitySuggestions: ['indoor meditation', 'deep journaling', 'listening to rain sounds']
             },
@@ -263,9 +267,9 @@ class WeatherIntegration {
                 icon: '☁️',
                 mood: 'neutral',
                 recommendations: [
-                    'Cloudy days offer balanced energy',
-                    'Great for focused productivity',
-                    'Perfect for structured routines'
+                    'Soft clouds bring gentle, balanced energy',
+                    'Perfect conditions for focused inner work',
+                    'The sky holds space for your sacred routine'
                 ],
                 activitySuggestions: ['focused meditation', 'structured journaling', 'goal review']
             },
@@ -274,9 +278,9 @@ class WeatherIntegration {
                 icon: '⛅',
                 mood: 'optimistic',
                 recommendations: [
-                    'Mixed weather brings creative energy',
-                    'Great for trying new meditation techniques',
-                    'Perfect balance of indoor and outdoor activities'
+                    'Nature offers both shadow and light for your journey',
+                    'Perfect conditions to explore new practices',
+                    'The sky mirrors your inner balance today'
                 ],
                 activitySuggestions: ['varied meditation', 'creative journaling', 'flexible routine']
             }
@@ -328,7 +332,17 @@ class WeatherIntegration {
     
     async fetchRealWeatherData() {
         try {
+            // Rate limiting to prevent API abuse
+            const now = Date.now();
+            if (now - this.lastApiCall < this.rateLimitDelay) {
+                await new Promise(resolve => setTimeout(resolve, this.rateLimitDelay - (now - this.lastApiCall)));
+            }
+            this.lastApiCall = Date.now();
+            this.apiCallCount++;
+            
             const { latitude, longitude } = this.userLocation;
+            
+            console.log(`🌤️ Fetching weather data (call #${this.apiCallCount})...`);
             
             // Fetch current weather
             const currentResponse = await fetch(
@@ -635,15 +649,18 @@ class WeatherIntegration {
         const widget = document.createElement('div');
         widget.id = 'weather-widget';
         
-        // Responsive positioning based on screen size
+        // Enhanced responsive positioning with better spacing
         const isMobile = window.innerWidth < 768;
         const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+        const isDesktop = window.innerWidth >= 1024;
         
-        let positionClass = 'fixed top-4 left-4';
+        let positionClass = 'fixed top-20 left-4 z-40';
         if (isMobile) {
-            positionClass = 'fixed top-4 left-2 right-2';
+            positionClass = 'fixed top-20 left-2 right-2 z-40';
         } else if (isTablet) {
-            positionClass = 'fixed top-4 left-4 max-w-sm';
+            positionClass = 'fixed top-20 left-4 z-40 max-w-sm';
+        } else if (isDesktop) {
+            positionClass = 'fixed top-20 right-4 z-40 max-w-xs';
         }
         
         widget.className = `weather-widget ${positionClass} z-30 bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-lg p-3 sm:p-4 shadow-lg transition-all duration-300`;
@@ -682,25 +699,25 @@ class WeatherIntegration {
                 </div>
                 
                 <div class="weather-recommendation">
-                    <div class="recommendation-text text-sm text-charcoal/80 mb-2">
-                        ${recommendations.suggestions.primary}
+                    <div class="recommendation-text text-sm text-forest-deep mb-2 font-medium">
+                        🌸 ${recommendations.suggestions.primary}
                     </div>
-                    <div class="mood-impact text-xs text-sage-deep">
-                        💡 ${recommendations.moodImpact.description}
+                    <div class="mood-impact text-xs text-sage-deep italic">
+                        ✨ ${recommendations.moodImpact.description}
                     </div>
                 </div>
                 
-                <div class="weather-actions mt-3">
-                    <button class="weather-refresh text-xs text-sage-deep hover:text-forest-deep transition-colors">
+                <div class="weather-actions mt-3 flex flex-wrap gap-2">
+                    <button class="weather-refresh text-xs text-sage-deep hover:text-forest-deep transition-colors px-2 py-1 rounded-md hover:bg-sage-pale/30">
                         🔄 Refresh
                     </button>
-                    <button class="weather-details-btn text-xs text-sage-deep hover:text-forest-deep transition-colors">
+                    <button class="weather-details-btn text-xs text-sage-deep hover:text-forest-deep transition-colors px-2 py-1 rounded-md hover:bg-sage-pale/30">
                         📊 Details
                     </button>
-                    <button class="weather-graph-btn text-xs text-sage-deep hover:text-forest-deep transition-colors">
+                    <button class="weather-graph-btn text-xs text-sage-deep hover:text-forest-deep transition-colors px-2 py-1 rounded-md hover:bg-sage-pale/30">
                         📈 Graph
                     </button>
-                    <button class="weather-minimize-btn text-xs text-sage-deep hover:text-forest-deep transition-colors">
+                    <button class="weather-minimize-btn text-xs text-sage-deep hover:text-forest-deep transition-colors px-2 py-1 rounded-md hover:bg-sage-pale/30">
                         ➖ Minimize
                     </button>
                 </div>
@@ -741,16 +758,19 @@ class WeatherIntegration {
         const handleResize = () => {
             const isMobile = window.innerWidth < 768;
             const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+            const isDesktop = window.innerWidth >= 1024;
             
-            let positionClass = 'fixed top-4 left-4';
+            let positionClass = 'fixed top-20 left-4 z-40';
             if (isMobile) {
-                positionClass = 'fixed top-4 left-2 right-2';
+                positionClass = 'fixed top-20 left-2 right-2 z-40';
             } else if (isTablet) {
-                positionClass = 'fixed top-4 left-4 max-w-sm';
+                positionClass = 'fixed top-20 left-4 z-40 max-w-sm';
+            } else if (isDesktop) {
+                positionClass = 'fixed top-20 right-4 z-40 max-w-xs';
             }
             
             // Update classes while preserving other styling
-            const baseClasses = 'weather-widget z-30 bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-lg p-3 sm:p-4 shadow-lg transition-all duration-300';
+            const baseClasses = 'weather-widget bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-lg p-3 sm:p-4 shadow-lg transition-all duration-300';
             widget.className = `${positionClass} ${baseClasses}`;
         };
         

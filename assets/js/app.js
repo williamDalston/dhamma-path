@@ -66,6 +66,7 @@ class DhammaPathApp {
         this.initializeSmartRecommendations();
         this.initializeAdaptiveTiming();
         this.initializeHealthIntegration();
+        this.initializeWeatherIntegration();
         this.initializeLearningSystem();
         this.initializeMobileGestures();
         this.initializeMobilePerformance();
@@ -192,6 +193,15 @@ class DhammaPathApp {
             this.healthIntegrationSystem = new window.HealthIntegrationSystem();
         } else {
             console.error('❌ HealthIntegrationSystem not found');
+        }
+    }
+
+    initializeWeatherIntegration() {
+        if (window.WeatherIntegration) {
+            this.weatherIntegration = new window.WeatherIntegration();
+            console.log('🌤️ Weather integration initialized');
+        } else {
+            console.error('❌ WeatherIntegration not found');
         }
     }
 

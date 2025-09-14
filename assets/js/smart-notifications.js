@@ -292,7 +292,7 @@ class SmartNotificationsSystem {
                         message = 'Good morning! Time for your mindful routine.';
                 }
                 
-                this.showNotification('Nature\'s Blessing 🌤️', {
+                this.showNotification('Sacred Weather 🌤️', {
                     body: message,
                     tag: 'weather-update'
                 });
