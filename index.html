@@ -185,8 +185,9 @@
         
         // Aggressive cache busting
         console.log('🔄 CACHE BUSTING - JavaScript reloaded at:', new Date().toISOString());
-        console.log('🔄 Current timestamp:', Date.now());
-        console.log('🔄 Version: v' + Date.now());
+        const timestamp = Date.now();
+        console.log('🔄 Current timestamp:', timestamp);
+        console.log('🔄 Version: v' + timestamp);
         
         // Clear any existing analytics system to force reinitialization
         if (window.analyticsSystem) {
