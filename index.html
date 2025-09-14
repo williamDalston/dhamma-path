@@ -77,7 +77,8 @@
       window.appURL = function(p = '') {
         if (/^https?:\/\//.test(p)) return p;         // absolute stays absolute
         const base = document.baseURI || location.origin + '/dhamma-path/';
-        return new URL(p.replace(/^\//, ''), base).toString();
+        const cleanBase = base.endsWith('/') ? base : base + '/';
+        return cleanBase + p.replace(/^\//, '');
       };
       })();
     </script>
@@ -622,7 +623,7 @@
           s.hidden = true;
           s.innerHTML = `
             <p>Your data stays on your device.</p>
-            <a id="privacy-link" href="${window.assetPath ? window.assetPath('privacy.html') : '/dhamma-path/privacy.html'}" rel="noopener">Privacy & Terms</a>`;
+            <a id="privacy-link" href="/dhamma-path/privacy.html" rel="noopener">Privacy & Terms</a>`;
           document.body.appendChild(s);
         }
         if (!document.getElementById('breathing-button')) {

@@ -1,6 +1,9 @@
 // Robust Service Worker for GitHub Pages
 const SCOPE = self.registration.scope; // e.g. https://.../dhamma-path/
-const toURL = (u) => new URL(u.replace(/^\//, ''), SCOPE).toString();
+const toURL = (u) => {
+    const cleanScope = SCOPE.endsWith('/') ? SCOPE : SCOPE + '/';
+    return cleanScope + u.replace(/^\//, '');
+};
 
 self.addEventListener('install', (event) => {
   const CRITICAL = [

@@ -646,7 +646,11 @@ class OfflineSupport {
     async cacheCriticalResources() {
         if ('caches' in window) {
             try {
-                function appURL(p){ return new URL(p.replace(/^\//,''), document.baseURI).toString(); }
+                function appURL(p){ 
+                    const base = document.baseURI || location.origin + '/dhamma-path/';
+                    const cleanBase = base.endsWith('/') ? base : base + '/';
+                    return cleanBase + p.replace(/^\//, '');
+                }
                 const criticalResources = [
                     appURL(''),
                     appURL('offline.html'),
