@@ -317,10 +317,10 @@ class ProductionOptimizer {
 
         // Cache critical resources for offline use
         const criticalResources = [
-            '/assets/css/styles.css',
-            '/assets/js/navigation.js',
-            '/assets/js/meditation-timer.js',
-            '/assets/templates/timer.html'
+            window.appURL ? window.appURL('assets/css/styles.css') : '/dhamma-path/assets/css/styles.css',
+            window.appURL ? window.appURL('assets/js/navigation.js') : '/dhamma-path/assets/js/navigation.js',
+            window.appURL ? window.appURL('assets/js/meditation-timer.js') : '/dhamma-path/assets/js/meditation-timer.js',
+            window.appURL ? window.appURL('assets/templates/timer.html') : '/dhamma-path/assets/templates/timer.html'
         ];
 
         if ('caches' in window) {

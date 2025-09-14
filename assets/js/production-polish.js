@@ -116,7 +116,8 @@ class ProductionPolish {
             name: 'MorningFlow - Digital Sanctuary',
             short_name: 'MorningFlow',
             description: 'A sacred space for morning rituals, meditation, and personal growth',
-            start_url: '/',
+            start_url: '/dhamma-path/',
+            scope: '/dhamma-path/',
             display: 'standalone',
             background_color: '#FFFEF7',
             theme_color: '#7A9B7A',
@@ -646,11 +647,11 @@ class OfflineSupport {
         if ('caches' in window) {
             try {
                 const criticalResources = [
-                    '/',
-                    '/assets/css/styles.css',
-                    '/assets/js/app.js',
-                    '/assets/js/navigation.js',
-                    '/offline.html'
+                    window.appURL ? window.appURL('') : '/dhamma-path/',
+                    window.appURL ? window.appURL('assets/css/styles.css') : '/dhamma-path/assets/css/styles.css',
+                    window.appURL ? window.appURL('assets/js/app.js') : '/dhamma-path/assets/js/app.js',
+                    window.appURL ? window.appURL('assets/js/navigation.js') : '/dhamma-path/assets/js/navigation.js',
+                    window.appURL ? window.appURL('offline.html') : '/dhamma-path/offline.html'
                 ];
                 
                 // Use safe caching with proper base paths

@@ -16,6 +16,20 @@
     
     <!-- GitHub Pages base path configuration -->
     <script>
+      // Ensure base href is set correctly
+      (function ensureBaseHref(){
+        const want = '/dhamma-path/';
+        let b = document.head.querySelector('base');
+        if (!b) {
+          b = document.createElement('base');
+          b.href = want;
+          document.head.prepend(b);
+        } else if (!b.href.includes(want)) {
+          b.href = want; // normalize
+        }
+        window.__APP_BASE__ = want;
+      })();
+      
       // Fallback if <base> changes or you run locally
       (function () {
         const fromBaseTag = document.querySelector('base')?.getAttribute('href') || '';
@@ -48,6 +62,13 @@
       });
       
       window.__fixPath = fix;
+      
+      // appURL helper for consistent path resolution
+      window.appURL = function(p = '') {
+        if (/^https?:\/\//.test(p)) return p;         // absolute stays absolute
+        const base = document.baseURI || location.origin + '/dhamma-path/';
+        return new URL(p.replace(/^\//, ''), base).toString();
+      };
       })();
     </script>
     
