@@ -87,6 +87,12 @@ class NavigationManager {
 
         this.currentPage = pageName;
         
+        // Dispatch page change event for anticipation system
+        document.dispatchEvent(new CustomEvent('pageChanged', {
+            detail: { page: pageName, previousPage: this.previousPage }
+        }));
+        this.previousPage = pageName;
+        
         // Close mobile menu when navigating
         this.closeMobileMenu();
 

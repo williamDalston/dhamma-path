@@ -128,6 +128,18 @@ class FlowNavigation {
                 indicator.classList.add('completed');
             }
         });
+        
+        // Dispatch flow progress event for anticipation system
+        const currentIndex = this.currentFlow.indexOf(currentPage);
+        document.dispatchEvent(new CustomEvent('flowProgress', {
+            detail: {
+                currentStep: currentIndex,
+                completed: currentIndex + 1,
+                total: this.currentFlow.length,
+                currentFlow: this.currentFlow,
+                currentPage: currentPage
+            }
+        }));
     }
 
     getCurrentPage() {
