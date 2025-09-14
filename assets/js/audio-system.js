@@ -19,6 +19,7 @@ class AudioSystem {
         };
         
         this.initializeAudioSystem();
+        this.setupAudioResume();
     }
     
     initializeAudioSystem() {
@@ -54,6 +55,19 @@ class AudioSystem {
         } catch (error) {
             console.error('Failed to initialize audio context:', error);
         }
+    }
+
+    // Add user gesture handler for AudioContext resume
+    setupAudioResume() {
+        window.addEventListener('pointerdown', async () => {
+            if (this.audioContext && this.audioContext.state === 'suspended') {
+                try { 
+                    await this.audioContext.resume(); 
+                } catch(e) {
+                    console.warn('AudioContext resume failed:', e);
+                }
+            }
+        }, { once: true });
     }
     
     createAmbientSounds() {

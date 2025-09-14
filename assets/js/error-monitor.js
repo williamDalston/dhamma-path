@@ -227,6 +227,12 @@ class ErrorMonitor {
     }
 
     async reportError(errorData) {
+        const IS_PAGES = /github\.io$/.test(location.hostname);
+        if (IS_PAGES) { 
+            console.warn('⚠️ Error endpoint not available on GitHub Pages'); 
+            return; 
+        }
+
         const payload = {
             ...errorData,
             sessionId: this.getSessionId(),

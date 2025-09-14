@@ -11,6 +11,31 @@
     <meta name="expires" content="Tue, 01 Jan 1980 1:00:00 GMT">
     <meta name="pragma" content="no-cache">
     
+    <!-- GitHub Pages base path configuration -->
+    <base href="/dhamma-path/">
+    <script>
+      // Fallback if <base> changes or you run locally
+      (function () {
+        const fromBaseTag = document.querySelector('base')?.getAttribute('href') || '';
+        const repoBase = fromBaseTag || (location.pathname.includes('/dhamma-path/') ? '/dhamma-path/' : '/');
+        window.__APP_BASE__ = repoBase;
+
+        // Normalize any hard-coded root URLs to the repo base (runs early)
+        const fix = (u) => {
+          if (!u) return u;
+          if (/^https?:\/\//i.test(u)) return u;      // absolute ok
+          if (u.startsWith(repoBase)) return u;       // already ok
+          if (u.startsWith('/')) return repoBase + u.slice(1);
+          return repoBase + u;
+        };
+        document.querySelectorAll('link[href],script[src]').forEach(el => {
+          if (el.hasAttribute('href')) el.setAttribute('href', fix(el.getAttribute('href')));
+          if (el.hasAttribute('src'))  el.setAttribute('src',  fix(el.getAttribute('src')));
+        });
+        window.__fixPath = fix;
+      })();
+    </script>
+    
     <!-- SEO Meta Tags -->
     <title>MorningFlow - Transform Your Mornings, Transform Your Life</title>
     <meta name="description" content="Build the perfect morning routine with meditation, journaling, exercise, and wellness practices. Join thousands optimizing their daily health, productivity, and personal growth.">
@@ -205,15 +230,16 @@
 
       // Resilient cache.addAll replacement (call this instead of addAll)
       window.__cacheAddAll = async function (cacheName, resources) {
+        const base = window.__APP_BASE__ || '/';
         const cache = await caches.open(cacheName);
-        for (const url of resources) {
-          try { 
-            await cache.add(url); 
-            console.log('✅ Cached:', url);
-          } catch (e) { 
-            console.warn('⚠️ Skipped cache:', url, e.message); 
-          }
-        }
+        const fixed = resources
+          .map(u => (u.startsWith('http') ? u : (u.startsWith('/') ? base + u.slice(1) : base + u)))
+          .filter(u => u !== '/' && u !== base); // don't try to cache the host root
+
+        const results = await Promise.allSettled(fixed.map(u => cache.add(u)));
+        results.forEach((r, i) => {
+          if (r.status === 'rejected') console.warn('⚠️ Skipped cache:', fixed[i], r.reason);
+        });
       };
 
       // Improved error logging
