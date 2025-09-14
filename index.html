@@ -20,19 +20,32 @@
         const repoBase = fromBaseTag || (location.pathname.includes('/dhamma-path/') ? '/dhamma-path/' : '/');
         window.__APP_BASE__ = repoBase;
 
-        // Normalize any hard-coded root URLs to the repo base (runs early)
-        const fix = (u) => {
-          if (!u) return u;
-          if (/^https?:\/\//i.test(u)) return u;      // absolute ok
-          if (u.startsWith(repoBase)) return u;       // already ok
-          if (u.startsWith('/')) return repoBase + u.slice(1);
-          return repoBase + u;
-        };
-        document.querySelectorAll('link[href],script[src]').forEach(el => {
-          if (el.hasAttribute('href')) el.setAttribute('href', fix(el.getAttribute('href')));
-          if (el.hasAttribute('src'))  el.setAttribute('src',  fix(el.getAttribute('src')));
-        });
-        window.__fixPath = fix;
+      // Normalize any hard-coded root URLs to the repo base (runs early)
+      const fix = (u) => {
+        if (!u) return u;
+        if (/^https?:\/\//i.test(u)) return u;      // absolute ok
+        if (u.startsWith(repoBase)) return u;       // already ok
+        if (u.startsWith('/')) return repoBase + u.slice(1);
+        return repoBase + u;
+      };
+      
+      // Fix all existing script and link URLs immediately
+      document.querySelectorAll('link[href],script[src]').forEach(el => {
+        if (el.hasAttribute('href')) {
+          const href = el.getAttribute('href');
+          if (href && !href.startsWith('http') && href.startsWith('/')) {
+            el.setAttribute('href', fix(href));
+          }
+        }
+        if (el.hasAttribute('src')) {
+          const src = el.getAttribute('src');
+          if (src && !src.startsWith('http') && src.startsWith('/')) {
+            el.setAttribute('src', fix(src));
+          }
+        }
+      });
+      
+      window.__fixPath = fix;
       })();
     </script>
     

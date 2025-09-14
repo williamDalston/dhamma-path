@@ -638,7 +638,6 @@ class OfflineSupport {
     async cacheCriticalResources() {
         if ('caches' in window) {
             try {
-                const cache = await caches.open(this.cacheName);
                 const criticalResources = [
                     '/',
                     '/assets/css/styles.css',

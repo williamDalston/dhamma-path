@@ -267,6 +267,12 @@ class JournalErrorHandler {
     }
 
     async saveToServer(entry) {
+        const IS_PAGES = /github\.io$/.test(location.hostname);
+        if (IS_PAGES) {
+            console.warn('⚠️ Journal API not available on GitHub Pages');
+            return; // Skip server save on GitHub Pages
+        }
+        
         try {
             const response = await fetch('/api/journal/entries', {
                 method: 'POST',

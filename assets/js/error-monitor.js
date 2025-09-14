@@ -407,6 +407,14 @@ class ErrorMonitor {
                 recentErrors: this.errorQueue.slice(-5) // Include recent errors for context
             };
 
+            const IS_PAGES = /github\.io$/.test(location.hostname);
+            if (IS_PAGES) {
+                console.warn('⚠️ Feedback endpoint not available on GitHub Pages');
+                modal.remove();
+                this.showNotification('Feedback saved locally (GitHub Pages)', 'info');
+                return;
+            }
+            
             await fetch('/api/feedback', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
