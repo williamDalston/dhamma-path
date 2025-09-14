@@ -38,7 +38,13 @@ class ProductionPolish {
     
     setupServiceWorker() {
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/dhamma-path/sw.js', { scope: '/dhamma-path/' })
+            const SCOPE = (window.PROJECT_SCOPE
+              || (location.pathname.match(/^\/[^/]+\//) || ['/'])[0]);
+
+            const SW_URL = (window.assetURL ? assetURL('sw.js')
+              : new URL('sw.js', location.origin + SCOPE).href);
+
+            navigator.serviceWorker.register(SW_URL, { scope: SCOPE })
                 .then(registration => {
                     this.serviceWorker = registration;
                     console.log('📦 Service Worker registered successfully');

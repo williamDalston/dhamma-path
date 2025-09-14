@@ -236,7 +236,13 @@ class PerformancePolish {
     setupCaching() {
         // Service Worker caching
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/dhamma-path/sw.js', { scope: '/dhamma-path/' }).then(registration => {
+            const SCOPE = (window.PROJECT_SCOPE
+              || (location.pathname.match(/^\/[^/]+\//) || ['/'])[0]);
+
+            const SW_URL = (window.assetURL ? assetURL('sw.js')
+              : new URL('sw.js', location.origin + SCOPE).href);
+
+            navigator.serviceWorker.register(SW_URL, { scope: SCOPE }).then(registration => {
                 console.log('📦 Service Worker registered');
             }).catch(error => {
                 console.error('❌ Service Worker registration failed:', error);

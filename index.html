@@ -8,13 +8,24 @@
     
     <!-- Centralized asset path configuration -->
     <script>
-      // Works on local root AND GitHub Pages project path
-      window.APP_BASE = location.pathname.includes('/dhamma-path/') ? '/dhamma-path/' : '/';
-      window.assetPath = (p) => {
-        const base = window.APP_BASE.endsWith('/') ? window.APP_BASE : window.APP_BASE + '/';
-        return base + p.replace(/^\/+/,'');
-      };
-      console.log('🔄 Asset path function updated at:', new Date().toISOString());
+      (() => {
+        // Detect repo prefix on GitHub Pages (e.g. "/dhamma-path/"); fallback "/"
+        const REPO_PREFIX = (location.hostname.endsWith('github.io')
+          ? (location.pathname.match(/^\/[^/]+\//) || ['/'])[0]
+          : '/');
+
+        // Always use a URL *object* as base (not a string)
+        const BASE = new URL(REPO_PREFIX, location.origin);
+        const stripLead = s => String(s || '').replace(/^\/+/, '');
+
+        // Public helpers used by the whole app
+        window.PROJECT_SCOPE = BASE.pathname;                       // "/dhamma-path/"
+        window.assetURL  = p => new URL(stripLead(p), BASE).href;   // absolute URL
+        window.assetPath = p => new URL(stripLead(p), BASE).pathname;
+        
+        console.log('🔄 Asset path function updated at:', new Date().toISOString());
+        console.log('📍 Project scope:', window.PROJECT_SCOPE);
+      })();
     </script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
@@ -173,13 +184,25 @@
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"></noscript>
     
     <!-- Critical CSS -->
-    <link rel="stylesheet" href="/dhamma-path/assets/css/critical.css?v=1757892007000">
+    <link rel="stylesheet" id="critical-css">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com" defer></script>
     
     <!-- Main Styles -->
-    <link rel="stylesheet" href="/dhamma-path/assets/css/styles.css?v=1757892007000">
+    <link rel="stylesheet" id="main-css">
+    
+    <script>
+      // Load CSS and JS after assetURL is available
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.assetURL) {
+          document.getElementById('critical-css').href = assetURL('assets/css/critical.css?v=1757892007000');
+          document.getElementById('main-css').href = assetURL('assets/css/styles.css?v=1757892007000');
+          document.getElementById('nav-js').src = assetURL('assets/js/navigation.js?v=1757892007000');
+          document.getElementById('app-js').src = assetURL('assets/js/app.js?v=1757892007000');
+        }
+      });
+    </script>
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -550,7 +573,7 @@
     <script src="assets/js/journal-system.js?v=175787554197000"></script>
     
     <!-- Core Systems -->
-    <script defer src="/dhamma-path/assets/js/navigation.js?v=1757892007000"></script>
+    <script defer id="nav-js"></script>
     <script src="assets/js/theme-manager.js?v=175787554178000"></script>
     <script src="assets/js/animations.js"></script>
     <script src="assets/js/gesture-manager.js?v=1757876093"></script>
@@ -665,7 +688,7 @@
     </script>
     
     <!-- Main Application (Loaded Last) -->
-    <script defer src="/dhamma-path/assets/js/app.js?v=1757892007000"></script>
+    <script defer id="app-js"></script>
     
     <!-- Foundation Validation -->
     <script src="validate-foundation.js?v=1757876093"></script>

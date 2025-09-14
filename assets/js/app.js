@@ -197,16 +197,33 @@ class DhammaPathApp {
     }
 
     async initializeWeatherIntegration() {
-        const start = performance.now();
-        while (!('WeatherIntegration' in window)) {
-            if (performance.now() - start > 5000) {
-                console.warn('WeatherIntegration still not available after 5s; skipping');
-                return;
+        try {
+            if (window.assetURL) {
+                // Use dynamic import with correct URL
+                const module = await import(window.assetURL('assets/js/weather-integration.js'));
+                const WeatherIntegration = module.default || module.WeatherIntegration || window.WeatherIntegration;
+                if (WeatherIntegration) {
+                    this.weatherIntegration = new WeatherIntegration();
+                    console.log('🌤️ Weather integration initialized');
+                } else {
+                    console.warn('WeatherIntegration not found in module');
+                }
+            } else {
+                // Fallback to existing method
+                const start = performance.now();
+                while (!('WeatherIntegration' in window)) {
+                    if (performance.now() - start > 5000) {
+                        console.warn('WeatherIntegration still not available after 5s; skipping');
+                        return;
+                    }
+                    await new Promise(r => setTimeout(r, 50));
+                }
+                this.weatherIntegration = new window.WeatherIntegration();
+                console.log('🌤️ Weather integration initialized');
             }
-            await new Promise(r => setTimeout(r, 50));
+        } catch (error) {
+            console.warn('WeatherIntegration load failed:', error);
         }
-        this.weatherIntegration = new window.WeatherIntegration();
-        console.log('🌤️ Weather integration initialized');
     }
 
     initializeLearningSystem() {

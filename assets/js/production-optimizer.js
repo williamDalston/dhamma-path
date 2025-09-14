@@ -136,8 +136,14 @@ class ProductionOptimizer {
     setupAdvancedCaching() {
         // Service Worker for aggressive caching
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/dhamma-path/sw.js', {
-                scope: '/dhamma-path/',
+            const SCOPE = (window.PROJECT_SCOPE
+              || (location.pathname.match(/^\/[^/]+\//) || ['/'])[0]);
+
+            const SW_URL = (window.assetURL ? assetURL('sw.js')
+              : new URL('sw.js', location.origin + SCOPE).href);
+
+            navigator.serviceWorker.register(SW_URL, {
+                scope: SCOPE,
                 updateViaCache: 'none'
             }).then(registration => {
                 console.log('🚀 Production Service Worker registered');
@@ -315,11 +321,12 @@ class ProductionOptimizer {
         document.body.appendChild(offlineIndicator);
 
         // Cache critical resources for offline use
-        const BASE = self.registration?.scope?.replace(location.origin, '') || '/';
-        const A = (p) => {
-            const base = BASE.endsWith('/') ? BASE : BASE + '/';
-            return base + p.replace(/^\/+/,'');
-        };
+        const SCOPE_URL = new URL(
+          (self.registration?.scope)
+          || (self.location?.origin + (self.PROJECT_SCOPE || (self.location?.pathname.match(/^\/[^/]+\//) || ['/'])[0]))
+        );
+        const toRel = s => String(s).replace(/^\/+/, '');
+        const A = p => new URL(toRel(p), SCOPE_URL).toString();
         const criticalResources = [
             A('assets/css/styles.css'),
             A('assets/js/app.js'),
