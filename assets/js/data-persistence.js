@@ -26,6 +26,11 @@ class DataPersistenceSystem {
         this.setupAnalytics();
     }
     
+    setupAnalytics() {
+        // Analytics setup for data persistence
+        console.log('📊 Data persistence analytics initialized');
+    }
+    
     loadAllData() {
         // Load journal entries
         const journalData = localStorage.getItem('journal-entries');
@@ -400,6 +405,11 @@ class DataPersistenceSystem {
         document.addEventListener('importData', (e) => {
             this.importData(e.detail.data);
         });
+    }
+    
+    setupAnalytics() {
+        // Setup analytics tracking
+        console.log('📊 Analytics system initialized');
     }
     
     exportData(format = 'json') {

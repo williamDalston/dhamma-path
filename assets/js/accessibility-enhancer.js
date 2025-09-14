@@ -492,6 +492,13 @@ class AccessibilityEnhancer {
         this.setupVoiceCommands();
     }
     
+    applyReducedMotion() {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) {
+            document.body.classList.add('reduce-motion');
+        }
+    }
+    
     applyHighContrast() {
         if (this.settings.highContrast) {
             document.body.classList.add('high-contrast');
@@ -499,6 +506,7 @@ class AccessibilityEnhancer {
             document.body.classList.remove('high-contrast');
         }
     }
+    
     
     applyLargeText() {
         if (this.settings.largeText) {

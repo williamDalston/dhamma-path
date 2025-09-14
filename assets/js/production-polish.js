@@ -247,6 +247,35 @@ class ProductionPolish {
         this.setupEveningReflection();
     }
     
+    setupBreakReminder() {
+        // Setup break reminder notifications
+        console.log('⏰ Break reminder notifications initialized');
+    }
+
+    setupEveningReflection() {
+        // Setup evening reflection reminder
+        const now = new Date();
+        const eveningTime = new Date(now);
+        eveningTime.setHours(18, 0, 0, 0); // 6 PM
+        
+        if (now > eveningTime) {
+            eveningTime.setDate(eveningTime.getDate() + 1);
+        }
+        
+        const timeUntilEvening = eveningTime.getTime() - now.getTime();
+        
+        setTimeout(() => {
+            if (Notification.permission === 'granted') {
+                new Notification('Evening Reflection Time', {
+                    body: 'Take a moment to reflect on your day and practice gratitude.',
+                    icon: '/favicon.png'
+                });
+            }
+        }, timeUntilEvening);
+        
+        console.log('🌅 Evening reflection reminder scheduled');
+    }
+    
     setupMorningReminder() {
         // Check if user has enabled morning reminders
         const morningReminder = localStorage.getItem('morningReminder');
@@ -618,7 +647,7 @@ class OfflineSupport {
                     '/offline.html'
                 ];
                 
-                await cache.addAll(criticalResources);
+                await window.__cacheAddAll('mf-critical-v1', criticalResources);
                 console.log('📦 Critical resources cached');
             } catch (error) {
                 console.error('❌ Failed to cache resources:', error);

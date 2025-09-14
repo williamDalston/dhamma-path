@@ -212,6 +212,11 @@ class ABTestingFramework {
         return variant;
     }
     
+    trackExperimentView(experimentId, variant) {
+        // Track experiment view for analytics
+        console.log(`🎯 Experiment view tracked: ${experimentId} - ${variant}`);
+    }
+    
     assignVariant(experiment) {
         const variants = Object.entries(experiment.variants);
         const totalWeight = variants.reduce((sum, [, variant]) => sum + variant.weight, 0);

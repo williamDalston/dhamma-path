@@ -179,6 +179,53 @@ class HealthIntegrationSystem {
         }, 60000); // Every minute
     }
 
+    checkHealthWarnings() {
+        // Check for health-related warnings and notifications
+        const now = new Date();
+        const hour = now.getHours();
+        
+        // Check for extended screen time (assuming 8+ hours is concerning)
+        const screenTime = this.getScreenTime();
+        if (screenTime > 480) { // 8 hours in minutes
+            console.warn('⚠️ Extended screen time detected:', screenTime, 'minutes');
+            this.showHealthNotification('Consider taking a break from screens');
+        }
+        
+        // Check for late night usage (after 11 PM)
+        if (hour >= 23 || hour <= 5) {
+            console.warn('🌙 Late night usage detected');
+            this.showHealthNotification('Consider winding down for better sleep');
+        }
+        
+        // Check for prolonged inactivity
+        const lastActivity = this.getLastActivityTime();
+        const inactivityMinutes = (now - lastActivity) / (1000 * 60);
+        if (inactivityMinutes > 60) {
+            console.warn('🏃 Prolonged inactivity detected:', inactivityMinutes, 'minutes');
+            this.showHealthNotification('Consider taking a movement break');
+        }
+    }
+
+    getScreenTime() {
+        // Mock screen time calculation - in real app, this would track actual usage
+        return Math.floor(Math.random() * 600) + 60; // 1-10 hours
+    }
+
+    getLastActivityTime() {
+        // Mock last activity time - in real app, this would track actual user activity
+        return new Date(Date.now() - Math.random() * 30 * 60 * 1000); // 0-30 minutes ago
+    }
+
+    showHealthNotification(message) {
+        if (Notification.permission === 'granted') {
+            new Notification('Health Reminder', {
+                body: message,
+                icon: '/favicon.png'
+            });
+        }
+        console.log('💚 Health notification:', message);
+    }
+
     setupHealthRecommendations() {
         // Setup health-based recommendations
         this.setupActivityRecommendations();

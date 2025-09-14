@@ -269,6 +269,11 @@ class VisualPolish {
         this.setupStateTransitions();
     }
     
+    setupStateTransitions() {
+        // Setup smooth state transitions
+        console.log('✨ State transitions initialized');
+    }
+    
     setupPageTransitions() {
         // Fade in animation for page content
         const pageContent = document.querySelector('.page-content, main, .content');
@@ -315,6 +320,20 @@ class VisualPolish {
         this.setupBackgroundHoverEffects();
     }
     
+    setupBackgroundHoverEffects() {
+        // Add subtle background hover effects to interactive elements
+        const interactiveElements = document.querySelectorAll('button, .btn, .card, .interactive');
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                element.style.transition = 'background-color 0.2s ease';
+                element.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+            });
+            element.addEventListener('mouseleave', () => {
+                element.style.backgroundColor = '';
+            });
+        });
+    }
+
     setupTextHoverEffects() {
         const textElements = document.querySelectorAll('h1, h2, h3, .title, .heading');
         

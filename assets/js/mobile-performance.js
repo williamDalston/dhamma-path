@@ -307,7 +307,7 @@ class MobilePerformanceOptimizer {
             }
         } else if (deviceType === 'mobile') {
             // Optimize JavaScript for mobile
-            if (window.physicsAnimations) {
+            if (window.physicsAnimations && typeof window.physicsAnimations.setQuality === 'function') {
                 window.physicsAnimations.setQuality('medium');
             }
             

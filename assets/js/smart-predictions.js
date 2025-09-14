@@ -222,17 +222,33 @@ class SmartPredictionsSystem {
         }
     }
     
+    addSafeClass(element, className) {
+        if (className && !className.includes(' ') && !className.includes('/')) {
+            element.classList.add(className);
+        } else {
+            console.warn('Invalid CSS class name:', className);
+            // Split and add valid classes
+            if (className) {
+                className.split(' ').forEach(cls => {
+                    if (cls && !cls.includes('/')) {
+                        element.classList.add(cls);
+                    }
+                });
+            }
+        }
+    }
+    
     displayPrediction(message, type) {
         const predictionEl = document.createElement('div');
         predictionEl.className = 'smart-prediction fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-lg p-4 shadow-lg max-w-md text-center transition-all duration-300 opacity-0 translate-y-[-10px]';
         
         const typeClasses = {
-            morning: 'text-forest-deep bg-forest-pale/30',
-            afternoon: 'text-gold-rich bg-gold-pale/30',
-            evening: 'text-sage-deep bg-sage-pale/30'
+            morning: 'text-forest-deep',
+            afternoon: 'text-gold-rich',
+            evening: 'text-sage-deep'
         };
         
-        predictionEl.classList.add(typeClasses[type] || 'text-charcoal');
+        this.addSafeClass(predictionEl, typeClasses[type] || 'text-charcoal');
         
         predictionEl.innerHTML = `
             <div class="flex items-center justify-between">

@@ -451,7 +451,7 @@ class UserAnticipationSystem {
             thought: 'text-charcoal bg-linen-white/80',
             prompt: 'text-sage-deep bg-sage-pale/30',
             flow: 'text-forest-deep bg-forest-pale/30',
-            progress: 'text-gold-rich bg-gold-pale/30'
+            progress: 'text-gold-rich'
         };
         
         messageEl.classList.add(typeClasses[type] || 'text-charcoal');

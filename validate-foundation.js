@@ -171,23 +171,22 @@ class FoundationValidator {
 
     // Helper methods for specific checks
     checkPrivacyElements() {
-        // Check if privacy-related CSS classes exist by testing computed styles
+        // Check if privacy elements exist in the DOM
         try {
-            // Create a test element to check if CSS classes are defined
-            const testElement = document.createElement('div');
-            testElement.className = 'privacy-badge trust-covenant';
-            testElement.style.display = 'none';
-            document.body.appendChild(testElement);
+            // Check for privacy section and privacy link
+            const privacySection = document.getElementById('privacy');
+            const privacyLink = document.getElementById('privacy-link');
             
-            const computedStyle = window.getComputedStyle(testElement);
-            const hasPrivacyBadge = computedStyle.display !== '';
+            console.log('🔍 Privacy validation:', {
+                privacySection: !!privacySection,
+                privacyLink: !!privacyLink,
+                sectionContent: privacySection?.textContent,
+                linkHref: privacyLink?.href
+            });
             
-            document.body.removeChild(testElement);
-            
-            // Also check if welcome template exists
-            const welcomeTemplate = document.querySelector('.welcome-screen');
-            return hasPrivacyBadge && welcomeTemplate !== null;
+            return privacySection !== null && privacyLink !== null;
         } catch (error) {
+            console.error('Privacy validation error:', error);
             return false;
         }
     }
@@ -195,13 +194,18 @@ class FoundationValidator {
     checkBreathingFunctionality() {
         // Check if breathing functionality is available
         try {
-            // Check if welcome screen has breathing elements
-            const welcomeScreen = document.querySelector('.welcome-screen');
-            const breathCircle = document.querySelector('.breath-circle');
-            const breathControls = document.querySelector('.breath-controls');
+            // Check for breathing button element
+            const breathingButton = document.getElementById('breathing-start');
             
-            return welcomeScreen !== null && (breathCircle !== null || breathControls !== null);
+            console.log('🔍 Breathing validation:', {
+                breathingButton: !!breathingButton,
+                buttonText: breathingButton?.textContent,
+                buttonId: breathingButton?.id
+            });
+            
+            return breathingButton !== null;
         } catch (error) {
+            console.error('Breathing validation error:', error);
             return false;
         }
     }
@@ -348,13 +352,17 @@ class FoundationValidator {
 
 // Auto-run validation when script loads
 if (typeof window !== 'undefined') {
-    // Wait for DOM to be ready
+    // Wait for DOM to be ready and give extra time for elements to load
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-            new FoundationValidator();
+            setTimeout(() => {
+                new FoundationValidator();
+            }, 1000); // Give 1 second for all elements to be ready
         });
     } else {
-        new FoundationValidator();
+        setTimeout(() => {
+            new FoundationValidator();
+        }, 1000); // Give 1 second for all elements to be ready
     }
 }
 

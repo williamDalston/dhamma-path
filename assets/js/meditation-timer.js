@@ -136,6 +136,14 @@ class MeditationTimer {
         
         this.updateStatus('Meditation in progress...');
         
+        // Dispatch timer started event
+        document.dispatchEvent(new CustomEvent('timerStarted', {
+            detail: { 
+                duration: this.totalTime,
+                timestamp: new Date()
+            }
+        }));
+        
         // Start the timer
         this.intervalId = setInterval(() => {
             this.timeRemaining--;
@@ -203,6 +211,24 @@ class MeditationTimer {
         }
         
         this.updateStatus('Meditation complete! 🎉');
+        
+        // Dispatch timer completed event
+        document.dispatchEvent(new CustomEvent('timerCompleted', {
+            detail: { 
+                duration: this.totalTime,
+                completedAt: new Date(),
+                activity: 'meditation'
+            }
+        }));
+        
+        // Dispatch activity completed event
+        document.dispatchEvent(new CustomEvent('activityCompleted', {
+            detail: { 
+                activity: 'meditation',
+                duration: this.totalTime,
+                completedAt: new Date()
+            }
+        }));
         
         // Show completion notification
         this.showCompletionNotification();

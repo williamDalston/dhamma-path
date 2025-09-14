@@ -401,29 +401,29 @@ class AnalyticsEngine {
     updatePerformanceScore() {
         const { lcp, fid, cls } = this.metrics.performance;
         
-        // Calculate performance score (0-100)
+        // Calculate performance score (0-100) - start with 100 and subtract penalties
         let score = 100;
         
-        // LCP scoring (0-25 points)
-        if (lcp <= 2500) score -= 0;
-        else if (lcp <= 4000) score -= 5;
-        else score -= 15;
+        // LCP scoring (0-25 points penalty)
+        if (lcp <= 2500) score -= 0;  // Good
+        else if (lcp <= 4000) score -= 10;  // Fair
+        else score -= 25;  // Poor
         
-        // FID scoring (0-25 points)
-        if (fid <= 100) score -= 0;
-        else if (fid <= 300) score -= 5;
-        else score -= 15;
+        // FID scoring (0-25 points penalty)
+        if (fid <= 100) score -= 0;  // Good
+        else if (fid <= 300) score -= 10;  // Fair
+        else score -= 25;  // Poor
         
-        // CLS scoring (0-25 points)
-        if (cls <= 0.1) score -= 0;
-        else if (cls <= 0.25) score -= 5;
-        else score -= 15;
+        // CLS scoring (0-25 points penalty)
+        if (cls <= 0.1) score -= 0;  // Good
+        else if (cls <= 0.25) score -= 10;  // Fair
+        else score -= 25;  // Poor
         
-        // Load time scoring (0-25 points)
+        // Load time scoring (0-25 points penalty)
         const loadTime = this.metrics.performance.loadTime;
-        if (loadTime <= 2000) score -= 0;
-        else if (loadTime <= 3000) score -= 5;
-        else score -= 15;
+        if (loadTime <= 2000) score -= 0;  // Good
+        else if (loadTime <= 3000) score -= 10;  // Fair
+        else score -= 25;  // Poor
         
         this.metrics.performance.score = Math.max(0, score);
     }
@@ -471,8 +471,10 @@ class AnalyticsEngine {
     
     updateDashboard() {
         // Update performance score
-        document.getElementById('performance-score')?.textContent = Math.round(this.metrics.performance.score);
-        document.getElementById('performance-percentage')?.textContent = `${Math.round(this.metrics.performance.score)}%`;
+        const scoreElement = document.getElementById('performance-score');
+        if (scoreElement) scoreElement.textContent = Math.round(this.metrics.performance.score);
+        const percentageElement = document.getElementById('performance-percentage');
+        if (percentageElement) percentageElement.textContent = `${Math.round(this.metrics.performance.score)}%`;
         
         // Update gauge
         const gaugeFill = document.getElementById('performance-gauge-fill');
@@ -482,13 +484,16 @@ class AnalyticsEngine {
         }
         
         // Update active users
-        document.getElementById('active-users')?.textContent = this.metrics.user.activeUsers;
+        const activeUsersElement = document.getElementById('active-users');
+        if (activeUsersElement) activeUsersElement.textContent = this.metrics.user.activeUsers;
         
         // Update load time
-        document.getElementById('avg-load-time')?.textContent = `${this.metrics.performance.loadTime.toFixed(0)}ms`;
+        const avgLoadTimeElement = document.getElementById('avg-load-time');
+        if (avgLoadTimeElement) avgLoadTimeElement.textContent = `${this.metrics.performance.loadTime.toFixed(0)}ms`;
         
         // Update error rate
-        document.getElementById('error-rate')?.textContent = `${this.metrics.system.errorRate.toFixed(1)}%`;
+        const errorRateElement = document.getElementById('error-rate');
+        if (errorRateElement) errorRateElement.textContent = `${this.metrics.system.errorRate.toFixed(1)}%`;
         
         // Update Core Web Vitals
         this.updateCoreWebVitals();
@@ -502,7 +507,8 @@ class AnalyticsEngine {
     
     updateCoreWebVitals() {
         // LCP
-        document.getElementById('lcp-value')?.textContent = `${this.metrics.performance.lcp.toFixed(0)}ms`;
+        const lcpValueElement = document.getElementById('lcp-value');
+        if (lcpValueElement) lcpValueElement.textContent = `${this.metrics.performance.lcp.toFixed(0)}ms`;
         const lcpProgress = document.getElementById('lcp-progress');
         if (lcpProgress) {
             const percentage = Math.min((this.metrics.performance.lcp / 2500) * 100, 100);
@@ -513,7 +519,8 @@ class AnalyticsEngine {
         }
         
         // FID
-        document.getElementById('fid-value')?.textContent = `${this.metrics.performance.fid.toFixed(1)}ms`;
+        const fidValueElement = document.getElementById('fid-value');
+        if (fidValueElement) fidValueElement.textContent = `${this.metrics.performance.fid.toFixed(1)}ms`;
         const fidProgress = document.getElementById('fid-progress');
         if (fidProgress) {
             const percentage = Math.min((this.metrics.performance.fid / 100) * 100, 100);
@@ -524,7 +531,8 @@ class AnalyticsEngine {
         }
         
         // CLS
-        document.getElementById('cls-value')?.textContent = this.metrics.performance.cls.toFixed(3);
+        const clsValueElement = document.getElementById('cls-value');
+        if (clsValueElement) clsValueElement.textContent = this.metrics.performance.cls.toFixed(3);
         const clsProgress = document.getElementById('cls-progress');
         if (clsProgress) {
             const percentage = Math.min((this.metrics.performance.cls / 0.1) * 100, 100);
@@ -537,7 +545,8 @@ class AnalyticsEngine {
     
     updateResourceUsage() {
         // Memory usage
-        document.getElementById('memory-usage')?.textContent = `${this.metrics.system.memoryUsage.toFixed(1)}MB`;
+        const memoryUsageElement = document.getElementById('memory-usage');
+        if (memoryUsageElement) memoryUsageElement.textContent = `${this.metrics.system.memoryUsage.toFixed(1)}MB`;
         const memoryProgress = document.getElementById('memory-progress');
         if (memoryProgress) {
             const percentage = Math.min((this.metrics.system.memoryUsage / 100) * 100, 100);
@@ -546,14 +555,16 @@ class AnalyticsEngine {
         
         // CPU usage (simulated)
         const cpuUsage = Math.random() * 30 + 10;
-        document.getElementById('cpu-usage')?.textContent = `${cpuUsage.toFixed(1)}%`;
+        const cpuUsageElement = document.getElementById('cpu-usage');
+        if (cpuUsageElement) cpuUsageElement.textContent = `${cpuUsage.toFixed(1)}%`;
         const cpuProgress = document.getElementById('cpu-progress');
         if (cpuProgress) {
             cpuProgress.style.width = `${cpuUsage}%`;
         }
         
         // Network requests
-        document.getElementById('network-requests')?.textContent = this.metrics.system.networkRequests;
+        const networkRequestsElement = document.getElementById('network-requests');
+        if (networkRequestsElement) networkRequestsElement.textContent = this.metrics.system.networkRequests;
         const networkProgress = document.getElementById('network-progress');
         if (networkProgress) {
             const percentage = Math.min((this.metrics.system.networkRequests / 50) * 100, 100);
@@ -563,7 +574,8 @@ class AnalyticsEngine {
     
     updateUserBehavior() {
         // Session duration
-        document.getElementById('session-duration')?.textContent = `${Math.round(this.metrics.user.sessionDuration)}s`;
+        const sessionDurationElement = document.getElementById('session-duration');
+        if (sessionDurationElement) sessionDurationElement.textContent = `${Math.round(this.metrics.user.sessionDuration)}s`;
         const sessionProgress = document.getElementById('session-progress');
         if (sessionProgress) {
             const percentage = Math.min((this.metrics.user.sessionDuration / 300) * 100, 100);
@@ -571,7 +583,8 @@ class AnalyticsEngine {
         }
         
         // Page views
-        document.getElementById('page-views')?.textContent = this.metrics.user.pageViews;
+        const pageViewsElement = document.getElementById('page-views');
+        if (pageViewsElement) pageViewsElement.textContent = this.metrics.user.pageViews;
         const pageViewsProgress = document.getElementById('page-views-progress');
         if (pageViewsProgress) {
             const percentage = Math.min((this.metrics.user.pageViews / 10) * 100, 100);
@@ -579,7 +592,8 @@ class AnalyticsEngine {
         }
         
         // Bounce rate
-        document.getElementById('bounce-rate')?.textContent = `${this.metrics.user.bounceRate.toFixed(1)}%`;
+        const bounceRateElement = document.getElementById('bounce-rate');
+        if (bounceRateElement) bounceRateElement.textContent = `${this.metrics.user.bounceRate.toFixed(1)}%`;
         const bounceProgress = document.getElementById('bounce-progress');
         if (bounceProgress) {
             const percentage = this.metrics.user.bounceRate;

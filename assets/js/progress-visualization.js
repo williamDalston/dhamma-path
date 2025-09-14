@@ -13,7 +13,6 @@ class ProgressVisualizationSystem {
     initializeVisualization() {
         this.setupChartLibrary();
         this.loadProgressData();
-        this.setupInsightsEngine();
         this.setupVisualizationEvents();
     }
     

@@ -31,6 +31,25 @@ class PhysicsAnimations {
         this.setupIntersectionObserver();
         console.log('✅ Physics Animation System initialized');
     }
+    
+    setQuality(quality) {
+        this.quality = quality;
+        console.log(`🎨 Physics animation quality set to: ${quality}`);
+        // Apply quality settings
+        if (quality === 'low') {
+            this.disableComplexAnimations();
+        } else if (quality === 'high') {
+            this.enableComplexAnimations();
+        }
+    }
+    
+    disableComplexAnimations() {
+        document.body.classList.add('reduce-physics');
+    }
+    
+    enableComplexAnimations() {
+        document.body.classList.remove('reduce-physics');
+    }
 
     setupSpringAnimations() {
         // Add spring animation CSS classes

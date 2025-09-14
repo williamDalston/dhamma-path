@@ -679,7 +679,29 @@ class MotionSystem {
 
     onResize() {
         // Adjust animations for new screen size
-        this.adjustAnimationsForResize();
+        this.updateMotionSettings();
+    }
+
+    updateMotionSettings() {
+        // Update motion settings based on current screen size and performance
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        // Adjust animation complexity based on screen size
+        if (width < 768) {
+            this.animationComplexity = 'low';
+        } else if (width < 1200) {
+            this.animationComplexity = 'medium';
+        } else {
+            this.animationComplexity = 'high';
+        }
+        
+        // Update CSS custom properties for responsive animations
+        document.documentElement.style.setProperty('--animation-duration', 
+            this.animationComplexity === 'low' ? '0.3s' : 
+            this.animationComplexity === 'medium' ? '0.5s' : '0.7s');
+        
+        console.log(`🎬 Motion settings updated for ${width}x${height} (${this.animationComplexity})`);
     }
 
     // Public API
