@@ -648,8 +648,8 @@ class OfflineSupport {
                 
                 // Use safe caching with proper base paths
                 const BASE = window.__APP_BASE__ || '/';
-                const cache = await caches.open('mf-critical-v1');
-                const results = await Promise.allSettled(criticalResources.map(u => cache.add(u)));
+                const cacheStore = await caches.open('mf-critical-v1');
+                const results = await Promise.allSettled(criticalResources.map(u => cacheStore.add(u)));
                 results.forEach((r, i) => {
                     if (r.status === 'rejected') console.warn('[SW] skipped', criticalResources[i], r.reason);
                 });
