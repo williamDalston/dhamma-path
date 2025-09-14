@@ -3,14 +3,17 @@
     <!-- Subtle Background Elements -->
     <div class="absolute inset-0 morphing-premium opacity-3 pointer-events-none"></div>
     
+    <!-- Breathing Background Animation -->
+    <div class="absolute inset-0 bg-gradient-to-br from-sage-deep/2 via-transparent to-forest-deep/2 animate-gentle-pulse pointer-events-none"></div>
+    
     <!-- Zone 1: Gentle Greeting at Top -->
-    <div class="greeting-zone flex-1 flex items-end justify-center pb-8">
+    <div class="greeting-zone flex-1 flex items-end justify-center pb-12">
         <div class="greeting-content text-center">
             <h1 class="greeting-text text-3xl md:text-4xl font-serif text-charcoal mb-3 leading-tight">
                 Good morning
             </h1>
             <p class="greeting-subtitle text-lg text-charcoal/60 font-medium">
-                Welcome to your sacred space
+                Your sacred space awaits
             </p>
         </div>
     </div>
@@ -20,24 +23,24 @@
         <div class="intention-container max-w-lg mx-auto text-center">
             <div class="intention-prompt mb-6">
                 <h2 class="intention-title text-xl md:text-2xl font-serif text-forest-deep mb-4">
-                    What is your intention for today?
+                    What intention will guide you today?
                 </h2>
                 <div class="intention-input-container relative">
                     <input type="text" 
-                           class="intention-input w-full px-6 py-4 text-center text-lg font-medium text-forest-deep bg-white/80 backdrop-blur-sm border-2 border-sage-deep/30 rounded-2xl focus:outline-none focus:border-sage-deep focus:bg-white/90 transition-all duration-300 placeholder-charcoal/40" 
+                           class="intention-input w-full px-6 py-4 text-center text-lg font-medium text-forest-deep bg-white/80 backdrop-blur-sm border-2 border-sage-deep/30 rounded-2xl focus:outline-none focus:border-sage-deep focus:bg-white/90 focus:shadow-lg focus:shadow-sage-deep/20 transition-all duration-300 placeholder-charcoal/40" 
                            placeholder="Peace, Focus, Joy, Strength..."
                            id="intention-input">
-                    <div class="intention-suggestions absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-xl shadow-lg hidden" id="intention-suggestions">
-                        <div class="suggestion-item px-4 py-3 hover:bg-sage-deep/10 cursor-pointer transition-colors duration-200" data-intention="Peace">
+                    <div class="intention-suggestions absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-sm border border-sage-deep/25 rounded-xl shadow-xl hidden" id="intention-suggestions">
+                        <div class="suggestion-item px-4 py-3 hover:bg-sage-deep/10 hover:scale-105 cursor-pointer transition-all duration-300 ease-out" data-intention="Peace">
                             <span class="text-sage-deep">🕊️</span> Peace
                         </div>
-                        <div class="suggestion-item px-4 py-3 hover:bg-sage-deep/10 cursor-pointer transition-colors duration-200" data-intention="Focus">
+                        <div class="suggestion-item px-4 py-3 hover:bg-sage-deep/10 hover:scale-105 cursor-pointer transition-all duration-300 ease-out" data-intention="Focus">
                             <span class="text-sage-deep">🎯</span> Focus
                         </div>
-                        <div class="suggestion-item px-4 py-3 hover:bg-sage-deep/10 cursor-pointer transition-colors duration-200" data-intention="Joy">
+                        <div class="suggestion-item px-4 py-3 hover:bg-sage-deep/10 hover:scale-105 cursor-pointer transition-all duration-300 ease-out" data-intention="Joy">
                             <span class="text-sage-deep">✨</span> Joy
                         </div>
-                        <div class="suggestion-item px-4 py-3 hover:bg-sage-deep/10 cursor-pointer transition-colors duration-200" data-intention="Strength">
+                        <div class="suggestion-item px-4 py-3 hover:bg-sage-deep/10 hover:scale-105 cursor-pointer transition-all duration-300 ease-out" data-intention="Strength">
                             <span class="text-sage-deep">💪</span> Strength
                         </div>
                     </div>
@@ -46,12 +49,12 @@
             
             <!-- Golden Thread Display -->
             <div class="golden-thread-display hidden" id="golden-thread-display">
-                <div class="thread-container bg-gradient-to-r from-sage-deep/10 to-forest-deep/10 rounded-2xl p-6 border border-sage-deep/20">
-                    <div class="thread-icon text-3xl mb-3">🧵</div>
+                <div class="thread-container bg-gradient-to-br from-sage-deep/15 via-forest-deep/10 to-sage-deep/15 rounded-2xl p-6 border border-sage-deep/25 shadow-lg text-center">
+                    <div class="thread-icon text-3xl mb-3 animate-gentle-pulse">🧵</div>
                     <h3 class="thread-title text-lg font-semibold text-forest-deep mb-2">Today's Golden Thread</h3>
                     <p class="thread-word text-2xl font-serif text-forest-deep" id="thread-word">Focus</p>
                     <p class="thread-context text-sm text-charcoal/60 mt-2" id="thread-context">
-                        This intention will guide your entire flow today
+                        This intention will weave through your entire flow
                     </p>
                 </div>
             </div>
@@ -59,20 +62,20 @@
     </div>
     
     <!-- Zone 3: Single Path Forward at Bottom -->
-    <div class="flow-zone flex-1 flex items-start justify-center pt-8">
+    <div class="flow-zone flex-1 flex items-start justify-center pt-12">
         <div class="flow-container text-center">
             <!-- Hero Flow Button -->
-            <button class="sacred-flow-button w-64 h-16 bg-gradient-to-r from-sage-deep to-forest-deep text-white text-xl font-semibold rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-2xl" 
+            <button class="sacred-flow-button w-72 h-18 bg-gradient-to-r from-sage-deep to-forest-deep text-white text-xl font-semibold rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-2xl" 
                     id="begin-sacred-flow-btn" 
                     disabled>
-                <span class="button-text">Begin Your Sacred Flow</span>
+                <span class="button-text">Begin Sacred Flow</span>
                 <div class="button-pulse absolute inset-0 rounded-2xl bg-gradient-to-r from-sage-deep to-forest-deep opacity-20 animate-pulse"></div>
             </button>
             
             <!-- Flow Preview (Hidden until intention is set) -->
-            <div class="flow-preview mt-6 hidden" id="flow-preview">
-                <p class="preview-text text-sm text-charcoal/60 mb-2">Your flow today:</p>
-                <div class="flow-steps flex justify-center space-x-4 text-xs text-charcoal/50">
+            <div class="flow-preview mt-8 hidden" id="flow-preview">
+                <p class="preview-text text-sm text-charcoal/70 mb-2">Your flow today:</p>
+                <div class="flow-steps flex justify-center space-x-4 text-xs text-charcoal/60">
                     <span class="flow-step">🧘 Meditation</span>
                     <span class="flow-step">✍️ Journal</span>
                     <span class="flow-step">💪 Workout</span>
@@ -82,8 +85,14 @@
     </div>
     
     <!-- Floating Elements for Visual Interest -->
-    <div class="absolute top-20 left-10 w-4 h-4 bg-forest-green/20 rounded-full float-premium" style="animation-delay: 1s;"></div>
-    <div class="absolute top-40 right-16 w-6 h-6 bg-sage-deep/20 rounded-full float-premium" style="animation-delay: 2s;"></div>
-    <div class="absolute bottom-32 left-20 w-3 h-3 bg-forest-green/30 rounded-full float-premium" style="animation-delay: 3s;"></div>
-    <div class="absolute bottom-20 right-10 w-5 h-5 bg-sage-deep/25 rounded-full float-premium" style="animation-delay: 4s;"></div>
+    <div class="absolute top-24 left-12 w-4 h-4 bg-forest-green/20 rounded-full float-premium" style="animation-delay: 1s;"></div>
+    <div class="absolute top-48 right-20 w-6 h-6 bg-sage-deep/20 rounded-full float-premium" style="animation-delay: 2s;"></div>
+    <div class="absolute bottom-40 left-24 w-3 h-3 bg-forest-green/30 rounded-full float-premium" style="animation-delay: 3s;"></div>
+    <div class="absolute bottom-24 right-16 w-5 h-5 bg-sage-deep/25 rounded-full float-premium" style="animation-delay: 4s;"></div>
+    <div class="absolute top-1/2 left-8 w-2 h-2 bg-forest-green/15 rounded-full float-premium" style="animation-delay: 5s;"></div>
+    <div class="absolute top-1/3 right-8 w-3 h-3 bg-sage-deep/15 rounded-full float-premium" style="animation-delay: 6s;"></div>
+    
+    <!-- Subtle Gradient Overlays -->
+    <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-sage-deep/5 to-transparent pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-forest-deep/5 to-transparent pointer-events-none"></div>
 </div>

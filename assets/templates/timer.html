@@ -21,7 +21,7 @@
                     Meditation Sanctuary
                 </h1>
                 <p class="sanctuary-subtitle text-lg text-charcoal/70 font-medium">
-                    A space for inner peace and reflection
+                    A sacred space for stillness and presence
                 </p>
             </div>
     
@@ -45,7 +45,14 @@
                 
                 <!-- Assumed Continuity Status -->
                 <div class="continuity-status">
-                    <div id="timer-status" class="text-lg text-charcoal/70 font-medium mb-4">Ready to begin meditation</div>
+                    <div id="timer-status" class="text-lg text-charcoal/80 font-medium mb-4">Ready to enter stillness</div>
+                    
+                    <!-- Breathing Indicator -->
+                    <div class="breathing-indicator flex items-center justify-center space-x-2 mb-4">
+                        <div class="breath-dot w-2 h-2 bg-sage-deep/40 rounded-full animate-gentle-pulse"></div>
+                        <div class="breath-dot w-2 h-2 bg-sage-deep/60 rounded-full animate-gentle-pulse" style="animation-delay: 0.5s;"></div>
+                        <div class="breath-dot w-2 h-2 bg-sage-deep/40 rounded-full animate-gentle-pulse" style="animation-delay: 1s;"></div>
+                    </div>
                     
                     <!-- Subtle Duration Adjustments -->
                     <div class="duration-adjustments flex justify-center space-x-6 text-sm text-charcoal/50">
@@ -62,7 +69,7 @@
         
             <!-- Single Hero Action - Assumed Continuity -->
             <div class="hero-action">
-                <button id="timer-start-btn" class="sacred-flow-button w-64 h-16 bg-gradient-to-r from-sage-deep to-forest-deep text-white text-xl font-semibold rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300">
+                <button id="timer-start-btn" class="sacred-flow-button w-72 h-18 bg-gradient-to-r from-sage-deep to-forest-deep text-white text-xl font-semibold rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300">
                     <span class="button-text">Begin Meditation</span>
                     <div class="button-pulse absolute inset-0 rounded-2xl bg-gradient-to-r from-sage-deep to-forest-deep opacity-20 animate-pulse"></div>
                 </button>

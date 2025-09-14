@@ -23,8 +23,8 @@
             <!-- Pre-Recording State -->
             <div class="pre-recording-state" id="pre-recording-state">
                 <!-- Record Button -->
-                <button class="record-button w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-sage-deep to-forest-deep flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 mb-6" id="record-button">
-                    <svg class="w-12 h-12 md:w-16 md:h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <button class="record-button w-40 h-40 rounded-full bg-gradient-to-br from-sage-deep to-forest-deep flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 mb-6" id="record-button" aria-label="Start recording your thoughts">
+                    <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10"/>
                     </svg>
                 </button>
@@ -38,8 +38,8 @@
             <!-- Active Recording State -->
             <div class="recording-state hidden" id="recording-state">
                 <!-- Stop Button -->
-                <button class="stop-button w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 mb-6" id="stop-button">
-                    <svg class="w-8 h-8 md:w-10 md:h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <button class="stop-button w-40 h-40 rounded-2xl bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 mb-6" id="stop-button" aria-label="Stop recording">
+                    <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
                         <rect x="6" y="6" width="12" height="12" rx="2"/>
                     </svg>
                 </button>
@@ -47,12 +47,12 @@
                 <!-- Waveform Visualizer -->
                 <div class="waveform-container mb-6" id="waveform-container">
                     <div class="waveform w-64 h-16 flex items-center justify-center space-x-1">
-                        <div class="wave-bar w-1 bg-sage-deep rounded-full waveform-bar"></div>
-                        <div class="wave-bar w-1 bg-forest-deep rounded-full waveform-bar"></div>
-                        <div class="wave-bar w-1 bg-sage-deep rounded-full waveform-bar"></div>
-                        <div class="wave-bar w-1 bg-forest-deep rounded-full waveform-bar"></div>
-                        <div class="wave-bar w-1 bg-sage-deep rounded-full waveform-bar"></div>
-                        <div class="wave-bar w-1 bg-forest-deep rounded-full waveform-bar"></div>
+                        <div class="wave-bar w-1 bg-sage-deep rounded-full waveform-bar animate-wave-pulse"></div>
+                        <div class="wave-bar w-1 bg-forest-deep rounded-full waveform-bar animate-wave-pulse" style="animation-delay: 0.1s;"></div>
+                        <div class="wave-bar w-1 bg-sage-deep rounded-full waveform-bar animate-wave-pulse" style="animation-delay: 0.2s;"></div>
+                        <div class="wave-bar w-1 bg-forest-deep rounded-full waveform-bar animate-wave-pulse" style="animation-delay: 0.3s;"></div>
+                        <div class="wave-bar w-1 bg-sage-deep rounded-full waveform-bar animate-wave-pulse" style="animation-delay: 0.4s;"></div>
+                        <div class="wave-bar w-1 bg-forest-deep rounded-full waveform-bar animate-wave-pulse" style="animation-delay: 0.5s;"></div>
                         <div class="wave-bar w-1 bg-sage-deep rounded-full waveform-bar"></div>
                         <div class="wave-bar w-1 bg-forest-deep rounded-full waveform-bar"></div>
                         <div class="wave-bar w-1 bg-sage-deep rounded-full waveform-bar"></div>
@@ -81,7 +81,7 @@
                 <!-- Audio Player -->
                 <div class="audio-player glass-card p-6 mb-8">
                     <div class="flex items-center justify-center mb-6">
-                        <button class="play-button w-16 h-16 rounded-full bg-gradient-to-br from-sage-deep to-forest-deep flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300" id="play-button">
+                        <button class="play-button w-16 h-16 rounded-full bg-gradient-to-br from-sage-deep to-forest-deep flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300" id="play-button" aria-label="Play recorded audio">
                             <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                                 <polygon points="5,3 19,12 5,21"/>
                             </svg>
@@ -121,7 +121,7 @@
                         </label>
                     </div>
                     
-                    <button class="save-button px-8 py-3 bg-gradient-to-r from-sage-deep to-forest-deep text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105" id="save-button">
+                    <button class="save-button px-8 py-3 bg-gradient-to-r from-sage-deep to-forest-deep text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105" id="save-button" aria-label="Save your recording">
                         Save Reflection
                     </button>
                 </div>
@@ -156,12 +156,12 @@
         <div class="prompt-navigation mt-8 text-center">
             <div class="navigation-hint text-sm text-charcoal/50 mb-4">Try a different prompt</div>
             <div class="navigation-buttons flex justify-center space-x-4">
-                <button class="nav-button w-10 h-10 rounded-full bg-sage-deep/10 hover:bg-sage-deep/20 transition-all duration-300 flex items-center justify-center" id="prev-prompt-btn">
+                <button class="nav-button w-10 h-10 rounded-full bg-sage-deep/10 hover:bg-sage-deep/20 transition-all duration-300 flex items-center justify-center" id="prev-prompt-btn" aria-label="Previous prompt">
                     <svg class="w-5 h-5 text-charcoal/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                 </button>
-                <button class="nav-button w-10 h-10 rounded-full bg-sage-deep/10 hover:bg-sage-deep/20 transition-all duration-300 flex items-center justify-center" id="next-prompt-btn">
+                <button class="nav-button w-10 h-10 rounded-full bg-sage-deep/10 hover:bg-sage-deep/20 transition-all duration-300 flex items-center justify-center" id="next-prompt-btn" aria-label="Next prompt">
                     <svg class="w-5 h-5 text-charcoal/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
@@ -182,7 +182,7 @@
     <div class="glass-modal max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div class="flex items-center justify-between mb-8">
             <h2 class="text-3xl font-serif text-forest-deep">Choose Your Prompt</h2>
-            <button class="close-button w-10 h-10 rounded-full bg-sage-deep/10 hover:bg-sage-deep/20 transition-all duration-300 flex items-center justify-center" id="close-prompts-modal">
+            <button class="close-button w-10 h-10 rounded-full bg-sage-deep/10 hover:bg-sage-deep/20 transition-all duration-300 flex items-center justify-center" id="close-prompts-modal" aria-label="Close prompts modal">
                 <svg class="w-6 h-6 text-charcoal/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
@@ -228,10 +228,10 @@
         </div>
         
         <div class="flex gap-4 mt-8">
-            <button class="cancel-button flex-1 py-4 px-6 bg-sage-deep/10 text-charcoal/70 rounded-xl font-medium hover:bg-sage-deep/20 transition-all duration-300" id="cancel-prompts-modal">
+            <button class="cancel-button flex-1 py-4 px-6 bg-sage-deep/10 text-charcoal/70 rounded-xl font-medium hover:bg-sage-deep/20 transition-all duration-300" id="cancel-prompts-modal" aria-label="Cancel prompt selection">
                 Cancel
             </button>
-            <button class="select-button flex-1 py-4 px-6 bg-gradient-to-r from-sage-deep to-forest-deep text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300" id="select-prompt-btn">
+            <button class="select-button flex-1 py-4 px-6 bg-gradient-to-r from-sage-deep to-forest-deep text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300" id="select-prompt-btn" aria-label="Use selected prompt">
                 Use This Prompt
             </button>
         </div>

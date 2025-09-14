@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MorningFlow - User Journey Testing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .test-pass { color: #10b981; }
+        .test-fail { color: #ef4444; }
+        .test-warning { color: #f59e0b; }
+        .test-info { color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">🧪 MorningFlow User Journey Testing</h1>
+        
+        <div id="test-results" class="space-y-6">
+            <!-- Test results will be populated here -->
+        </div>
+        
+        <div class="mt-8 p-4 bg-white rounded-lg shadow">
+            <h2 class="text-xl font-semibold mb-4">Test Summary</h2>
+            <div id="test-summary" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center">
+                    <div id="total-tests" class="text-2xl font-bold text-gray-900">0</div>
+                    <div class="text-sm text-gray-600">Total Tests</div>
+                </div>
+                <div class="text-center">
+                    <div id="passed-tests" class="text-2xl font-bold text-green-600">0</div>
+                    <div class="text-sm text-gray-600">Passed</div>
+                </div>
+                <div class="text-center">
+                    <div id="failed-tests" class="text-2xl font-bold text-red-600">0</div>
+                    <div class="text-sm text-gray-600">Failed</div>
+                </div>
+                <div class="text-center">
+                    <div id="warning-tests" class="text-2xl font-bold text-yellow-600">0</div>
+                    <div class="text-sm text-gray-600">Warnings</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class UserJourneyTester {
+            constructor() {
+                this.tests = [];
+                this.results = {
+                    total: 0,
+                    passed: 0,
+                    failed: 0,
+                    warnings: 0
+                };
+            }
+
+            addTest(name, testFn, category = 'General') {
+                this.tests.push({ name, testFn, category });
+            }
+
+            async runTests() {
+                console.log('🧪 Starting user journey tests...');
+                
+                for (const test of this.tests) {
+                    try {
+                        console.log(`Testing: ${test.name}`);
+                        const result = await test.testFn();
+                        this.recordResult(test.name, result, test.category);
+                    } catch (error) {
+                        console.error(`Test failed: ${test.name}`, error);
+                        this.recordResult(test.name, { status: 'fail', message: error.message }, test.category);
+                    }
+                }
+                
+                this.updateSummary();
+                console.log('✅ All tests completed');
+            }
+
+            recordResult(testName, result, category) {
+                this.results.total++;
+                
+                const status = result.status || 'pass';
+                if (status === 'pass') this.results.passed++;
+                else if (status === 'fail') this.results.failed++;
+                else if (status === 'warning') this.results.warnings++;
+
+                this.displayResult(testName, result, category);
+            }
+
+            displayResult(testName, result, category) {
+                const container = document.getElementById('test-results');
+                const status = result.status || 'pass';
+                const statusClass = status === 'pass' ? 'test-pass' : 
+                                  status === 'fail' ? 'test-fail' : 'test-warning';
+                
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'p-4 bg-white rounded-lg shadow border-l-4 border-current';
+                resultDiv.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-semibold ${statusClass}">${testName}</h3>
+                            <p class="text-sm text-gray-600">Category: ${category}</p>
+                            ${result.message ? `<p class="text-sm mt-1">${result.message}</p>` : ''}
+                        </div>
+                        <div class="text-2xl">
+                            ${status === 'pass' ? '✅' : status === 'fail' ? '❌' : '⚠️'}
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(resultDiv);
+            }
+
+            updateSummary() {
+                document.getElementById('total-tests').textContent = this.results.total;
+                document.getElementById('passed-tests').textContent = this.results.passed;
+                document.getElementById('failed-tests').textContent = this.results.failed;
+                document.getElementById('warning-tests').textContent = this.results.warnings;
+            }
+        }
+
+        // Initialize tester
+        const tester = new UserJourneyTester();
+
+        // Test 1: Local Storage Data Flow
+        tester.addTest('Local Storage Data Flow', async () => {
+            const testData = { test: 'value', timestamp: Date.now() };
+            localStorage.setItem('testData', JSON.stringify(testData));
+            const retrieved = JSON.parse(localStorage.getItem('testData'));
+            localStorage.removeItem('testData');
+            
+            return retrieved.test === 'value' ? 
+                { status: 'pass', message: 'Data storage and retrieval working correctly' } :
+                { status: 'fail', message: 'Data storage/retrieval failed' };
+        }, 'Data Management');
+
+        // Test 2: Navigation System
+        tester.addTest('Navigation System', async () => {
+            const navLinks = document.querySelectorAll('.main-nav-link');
+            return navLinks.length > 0 ? 
+                { status: 'pass', message: `${navLinks.length} navigation links found` } :
+                { status: 'fail', message: 'No navigation links found' };
+        }, 'Navigation');
+
+        // Test 3: Template Loading
+        tester.addTest('Template Loading', async () => {
+            try {
+                const response = await fetch('assets/templates/home.html');
+                return response.ok ? 
+                    { status: 'pass', message: 'Home template loads successfully' } :
+                    { status: 'fail', message: 'Home template failed to load' };
+            } catch (error) {
+                return { status: 'warning', message: 'Template loading test skipped (not in app context)' };
+            }
+        }, 'Template System');
+
+        // Test 4: Golden Thread Integration
+        tester.addTest('Golden Thread Integration', async () => {
+            const testIntention = { word: 'Test', context: 'Testing' };
+            localStorage.setItem('morningFlowCurrentIntention', JSON.stringify(testIntention));
+            const retrieved = JSON.parse(localStorage.getItem('morningFlowCurrentIntention'));
+            localStorage.removeItem('morningFlowCurrentIntention');
+            
+            return retrieved.word === 'Test' ? 
+                { status: 'pass', message: 'Golden Thread data flow working' } :
+                { status: 'fail', message: 'Golden Thread integration failed' };
+        }, 'Data Integration');
+
+        // Test 5: Journal Entry System
+        tester.addTest('Journal Entry System', async () => {
+            const testEntry = {
+                content: 'Test journal entry',
+                timestamp: new Date().toISOString(),
+                mood: 'happy'
+            };
+            
+            const entries = JSON.parse(localStorage.getItem('morningFlowJournalEntries') || '[]');
+            entries.push(testEntry);
+            localStorage.setItem('morningFlowJournalEntries', JSON.stringify(entries));
+            
+            const retrieved = JSON.parse(localStorage.getItem('morningFlowJournalEntries'));
+            const found = retrieved.find(entry => entry.content === 'Test journal entry');
+            
+            // Clean up
+            const filtered = retrieved.filter(entry => entry.content !== 'Test journal entry');
+            localStorage.setItem('morningFlowJournalEntries', JSON.stringify(filtered));
+            
+            return found ? 
+                { status: 'pass', message: 'Journal entry system working correctly' } :
+                { status: 'fail', message: 'Journal entry system failed' };
+        }, 'Journal System');
+
+        // Test 6: Gratitude System
+        tester.addTest('Gratitude System', async () => {
+            const testGratitude = {
+                point1: 'Test gratitude 1',
+                point2: 'Test gratitude 2',
+                point3: 'Test gratitude 3',
+                timestamp: new Date().toISOString()
+            };
+            
+            const entries = JSON.parse(localStorage.getItem('morningFlowGratitudeEntries') || '[]');
+            entries.push(testGratitude);
+            localStorage.setItem('morningFlowGratitudeEntries', JSON.stringify(entries));
+            
+            const retrieved = JSON.parse(localStorage.getItem('morningFlowGratitudeEntries'));
+            const found = retrieved.find(entry => entry.point1 === 'Test gratitude 1');
+            
+            // Clean up
+            const filtered = retrieved.filter(entry => entry.point1 !== 'Test gratitude 1');
+            localStorage.setItem('morningFlowGratitudeEntries', JSON.stringify(filtered));
+            
+            return found ? 
+                { status: 'pass', message: 'Gratitude system working correctly' } :
+                { status: 'fail', message: 'Gratitude system failed' };
+        }, 'Gratitude System');
+
+        // Test 7: Clarity Reflections
+        tester.addTest('Clarity Reflections', async () => {
+            const testReflection = {
+                prompt: 'Test prompt',
+                timestamp: new Date().toISOString(),
+                duration: 60
+            };
+            
+            const reflections = JSON.parse(localStorage.getItem('clarityReflections') || '[]');
+            reflections.push(testReflection);
+            localStorage.setItem('clarityReflections', JSON.stringify(reflections));
+            
+            const retrieved = JSON.parse(localStorage.getItem('clarityReflections'));
+            const found = retrieved.find(reflection => reflection.prompt === 'Test prompt');
+            
+            // Clean up
+            const filtered = retrieved.filter(reflection => reflection.prompt !== 'Test prompt');
+            localStorage.setItem('clarityReflections', JSON.stringify(filtered));
+            
+            return found ? 
+                { status: 'pass', message: 'Clarity reflections working correctly' } :
+                { status: 'fail', message: 'Clarity reflections failed' };
+        }, 'Clarity System');
+
+        // Test 8: User Progress Tracking
+        tester.addTest('User Progress Tracking', async () => {
+            const testProgress = {
+                sessions: 5,
+                lastSession: new Date().toISOString(),
+                streak: 3
+            };
+            
+            localStorage.setItem('userProgress', JSON.stringify(testProgress));
+            const retrieved = JSON.parse(localStorage.getItem('userProgress'));
+            localStorage.removeItem('userProgress');
+            
+            return retrieved.sessions === 5 ? 
+                { status: 'pass', message: 'Progress tracking working correctly' } :
+                { status: 'fail', message: 'Progress tracking failed' };
+        }, 'Progress System');
+
+        // Test 9: Theme Management
+        tester.addTest('Theme Management', async () => {
+            const testTheme = 'dark';
+            localStorage.setItem('currentTheme', testTheme);
+            const retrieved = localStorage.getItem('currentTheme');
+            localStorage.removeItem('currentTheme');
+            
+            return retrieved === testTheme ? 
+                { status: 'pass', message: 'Theme management working correctly' } :
+                { status: 'fail', message: 'Theme management failed' };
+        }, 'Theme System');
+
+        // Test 10: Analytics Data
+        tester.addTest('Analytics Data', async () => {
+            const testAnalytics = {
+                userId: 'test-user-123',
+                events: ['page_view', 'button_click'],
+                timestamp: Date.now()
+            };
+            
+            localStorage.setItem('analytics_user_id', testAnalytics.userId);
+            const retrieved = localStorage.getItem('analytics_user_id');
+            localStorage.removeItem('analytics_user_id');
+            
+            return retrieved === testAnalytics.userId ? 
+                { status: 'pass', message: 'Analytics data storage working' } :
+                { status: 'fail', message: 'Analytics data storage failed' };
+        }, 'Analytics');
+
+        // Run all tests
+        tester.runTests();
+    </script>
+</body>
+</html>

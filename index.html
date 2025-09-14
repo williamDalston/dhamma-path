@@ -158,8 +158,8 @@
         <nav class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8" role="navigation" aria-label="Main navigation">
             <div class="flex items-center justify-between h-16 sm:h-20 transition-all duration-300">
                 <!-- Logo -->
-                <a href="#" data-page="home" class="flex items-center space-x-2 main-nav-link" aria-label="The Dhamma Path - Home">
-                     <svg width="32" height="32" class="sm:w-10 sm:h-10 fill-charcoal transition-colors duration-300" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="The Dhamma Path Logo" role="img">
+                <a href="#" data-page="home" class="flex items-center space-x-2 main-nav-link group" aria-label="The Dhamma Path - Home">
+                     <svg width="32" height="32" class="sm:w-10 sm:h-10 fill-charcoal transition-all duration-300 group-hover:drop-shadow-lg group-hover:drop-shadow-sage-deep/20" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="The Dhamma Path Logo" role="img">
                         <defs>
                             <lineargradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" style="stop-color:currentColor;stop-opacity:0.8" />
@@ -170,7 +170,7 @@
                         <path class="logo-path" fill="url(#logoGradient)" stroke="none" d="M20 80 C 30 45, 50 30, 50 20 C 50 30, 60 40, 70 50 C 90 40, 80 70, 50 80 C 20 90, 30 50, 20 80 Z" />
                         <circle cx="50" cy="50" r="3" fill="currentColor" opacity="0.6"/>
                     </svg>
-                    <span class="font-lora text-sm font-bold text-charcoal">MorningFlow</span>
+                    <span class="font-lora text-sm font-bold text-charcoal group-hover:text-sage-deep transition-colors duration-300">MorningFlow</span>
                 </a>
 
                 <!-- Desktop Navigation -->
@@ -178,7 +178,10 @@
                     <a href="#" data-page="timer" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm" aria-label="Start meditation timer for stress reduction and mental clarity">🧘 Meditate</a>
                     <a href="#" data-page="journal" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm" aria-label="Access wellness journaling for personal growth and self-reflection">✍️ Journal</a>
                     <a href="#" data-page="workout" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm" aria-label="Begin morning exercise routine for physical health and energy">💪 Exercise</a>
-                    <a href="#" data-page="interview" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm" aria-label="Practice confidence building and skill development">🎤 Practice</a>
+                    <a href="#" data-page="clarity" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm" aria-label="Practice confidence building and skill development">🎤 Practice</a>
+                    <a href="#" data-page="gratitude" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm" aria-label="Express gratitude and appreciation">🙏 Gratitude</a>
+                    <a href="#" data-page="wisdom" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm" aria-label="View your collected wisdom and insights">📚 Wisdom</a>
+                    <a href="#" data-page="analytics" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm" aria-label="View performance analytics and monitoring">📊 Analytics</a>
                     
                     <!-- Dark Mode Toggle -->
                     <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-light-green/20 dark:hover:bg-charcoal/20 transition-colors border border-forest-green/20">
@@ -246,10 +249,22 @@
                     <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300">💪</span>
                         <span>Exercise</span>
                     </a>
-                    <a href="#" data-page="interview" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-4 rounded-xl text-base font-medium hover:bg-gradient-to-r hover:from-forest-green/10 hover:to-light-green/10 hover:shadow-md transition-all duration-300 min-h-[52px] flex items-center group">
+                    <a href="#" data-page="clarity" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-4 rounded-xl text-base font-medium hover:bg-gradient-to-r hover:from-forest-green/10 hover:to-light-green/10 hover:shadow-md transition-all duration-300 min-h-[52px] flex items-center group">
                     <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300">🎤</span>
                         <span>Practice</span>
-                </a>
+                    </a>
+                    <a href="#" data-page="gratitude" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-4 rounded-xl text-base font-medium hover:bg-gradient-to-r hover:from-forest-green/10 hover:to-light-green/10 hover:shadow-md transition-all duration-300 min-h-[52px] flex items-center group">
+                    <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300">🙏</span>
+                        <span>Gratitude</span>
+                    </a>
+                    <a href="#" data-page="wisdom" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-4 rounded-xl text-base font-medium hover:bg-gradient-to-r hover:from-forest-green/10 hover:to-light-green/10 hover:shadow-md transition-all duration-300 min-h-[52px] flex items-center group">
+                    <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300">📚</span>
+                        <span>Wisdom</span>
+                    </a>
+                    <a href="#" data-page="analytics" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-4 rounded-xl text-base font-medium hover:bg-gradient-to-r hover:from-forest-green/10 hover:to-light-green/10 hover:shadow-md transition-all duration-300 min-h-[52px] flex items-center group">
+                    <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300">📊</span>
+                        <span>Analytics</span>
+                    </a>
             </div>
         </div>
     </header>

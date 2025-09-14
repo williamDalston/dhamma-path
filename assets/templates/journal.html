@@ -22,7 +22,7 @@
                 </div>
             </div>
             <h2 class="text-2xl font-serif text-forest-deep mb-2">Prepare Your Heart</h2>
-            <p class="text-lg text-charcoal/70">Take three deep breaths to center yourself</p>
+            <p class="text-lg text-charcoal/70">Three breaths to center your soul</p>
         </div>
     </div>
     
@@ -33,37 +33,37 @@
             <h1 class="sanctuary-heading text-3xl md:text-4xl font-serif text-forest-deep mb-3 leading-tight">
                 Your Sacred Thoughts
             </h1>
-            <p class="sanctuary-subtitle text-lg text-charcoal/70 font-medium">
-                A space for pure, introspective quiet
-            </p>
+                <p class="sanctuary-subtitle text-lg text-charcoal/70 font-medium">
+                    A sacred space for your innermost thoughts
+                </p>
         </div>
     
         <!-- Enhanced Emotion Wheel -->
         <div class="emotion-wheel-container mb-8">
             <div class="emotion-wheel-wrapper bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-sage-deep/20 max-w-md mx-auto">
-                <h3 class="text-lg font-serif text-forest-deep mb-4 text-center">How are you feeling right now?</h3>
+                <h3 class="text-lg font-serif text-forest-deep mb-4 text-center">What lives in your heart today?</h3>
                 <div class="emotion-wheel grid grid-cols-3 gap-4">
-                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105" data-emotion="joy">
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105 text-center" data-emotion="joy">
                         <div class="text-2xl mb-2">😊</div>
                         <div class="text-sm font-medium text-forest-deep">Joy</div>
                     </button>
-                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105" data-emotion="peace">
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105 text-center" data-emotion="peace">
                         <div class="text-2xl mb-2">😌</div>
                         <div class="text-sm font-medium text-forest-deep">Peace</div>
                     </button>
-                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105" data-emotion="gratitude">
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105 text-center" data-emotion="gratitude">
                         <div class="text-2xl mb-2">🙏</div>
                         <div class="text-sm font-medium text-forest-deep">Gratitude</div>
                     </button>
-                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105" data-emotion="curiosity">
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105 text-center" data-emotion="curiosity">
                         <div class="text-2xl mb-2">🤔</div>
                         <div class="text-sm font-medium text-forest-deep">Curiosity</div>
                     </button>
-                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105" data-emotion="determination">
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105 text-center" data-emotion="determination">
                         <div class="text-2xl mb-2">💪</div>
                         <div class="text-sm font-medium text-forest-deep">Determination</div>
                     </button>
-                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105" data-emotion="love">
+                    <button class="emotion-btn p-4 rounded-xl hover:bg-sage-deep/10 transition-all duration-200 transform hover:scale-105 text-center" data-emotion="love">
                         <div class="text-2xl mb-2">❤️</div>
                         <div class="text-sm font-medium text-forest-deep">Love</div>
                     </button>
@@ -79,10 +79,17 @@
         
         <!-- Sacred Writing Area -->
         <div class="writing-area-container flex-1 max-w-4xl mx-auto">
-            <div class="writing-area bg-white/90 backdrop-blur-sm rounded-2xl p-8 border border-sage-deep/20 shadow-lg">
+            <div class="writing-area bg-white/90 backdrop-blur-sm rounded-2xl p-8 border border-sage-deep/20 shadow-lg relative">
                 <!-- Golden Thread Watermark -->
                 <div class="golden-thread-watermark absolute top-4 right-4 opacity-30" id="golden-thread-watermark">
                     <span class="text-xs text-sage-deep font-medium" id="watermark-text">Focus</span>
+                </div>
+                
+                <!-- Writing Flow Indicator -->
+                <div class="writing-flow-indicator absolute top-4 left-4 flex items-center space-x-1">
+                    <div class="flow-dot w-1 h-1 bg-sage-deep/30 rounded-full animate-gentle-pulse"></div>
+                    <div class="flow-dot w-1 h-1 bg-sage-deep/50 rounded-full animate-gentle-pulse" style="animation-delay: 0.3s;"></div>
+                    <div class="flow-dot w-1 h-1 bg-sage-deep/30 rounded-full animate-gentle-pulse" style="animation-delay: 0.6s;"></div>
                 </div>
                 
                 <!-- Writing Area -->
@@ -95,7 +102,7 @@
                     ></textarea>
                     
                     <!-- Writing Stats -->
-                    <div class="absolute bottom-4 right-4 flex items-center space-x-4 text-sm text-charcoal/50">
+                    <div class="absolute bottom-4 right-4 flex items-center space-x-4 text-sm text-charcoal/60">
                         <span id="word-count" class="font-medium">0 words</span>
                         <span>•</span>
                         <span id="char-count" class="font-medium">0 characters</span>
@@ -104,7 +111,7 @@
                 
                 <!-- Completion Actions -->
                 <div class="completion-actions mt-6 flex justify-center">
-                    <button id="journal-complete-btn" class="sacred-flow-button w-48 h-12 bg-gradient-to-r from-sage-deep to-forest-deep text-white text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                    <button id="journal-complete-btn" class="sacred-flow-button w-48 h-12 bg-gradient-to-r from-sage-deep to-forest-deep text-white text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300" aria-label="Complete journal entry">
                         <span class="button-text">Complete Reflection</span>
                     </button>
                 </div>

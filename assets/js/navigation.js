@@ -106,39 +106,6 @@ class NavigationManager {
 
     async loadPageTemplate(pageName) {
         const mainContent = document.getElementById('main-content');
-        const templatePath = `assets/templates/${pageName}.html`;
-        
-        try {
-            const response = await fetch(templatePath);
-            if (!response.ok) {
-                throw new Error(`Failed to load template: ${response.status}`);
-            }
-            const content = await response.text();
-            mainContent.innerHTML = content;
-            
-            // Trigger animations after content is loaded
-            setTimeout(() => {
-                this.triggerPageAnimations();
-            }, 50);
-            
-        } catch (error) {
-            console.error('❌ Template loading failed:', error);
-            throw error;
-        }
-    }
-
-    triggerPageAnimations() {
-        // Trigger intersection observer for animations
-        const animatedElements = document.querySelectorAll('[data-animate]');
-        animatedElements.forEach(element => {
-            if (window.AnimationSystem) {
-                window.AnimationSystem.applyAnimation(element, element.dataset.animate, element.dataset.delay || 0);
-            }
-        });
-    }
-
-    async loadPageTemplate(pageName) {
-        const mainContent = document.getElementById('main-content');
         if (!mainContent) return;
 
         try {
@@ -863,12 +830,130 @@ class NavigationManager {
     }
     
     showProgressView() {
-        // Show progress overview (could be a modal or navigate to a progress page)
+        // Show progress overview
         console.log('📊 Showing progress view');
-        // For now, just show a notification
-        if (window.dhammaPathApp && window.dhammaPathApp.showNotification) {
-            window.dhammaPathApp.showNotification('Progress view coming soon!', 'info');
-        }
+        
+        // Create progress modal
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4';
+        modal.innerHTML = `
+            <div class="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-charcoal">Your Progress</h2>
+                    <button class="close-progress-modal text-charcoal/60 hover:text-charcoal text-2xl">×</button>
+                </div>
+                
+                <div class="space-y-6">
+                    <!-- Streak Card -->
+                    <div class="bg-gradient-to-r from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-semibold text-green-800">Current Streak</h3>
+                                <p class="text-3xl font-bold text-green-900" id="progress-streak">7 days</p>
+                            </div>
+                            <div class="text-4xl">🔥</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Activity Stats -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                            <div class="text-blue-800 text-sm font-medium">Meditation</div>
+                            <div class="text-2xl font-bold text-blue-900" id="progress-meditation">12 sessions</div>
+                        </div>
+                        <div class="bg-purple-50 rounded-xl p-4 border border-purple-200">
+                            <div class="text-purple-800 text-sm font-medium">Journal</div>
+                            <div class="text-2xl font-bold text-purple-900" id="progress-journal">8 entries</div>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4 border border-orange-200">
+                            <div class="text-orange-800 text-sm font-medium">Workout</div>
+                            <div class="text-2xl font-bold text-orange-900" id="progress-workout">5 sessions</div>
+                        </div>
+                        <div class="bg-pink-50 rounded-xl p-4 border border-pink-200">
+                            <div class="text-pink-800 text-sm font-medium">Gratitude</div>
+                            <div class="text-2xl font-bold text-pink-900" id="progress-gratitude">15 entries</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Weekly Progress -->
+                    <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">This Week</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-600">Completion Rate</span>
+                                <span class="font-semibold text-gray-900" id="progress-completion">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-600">Total Time</span>
+                                <span class="font-semibold text-gray-900" id="progress-time">2h 30m</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 flex justify-end">
+                    <button class="close-progress-modal bg-forest-green text-white px-6 py-2 rounded-lg hover:bg-forest-deep transition-colors">
+                        Close
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Load progress data
+        this.loadProgressData();
+        
+        // Close modal handlers
+        modal.querySelectorAll('.close-progress-modal').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+        });
+        
+        // Close on backdrop click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                document.body.removeChild(modal);
+            }
+        });
+    }
+    
+    loadProgressData() {
+        // Load and display real progress data
+        const history = JSON.parse(localStorage.getItem('morningFlowHistory') || '[]');
+        const journalEntries = JSON.parse(localStorage.getItem('morningFlowJournalEntries') || '[]');
+        const gratitudeEntries = JSON.parse(localStorage.getItem('morningFlowGratitudeEntries') || '[]');
+        
+        // Update elements
+        const elements = {
+            'progress-streak': Math.min(history.length, 30) + ' days',
+            'progress-meditation': history.filter(s => s.type === 'meditation').length + ' sessions',
+            'progress-journal': journalEntries.length + ' entries',
+            'progress-workout': history.filter(s => s.type === 'workout').length + ' sessions',
+            'progress-gratitude': gratitudeEntries.length + ' entries',
+            'progress-completion': Math.round((history.filter(s => s.completed).length / Math.max(history.length, 1)) * 100) + '%',
+            'progress-time': this.calculateTotalTime(history)
+        };
+        
+        Object.entries(elements).forEach(([id, value]) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        });
+    }
+    
+    calculateTotalTime(history) {
+        const totalMinutes = history.reduce((total, session) => {
+            return total + (session.duration || 0);
+        }, 0);
+        
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        
+        return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
     }
     
     setupFlowBuilderModal() {
@@ -1109,8 +1194,8 @@ class NavigationManager {
             });
         }
         
-        // Initialize charts
-        this.initializeCharts();
+        // Initialize analytics data
+        this.initializeAnalyticsData();
         
         // Start real-time updates
         this.startRealTimeUpdates();
@@ -1141,14 +1226,65 @@ class NavigationManager {
         }
     }
     
-    initializeCharts() {
-        // Initialize chart placeholders
-        const chartPlaceholders = document.querySelectorAll('.chart-placeholder');
-        chartPlaceholders.forEach(placeholder => {
-            // In a real implementation, you'd initialize actual charts here
-            // using libraries like Chart.js, D3.js, or similar
-            console.log('📊 Initializing chart placeholder');
-        });
+    initializeAnalyticsData() {
+        // Load real data from localStorage and display it
+        this.loadAnalyticsData();
+    }
+    
+    loadAnalyticsData() {
+        // Load meditation sessions
+        const meditationSessions = JSON.parse(localStorage.getItem('morningFlowHistory') || '[]');
+        const meditationCount = meditationSessions.filter(session => session.type === 'meditation').length;
+        
+        // Load journal entries
+        const journalEntries = JSON.parse(localStorage.getItem('morningFlowJournalEntries') || '[]');
+        const journalCount = journalEntries.length;
+        
+        // Load gratitude entries
+        const gratitudeEntries = JSON.parse(localStorage.getItem('morningFlowGratitudeEntries') || '[]');
+        const gratitudeCount = gratitudeEntries.length;
+        
+        // Load workout sessions
+        const workoutSessions = JSON.parse(localStorage.getItem('morningFlowHistory') || '[]');
+        const workoutCount = workoutSessions.filter(session => session.type === 'workout').length;
+        
+        // Update display
+        const meditationEl = document.getElementById('meditation-count');
+        const journalEl = document.getElementById('journal-count');
+        const gratitudeEl = document.getElementById('gratitude-count');
+        const workoutEl = document.getElementById('workout-count');
+        
+        if (meditationEl) meditationEl.textContent = meditationCount;
+        if (journalEl) journalEl.textContent = journalCount;
+        if (gratitudeEl) gratitudeEl.textContent = gratitudeCount;
+        if (workoutEl) workoutEl.textContent = workoutCount;
+        
+        // Calculate streak
+        this.calculateStreak();
+        
+        // Calculate completion rate
+        this.calculateCompletionRate();
+    }
+    
+    calculateStreak() {
+        const history = JSON.parse(localStorage.getItem('morningFlowHistory') || '[]');
+        const streakDays = document.getElementById('streak-days');
+        if (streakDays) {
+            // Simple streak calculation - in real app would be more sophisticated
+            streakDays.textContent = Math.min(history.length, 30);
+        }
+    }
+    
+    calculateCompletionRate() {
+        const history = JSON.parse(localStorage.getItem('morningFlowHistory') || '[]');
+        const completionRate = document.getElementById('completion-rate');
+        if (completionRate) {
+            // Simple completion rate calculation
+            const completed = history.filter(session => session.completed).length;
+            const total = Math.max(history.length, 1);
+            const rate = Math.round((completed / total) * 100);
+            completionRate.textContent = `${rate}%`;
+        }
     }
     
     startRealTimeUpdates() {
