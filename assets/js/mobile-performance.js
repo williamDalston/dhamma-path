@@ -414,19 +414,26 @@ class MobilePerformanceOptimizer {
     }
 
     triggerMemoryOptimization() {
-        console.log('📱 Triggering memory optimization...');
+        // Debounce memory optimization
+        if (this._memoryOptimizationTimeout) {
+            clearTimeout(this._memoryOptimizationTimeout);
+        }
         
-        // Clear unused resources
-        this.clearUnusedResources();
-        
-        // Reduce animation quality
-        this.performanceSettings.animationQuality = 'low';
-        
-        // Disable ambient effects
-        this.performanceSettings.enableAmbientEffects = false;
-        
-        // Apply optimizations
-        this.applyOptimizations();
+        this._memoryOptimizationTimeout = setTimeout(() => {
+            console.log('🧠 Memory optimization applied');
+            
+            // Clear unused resources
+            this.clearUnusedResources();
+            
+            // Reduce animation quality
+            this.performanceSettings.animationQuality = 'low';
+            
+            // Disable ambient effects
+            this.performanceSettings.enableAmbientEffects = false;
+            
+            // Apply optimizations
+            this.applyOptimizations();
+        }, 1500); // 1.5 second debounce
     }
 
     triggerBatteryOptimization() {

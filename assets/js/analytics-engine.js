@@ -712,7 +712,7 @@ class AnalyticsEngine {
     
     sendEvent(event) {
         // In a real implementation, you'd send to your analytics endpoint
-        console.log('📊 Analytics Event:', event);
+        console.log('📊 Analytics Event: %o', event);
     }
     
     getSessionId() {

@@ -113,18 +113,19 @@ class ErrorMonitor {
     }
 
     setupPerformanceMonitoring() {
-        // Monitor long tasks
+        // Monitor long tasks (throttled)
         if ('PerformanceObserver' in window) {
+            const LONG_TASK_MS = 150;      // raised threshold
+            let lastLog = 0;
             const longTaskObserver = new PerformanceObserver((entryList) => {
+                const now = performance.now();
+                if (now - lastLog < 2000) return; // 1 log / 2s
+                
                 for (const entry of entryList.getEntries()) {
-                    if (entry.duration > 50) {
-                        this.handleError({
-                            type: 'long_task',
-                            message: `Long task detected: ${entry.duration}ms`,
-                            duration: entry.duration,
-                            startTime: entry.startTime,
-                            timestamp: Date.now()
-                        });
+                    if (entry.duration >= LONG_TASK_MS) {
+                        console.warn(`⚠️ Long task detected: ${entry.duration.toFixed(0)}ms`);
+                        lastLog = now;
+                        break;
                     }
                 }
             });
@@ -167,7 +168,7 @@ class ErrorMonitor {
     }
 
     handleError(errorData) {
-        console.error('Error detected:', errorData);
+        console.error('Error detected: %o', errorData);
         
         // Add to queue
         this.errorQueue.push(errorData);

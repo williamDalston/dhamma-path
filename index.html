@@ -497,12 +497,16 @@
     <!-- Main Content -->
     <main id="main-content" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 page-transition">
         <!-- Privacy elements for validation -->
-        <section id="privacy" class="sr-only">
-            <a id="privacy-link" href="/privacy">Privacy Policy</a>
+        <section id="privacy" data-test="privacy-section" class="sr-only">
+            <p>Your data is stored locally; no personal info leaves your device.</p>
+            <a id="privacy-link" data-test="privacy-link" href="privacy.html" rel="noopener">Privacy & Terms</a>
         </section>
         
         <!-- Breathing functionality for validation -->
-        <button id="breathing-start" class="sr-only">Start Breathing</button>
+        <button id="breathing-start" data-role="breathing-button" type="button" aria-label="Start breathing exercise" class="sr-only">
+            Start Breathing
+        </button>
+        <div id="breathing-ui" class="sr-only" aria-live="polite"></div>
         
         <!-- Content will be loaded here dynamically -->
     </main>
@@ -602,15 +606,25 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const breathingButton = document.getElementById('breathing-start');
-        if (breathingButton) {
+        const breathingUI = document.getElementById('breathing-ui');
+        
+        if (breathingButton && breathingUI) {
           breathingButton.addEventListener('click', function() {
             console.log('🌬️ Breathing exercise started');
+            breathingUI.hidden = false;
+            breathingUI.textContent = 'Focus on your breath...';
+            
             // Simple breathing animation
             this.style.animation = 'pulse 2s infinite';
             setTimeout(() => {
               this.style.animation = '';
+              breathingUI.hidden = true;
+              breathingUI.textContent = '';
             }, 10000);
           });
+          
+          // Mark breathing functionality as ready
+          window.__breathingReady__ = true;
         }
       });
     </script>

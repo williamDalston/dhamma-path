@@ -52,7 +52,7 @@ class AnalyticsSystem {
             page: window.location.pathname
         });
 
-        console.log('📊 Page View Tracked:', pageView);
+        console.log('📊 Page View Tracked: %o', pageView);
     }
 
     setupEventTracking() {
@@ -352,7 +352,7 @@ class AnalyticsSystem {
         // Only log important events to reduce console spam
         const importantEvents = ['navigation', 'timer_start', 'timer_complete', 'error', 'performance_metrics'];
         if (importantEvents.includes(eventType)) {
-            console.log('📊 Event Tracked:', event);
+            console.log('📊 Event Tracked: %o', event);
         }
 
         // Update user journey
