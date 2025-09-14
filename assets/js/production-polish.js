@@ -647,21 +647,13 @@ class OfflineSupport {
                     '/offline.html'
                 ];
                 
-                // Use fallback if __cacheAddAll not available
-                if (typeof window.__cacheAddAll === 'function') {
-                    await window.__cacheAddAll('mf-critical-v1', criticalResources);
-                } else {
-                    // Fallback implementation
-                    const cache = await caches.open('mf-critical-v1');
-                    for (const url of criticalResources) {
-                        try { 
-                            await cache.add(url); 
-                            console.log('✅ Cached:', url);
-                        } catch (e) { 
-                            console.warn('⚠️ Skipped cache:', url, e.message); 
-                        }
-                    }
-                }
+                // Use safe caching with proper base paths
+                const BASE = window.__APP_BASE__ || '/';
+                const cache = await caches.open('mf-critical-v1');
+                const results = await Promise.allSettled(criticalResources.map(u => cache.add(u)));
+                results.forEach((r, i) => {
+                    if (r.status === 'rejected') console.warn('[SW] skipped', criticalResources[i], r.reason);
+                });
                 console.log('📦 Critical resources cached');
             } catch (error) {
                 console.error('❌ Failed to cache resources:', error);

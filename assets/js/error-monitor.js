@@ -227,49 +227,35 @@ class ErrorMonitor {
     }
 
     async reportError(errorData) {
+        const payload = {
+            ...errorData,
+            sessionId: this.getSessionId(),
+            userId: this.getUserId(),
+            viewport: { width: window.innerWidth, height: window.innerHeight },
+            screen: { width: screen.width, height: screen.height },
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            language: navigator.language
+        };
+
+        const BASE = window.__APP_BASE__ || '/';
+        const endpoint = `${BASE}api/error`; // if you actually have one; otherwise skip
+
         try {
-            // Add session context
-            const enrichedError = {
-                ...errorData,
-                sessionId: this.getSessionId(),
-                userId: this.getUserId(),
-                viewport: {
-                    width: window.innerWidth,
-                    height: window.innerHeight
-                },
-                screen: {
-                    width: screen.width,
-                    height: screen.height
-                },
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                language: navigator.language
-            };
-
-            // Send to error tracking service (graceful fallback if endpoint doesn't exist)
-            try {
-                const response = await fetch('./api/errors', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Error-Report': 'true'
-                    },
-                    body: JSON.stringify(enrichedError)
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error reporting failed: ${response.status}`);
-                }
-
-                console.log('✅ Error reported successfully');
-            } catch (fetchError) {
-                // If endpoint doesn't exist or fails, just log locally
-                console.warn('⚠️ Error reporting endpoint not available:', fetchError.message);
-                return; // Don't throw, just return gracefully
-            }
-        } catch (error) {
-            console.error('❌ Failed to report error:', error);
-            // Store in localStorage for later retry
-            this.storeErrorForRetry(errorData);
+            const ok = await fetch(endpoint, {
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+                keepalive: true // allows send during unload
+            });
+            if (!ok.ok) throw new Error(`HTTP ${ok.status}`);
+            console.log('✅ Error reported successfully');
+        } catch (e) {
+            // On GitHub Pages: no server => avoid spamming 405s
+            console.warn('[ErrorMonitor] backend unavailable; logging locally:', e.message);
+            // Optional: buffer locally to send later to a real endpoint
+            const buf = JSON.parse(localStorage.getItem('mf_error_buffer') || '[]');
+            buf.push({ t: Date.now(), payload });
+            localStorage.setItem('mf_error_buffer', JSON.stringify(buf));
         }
     }
 

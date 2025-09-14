@@ -634,7 +634,19 @@ class WeatherIntegration {
         
         const widget = document.createElement('div');
         widget.id = 'weather-widget';
-        widget.className = 'weather-widget fixed top-4 left-4 z-30 bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-lg p-4 shadow-lg transition-all duration-300';
+        
+        // Responsive positioning based on screen size
+        const isMobile = window.innerWidth < 768;
+        const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+        
+        let positionClass = 'fixed top-4 left-4';
+        if (isMobile) {
+            positionClass = 'fixed top-4 left-2 right-2';
+        } else if (isTablet) {
+            positionClass = 'fixed top-4 left-4 max-w-sm';
+        }
+        
+        widget.className = `weather-widget ${positionClass} z-30 bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-lg p-3 sm:p-4 shadow-lg transition-all duration-300`;
         
         // Get daily temperature range from real data or fallback to mock
         const dailyTemps = this.dailyTemperatures || this.mockWeatherData.dailyTemperatures;
@@ -682,11 +694,14 @@ class WeatherIntegration {
                     <button class="weather-refresh text-xs text-sage-deep hover:text-forest-deep transition-colors">
                         🔄 Refresh
                     </button>
-                    <button class="weather-details-btn text-xs text-sage-deep hover:text-forest-deep transition-colors ml-3">
+                    <button class="weather-details-btn text-xs text-sage-deep hover:text-forest-deep transition-colors">
                         📊 Details
                     </button>
-                    <button class="weather-graph-btn text-xs text-sage-deep hover:text-forest-deep transition-colors ml-3">
+                    <button class="weather-graph-btn text-xs text-sage-deep hover:text-forest-deep transition-colors">
                         📈 Graph
+                    </button>
+                    <button class="weather-minimize-btn text-xs text-sage-deep hover:text-forest-deep transition-colors">
+                        ➖ Minimize
                     </button>
                 </div>
             </div>
@@ -711,12 +726,69 @@ class WeatherIntegration {
             this.showTemperatureGraph();
         });
         
+        widget.querySelector('.weather-minimize-btn').addEventListener('click', () => {
+            this.toggleWeatherWidget();
+        });
+        
         // Auto-hide after 10 seconds
         setTimeout(() => {
             if (widget.parentNode) {
                 widget.style.opacity = '0.7';
             }
         }, 10000);
+        
+        // Handle window resize for responsive positioning
+        const handleResize = () => {
+            const isMobile = window.innerWidth < 768;
+            const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+            
+            let positionClass = 'fixed top-4 left-4';
+            if (isMobile) {
+                positionClass = 'fixed top-4 left-2 right-2';
+            } else if (isTablet) {
+                positionClass = 'fixed top-4 left-4 max-w-sm';
+            }
+            
+            // Update classes while preserving other styling
+            const baseClasses = 'weather-widget z-30 bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-lg p-3 sm:p-4 shadow-lg transition-all duration-300';
+            widget.className = `${positionClass} ${baseClasses}`;
+        };
+        
+        window.addEventListener('resize', handleResize);
+        
+        // Clean up resize listener when widget is removed
+        const originalRemove = widget.remove;
+        widget.remove = function() {
+            window.removeEventListener('resize', handleResize);
+            originalRemove.call(this);
+        };
+    }
+    
+    toggleWeatherWidget() {
+        const widget = document.getElementById('weather-widget');
+        if (!widget) return;
+        
+        const isMinimized = widget.classList.contains('minimized');
+        
+        if (isMinimized) {
+            // Restore full widget
+            widget.classList.remove('minimized');
+            widget.style.height = 'auto';
+            widget.style.overflow = 'visible';
+            const minimizeBtn = widget.querySelector('.weather-minimize-btn');
+            if (minimizeBtn) {
+                minimizeBtn.textContent = '➖ Minimize';
+            }
+        } else {
+            // Minimize to just temperature
+            widget.classList.add('minimized');
+            widget.style.height = '60px';
+            widget.style.overflow = 'hidden';
+            const minimizeBtn = widget.querySelector('.weather-minimize-btn');
+            if (minimizeBtn) {
+                minimizeBtn.textContent = '➕ Expand';
+            }
+        }
     }
     
     showContextualRecommendations(recommendations) {

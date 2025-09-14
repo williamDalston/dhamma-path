@@ -226,18 +226,13 @@
       });
 
       // Web Audio resume on gesture (autoplay policy)
-      (function gateAudioContext() {
-        const resume = () => {
-          try {
-            const Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
-            const ctx = window.__audioCtx || new Ctx(); window.__audioCtx = ctx;
-            if (ctx.state === 'suspended') ctx.resume();
-          } catch (e) { /* ignore */ }
-        };
-        ['pointerdown', 'touchstart', 'keydown'].forEach(ev => {
-          document.addEventListener(ev, resume, { once: true, passive: true });
-        });
-      })();
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+      window.addEventListener('pointerdown', async () => {
+        if (audioCtx.state === 'suspended') {
+          try { await audioCtx.resume(); } catch (e) { console.warn('Audio resume failed', e); }
+        }
+      }, { once: true });
     </script>
 </head>
 
@@ -536,30 +531,21 @@
     
     <!-- Premium Service Worker Registration -->
     <script>
-        // Premium Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', async () => {
-                try {
-                    const registration = await navigator.serviceWorker.register('./sw.js', { scope: './' });
-                    console.log('🚀 Premium Service Worker registered successfully:', registration.scope);
-                    
-                    // Handle updates
-                    registration.addEventListener('updatefound', () => {
-                        const newWorker = registration.installing;
-                        newWorker.addEventListener('statechange', () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                // New version available
-                                if (confirm('A new version is available. Reload to update?')) {
-                                    window.location.reload();
-                                }
-                            }
-            });
-        });
-            } catch (error) {
-                    console.error('❌ Service Worker registration failed:', error);
-                }
-            });
-        }
+        // GitHub Pages-safe Service Worker Registration
+        (function () {
+          // Detect base path from <base> or repo folder name
+          const fromBaseTag = document.querySelector('base')?.getAttribute('href') || '';
+          const repoBase = fromBaseTag || (location.pathname.includes('/dhamma-path/') ? '/dhamma-path/' : '/');
+
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register(`${repoBase}sw.js`, { scope: repoBase })
+              .then(reg => console.log('[SW] registered with scope:', reg.scope))
+              .catch(err => console.warn('[SW] registration failed:', err));
+          }
+
+          // Expose for other modules that need correct paths
+          window.__APP_BASE__ = repoBase;
+        })();
         
         // Premium PWA Installation
         let deferredPrompt;
