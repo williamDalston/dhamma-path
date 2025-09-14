@@ -257,7 +257,7 @@ class NavigationManager {
             <div class="text-center py-16">
                 <h1 class="text-4xl font-bold text-charcoal mb-8">✍️ Journal</h1>
                 <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
-                    <textarea id="journal-textarea" class="w-full h-64 p-4 border-2 border-forest-green/30 rounded-xl resize-none" placeholder="What are you grateful for today? What did you learn? How are you feeling?"></textarea>
+                    <textarea id="journal-textarea" class="w-full h-64 p-4 border-2 border-forest-green/30 rounded-xl resize-none" placeholder="What light touched your heart today? What wisdom emerged? How is your soul feeling?"></textarea>
                     <button id="journal-save-btn" class="mt-4 px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Save Entry</button>
                 </div>
             </div>
@@ -559,7 +559,7 @@ class NavigationManager {
                 entries.push(entry);
                 localStorage.setItem('journal-entries', JSON.stringify(entries));
                 
-                showNotification('Journal entry saved!', 'success');
+                showNotification('Your thoughts are safely held', 'success');
                 textarea.value = '';
                 saveBtn.disabled = true;
             }
@@ -602,7 +602,7 @@ class NavigationManager {
             textarea.disabled = false;
             saveBtn.disabled = !textarea.value.trim();
             
-            showNotification('Writing session complete!', 'success');
+            showNotification('Your sacred reflection is complete!', 'success');
         }
 
         function showNotification(message, type = 'info') {
@@ -780,7 +780,7 @@ class NavigationManager {
             clearInterval(timerInterval);
             updateStatus('Workout complete! Great job!');
             
-            showNotification('Workout complete! You did amazing!', 'success');
+            showNotification('Your body honors your commitment!', 'success');
         }
 
         function showNotification(message, type = 'info') {
@@ -1026,7 +1026,7 @@ class NavigationManager {
         localStorage.setItem('customFlow', JSON.stringify(customFlow));
         
         if (window.dhammaPathApp && window.dhammaPathApp.showNotification) {
-            window.dhammaPathApp.showNotification('Custom flow saved!', 'success');
+            window.dhammaPathApp.showNotification('Your sacred flow is preserved!', 'success');
         }
         
         console.log('💾 Custom flow saved:', customFlow);
@@ -1505,7 +1505,7 @@ class NavigationManager {
                 .catch(error => {
                     console.error('Error accessing microphone:', error);
                     if (window.dhammaPathApp && window.dhammaPathApp.showNotification) {
-                        window.dhammaPathApp.showNotification('Microphone access required for Clarity practice', 'warning');
+                        window.dhammaPathApp.showNotification('Your voice needs permission to be heard', 'warning');
                     }
                 });
         }
@@ -1539,7 +1539,7 @@ class NavigationManager {
 
             // Show completion notification
             if (window.dhammaPathApp && window.dhammaPathApp.showNotification) {
-                window.dhammaPathApp.showNotification('Expression complete! Well done.', 'success');
+                window.dhammaPathApp.showNotification('Your voice has been honored!', 'success');
             }
         }
 
@@ -1588,7 +1588,7 @@ class NavigationManager {
             localStorage.setItem('clarityReflections', JSON.stringify(reflections));
 
             if (window.dhammaPathApp && window.dhammaPathApp.showNotification) {
-                window.dhammaPathApp.showNotification('Reflection saved!', 'success');
+                window.dhammaPathApp.showNotification('Your reflection is preserved!', 'success');
             }
         }
 

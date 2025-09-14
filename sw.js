@@ -1,437 +1,311 @@
-// Production Service Worker for The Dhamma Path
-// Ferrari-level caching strategies and offline support
+/**
+ * Service Worker for Offline Functionality
+ * Provides offline support and caching for MorningFlow app
+ */
 
-const CACHE_VERSION = 'v2.1.0';
-const STATIC_CACHE = `dhamma-path-static-${CACHE_VERSION}`;
-const DYNAMIC_CACHE = `dhamma-path-dynamic-${CACHE_VERSION}`;
-const IMAGE_CACHE = `dhamma-path-images-${CACHE_VERSION}`;
-const API_CACHE = `dhamma-path-api-${CACHE_VERSION}`;
+const CACHE_NAME = 'morningflow-v1';
+const STATIC_CACHE_NAME = 'morningflow-static-v1';
+const DYNAMIC_CACHE_NAME = 'morningflow-dynamic-v1';
 
-// Critical resources for immediate caching
-const CRITICAL_RESOURCES = [
+// Files to cache for offline use
+const STATIC_ASSETS = [
     '/',
     '/index.html',
-    '/assets/css/critical.css',
     '/assets/css/styles.css',
-    '/assets/js/navigation.js',
-    '/assets/js/meditation-timer.js',
     '/assets/js/app.js',
-    '/assets/js/production-optimizer.js',
-    '/manifest.json',
-    '/favicon.svg',
-    '/favicon.png',
-    '/apple-touch-icon.png'
-];
-
-// Template resources for prefetching
-const TEMPLATE_RESOURCES = [
+    '/assets/js/navigation.js',
+    '/assets/js/flow-navigation.js',
+    '/assets/js/user-anticipation.js',
+    '/assets/js/smart-predictions.js',
+    '/assets/js/accessibility-enhancer.js',
+    '/assets/js/data-persistence.js',
+    '/assets/js/smart-notifications.js',
     '/assets/templates/home.html',
     '/assets/templates/timer.html',
     '/assets/templates/journal.html',
+    '/assets/templates/gratitude.html',
     '/assets/templates/workout.html',
-    '/assets/templates/interview.html',
-    '/assets/templates/layout.html'
+    '/favicon.ico'
 ];
 
-// Install event - cache critical resources
+// Install event - cache static assets
 self.addEventListener('install', (event) => {
-    console.log('🚀 Production Service Worker installing...');
+    console.log('Service Worker installing...');
+    
     event.waitUntil(
-        Promise.all([
-            caches.open(STATIC_CACHE).then(cache => {
-                console.log('📦 Caching critical resources...');
-                return cache.addAll(CRITICAL_RESOURCES);
-            }),
-            caches.open(DYNAMIC_CACHE).then(cache => {
-                console.log('📦 Caching template resources...');
-                return cache.addAll(TEMPLATE_RESOURCES);
+        caches.open(STATIC_CACHE_NAME)
+            .then((cache) => {
+                console.log('Caching static assets...');
+                return cache.addAll(STATIC_ASSETS);
             })
-        ]).then(() => {
-            console.log('✅ All critical resources cached successfully');
-            return self.skipWaiting();
-        }).catch(error => {
-            console.error('❌ Failed to cache resources:', error);
-        })
+            .then(() => {
+                console.log('Static assets cached successfully');
+                return self.skipWaiting();
+            })
+            .catch((error) => {
+                console.error('Failed to cache static assets:', error);
+            })
     );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-    console.log('🔄 Production Service Worker activating...');
+    console.log('Service Worker activating...');
+    
     event.waitUntil(
         caches.keys()
-            .then(cacheNames => {
-                const validCaches = [STATIC_CACHE, DYNAMIC_CACHE, IMAGE_CACHE, API_CACHE];
+            .then((cacheNames) => {
                 return Promise.all(
-                    cacheNames.map(cacheName => {
-                        if (!validCaches.includes(cacheName)) {
-                            console.log('🗑️ Deleting old cache:', cacheName);
+                    cacheNames.map((cacheName) => {
+                        if (cacheName !== STATIC_CACHE_NAME && 
+                            cacheName !== DYNAMIC_CACHE_NAME) {
+                            console.log('Deleting old cache:', cacheName);
                             return caches.delete(cacheName);
                         }
                     })
                 );
             })
             .then(() => {
-                console.log('✅ Production Service Worker activated successfully');
+                console.log('Service Worker activated');
                 return self.clients.claim();
             })
     );
 });
 
-// Fetch event - advanced caching strategies
+// Fetch event - serve from cache or network
 self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
-
-    // Skip non-GET requests and non-http protocols
-    if (request.method !== 'GET' || !url.protocol.startsWith('http')) {
+    
+    // Skip non-GET requests
+    if (request.method !== 'GET') {
         return;
     }
-
-    // Handle different resource types with optimized strategies
-    if (url.pathname === '/' || url.pathname === '/index.html') {
-        event.respondWith(networkFirstWithFallback(request, STATIC_CACHE));
-    } else if (url.pathname.startsWith('/assets/css/') || url.pathname.startsWith('/assets/js/')) {
-        event.respondWith(cacheFirstWithNetworkUpdate(request, STATIC_CACHE));
-    } else if (url.pathname.startsWith('/assets/templates/')) {
-        event.respondWith(staleWhileRevalidate(request, DYNAMIC_CACHE));
-    } else if (url.pathname.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i)) {
-        event.respondWith(imageCacheStrategy(request));
-    } else if (url.pathname.startsWith('/api/')) {
-        event.respondWith(apiCacheStrategy(request));
-    } else {
-        event.respondWith(staleWhileRevalidate(request, DYNAMIC_CACHE));
+    
+    // Skip chrome-extension and other non-http requests
+    if (!request.url.startsWith('http')) {
+        return;
     }
+    
+    event.respondWith(
+        caches.match(request)
+            .then((cachedResponse) => {
+                // Return cached version if available
+                if (cachedResponse) {
+                    return cachedResponse;
+                }
+                
+                // Otherwise, fetch from network
+                return fetch(request)
+                    .then((networkResponse) => {
+                        // Don't cache if not a valid response
+                        if (!networkResponse || 
+                            networkResponse.status !== 200 || 
+                            networkResponse.type !== 'basic') {
+                            return networkResponse;
+                        }
+                        
+                        // Clone the response
+                        const responseToCache = networkResponse.clone();
+                        
+                        // Cache dynamic content
+                        if (shouldCache(request)) {
+                            caches.open(DYNAMIC_CACHE_NAME)
+                                .then((cache) => {
+                                    cache.put(request, responseToCache);
+                                });
+                        }
+                        
+                        return networkResponse;
+                    })
+                    .catch(() => {
+                        // Return offline page for navigation requests
+                        if (request.mode === 'navigate') {
+                            return caches.match('/index.html');
+                        }
+                        
+                        // Return a basic offline response for other requests
+                        return new Response('Offline', {
+                            status: 503,
+                            statusText: 'Service Unavailable',
+                            headers: new Headers({
+                                'Content-Type': 'text/plain'
+                            })
+                        });
+                    });
+            })
+    );
 });
 
-// Network first with fallback strategy
-async function networkFirstWithFallback(request, cacheName) {
-    try {
-        const networkResponse = await fetch(request);
-        if (networkResponse.ok) {
-            const cache = await caches.open(cacheName);
-            cache.put(request, networkResponse.clone());
-        }
-        return networkResponse;
-    } catch (error) {
-        const cachedResponse = await caches.match(request);
-        if (cachedResponse) {
-            return cachedResponse;
-        }
-        return new Response('Offline - Please check your connection', { 
-            status: 503,
-            headers: { 'Content-Type': 'text/html' }
-        });
-    }
-}
-
-// Cache first with network update strategy
-async function cacheFirstWithNetworkUpdate(request, cacheName) {
-    try {
-        const cachedResponse = await caches.match(request);
-        if (cachedResponse) {
-            // Update cache in background
-            fetch(request).then(networkResponse => {
-                if (networkResponse.ok) {
-                    caches.open(cacheName).then(cache => {
-                        cache.put(request, networkResponse.clone());
-                    });
-                }
-            }).catch(() => {});
-            return cachedResponse;
-        }
-
-        const networkResponse = await fetch(request);
-        if (networkResponse.ok) {
-            const cache = await caches.open(cacheName);
-            cache.put(request, networkResponse.clone());
-        }
-        return networkResponse;
-    } catch (error) {
-        return new Response('Resource unavailable offline', { status: 503 });
-    }
-}
-
-// Stale while revalidate strategy
-async function staleWhileRevalidate(request, cacheName) {
-    const cache = await caches.open(cacheName);
-    const cachedResponse = await cache.match(request);
-
-    const fetchPromise = fetch(request).then(networkResponse => {
-        if (networkResponse.ok) {
-            cache.put(request, networkResponse.clone());
-        }
-        return networkResponse;
-    }).catch(() => cachedResponse);
-
-    return cachedResponse || fetchPromise;
-}
-
-// Image caching strategy with compression
-async function imageCacheStrategy(request) {
-    try {
-        const cachedResponse = await caches.match(request);
-        if (cachedResponse) {
-            return cachedResponse;
-        }
-
-        const networkResponse = await fetch(request);
-        if (networkResponse.ok) {
-            const cache = await caches.open(IMAGE_CACHE);
-            cache.put(request, networkResponse.clone());
-        }
-        return networkResponse;
-    } catch (error) {
-        return new Response('Image unavailable offline', { status: 503 });
-    }
-}
-
-// API caching strategy with TTL
-async function apiCacheStrategy(request) {
-    try {
-        const cachedResponse = await caches.match(request);
-        const cacheDate = cachedResponse?.headers.get('sw-cache-date');
-        
-        // Check if cache is still valid (5 minutes TTL)
-        if (cachedResponse && cacheDate) {
-            const cacheTime = parseInt(cacheDate);
-            const now = Date.now();
-            if (now - cacheTime < 300000) { // 5 minutes
-                return cachedResponse;
-            }
-        }
-
-        const networkResponse = await fetch(request);
-        if (networkResponse.ok) {
-            const responseClone = networkResponse.clone();
-            const headers = new Headers(responseClone.headers);
-            headers.set('sw-cache-date', Date.now().toString());
-            
-            const cacheResponse = new Response(responseClone.body, {
-                status: responseClone.status,
-                statusText: responseClone.statusText,
-                headers: headers
-            });
-
-            const cache = await caches.open(API_CACHE);
-            cache.put(request, cacheResponse);
-        }
-        return networkResponse;
-    } catch (error) {
-        const cachedResponse = await caches.match(request);
-        if (cachedResponse) {
-            return cachedResponse;
-        }
-        return new Response('API unavailable offline', { status: 503 });
-    }
-}
-
-// Background sync for offline actions
-self.addEventListener('sync', (event) => {
-    console.log('🔄 Background sync triggered:', event.tag);
+// Helper function to determine if request should be cached
+function shouldCache(request) {
+    const url = new URL(request.url);
     
-    switch (event.tag) {
-        case 'background-sync':
-            event.waitUntil(doBackgroundSync());
-            break;
-        case 'analytics-sync':
-            event.waitUntil(syncAnalytics());
-            break;
-        case 'progress-sync':
-            event.waitUntil(syncProgress());
-            break;
+    // Cache HTML pages
+    if (url.pathname.endsWith('.html') || url.pathname === '/') {
+        return true;
+    }
+    
+    // Cache CSS and JS files
+    if (url.pathname.match(/\.(css|js)$/)) {
+        return true;
+    }
+    
+    // Cache images
+    if (url.pathname.match(/\.(png|jpg|jpeg|gif|svg|ico)$/)) {
+        return true;
+    }
+    
+    // Cache fonts
+    if (url.pathname.match(/\.(woff|woff2|ttf|eot)$/)) {
+        return true;
+    }
+    
+    return false;
+}
+
+// Background sync for offline data
+self.addEventListener('sync', (event) => {
+    console.log('Background sync triggered:', event.tag);
+    
+    if (event.tag === 'background-sync') {
+        event.waitUntil(doBackgroundSync());
     }
 });
 
 async function doBackgroundSync() {
     try {
-        // Sync any pending data when back online
-        console.log('🔄 Syncing background data...');
+        // Sync any offline data when connection is restored
+        console.log('Performing background sync...');
         
-        // Check for pending analytics
-        const pendingAnalytics = await getStoredData('pending-analytics');
-        if (pendingAnalytics && pendingAnalytics.length > 0) {
-            await syncAnalytics();
-        }
+        // In a real app, you'd sync offline journal entries, etc.
+        // For now, just log that sync is happening
+        console.log('Background sync completed');
         
-        // Check for pending progress data
-        const pendingProgress = await getStoredData('pending-progress');
-        if (pendingProgress && pendingProgress.length > 0) {
-            await syncProgress();
-        }
-        
-        console.log('✅ Background sync completed');
     } catch (error) {
-        console.error('❌ Background sync failed:', error);
+        console.error('Background sync failed:', error);
     }
 }
 
-async function syncAnalytics() {
-    try {
-        const pendingData = await getStoredData('pending-analytics') || [];
-        if (pendingData.length === 0) return;
-        
-        // Send analytics data to server
-        const response = await fetch('/api/analytics/batch', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ events: pendingData })
-        });
-        
-        if (response.ok) {
-            await clearStoredData('pending-analytics');
-            console.log('✅ Analytics synced successfully');
-        }
-    } catch (error) {
-        console.error('❌ Analytics sync failed:', error);
-    }
-}
-
-async function syncProgress() {
-    try {
-        const pendingData = await getStoredData('pending-progress') || [];
-        if (pendingData.length === 0) return;
-        
-        // Send progress data to server
-        const response = await fetch('/api/progress/batch', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ progress: pendingData })
-        });
-        
-        if (response.ok) {
-            await clearStoredData('pending-progress');
-            console.log('✅ Progress synced successfully');
-        }
-    } catch (error) {
-        console.error('❌ Progress sync failed:', error);
-    }
-}
-
-// Push notifications with rich content
+// Push notifications
 self.addEventListener('push', (event) => {
+    console.log('Push notification received');
+    
+    const options = {
+        body: 'Your morning routine is waiting for you!',
+        icon: '/favicon.ico',
+        badge: '/favicon.ico',
+        vibrate: [100, 50, 100],
+        data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1
+        },
+        actions: [
+            {
+                action: 'explore',
+                title: 'Start Routine',
+                icon: '/favicon.ico'
+            },
+            {
+                action: 'close',
+                title: 'Close',
+                icon: '/favicon.ico'
+            }
+        ]
+    };
+    
     if (event.data) {
         const data = event.data.json();
-        const options = {
-            body: data.body,
-            icon: '/favicon.svg',
-            badge: '/favicon.svg',
-            vibrate: [200, 100, 200, 100, 200],
-            data: {
-                dateOfArrival: Date.now(),
-                primaryKey: data.primaryKey,
-                url: data.url || '/'
-            },
-            actions: [
-                {
-                    action: 'open',
-                    title: 'Open App',
-                    icon: '/favicon.svg'
-                },
-                {
-                    action: 'dismiss',
-                    title: 'Dismiss',
-                    icon: '/favicon.svg'
-                }
-            ],
-            requireInteraction: data.requireInteraction || false,
-            silent: data.silent || false
-        };
-
-        event.waitUntil(
-            self.registration.showNotification(data.title, options)
-        );
+        options.body = data.body || options.body;
+        options.title = data.title || 'MorningFlow';
     }
+    
+    event.waitUntil(
+        self.registration.showNotification('MorningFlow', options)
+    );
 });
 
-// Enhanced notification click handling
+// Notification click handler
 self.addEventListener('notificationclick', (event) => {
+    console.log('Notification clicked:', event.action);
+    
     event.notification.close();
-
-    if (event.action === 'open' || !event.action) {
+    
+    if (event.action === 'explore') {
         event.waitUntil(
-            clients.matchAll({ type: 'window' }).then(clientList => {
-                const url = event.notification.data?.url || '/';
-                
-                // Focus existing window or open new one
-                for (const client of clientList) {
-                    if (client.url === url && 'focus' in client) {
-                        return client.focus();
-                    }
-                }
-                
-                if (clients.openWindow) {
-                    return clients.openWindow(url);
-                }
-            })
+            clients.openWindow('/')
         );
     }
 });
 
-// Utility functions for data storage
-async function getStoredData(key) {
-    try {
-        const cache = await caches.open(DYNAMIC_CACHE);
-        const response = await cache.match(`/data/${key}`);
-        return response ? await response.json() : null;
-    } catch (error) {
-        console.error('Failed to get stored data:', error);
-        return null;
-    }
-}
-
-async function setStoredData(key, data) {
-    try {
-        const cache = await caches.open(DYNAMIC_CACHE);
-        const response = new Response(JSON.stringify(data));
-        await cache.put(`/data/${key}`, response);
-    } catch (error) {
-        console.error('Failed to store data:', error);
-    }
-}
-
-async function clearStoredData(key) {
-    try {
-        const cache = await caches.open(DYNAMIC_CACHE);
-        await cache.delete(`/data/${key}`);
-    } catch (error) {
-        console.error('Failed to clear stored data:', error);
-    }
-}
-
-// Cache management and cleanup
+// Message handling for communication with main thread
 self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'CACHE_CLEANUP') {
-        event.waitUntil(cleanupCaches());
+    console.log('Service Worker received message:', event.data);
+    
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
+    
+    if (event.data && event.data.type === 'GET_VERSION') {
+        event.ports[0].postMessage({ version: CACHE_NAME });
     }
 });
 
-async function cleanupCaches() {
+// Periodic background sync (if supported)
+self.addEventListener('periodicsync', (event) => {
+    console.log('Periodic sync triggered:', event.tag);
+    
+    if (event.tag === 'content-sync') {
+        event.waitUntil(doPeriodicSync());
+    }
+});
+
+async function doPeriodicSync() {
     try {
-        const cacheNames = await caches.keys();
-        const validCaches = [STATIC_CACHE, DYNAMIC_CACHE, IMAGE_CACHE, API_CACHE];
+        console.log('Performing periodic sync...');
         
-        for (const cacheName of cacheNames) {
-            if (!validCaches.includes(cacheName)) {
-                await caches.delete(cacheName);
-            }
-        }
-        
-        // Clean up old entries in dynamic cache
-        const dynamicCache = await caches.open(DYNAMIC_CACHE);
-        const requests = await dynamicCache.keys();
+        // Update cached content periodically
+        const cache = await caches.open(STATIC_CACHE_NAME);
+        const requests = STATIC_ASSETS.map(url => new Request(url));
         
         for (const request of requests) {
-            const response = await dynamicCache.match(request);
-            const cacheDate = response?.headers.get('sw-cache-date');
-            
-            if (cacheDate && Date.now() - parseInt(cacheDate) > 86400000) { // 24 hours
-                await dynamicCache.delete(request);
+            try {
+                const response = await fetch(request);
+                if (response.ok) {
+                    await cache.put(request, response);
+                }
+            } catch (error) {
+                console.warn('Failed to update cache for:', request.url);
             }
         }
         
-        console.log('✅ Cache cleanup completed');
+        console.log('Periodic sync completed');
+        
     } catch (error) {
-        console.error('❌ Cache cleanup failed:', error);
+        console.error('Periodic sync failed:', error);
     }
 }
+
+// Cache management
+async function cleanupOldCaches() {
+    const cacheNames = await caches.keys();
+    const oldCaches = cacheNames.filter(name => 
+        name !== STATIC_CACHE_NAME && 
+        name !== DYNAMIC_CACHE_NAME &&
+        name.startsWith('morningflow-')
+    );
+    
+    await Promise.all(
+        oldCaches.map(cacheName => caches.delete(cacheName))
+    );
+    
+    console.log('Cleaned up old caches:', oldCaches);
+}
+
+// Update available
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'UPDATE_AVAILABLE') {
+        console.log('Update available, reloading...');
+        self.skipWaiting();
+    }
+});

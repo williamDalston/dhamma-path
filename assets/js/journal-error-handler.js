@@ -78,7 +78,7 @@ class JournalErrorHandler {
         // Entry loading errors
         this.handleLoadError = (error) => {
             console.error('Load error:', error);
-            this.showRecoveryNotification('Failed to load entries', 'Showing empty state', 'warning');
+            this.showRecoveryNotification('Taking a moment to reconnect', 'Showing empty state', 'warning');
             this.showEmptyState();
         };
 

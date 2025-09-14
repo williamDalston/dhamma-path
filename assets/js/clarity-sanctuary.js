@@ -198,7 +198,7 @@ class ClaritySanctuary {
     
     async checkMicrophoneSupport() {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            this.showMicrophoneError('Your browser doesn\'t support audio recording');
+            this.showMicrophoneError('Your voice needs a different path to be heard');
             return false;
         }
         
@@ -280,7 +280,7 @@ class ClaritySanctuary {
             
         } catch (error) {
             console.error('🎤 Recording failed:', error);
-            this.showMicrophoneError('Unable to start recording. Please check your microphone permissions.');
+            this.showMicrophoneError('Taking a moment to reconnect with your voice');
         }
     }
     
@@ -292,7 +292,7 @@ class ClaritySanctuary {
         );
         
         if (!userConfirmed) {
-            this.showMicrophoneError('Microphone access is needed for this exercise. You can enable it anytime in your device\'s Settings.');
+            this.showMicrophoneError('Your voice needs permission to be heard. You can enable it anytime in your device\'s Settings.');
             return;
         }
         
@@ -314,7 +314,7 @@ class ClaritySanctuary {
             
         } catch (error) {
             console.error('🎤 Permission denied:', error);
-            this.showMicrophoneError('Microphone access is needed for this exercise. You can enable it anytime in your device\'s Settings.');
+            this.showMicrophoneError('Your voice needs permission to be heard. You can enable it anytime in your device\'s Settings.');
         }
     }
     
@@ -379,7 +379,7 @@ class ClaritySanctuary {
     
     processRecording() {
         if (this.audioChunks.length === 0) {
-            this.showError('No audio was recorded. Please try again.');
+            this.showError('Your voice wasn\'t captured. Please try again with gentle patience.');
             return;
         }
         
@@ -419,7 +419,7 @@ class ClaritySanctuary {
         } else {
             this.currentAudio.play().catch(error => {
                 console.error('🎤 Playback failed:', error);
-                this.showError('Unable to play audio. Please try again.');
+                this.showError('Your voice needs a moment to be heard. Please try again.');
             });
             this.isPlaying = true;
         }
@@ -629,7 +629,7 @@ class ClaritySanctuary {
         const isPrivate = document.getElementById('privacy-checkbox')?.checked || false;
         
         if (!this.currentAudio) {
-            this.showError('No recording to save. Please record something first.');
+            this.showError('Your voice needs to be heard first. Please record something.');
             return;
         }
         
@@ -663,7 +663,7 @@ class ClaritySanctuary {
             
         } catch (error) {
             console.error('💾 Save failed:', error);
-            this.showError('Unable to save reflection. Please try again.');
+            this.showError('Your reflection needs a moment to be preserved. Please try again.');
         }
     }
     

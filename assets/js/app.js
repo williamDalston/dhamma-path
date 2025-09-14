@@ -76,13 +76,13 @@ class DhammaPathApp {
         // Global error handler
         window.addEventListener('error', (event) => {
             console.error('Global error:', event.error);
-            this.showErrorNotification('An unexpected error occurred');
+            this.showErrorNotification('A gentle pause in your flow');
         });
 
         // Unhandled promise rejection handler
         window.addEventListener('unhandledrejection', (event) => {
             console.error('Unhandled promise rejection:', event.reason);
-            this.showErrorNotification('An unexpected error occurred');
+            this.showErrorNotification('A gentle pause in your flow');
         });
     }
 

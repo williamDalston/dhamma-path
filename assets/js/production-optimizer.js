@@ -247,11 +247,11 @@ class ProductionOptimizer {
 
         // Network error handling
         window.addEventListener('online', () => {
-            this.showNotification('Connection restored', 'success');
+            this.showNotification('Your sacred space is reconnected', 'success');
         });
 
         window.addEventListener('offline', () => {
-            this.showNotification('Connection lost - working offline', 'warning');
+            this.showNotification('Working in sacred solitude', 'warning');
         });
     }
 
@@ -262,7 +262,7 @@ class ProductionOptimizer {
         this.reportError(error, type);
         
         // Show user-friendly error message
-        this.showNotification('Something went wrong. Please try again.', 'error');
+        this.showNotification('A gentle pause in your flow. Please try again.', 'error');
         
         // Fallback actions
         this.triggerFallbacks(error);
@@ -356,7 +356,7 @@ class ProductionOptimizer {
 
     enableOfflineMode() {
         document.body.classList.add('offline-mode');
-        this.showNotification('Working in offline mode', 'info');
+        this.showNotification('Working in sacred solitude', 'info');
     }
 
     resetTimerState() {
