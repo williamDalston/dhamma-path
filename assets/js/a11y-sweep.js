@@ -303,19 +303,34 @@ window.AccessibilitySweep = AccessibilitySweep;
 if (!window.__a11ySweepInstalled) {
     window.__a11ySweepInstalled = true;
     
+    let sweepInstance = null;
+    let isRunning = false;
+    
     const runSweep = () => {
-        if (!window.a11ySweep) {
-            window.a11ySweep = new AccessibilitySweep();
+        if (isRunning) return;
+        isRunning = true;
+        
+        if (!sweepInstance) {
+            sweepInstance = new AccessibilitySweep();
         } else {
-            window.a11ySweep.runManualSweep();
+            sweepInstance.runManualSweep();
         }
+        
+        isRunning = false;
     };
     
     const throttledSweep = (() => {
         let timeoutId;
+        let lastRun = 0;
         return () => {
+            const now = Date.now();
+            if (now - lastRun < 5000) return; // Don't run more than once every 5 seconds
+            
             cancelIdleCallback?.(timeoutId);
-            timeoutId = requestIdleCallback(runSweep, { timeout: 2000 });
+            timeoutId = requestIdleCallback(() => {
+                lastRun = now;
+                runSweep();
+            }, { timeout: 2000 });
         };
     })();
     
@@ -324,7 +339,32 @@ if (!window.__a11ySweepInstalled) {
         runSweep();
     }, { once: true });
     
-    // Throttled observer for new content
-    const observer = new MutationObserver(throttledSweep);
-    observer.observe(document.body, { childList: true, subtree: true });
+    // Throttled observer for new content - only watch for significant changes
+    const observer = new MutationObserver(mutations => {
+        let hasSignificantChange = false;
+        mutations.forEach(mutation => {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        // Only trigger on interactive elements
+                        if (node.matches && (node.matches('button, [role="button"], input, select, textarea') || 
+                            node.querySelector('button, [role="button"], input, select, textarea'))) {
+                            hasSignificantChange = true;
+                        }
+                    }
+                });
+            }
+        });
+        
+        if (hasSignificantChange) {
+            throttledSweep();
+        }
+    });
+    
+    observer.observe(document.body, { 
+        childList: true, 
+        subtree: true,
+        attributes: false,
+        characterData: false
+    });
 }

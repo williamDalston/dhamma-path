@@ -61,7 +61,13 @@ class WeatherIntegration {
         
         // Always call getCurrentPosition off the object to preserve 'this'
         geo.getCurrentPosition(
-            pos => onOk(pos),
+            pos => {
+                if (pos && pos.coords) {
+                    onOk(pos);
+                } else {
+                    onErr(new Error('Invalid position data'));
+                }
+            },
             err => onErr(err),
             {
                 enableHighAccuracy: true,
@@ -77,9 +83,17 @@ class WeatherIntegration {
             if (navigator.geolocation) {
                 console.log('🌍 Attempting automatic location detection...');
                 try {
-                    const position = await this.tryGeo({
-                        onOk: (pos) => pos,
-                        onErr: (err) => { throw err; }
+                    const position = await new Promise((resolve, reject) => {
+                        this.tryGeo({
+                            onOk: (pos) => {
+                                if (pos && pos.coords) {
+                                    resolve(pos);
+                                } else {
+                                    reject(new Error('Invalid position data'));
+                                }
+                            },
+                            onErr: (err) => reject(err)
+                        });
                     });
                     this.userLocation = {
                         latitude: position.coords.latitude,
