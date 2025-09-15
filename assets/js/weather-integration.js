@@ -34,6 +34,7 @@ class WeatherIntegration {
     
     initializeWeatherSystem() {
         this.setupWeatherConditions();
+        this.setupWeatherAPI();
         this.detectUserLocation();
         if (typeof this.setupWeatherRecommendations === 'function') {
             this.setupWeatherRecommendations();
@@ -171,18 +172,73 @@ class WeatherIntegration {
     }
     
     displayLocationInWidget() {
-        // Update the subtle weather widget with location info
+        // Update the weather widget with location info
         const locationEl = document.getElementById('weather-location');
         if (locationEl && this.userLocation) {
-            locationEl.textContent = `📍 ${this.userLocation.latitude.toFixed(4)}, ${this.userLocation.longitude.toFixed(4)}`;
+            locationEl.textContent = `📍 ${this.userLocation.latitude.toFixed(2)}, ${this.userLocation.longitude.toFixed(2)}`;
         }
     }
     
+    requestLocationPermission() {
+        // Show a user-friendly location permission request
+        const permissionModal = document.createElement('div');
+        permissionModal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
+        permissionModal.innerHTML = `
+            <div class="bg-white rounded-xl p-6 max-w-md mx-4">
+                <div class="text-center">
+                    <div class="text-4xl mb-4">🌍</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Enable Location Access</h3>
+                    <p class="text-gray-600 mb-6">We'd like to show you accurate weather for your location. This helps us provide better recommendations for your morning routine.</p>
+                    <div class="flex space-x-3">
+                        <button id="allow-location" class="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                            Allow Location
+                        </button>
+                        <button id="deny-location" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors">
+                            Use Default
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(permissionModal);
+        
+        // Add event listeners
+        permissionModal.querySelector('#allow-location').addEventListener('click', async () => {
+            try {
+                const position = await this.getAccurateLocation();
+                this.userLocation = {
+                    latitude: position.lat,
+                    longitude: position.lng
+                };
+                this.isUSLocation = this.isLocationInUS(this.userLocation.latitude, this.userLocation.longitude);
+                this.temperatureUnit = this.isUSLocation ? 'F' : 'C';
+                
+                console.log(`🌍 Location permission granted: ${this.userLocation.latitude.toFixed(2)}, ${this.userLocation.longitude.toFixed(2)}`);
+                
+                // Update weather with new location
+                await this.getCurrentWeather();
+                this.updateWeatherWidget(this.currentWeather);
+                
+                permissionModal.remove();
+            } catch (error) {
+                console.error('Location permission denied:', error);
+                permissionModal.remove();
+            }
+        });
+        
+        permissionModal.querySelector('#deny-location').addEventListener('click', () => {
+            console.log('🌍 Using default location');
+            permissionModal.remove();
+        });
+    }
+    
     updateWeatherWidget(weatherData) {
-        // Update the subtle weather widget with current weather
+        // Update the weather widget with current weather
         const iconEl = document.getElementById('weather-icon');
         const tempEl = document.getElementById('weather-temp');
         const descEl = document.getElementById('weather-desc');
+        const locationEl = document.getElementById('weather-location');
 
         if (weatherData) {
             const icon = this.getWeatherIcon(weatherData.condition || weatherData.weather);
@@ -210,6 +266,14 @@ class WeatherIntegration {
                     descEl.style.minHeight = '16px';
                     descEl.style.textAlign = 'center';
                 });
+            }
+            
+            if (locationEl) {
+                if (this.userLocation) {
+                    locationEl.textContent = `📍 ${this.userLocation.latitude.toFixed(2)}, ${this.userLocation.longitude.toFixed(2)}`;
+                } else {
+                    locationEl.textContent = `📍 ${this.isUSLocation ? 'US' : 'International'} Location`;
+                }
             }
         }
     }
@@ -1403,13 +1467,25 @@ window.WeatherIntegration = WeatherIntegration;
 
 // Initialize weather integration
 document.addEventListener('DOMContentLoaded', () => {
-    window.weatherIntegration = new WeatherIntegration();
-    
-    // ✅ OpenWeatherMap API key is configured and ready!
-    // Real weather data will be fetched automatically
-    
-    // Load weather on app start
-    setTimeout(() => {
-        window.weatherIntegration.getCurrentWeather();
-    }, 2000);
+    // Only initialize if not already initialized
+    if (!window.weatherIntegration) {
+        window.weatherIntegration = new WeatherIntegration();
+        
+        // ✅ OpenWeatherMap API key is configured and ready!
+        // Real weather data will be fetched automatically
+        
+        // Load weather on app start
+        setTimeout(() => {
+            if (window.weatherIntegration) {
+                window.weatherIntegration.getCurrentWeather().then(weatherData => {
+                    if (weatherData) {
+                        console.log('🌤️ Weather data loaded successfully:', weatherData);
+                        window.weatherIntegration.updateWeatherWidget(weatherData);
+                    }
+                }).catch(error => {
+                    console.error('🌤️ Weather loading failed:', error);
+                });
+            }
+        }, 2000);
+    }
 });

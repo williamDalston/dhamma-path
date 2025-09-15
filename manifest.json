@@ -50,7 +50,7 @@
       "url": "/?page=timer",
       "icons": [
         {
-          "src": "/favicon.png",
+          "src": "/assets/icons/icon-192.png",
           "sizes": "96x96"
         }
       ]
@@ -62,7 +62,7 @@
       "url": "/?page=journal",
       "icons": [
         {
-          "src": "/favicon.png",
+          "src": "/assets/icons/icon-192.png",
           "sizes": "96x96"
         }
       ]
@@ -74,7 +74,7 @@
       "url": "/?page=workout",
       "icons": [
         {
-          "src": "/favicon.png",
+          "src": "/assets/icons/icon-192.png",
           "sizes": "96x96"
         }
       ]

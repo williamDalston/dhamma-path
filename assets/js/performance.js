@@ -75,10 +75,10 @@ class PerformanceMonitor {
             const nav = performance.getEntriesByType('navigation')[0];
             let loadTimeMs = 0;
 
-            if (nav) {
+            if (nav && nav.loadEventEnd > 0) {
                 loadTimeMs = Math.max(0, Math.round(nav.loadEventEnd - nav.startTime));
             } else {
-                // fallback if no NavigationTiming entry (old browsers, special iframes)
+                // fallback if no NavigationTiming entry or loadEventEnd is 0
                 const t0 = (window.__perfStart = window.__perfStart ?? performance.now());
                 loadTimeMs = Math.max(0, Math.round(performance.now() - t0));
             }

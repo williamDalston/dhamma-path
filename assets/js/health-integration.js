@@ -220,7 +220,7 @@ class HealthIntegrationSystem {
         if (Notification.permission === 'granted') {
             new Notification('Health Reminder', {
                 body: message,
-                icon: '/favicon.png'
+                icon: '/assets/icons/icon-192.png'
             });
         }
         console.log('💚 Health notification:', message);

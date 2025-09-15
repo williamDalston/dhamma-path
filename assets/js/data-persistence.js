@@ -414,7 +414,7 @@ class DataPersistenceSystem {
     
     setupAnalytics() {
         // Setup analytics tracking
-        console.log('📊 Analytics system initialized');
+        // Analytics is initialized in app.js
     }
     
     exportData(format = 'json') {

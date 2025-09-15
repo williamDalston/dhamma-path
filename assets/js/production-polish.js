@@ -291,7 +291,7 @@ class ProductionPolish {
             if (Notification.permission === 'granted') {
                 new Notification('Evening Reflection Time', {
                     body: 'Take a moment to reflect on your day and practice gratitude.',
-                    icon: '/favicon.png'
+                    icon: '/assets/icons/icon-192.png'
                 });
             }
         }, timeUntilEvening);

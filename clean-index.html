@@ -81,6 +81,20 @@
                 <h2 class="text-3xl font-bold text-gray-900 mb-8">Welcome to MorningFlow</h2>
                 <p class="text-lg text-gray-600 mb-8">Start your day with intention and purpose</p>
                 
+                <!-- Weather Widget Placeholder -->
+                <div id="weather-widget-container" class="mb-8">
+                    <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-gray-200/50 max-w-sm mx-auto cursor-pointer hover:shadow-md transition-all duration-300" id="weather-widget-clickable">
+                        <div class="flex items-center justify-center space-x-3">
+                            <div id="weather-icon" class="text-2xl">🌤️</div>
+                            <div class="text-center">
+                                <div id="weather-temp" class="text-xl font-semibold text-gray-800">--°F</div>
+                                <div id="weather-desc" class="text-sm text-gray-600">Loading weather...</div>
+                                <div id="weather-location" class="text-xs text-gray-500">📍 Detecting location...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="bg-white p-6 rounded-lg shadow">
                         <h3 class="text-xl font-semibold mb-4">🧘 Meditation Timer</h3>
@@ -191,11 +205,28 @@
     <!-- Scripts -->
     <script src="assets/js/simple-timer.js"></script>
     <script src="assets/js/simple-navigation.js"></script>
+    <script src="assets/js/weather-integration.js"></script>
     
     <!-- Initialize -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             console.log('MorningFlow initialized successfully!');
+            
+            // Initialize weather system
+            if (window.WeatherIntegration) {
+                window.weatherIntegration = new WeatherIntegration();
+                console.log('🌤️ Weather system initialized');
+                
+                // Add click handler for weather widget
+                const weatherWidget = document.getElementById('weather-widget-clickable');
+                if (weatherWidget) {
+                    weatherWidget.addEventListener('click', () => {
+                        if (window.weatherIntegration && window.weatherIntegration.requestLocationPermission) {
+                            window.weatherIntegration.requestLocationPermission();
+                        }
+                    });
+                }
+            }
         });
     </script>
 </body>
