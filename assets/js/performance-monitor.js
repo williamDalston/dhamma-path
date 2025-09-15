@@ -478,10 +478,10 @@ class PerformanceMonitor {
     }
 
     startOptimization() {
-        // Run optimizations every 30 seconds
+        // Run optimizations every 2 minutes (reduced frequency)
         setInterval(() => {
             this.runPeriodicOptimizations();
-        }, 30000);
+        }, 120000);
     }
 
     runPeriodicOptimizations() {

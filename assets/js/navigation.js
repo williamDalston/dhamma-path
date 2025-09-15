@@ -5,6 +5,10 @@
 
 class NavigationManager {
     constructor() {
+        // One-time mount guard
+        if (document.documentElement.dataset.navMounted) return;
+        document.documentElement.dataset.navMounted = '1';
+        
         // Singleton guard for hot reload
         const ns = (window.__app ??= {});
         if (ns.navInit) return;

@@ -275,19 +275,9 @@ class PerformancePolish {
     }
     
     preloadCriticalResources() {
-        const criticalResources = [
-            '/assets/css/styles.css',
-            '/assets/js/app.js',
-            '/assets/js/navigation.js'
-        ];
-        
-        criticalResources.forEach(resource => {
-            const link = document.createElement('link');
-            link.rel = 'preload';
-            link.href = resource;
-            link.as = resource.endsWith('.css') ? 'style' : 'script';
-            document.head.appendChild(link);
-        });
+        // Skip preloading to avoid console warnings
+        // Resources are already loaded via script tags
+        console.log('📦 Critical resources already loaded via script tags');
     }
     
     preloadNextInteractions() {

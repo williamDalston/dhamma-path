@@ -4,18 +4,18 @@
  */
 
 class AnalyticsSystem {
-    constructor() {
-        // Idempotent guard to prevent re-initialization
-        if (window.__mf?.modules?.analytics) {
-            return window.__mf.modules.analytics.instance;
+    constructor(root) {
+        // Handle both DI and direct instantiation
+        if (root?.systems) {
+            // Idempotent guard to prevent re-initialization
+            if (root.systems.analytics) {
+                return root.systems.analytics;
+            }
+            // Register with root
+            root.systems.analytics = this;
+        } else {
+            // Fallback for direct instantiation - silent
         }
-        
-        // Initialize module registry
-        window.__mf = window.__mf || { modules: {} };
-        window.__mf.modules.analytics = {
-            instance: this,
-            aborter: new AbortController()
-        };
         
         this.events = [];
         this.sessionId = this.generateSessionId();
@@ -25,15 +25,16 @@ class AnalyticsSystem {
         this.init();
         
         // Cleanup on page hide/unload
+        this.aborter = new AbortController();
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 this.cleanup();
             }
-        }, { signal: window.__mf.modules.analytics.aborter.signal });
+        }, { signal: this.aborter.signal });
         
         window.addEventListener('beforeunload', () => {
             this.cleanup();
-        }, { signal: window.__mf.modules.analytics.aborter.signal });
+        }, { signal: this.aborter.signal });
     }
     
     cleanup() {
@@ -464,9 +465,4 @@ class AnalyticsSystem {
 // Export for global use
 window.AnalyticsSystem = AnalyticsSystem;
 
-// Auto-initialize analytics system
-document.addEventListener('DOMContentLoaded', () => {
-    if (!window.analyticsSystem) {
-        window.analyticsSystem = new AnalyticsSystem();
-    }
-});
+// AnalyticsSystem is now initialized only by app.js

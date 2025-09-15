@@ -318,11 +318,11 @@ img[src*="sun.svg"], img[src*="weather"], img[src*="icon"], .weather-icon {
     100% { background-position: 200% 0; }
 }
 
-/* Font loading optimization */
+/* Font loading optimization - using system fonts for now */
 @font-face {
     font-family: 'Inter';
     font-display: swap;
-    src: url('data:font/woff2;base64,') format('woff2');
+    src: local('Inter'), local('Inter-Regular'), local('system-ui'), local('-apple-system'), local('BlinkMacSystemFont'), local('Segoe UI'), local('Roboto'), local('Helvetica Neue'), local('Arial'), sans-serif;
 }
 
 /* Prevent layout shifts from dynamic content */

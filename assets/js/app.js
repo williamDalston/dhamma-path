@@ -217,7 +217,7 @@ class DhammaPathApp {
 
     initializeAnalytics() {
         if (window.AnalyticsSystem) {
-            this.analyticsSystem = new window.AnalyticsSystem();
+            this.analyticsSystem = new window.AnalyticsSystem(window.App);
             // Make it globally available
             window.analyticsSystem = this.analyticsSystem;
             console.log('📊 Analytics system initialized');
@@ -279,7 +279,7 @@ class DhammaPathApp {
     initializeMotionSystem() {
         try {
             if (window.MotionSystem) {
-                this.motionSystem = new window.MotionSystem();
+                this.motionSystem = new window.MotionSystem(window.App);
                 console.log('✅ Motion system initialized');
             } else {
                 console.warn('⚠️ MotionSystem not found - continuing without motion coordination');

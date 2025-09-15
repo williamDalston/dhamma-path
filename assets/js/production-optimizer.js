@@ -76,9 +76,7 @@ class ProductionOptimizer {
             { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
             { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: true },
             { rel: 'dns-prefetch', href: 'https://cdn.tailwindcss.com' },
-            { rel: 'preload', href: 'assets/css/styles.css', as: 'style' },
-            { rel: 'preload', href: 'assets/js/navigation.js', as: 'script' },
-            { rel: 'preload', href: 'assets/js/meditation-timer.js', as: 'script' },
+            // Removed unused preloads to avoid console warnings
             { rel: 'prefetch', href: 'assets/templates/journal.html' },
             { rel: 'prefetch', href: 'assets/templates/workout.html' },
         ];

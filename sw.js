@@ -46,6 +46,9 @@ self.addEventListener('fetch', (event) => {
 
   // ✅ Never intercept cross-origin (fixes Tailwind CDN fetch below)
   if (url.origin !== self.location.origin) return;
+  
+  // ✅ Skip non-GET requests (POST, PUT, etc. are not cacheable)
+  if (event.request.method !== 'GET') return;
 
   event.respondWith(
     caches.match(event.request).then((hit) =>

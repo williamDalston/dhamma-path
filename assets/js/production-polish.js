@@ -556,7 +556,7 @@ class ProductionPolish {
             script-src 'self' 'unsafe-inline' 'unsafe-eval';
             style-src 'self' 'unsafe-inline';
             img-src 'self' data: https:;
-            font-src 'self' data:;
+            font-src 'self' data: https:;
             connect-src 'self' https:;
             media-src 'self';
             object-src 'none';
@@ -792,6 +792,7 @@ class ProductionAnalytics {
         this.events = [];
         this.batchSize = 10;
         this.flushInterval = 30000; // 30 seconds
+        this.isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
     }
     
     init() {
@@ -841,16 +842,34 @@ class ProductionAnalytics {
         const eventsToSend = [...this.events];
         this.events = [];
         
+        // Skip sending in development
+        if (this.isDev) {
+            console.log(`📊 Analytics: ${eventsToSend.length} events logged (dev mode - not sent)`);
+            return;
+        }
+        
         try {
-            await fetch(this.endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(eventsToSend)
-            });
-            
-            console.log(`📊 Analytics: ${eventsToSend.length} events sent`);
+            // Use sendBeacon for better reliability and no CORS issues
+            if (navigator.sendBeacon) {
+                const blob = new Blob([JSON.stringify(eventsToSend)], {type: 'application/json'});
+                const success = navigator.sendBeacon(this.endpoint, blob);
+                if (success) {
+                    console.log(`📊 Analytics: ${eventsToSend.length} events sent via sendBeacon`);
+                } else {
+                    throw new Error('sendBeacon failed');
+                }
+            } else {
+                // Fallback to fetch
+                await fetch(this.endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(eventsToSend),
+                    keepalive: true
+                });
+                console.log(`📊 Analytics: ${eventsToSend.length} events sent via fetch`);
+            }
         } catch (error) {
             console.error('❌ Analytics flush failed:', error);
             // Re-add events to queue
@@ -883,6 +902,7 @@ class ErrorReporting {
         this.endpoint = '/api/errors';
         this.errors = [];
         this.maxErrors = 100;
+        this.isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
     }
     
     init() {
@@ -948,6 +968,12 @@ class ErrorReporting {
         
         const errorsToSend = [...this.errors];
         this.errors = [];
+        
+        // Skip sending in development
+        if (this.isDev) {
+            console.log(`📊 Error Reporting: ${errorsToSend.length} errors logged (dev mode - not sent)`);
+            return;
+        }
         
         try {
             await fetch(this.endpoint, {

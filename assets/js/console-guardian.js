@@ -303,26 +303,30 @@ class ConsoleGuardian {
     }
 
     startContinuousMonitoring() {
-        // Monitor every 5 seconds
+        // Monitor every 30 seconds (reduced frequency to prevent loops)
         setInterval(() => {
             this.performHealthCheck();
-        }, 5000);
+        }, 30000);
 
-        // Report status every 30 seconds
+        // Report status every 2 minutes (reduced frequency)
         setInterval(() => {
             this.reportStatus();
-        }, 30000);
+        }, 120000);
     }
 
     performHealthCheck() {
+        // Prevent infinite loops by checking if we're already healing
+        if (this.isHealing) return;
+        
         const issues = Array.from(this.issues.values());
         const unfixedIssues = issues.filter(issue => !issue.fixed);
         
         if (unfixedIssues.length > 0) {
             console.log(`🔍 Health Check: ${unfixedIssues.length} unfixed issues detected`);
             
-            // Try to fix unfixed issues
-            unfixedIssues.forEach(issue => {
+            // Try to fix unfixed issues (limit to 3 at a time to prevent loops)
+            const issuesToFix = unfixedIssues.slice(0, 3);
+            issuesToFix.forEach(issue => {
                 this.attemptAutoFix(issue.id, issue.type, issue.message, issue.args);
             });
         }

@@ -3465,7 +3465,7 @@ html {
     font-style: normal;
     font-weight: 100 900;
     font-display: swap;
-    src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2') format('woff2');
+    src: local('Inter'), local('Inter-Regular'), local('system-ui'), local('-apple-system'), local('BlinkMacSystemFont'), local('Segoe UI'), local('Roboto'), local('Helvetica Neue'), local('Arial'), sans-serif;
     font-feature-settings: var(--font-feature-settings);
     font-optical-sizing: var(--font-optical-sizing);
 }
@@ -3475,7 +3475,7 @@ html {
     font-style: normal;
     font-weight: 400 700;
     font-display: swap;
-    src: url('https://fonts.gstatic.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787weuxJBkqg.woff2') format('woff2');
+    src: local('Lora'), local('Lora-Regular'), local('Georgia'), local('Times New Roman'), serif;
     font-feature-settings: var(--font-feature-settings);
 }
 
@@ -3484,7 +3484,7 @@ html {
     font-style: normal;
     font-weight: 400 900;
     font-display: swap;
-    src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXDTzYhA.woff2') format('woff2');
+    src: local('Playfair Display'), local('PlayfairDisplay-Regular'), local('Georgia'), local('Times New Roman'), serif;
     font-feature-settings: var(--font-feature-settings);
 }
 

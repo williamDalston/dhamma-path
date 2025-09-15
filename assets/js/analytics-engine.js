@@ -317,6 +317,16 @@ class AnalyticsEngine {
         if ('memory' in performance) {
             const memory = performance.memory;
             this.metrics.system.memoryUsage = memory.usedJSHeapSize / 1024 / 1024;
+            
+            // Throttle memory usage tracking to every 5 seconds
+            if (!this.lastMemoryTrack || Date.now() - this.lastMemoryTrack > 5000) {
+                this.trackEvent('memory_usage', { 
+                    used: this.metrics.system.memoryUsage,
+                    total: memory.totalJSHeapSize / 1024 / 1024,
+                    limit: memory.jsHeapSizeLimit / 1024 / 1024
+                });
+                this.lastMemoryTrack = Date.now();
+            }
         }
     }
     

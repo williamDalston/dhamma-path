@@ -4,18 +4,18 @@
  */
 
 class MotionSystem {
-    constructor() {
-        // Idempotent guard to prevent re-initialization
-        if (window.__mf?.modules?.motionSystem) {
-            return window.__mf.modules.motionSystem.instance;
+    constructor(root) {
+        // Handle both DI and direct instantiation
+        if (root?.systems) {
+            // Idempotent guard to prevent re-initialization
+            if (root.systems.motionSystem) {
+                return root.systems.motionSystem;
+            }
+            // Register with root
+            root.systems.motionSystem = this;
+        } else {
+            // Fallback for direct instantiation
         }
-        
-        // Initialize module registry
-        window.__mf = window.__mf || { modules: {} };
-        window.__mf.modules.motionSystem = {
-            instance: this,
-            aborter: new AbortController()
-        };
         
         this.isEnabled = true;
         this.performanceMode = 'auto';
@@ -64,15 +64,16 @@ class MotionSystem {
         this.init();
         
         // Cleanup on page hide/unload
+        this.aborter = new AbortController();
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 this.cleanup();
             }
-        }, { signal: window.__mf.modules.motionSystem.aborter.signal });
+        }, { signal: this.aborter.signal });
         
         window.addEventListener('beforeunload', () => {
             this.cleanup();
-        }, { signal: window.__mf.modules.motionSystem.aborter.signal });
+        }, { signal: this.aborter.signal });
     }
     
     cleanup() {
@@ -830,11 +831,4 @@ class MotionSystem {
 // Initialize motion system
 window.MotionSystem = MotionSystem;
 
-// Auto-initialize if DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        window.motionSystem = new MotionSystem();
-    });
-} else {
-    window.motionSystem = new MotionSystem();
-}
+// MotionSystem is now initialized only by app.js

@@ -4,52 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     
-    <!-- Content Security Policy for GitHub Pages -->
-    <meta http-equiv="Content-Security-Policy"
-      content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline' 'unsafe-eval';
-        style-src 'self' 'unsafe-inline';
-        img-src 'self' data: https:;
-        font-src 'self' data:;
-        connect-src 'self' https:;
-        media-src 'self';
-        object-src 'none';
-        frame-src 'none';
-        worker-src 'self';
-        manifest-src 'self';
-      ">
-    
-    <!-- Font optimization: preconnect + preload + swap -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">                                         
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
-    
-    <!-- Critical font display optimization -->
-    <style>
-        @font-face {
-            font-family: 'Inter';
-            font-display: swap;
-            font-weight: 300 700;
-        }
-    </style>
-    
     <!-- CRITICAL: Early Boot Shim - must run before any other scripts -->
     <script>
     /* ====== MF EARLY BOOT SHIM (must run before bundles) ====== */
-    (function() {
+    (function () {
       if (window.__mfEarlyBoot) return; window.__mfEarlyBoot = true;
 
-      // Physics animations queue + flush shim
-      (function bootPhysicsShim(){
-        if (window.physicsAnimations) return;           // real lib already present
-        const q = [];
-        const proxy = new Proxy({}, {
-          get: (_t, m) => (...args) => q.push([m, args]) // queue calls
-        });
-        proxy.__flush = real => { q.splice(0).forEach(([m,a]) => real[m]?.(...a)); };
-        window.physicsAnimations = proxy;
+      // physicsAnimations.setQuality() guard (used by MobilePerformanceOptimizer)
+      (function ensurePhysicsAPI() {
+        const g = window; g.physicsAnimations = g.physicsAnimations || {};
+        if (typeof g.physicsAnimations.setQuality !== 'function') {
+          g.physicsAnimations.setQuality = function () {
+            console.info('[EarlyBoot] physicsAnimations.setQuality() noop');
+          };
+        }
       })();
 
       // classList.add tolerant of space-joined tokens (prevents InvalidCharacterError)
@@ -63,206 +31,6 @@
         };
         proto.__mfPatched = true;
       })();
-      
-      // waitForGlobal utility for dependency management
-      window.waitForGlobal = function(name, timeout = 5000) {
-        return new Promise((resolve, reject) => {
-          if (window[name]) {
-            resolve(window[name]);
-            return;
-          }
-          
-          const startTime = Date.now();
-          const checkInterval = setInterval(() => {
-            if (window[name]) {
-              clearInterval(checkInterval);
-              resolve(window[name]);
-            } else if (Date.now() - startTime > timeout) {
-              clearInterval(checkInterval);
-              reject(new Error(`${name} not found after ${timeout}ms`));
-            }
-          }, 100);
-        });
-      };
-
-      // Debounced emergency performance mode with rolling window
-      const LONG = 500;              // ms (increased from 200ms)
-      const WINDOW_MS = 10000;       // rolling window (increased from 5s)
-      const TRIGGER_COUNT = 5;       // N long tasks in window to trigger (increased from 3)
-      let timestamps = [];
-      let cooling = false;
-
-      const degrade = () => {
-        window.physicsAnimations?.setQuality?.('low');
-        if (window.analytics) {
-          window.analytics.throttle = true;
-        }
-        console.log('🔧 Performance degraded due to long tasks');
-      };
-
-      if (window.PerformanceObserver && PerformanceObserver.supportedEntryTypes.includes('longtask')) {
-        new PerformanceObserver(list => {
-          const now = performance.now();
-          for (const e of list.getEntries()) {
-            if (e.duration > LONG) {
-              timestamps.push(now);
-              console.warn(`🐌 Long task detected: ${Math.round(e.duration)}ms`, e);
-            }
-          }
-          // drop old timestamps
-          timestamps = timestamps.filter(t => now - t <= WINDOW_MS);
-
-          if (!cooling && timestamps.length >= TRIGGER_COUNT) {
-            degrade();
-            cooling = true;
-            setTimeout(() => (cooling = false), 4000); // stop flapping
-          }
-        }).observe({ entryTypes: ['longtask'] });
-      }
-
-      // Memory management
-      window.memoryManager = {
-        cleanupInterval: null,
-        
-        init() {
-          this.cleanupInterval = setInterval(() => {
-            this.performCleanup();
-          }, 30000); // Clean every 30 seconds
-        },
-        
-        performCleanup() {
-          // Clear unused analytics events older than 5 minutes
-          if (window.analytics && window.analytics.events) {
-            const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
-            window.analytics.events = window.analytics.events.filter(
-              event => event.timestamp > fiveMinutesAgo
-            );
-          }
-
-          // Clear animation frames that may be lingering
-          if (window.physicsAnimations && typeof window.physicsAnimations.cleanupStaleAnimations === 'function') {
-            window.physicsAnimations.cleanupStaleAnimations();
-          }
-
-          // Force garbage collection hint (if available)
-          if (window.gc && typeof window.gc === 'function') {
-            window.gc();
-          }
-        },
-        
-        destroy() {
-          if (this.cleanupInterval) {
-            clearInterval(this.cleanupInterval);
-          }
-        }
-      };
-
-      // Initialize memory manager
-      window.memoryManager.init();
-
-      // EMERGENCY PERFORMANCE MODE
-      const EMERGENCY_MODE = false; // Set to false once performance improves
-      
-      if (EMERGENCY_MODE) {
-        console.log('🚨 Running in emergency performance mode');
-        
-        // Disable heavy animations immediately
-        if (window.physicsAnimations) {
-          window.physicsAnimations.setQuality('minimal');
-        }
-        
-        // Reduce analytics frequency
-        if (window.analytics) {
-          window.analytics.sampleRate = 0.05; // Only 5% of events
-        }
-        
-        // Disable non-critical systems
-        window.DISABLE_HAPTICS = true;
-        window.DISABLE_HEAVY_EFFECTS = true;
-        window.DISABLE_ANIMATIONS = true;
-        window.DISABLE_TRANSITIONS = true;
-        
-        // Add emergency CSS immediately
-        const emergencyStyle = document.createElement('style');
-        emergencyStyle.textContent = `
-          * { animation-duration: 0.01s !important; transition-duration: 0.01s !important; }
-          .disable-animations * { animation: none !important; transition: none !important; }
-        `;
-        document.head.appendChild(emergencyStyle);
-      }
-
-      // Emergency Memory Manager
-      window.emergencyMemoryManager = {
-        interval: null,
-        
-        init() {
-          this.interval = setInterval(() => {
-            this.aggressiveCleanup();
-          }, 10000); // Clean every 10 seconds
-        },
-        
-        aggressiveCleanup() {
-          // Clear analytics events older than 2 minutes
-          if (window.analytics?.events) {
-            const twoMinutesAgo = Date.now() - 2 * 60 * 1000;
-            const originalLength = window.analytics.events.length;
-            window.analytics.events = window.analytics.events.filter(
-              event => event.timestamp > twoMinutesAgo
-            );
-            
-            const cleaned = originalLength - window.analytics.events.length;
-            if (cleaned > 0) {
-              console.log(`🧹 Cleaned ${cleaned} old analytics events`);
-            }
-          }
-          
-          // Clear unused DOM nodes
-          this.cleanupUnusedElements();
-          
-          // Clear animation frames
-          this.cleanupAnimations();
-        },
-        
-        cleanupUnusedElements() {
-          // Remove invisible elements that may be lingering
-          const invisibleElements = document.querySelectorAll('[style*="display: none"]');
-          invisibleElements.forEach(el => {
-            if (!el.dataset.preserve) {
-              el.remove();
-            }
-          });
-        },
-        
-        cleanupAnimations() {
-          // Cancel any pending animation frames
-          if (window.pendingAnimations) {
-            window.pendingAnimations.forEach(id => cancelAnimationFrame(id));
-            window.pendingAnimations = [];
-          }
-        },
-        
-        destroy() {
-          if (this.interval) {
-            clearInterval(this.interval);
-          }
-        }
-      };
-
-      // Initialize emergency memory manager
-      window.emergencyMemoryManager.init();
-
-      // Emergency mode is now handled automatically by performance monitoring
-      // No manual toggle needed - system responds to performance issues automatically
-
-      // tryInit helper for cleaner boot logging
-      window.tryInit = async function(name, fn) {
-        try { 
-          await fn(); 
-          console.log(`✅ ${name} initialized`); 
-        } catch (e) { 
-          console.warn(`❌ ${name} skipped`, e); 
-        }
-      };
 
       // FocusManager fallback (until your real script loads)
       if (!window.FocusManager) {
@@ -412,162 +180,7 @@
       // Run patches after a short delay to ensure classes are loaded
       setTimeout(patchMissingMethods, 100);
 
-        // Foundation validation elements initialization
-        (function initFoundationElements() {
-          // Breathing button bootstrap
-          const btn = document.getElementById('breathing-btn');
-          if (btn) {
-            btn.hidden = false;
-            btn.addEventListener('click', () => {
-              document.body.classList.add('breathing-active');
-              // play ultra-light animation only; keep it cheap
-              window.physicsAnimations?.setQuality?.('low');
-            }, { once: true });
-          }
-          
-          // Weather toggle functionality
-          (function initWeatherToggle() {
-            const weatherBtn = document.getElementById('weather-btn');
-            const weatherWidget = document.getElementById('weather-widget');
-            let isWeatherVisible = false;
-
-            if (weatherBtn && weatherWidget) {
-              weatherBtn.addEventListener('click', () => {
-                isWeatherVisible = !isWeatherVisible;
-
-                if (isWeatherVisible) {
-                  weatherWidget.classList.remove('hidden', 'opacity-0');
-                  weatherWidget.classList.add('opacity-100');
-                  weatherBtn.textContent = '🌤️';
-                  weatherBtn.title = 'Hide weather';
-
-                  // Load weather data when shown
-                  if (window.weatherIntegration && window.weatherIntegration.getCurrentWeather) {
-                    window.weatherIntegration.getCurrentWeather();
-                  }
-                } else {
-                  weatherWidget.classList.add('opacity-0');
-                  setTimeout(() => {
-                    weatherWidget.classList.add('hidden');
-                  }, 300);
-                  weatherBtn.textContent = '🌤️';
-                  weatherBtn.title = 'Show weather';
-                }
-              });
-            }
-          })();
-          
-          // Quick action cards functionality
-          (function initQuickActions() {
-            const quickActionCards = document.querySelectorAll('.quick-action-card');
-            quickActionCards.forEach(card => {
-              card.addEventListener('click', () => {
-                const action = card.dataset.action;
-                console.log(`🚀 Quick action: ${action}`);
-                
-                // Navigate to the appropriate page
-                if (window.dhammaPathApp && window.dhammaPathApp.navigateToPage) {
-                  window.dhammaPathApp.navigateToPage(action);
-                }
-              });
-            });
-          })();
-          
-          // Automatic location detection - no buttons needed
-          setTimeout(() => {
-            if (navigator.geolocation && window.weatherIntegration) {
-              console.log('🌍 Attempting automatic location detection...');
-              navigator.geolocation.getCurrentPosition(
-                (position) => {
-                  console.log('🌍 Location detected automatically:', position.coords.latitude, position.coords.longitude);
-                  // Trigger weather refresh with new location
-                  if (window.weatherIntegration.getCurrentWeather) {
-                    window.weatherIntegration.getCurrentWeather();
-                  }
-                },
-                (error) => {
-                  console.log('📍 Automatic location failed, using browser detection:', error.message);
-                },
-                { timeout: 5000, enableHighAccuracy: true }
-              );
-            }
-          }, 1000);
-          
-          // expose privacy section
-          document.getElementById('privacy')?.removeAttribute('hidden');
-          
-          // Fire foundation-ready event for deterministic validation
-          document.dispatchEvent(new Event('foundation-ready'));
-        })();
-
-      // Skeleton loader management
-      (function initSkeletonLoaders() {
-        // Hide skeleton loaders when content loads
-        const hideSkeleton = (id) => {
-          const skeleton = document.getElementById(id);
-          if (skeleton) {
-            skeleton.style.display = 'none';
-          }
-        };
-
-        // Expose function globally for use by other modules
-        window.hideSkeletonLoader = hideSkeleton;
-        
-        // Auto-hide after 3 seconds as fallback
-        setTimeout(() => {
-          hideSkeleton('weather-skeleton');
-          hideSkeleton('analytics-skeleton');
-          hideSkeleton('recommendations-skeleton');
-        }, 3000);
-      })();
-
-      // NUCLEAR CACHE CLEAR - Force fresh load
-      console.log('🚀 NUCLEAR CACHE CLEAR - Forcing fresh JavaScript load');
-      
-      // Clear all caches
-      if ('caches' in window) {
-        caches.keys().then(names => {
-          names.forEach(name => {
-            caches.delete(name);
-            console.log('🗑️ Deleted cache:', name);
-          });
-        });
-      }
-      
-      // Clear localStorage and sessionStorage
-      localStorage.clear();
-      sessionStorage.clear();
-      console.log('🗑️ Cleared all storage');
-      
-      // Force reload all scripts
-      const scripts = document.querySelectorAll('script[src*="assets/js/"]');
-      scripts.forEach(script => {
-        const newSrc = script.src.replace(/v=\d+/, 'v=' + Date.now());
-        script.src = newSrc;
-        console.log('🔄 Updated script:', newSrc);
-      });
-      
       console.log('✅ Early Boot Shim loaded');
-      
-      // Initialize Console Monitoring System
-      setTimeout(() => {
-        if (window.consoleGuardian) {
-          const statusIndicator = document.getElementById('console-monitor-status');
-          if (statusIndicator) {
-            statusIndicator.classList.remove('hidden');
-            statusIndicator.textContent = '🛡️ Console Guardian Active - Press Ctrl+Shift+D for dashboard';
-            
-            // Hide after 5 seconds
-            setTimeout(() => {
-              statusIndicator.classList.add('hidden');
-            }, 5000);
-          }
-          
-          console.log('🛡️ Console Guardian System Initialized');
-          console.log('📊 Press Ctrl+Shift+D to open the Console Dashboard');
-          console.log('🔧 All console issues will be automatically detected and fixed');
-        }
-      }, 2000);
     })();
     </script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
@@ -604,7 +217,7 @@
     
     <!-- Additional SEO Meta Tags -->
     <meta name="theme-color" content="#4A6C55">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="MorningFlow">
     
@@ -617,16 +230,12 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     
     <!-- PWA Manifest -->
-    <link rel="manifest" href="/dhamma-path/manifest.webmanifest">
+    <link rel="manifest" href="/manifest.json">
     
     <!-- Performance Hints -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
     
-    <!-- Critical Font Preloading -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"></noscript>
+    <!-- Using system fonts - no preload needed -->
     
     <!-- Critical CSS -->
     <link rel="stylesheet" href="assets/css/critical.css">
@@ -723,12 +332,12 @@
     </script>
 </head>
 
-<body class="bg-linen-white text-charcoal transition-colors duration-300 min-h-screen grid grid-rows-[auto_1fr_auto]">
+<body class="bg-linen-white text-charcoal transition-colors duration-300">
     <a href="#main-content" id="skip-to-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-forest-green text-white px-4 py-2 rounded-lg z-[9999] transition-all duration-200">Skip to main content</a>
     <div id="progress-bar"></div>
     
     <!-- Header & Navigation -->
-    <header id="header" class="site-header bg-gradient-to-r from-linen-white/90 via-linen-white/95 to-linen-white/90 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200/50 shadow-lg transition-all duration-300">
+    <header id="header" class="bg-gradient-to-r from-linen-white/90 via-linen-white/95 to-linen-white/90 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200/50 shadow-lg transition-all duration-300">
         <nav class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8" role="navigation" aria-label="Main navigation">
             <div class="flex items-center justify-between h-16 sm:h-20 transition-all duration-300">
                 <!-- Logo -->
@@ -749,42 +358,15 @@
 
                 <!-- Desktop Navigation -->
                 <div id="desktop-nav-links" class="hidden md:flex items-center space-x-1">
-                    <a href="#" data-page="home" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green focus:text-forest-green focus:ring-2 focus:ring-forest-green/50 focus:outline-none transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 focus:bg-light-green/20 hover:shadow-sm focus:shadow-sm hover:scale-105 focus:scale-105 group flex items-center gap-2" aria-label="Return to home page">
-                        <span class="text-lg leading-none" aria-hidden="true">🏠</span>
-                        <span class="group-hover:tracking-wide transition-all duration-300">Home</span>
-                    </a>
-                    <a href="#" data-page="timer" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green focus:text-forest-green focus:ring-2 focus:ring-forest-green/50 focus:outline-none transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 focus:bg-light-green/20 hover:shadow-sm focus:shadow-sm hover:scale-105 focus:scale-105 group flex items-center gap-2" aria-label="Start meditation timer for stress reduction and mental clarity">
-                        <span class="text-lg leading-none" aria-hidden="true">🧘</span>
-                        <span class="group-hover:tracking-wide transition-all duration-300">Meditate</span>
-                    </a>
-                    <a href="#" data-page="journal" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green focus:text-forest-green focus:ring-2 focus:ring-forest-green/50 focus:outline-none transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 focus:bg-light-green/20 hover:shadow-sm focus:shadow-sm hover:scale-105 focus:scale-105 group flex items-center gap-2" aria-label="Access wellness journaling for personal growth and self-reflection">
-                        <span class="text-lg leading-none" aria-hidden="true">✍️</span>
-                        <span class="group-hover:tracking-wide transition-all duration-300">Journal</span>
-                    </a>
-                    <a href="#" data-page="workout" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green focus:text-forest-green focus:ring-2 focus:ring-forest-green/50 focus:outline-none transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 focus:bg-light-green/20 hover:shadow-sm focus:shadow-sm hover:scale-105 focus:scale-105 group flex items-center gap-2" aria-label="Begin morning exercise routine for physical health and energy">
-                        <span class="text-lg leading-none" aria-hidden="true">💪</span>
-                        <span class="group-hover:tracking-wide transition-all duration-300">Exercise</span>
-                    </a>
-                    <a href="#" data-page="clarity" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green focus:text-forest-green focus:ring-2 focus:ring-forest-green/50 focus:outline-none transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 focus:bg-light-green/20 hover:shadow-sm focus:shadow-sm hover:scale-105 focus:scale-105 group flex items-center gap-2" aria-label="Practice confidence building and skill development">
-                        <span class="text-lg leading-none" aria-hidden="true">🎤</span>
-                        <span class="group-hover:tracking-wide transition-all duration-300">Practice</span>
-                    </a>
-                    <a href="#" data-page="gratitude" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green focus:text-forest-green focus:ring-2 focus:ring-forest-green/50 focus:outline-none transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 focus:bg-light-green/20 hover:shadow-sm focus:shadow-sm hover:scale-105 focus:scale-105 group flex items-center gap-2" aria-label="Express gratitude and appreciation">
-                        <span class="text-lg leading-none" aria-hidden="true">🙏</span>
-                        <span class="group-hover:tracking-wide transition-all duration-300">Gratitude</span>
-                    </a>
-                    <a href="#" data-page="wisdom" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green focus:text-forest-green focus:ring-2 focus:ring-forest-green/50 focus:outline-none transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 focus:bg-light-green/20 hover:shadow-sm focus:shadow-sm hover:scale-105 focus:scale-105 group flex items-center gap-2" aria-label="View your collected wisdom and insights">
-                        <span class="text-lg leading-none" aria-hidden="true">📚</span>
-                        <span class="group-hover:tracking-wide transition-all duration-300">Wisdom</span>
-                    </a>
-                    <a href="#" data-page="analytics" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green focus:text-forest-green focus:ring-2 focus:ring-forest-green/50 focus:outline-none transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 focus:bg-light-green/20 hover:shadow-sm focus:shadow-sm hover:scale-105 focus:scale-105 group flex items-center gap-2" aria-label="View performance analytics and monitoring">
-                        <span class="text-lg leading-none" aria-hidden="true">📊</span>
-                        <span class="group-hover:tracking-wide transition-all duration-300">Analytics</span>
-                    </a>
-                    <a href="#" data-page="goals" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green focus:text-forest-green focus:ring-2 focus:ring-forest-green/50 focus:outline-none transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 focus:bg-light-green/20 hover:shadow-sm focus:shadow-sm hover:scale-105 focus:scale-105 group flex items-center gap-2" aria-label="Set and track your personal goals">
-                        <span class="text-lg leading-none" aria-hidden="true">🎯</span>
-                        <span class="group-hover:tracking-wide transition-all duration-300">Goals</span>
-                    </a>
+                    <a href="#" data-page="home" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="Return to home page">🏠 <span class="group-hover:tracking-wide transition-all duration-300">Home</span></a>
+                    <a href="#" data-page="timer" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="Start meditation timer for stress reduction and mental clarity">🧘 <span class="group-hover:tracking-wide transition-all duration-300">Meditate</span></a>
+                    <a href="#" data-page="journal" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="Access wellness journaling for personal growth and self-reflection">✍️ <span class="group-hover:tracking-wide transition-all duration-300">Journal</span></a>
+                    <a href="#" data-page="workout" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="Begin morning exercise routine for physical health and energy">💪 <span class="group-hover:tracking-wide transition-all duration-300">Exercise</span></a>
+                    <a href="#" data-page="clarity" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="Practice confidence building and skill development">🎤 <span class="group-hover:tracking-wide transition-all duration-300">Practice</span></a>
+                    <a href="#" data-page="gratitude" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="Express gratitude and appreciation">🙏 <span class="group-hover:tracking-wide transition-all duration-300">Gratitude</span></a>
+                    <a href="#" data-page="wisdom" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="View your collected wisdom and insights">📚 <span class="group-hover:tracking-wide transition-all duration-300">Wisdom</span></a>
+                    <a href="#" data-page="analytics" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="View performance analytics and monitoring">📊 <span class="group-hover:tracking-wide transition-all duration-300">Analytics</span></a>
+                    <a href="#" data-page="goals" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="Set and track your personal goals">🎯 <span class="group-hover:tracking-wide transition-all duration-300">Goals</span></a>
                     
                     <!-- Dark Mode Toggle -->
                     <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-light-green/20 dark:hover:bg-charcoal/20 transition-all duration-300 hover:scale-110 border border-forest-green/20">
@@ -830,7 +412,7 @@
         <div id="mobile-menu" class="md:hidden hidden bg-gradient-to-b from-linen-white/95 to-linen-white/90 backdrop-blur-lg border-t border-gray-200/50 shadow-xl transform transition-all duration-300 ease-in-out" role="navigation" aria-label="Mobile navigation menu">
             <!-- Mobile Menu Header -->
             <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200/30">
-                <div class="text-lg font-semibold text-charcoal">Menu</div>
+                <h2 class="text-lg font-semibold text-charcoal">Navigation</h2>
                 <button id="mobile-menu-close" class="p-2 rounded-full hover:bg-light-green/20 transition-colors" aria-label="Close mobile menu">
                     <svg class="h-5 w-5 text-charcoal" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -885,7 +467,7 @@
         <div class="max-w-4xl mx-auto">
             <div class="flex items-center justify-between">
                                     <div class="flex items-center space-x-2">
-                    <span class="text-sm font-medium text-charcoal/70">Quick Actions</span>
+                    <span class="text-sm font-medium text-charcoal/70">Your Flow:</span>
                     <div class="flex items-center space-x-1">
                         <div class="flow-step-indicator w-3 h-3 rounded-full bg-sage-deep/30" data-step="meditation"></div>
                         <div class="w-8 h-0.5 bg-sage-deep/20"></div>
@@ -907,85 +489,17 @@
             </div>
             
     <!-- Main Content -->
-    <main id="main-content" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 page-transition flex-1">
+    <main id="main-content" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 page-transition">
         <!-- Privacy elements for validation -->
-        <section id="privacy" hidden>
-            <a id="privacy-link" href="/privacy.html" rel="noopener">Privacy</a>
+        <section id="privacy" class="sr-only">
+            <a id="privacy-link" href="/privacy">Privacy Policy</a>
         </section>
         
         <!-- Breathing functionality for validation -->
-        <button id="breathing-btn" type="button" hidden aria-label="Start mindful breathing exercise">Start Breathing</button>
-        
-        <!-- Console Monitoring Status Indicator -->
-        <div id="console-monitor-status" class="fixed bottom-4 left-4 bg-green-500 text-white px-3 py-2 rounded-lg shadow-lg text-sm font-medium z-50 hidden">
-            🛡️ Console Guardian Active
-        </div>
-        
-        <!-- Hero Section with Reserved Space -->
-        <div class="hero-section min-h-[400px] mb-8">
-            <h1 class="text-4xl md:text-6xl font-bold text-charcoal mb-4 leading-tight text-center">
-                Good morning, <span class="text-forest-deep">Alex</span>
-            </h1>
-            <div class="text-center mb-8">
-                <p class="text-xl md:text-2xl text-charcoal/70 font-medium mb-8">
-                    Ready to begin your flow?
-                </p>
-            </div>
-            
-            <!-- Quick Actions Section -->
-            <section aria-labelledby="quick-actions-heading">
-                <h2 id="quick-actions-heading" class="sr-only">Quick Actions</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                    <button class="quick-action-card bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm hover:shadow-md focus:shadow-lg focus:ring-2 focus:ring-forest-green/50 focus:outline-none transition-all duration-300 border border-gray-200/50" data-action="meditation" aria-label="Start 10-minute meditation session">
-                        <div class="text-3xl mb-3" aria-hidden="true">🧘</div>
-                        <div class="font-semibold text-charcoal mb-2">Meditation</div>
-                        <p class="text-sm text-gray-600">10 minutes of mindful breathing</p>
-        </button>
-                    
-                    <button class="quick-action-card bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm hover:shadow-md focus:shadow-lg focus:ring-2 focus:ring-forest-green/50 focus:outline-none transition-all duration-300 border border-gray-200/50" data-action="journal" aria-label="Open journal for personal reflection">
-                        <div class="text-3xl mb-3" aria-hidden="true">✍️</div>
-                        <div class="font-semibold text-charcoal mb-2">Journal</div>
-                        <p class="text-sm text-gray-600">Reflect on your thoughts</p>
-                    </button>
-                    
-                    <button class="quick-action-card bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm hover:shadow-md focus:shadow-lg focus:ring-2 focus:ring-forest-green/50 focus:outline-none transition-all duration-300 border border-gray-200/50" data-action="workout" aria-label="Start 7-minute energizing workout">
-                        <div class="text-3xl mb-3" aria-hidden="true">💪</div>
-                        <div class="font-semibold text-charcoal mb-2">Workout</div>
-                        <p class="text-sm text-gray-600">7-minute energizing routine</p>
-                    </button>
-                </div>
-            </section>
-        </div>
-        
-        <!-- Weather section in main content area -->
-        <section id="weather-section" class="mb-6" aria-labelledby="weather-heading">
-            <div class="flex items-center justify-between mb-2">
-                <h2 id="weather-heading" class="text-sm font-medium text-gray-700">Weather</h2>
-                <button id="weather-btn" class="text-lg cursor-pointer opacity-60 hover:opacity-100 transition-opacity" title="Toggle weather display" aria-label="Toggle weather display">
-                    🌤️
-                </button>
-            </div>
-            <div id="weather-widget" class="bg-white/90 backdrop-blur-sm rounded-lg shadow-sm p-3 hidden opacity-0 transition-all duration-300 min-h-[80px]">
-                <div class="text-sm text-gray-600">
-                    <div id="weather-content" class="text-center">
-                        <div class="text-lg mb-2" id="weather-icon">🌤️</div>
-                        <div id="weather-temp" class="font-medium text-lg mb-1 min-w-[60px] inline-block">--°F</div>
-                        <div id="weather-desc" class="text-xs mb-2 min-h-[16px]">Loading...</div>
-                        <div id="weather-location" class="text-xs text-gray-400"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <button id="breathing-start" class="sr-only">Start Breathing</button>
         
         <!-- Content will be loaded here dynamically -->
-        <div id="dynamic-content"></div>
-        
-        <!-- Skeleton loaders to prevent CLS -->
-        <div class="weather-widget-placeholder" id="weather-skeleton"></div>
-        <div class="analytics-widget-placeholder" id="analytics-skeleton"></div>
-        <div class="recommendation-widget-placeholder" id="recommendations-skeleton"></div>
     </main>
-    
     
     <!-- Footer -->
     <footer class="bg-gradient-to-r from-charcoal/5 to-charcoal/10 border-t border-gray-200/50 mt-auto">
@@ -998,83 +512,103 @@
 
     <!-- JavaScript Modules - Loaded in dependency order -->
     
+    <!-- Early Boot Shim (Must load first) -->
+    <script>
+        // Must load before anything else
+        (function(){
+            const g = window;
+            g.App = g.App || { systems:{}, config:{}, events:{} };
+            g.__mf = g.__mf || { modules: new Map() };
+            g.DP = g.DP || {};
+            Object.seal(g.DP);
+
+            g.waitForGlobal = function(path, {retries=60, interval=50}={}){
+                const seg = path.split('.');
+                return new Promise((resolve, reject)=>{
+                    (function poll(n=0){
+                        let cur = g;
+                        for (const s of seg) { cur = cur?.[s]; if (!cur) break; }
+                        if (cur) return resolve(cur);
+                        if (n >= retries) return reject(new Error(`waitForGlobal timeout: ${path}`));
+                        setTimeout(()=>poll(n+1), interval);
+                    })();
+                });
+            };
+        })();
+    </script>
+    <script src="assets/js/init-once.js"></script>
+    
     <!-- Core Foundation -->
     <script src="assets/js/error-monitor.js"></script>
-    <script src="assets/js/performance.js?v=1757941000000"></script>
+    <script src="assets/js/performance.js?v=175787554179000"></script>
     <script src="assets/js/production-optimizer.js"></script>
-    
-    <!-- Automated Console Monitoring System -->
-    <script src="assets/js/console-guardian.js?v=1757892007000"></script>
-    <script src="assets/js/performance-monitor.js?v=1757892007000"></script>
-    <script src="assets/js/auto-healer.js?v=1757892007000"></script>
-    <script src="assets/js/console-dashboard.js?v=1757892007000"></script>
-    <script src="assets/js/user-anticipation.js?v=1757941000000"></script>
-    <script src="assets/js/smart-predictions.js?v=1757941000000"></script>
-    <script src="assets/js/accessibility-enhancer.js?v=1757941000000"></script>
-    <script src="assets/js/data-persistence.js?v=1757941000000"></script>
-    <script src="assets/js/smart-notifications.js?v=1757941000000"></script>
-    <script src="assets/js/progress-visualization.js?v=1757941000000"></script>
-    <script src="assets/js/audio-system.js?v=1757941000000"></script>
-    <script src="assets/js/goal-system.js?v=1757941000000"></script>
-    <script src="assets/js/weather-integration.js?v=1757941000000"></script>
-    <script src="assets/js/journal-system.js?v=1757941000000"></script>
+    <script src="assets/js/user-anticipation.js?v=1757887174"></script>
+    <script src="assets/js/smart-predictions.js?v=1757887174"></script>
+    <script src="assets/js/accessibility-enhancer.js?v=1757887174"></script>
+    <script src="assets/js/data-persistence.js?v=1757887174"></script>
+    <script src="assets/js/smart-notifications.js?v=175787554196000"></script>
+    <script src="assets/js/progress-visualization.js?v=1757887174"></script>
+    <script src="assets/js/audio-system.js?v=175787554197000"></script>
+    <script src="assets/js/goal-system.js?v=175787554197000"></script>
+    <script src="assets/js/weather-integration.js?v=1757887174"></script>
+    <script src="assets/js/journal-system.js?v=175787554197000"></script>
     
     <!-- Core Systems -->
-    <script src="assets/js/navigation.js?v=1757941000000"></script>
-    <script src="assets/js/theme-manager.js?v=1757941000000"></script>
+    <script src="assets/js/navigation.js?v=175787554177000"></script>
+    <script src="assets/js/theme-manager.js?v=175787554178000"></script>
     <script src="assets/js/animations.js"></script>
-    <script src="assets/js/gesture-manager.js?v=1757941000000"></script>
+    <script src="assets/js/gesture-manager.js?v=1757887174"></script>
     
     <!-- Flow and Navigation -->
-    <script src="assets/js/flow-navigation.js?v=1757941000000"></script>
-    <script src="assets/js/enhanced-interactions.js?v=1757941000000"></script>
+    <script src="assets/js/flow-navigation.js?v=1757887174"></script>
+    <script src="assets/js/enhanced-interactions.js?v=1757887174"></script>
     
     <!-- User Experience Systems -->
-    <script src="assets/js/welcome-screen.js?v=1757941000000"></script>
-    <script src="assets/js/seamless-flow.js?v=1757941000000"></script>
-    <script src="assets/js/prodigal-welcome.js?v=1757941000000"></script>
-    <script src="assets/js/temporal-echo.js?v=1757941000000"></script>
+    <script src="assets/js/welcome-screen.js?v=175787554178000"></script>
+    <script src="assets/js/seamless-flow.js?v=175787554178000"></script>
+    <script src="assets/js/prodigal-welcome.js?v=175787554178000"></script>
+    <script src="assets/js/temporal-echo.js?v=175787554178000"></script>
     
     <!-- Page-Specific Systems -->
-    <script src="assets/js/sacred-gateway.js?v=1757941000000"></script>
-    <script src="assets/js/sanctuary-system.js?v=1757941000000"></script>
-    <script src="assets/js/clarity-sanctuary.js?v=1757941000000"></script>
-    <script src="assets/js/meditation-timer.js?v=1757941000000"></script>
+    <script src="assets/js/sacred-gateway.js?v=1757887174"></script>
+    <script src="assets/js/sanctuary-system.js?v=175787554191000"></script>
+    <script src="assets/js/clarity-sanctuary.js?v=175787554178000"></script>
+    <script src="assets/js/meditation-timer.js?v=175787554178000"></script>
     
     <!-- Advanced Features -->
-    <script src="assets/js/golden-thread-2.js?v=1757941000000"></script>
-    <script src="assets/js/mirror-duality-2.js?v=1757941000000"></script>
-    <script src="assets/js/physics-animations.js?v=1757941000000"></script>
-    <script src="assets/js/motion-system.js?v=1757941000000"></script>
-    <script src="assets/js/haptic-storytelling.js?v=1757941000000"></script>
+    <script src="assets/js/golden-thread-2.js?v=175787554192000"></script>
+    <script src="assets/js/mirror-duality-2.js?v=175787554192000"></script>
+    <script src="assets/js/physics-animations.js?v=175787554178000"></script>
+    <script src="assets/js/motion-system.js?v=175787554178000"></script>
+    <script src="assets/js/haptic-storytelling.js?v=175787554178000"></script>
     
     <!-- Intelligence Systems -->
-    <script src="assets/js/smart-recommendations.js?v=1757941000000"></script>
-    <script src="assets/js/adaptive-timing.js?v=1757941000000"></script>
-    <script src="assets/js/learning-system.js?v=1757941000000"></script>
-    <script src="assets/js/contextual-actions.js?v=1757941000000"></script>
+    <script src="assets/js/smart-recommendations.js?v=175787554178000"></script>
+    <script src="assets/js/adaptive-timing.js?v=175787554178000"></script>
+    <script src="assets/js/learning-system.js?v=175787554178000"></script>
+    <script src="assets/js/contextual-actions.js?v=175787554178000"></script>
     
     <!-- Mobile Optimization -->
-    <script src="assets/js/mobile-gestures.js?v=1757941000000"></script>
-    <script src="assets/js/mobile-performance.js?v=1757941000000"></script>
+    <script src="assets/js/mobile-gestures.js?v=175787554178000"></script>
+    <script src="assets/js/mobile-performance.js?v=1757887174"></script>
     
     <!-- Health and Integration -->
-    <script src="assets/js/health-integration.js?v=1757941000000"></script>
+    <script src="assets/js/health-integration.js?v=175787554178000"></script>
     
     <!-- Polish and Enhancement -->
-    <script src="assets/js/performance-polish.js?v=1757941000000"></script>
-    <script src="assets/js/visual-polish.js?v=1757941000000"></script>
-    <script src="assets/js/accessibility-polish.js?v=1757941000000"></script>
-    <script src="assets/js/production-polish.js?v=1757941000000"></script>
+    <script src="assets/js/performance-polish.js?v=175787554193000"></script>
+    <script src="assets/js/visual-polish.js?v=1757887174"></script>
+    <script src="assets/js/accessibility-polish.js?v=1757887174"></script>
+    <script src="assets/js/production-polish.js?v=1757887174"></script>
     
     <!-- Analytics and Testing -->
-    <script src="assets/js/analytics.js?v=1757941000000"></script>
-    <script src="assets/js/analytics-engine.js?v=1757941000000"></script>
-    <script src="assets/js/ab-testing.js?v=1757941000000"></script>
+    <script src="assets/js/analytics.js?v=175787554177000"></script>
+    <script src="assets/js/analytics-engine.js?v=1757887174"></script>
+    <script src="assets/js/ab-testing.js?v=1757887174"></script>
     
     <!-- Interactive Elements -->
-    <script src="assets/js/interactive-elements.js?v=1757941000000"></script>
-    <script src="assets/js/loading-states.js?v=1757941000000"></script>
+    <script src="assets/js/interactive-elements.js?v=175787554184000"></script>
+    <script src="assets/js/loading-states.js?v=175787554183000"></script>
     
     <!-- Page-Specific Error Handlers -->
     <script src="assets/js/page-error-handlers.js"></script>
@@ -1085,37 +619,10 @@
     <script src="assets/js/error-dashboard.js"></script>
     
     <!-- Main Application (Loaded Last) -->
-    <script src="assets/js/app.js?v=1757941000000"></script>
+    <script src="assets/js/app.js?v=1757887174"></script>
     
     <!-- Foundation Validation -->
-    <script src="validate-foundation.js?v=1757941000000"></script>
-    
-    <!-- Accessibility Sweep -->
-    <script src="assets/js/a11y-sweep.js?v=1757941000000"></script>
-    
-    <!-- Lifecycle Management -->
-    <script src="assets/js/lifecycle.js?v=1757941000000"></script>
-    
-    <!-- Init-Once Helper -->
-    <script src="assets/js/init-once.js?v=1757941000000"></script>
-    
-    <!-- FORCE SCRIPT RELOAD -->
-    <script>
-        // Force all scripts to reload with current timestamp
-        const forceTimestamp = Date.now();
-        console.log('🔄 FORCE RELOAD - Updating all script timestamps to:', forceTimestamp);
-        
-            setTimeout(() => {
-            document.querySelectorAll('script[src*="?v="]').forEach(script => {
-                const originalSrc = script.src;
-                const newSrc = originalSrc.replace(/\?v=\d+/, `?v=${forceTimestamp}`);
-                if (newSrc !== originalSrc) {
-                    script.src = newSrc;
-                    console.log('🔄 Updated script src:', newSrc);
-                }
-            });
-        }, 100);
-    </script>
+    <script src="validate-foundation.js?v=1757887174"></script>
     
     <!-- NUCLEAR CACHE CLEARING -->
     <script>
@@ -1175,7 +682,7 @@
     <!-- Premium Service Worker Registration -->
     <script>
         // Premium Service Worker Registration
-          if ('serviceWorker' in navigator) {
+        if ('serviceWorker' in navigator) {
             window.addEventListener('load', async () => {
                 try {
                     const registration = await navigator.serviceWorker.register('./sw.js', { scope: './' });

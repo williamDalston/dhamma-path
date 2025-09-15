@@ -98,27 +98,27 @@ class AutoHealer {
     }
 
     startHealthChecks() {
-        // Run health checks every 10 seconds
+        // Run health checks every 60 seconds (reduced frequency)
         setInterval(() => {
             this.runHealthChecks();
-        }, 10000);
+        }, 60000);
 
-        // Run deep health checks every 60 seconds
+        // Run deep health checks every 5 minutes (reduced frequency)
         setInterval(() => {
             this.runDeepHealthChecks();
-        }, 60000);
+        }, 300000);
     }
 
     startProactiveHealing() {
-        // Run prevention rules every 5 seconds
+        // Run prevention rules every 30 seconds (reduced frequency)
         setInterval(() => {
             this.runPreventionRules();
-        }, 5000);
+        }, 30000);
 
-        // Run healing strategies every 15 seconds
+        // Run healing strategies every 2 minutes (reduced frequency)
         setInterval(() => {
             this.runHealingStrategies();
-        }, 15000);
+        }, 120000);
     }
 
     runHealthChecks() {

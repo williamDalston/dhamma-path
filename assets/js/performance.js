@@ -70,10 +70,13 @@ class PerformanceMonitor {
             this.observers.push(fidObserver);
         }
 
-        // Measure load time
+        // Measure load time using navigation timing
         window.addEventListener('load', () => {
-            this.metrics.loadTime = performance.now();
-            console.log('🎯 Load Time:', this.metrics.loadTime + 'ms');
+            const navigation = performance.getEntriesByType('navigation')[0];
+            if (navigation) {
+                this.metrics.loadTime = navigation.loadEventEnd - navigation.loadEventStart;
+                console.log('🎯 Load Time:', this.metrics.loadTime + 'ms');
+            }
         });
     }
 
@@ -147,21 +150,9 @@ class PerformanceMonitor {
     }
 
     preloadCriticalResources() {
-        // Preload critical resources
-        const criticalResources = [
-            'assets/css/critical.css',
-            'assets/css/styles.css',
-            'assets/js/navigation.js',
-            'assets/js/meditation-timer.js'
-        ];
-
-        criticalResources.forEach(resource => {
-            const link = document.createElement('link');
-            link.rel = 'preload';
-            link.href = resource;
-            link.as = resource.endsWith('.css') ? 'style' : 'script';
-            document.head.appendChild(link);
-        });
+        // Skip preloading to avoid console warnings
+        // Resources are already loaded via script tags
+        console.log('📦 Critical resources already loaded via script tags');
     }
 
     setupIntersectionObserver() {

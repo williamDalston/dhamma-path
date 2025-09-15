@@ -392,15 +392,15 @@ class ConsoleDashboard {
     }
 
     startMonitoring() {
-        // Update metrics every 2 seconds
+        // Update metrics every 10 seconds (reduced frequency)
         setInterval(() => {
             this.updateMetrics();
-        }, 2000);
+        }, 10000);
 
-        // Update issues every 5 seconds
+        // Update issues every 30 seconds (reduced frequency)
         setInterval(() => {
             this.updateIssues();
-        }, 5000);
+        }, 30000);
     }
 
     updateMetrics() {
