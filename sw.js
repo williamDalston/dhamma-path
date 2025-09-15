@@ -1,63 +1,51 @@
-// Robust Service Worker for GitHub Pages
-const SCOPE = self.registration.scope; // e.g. https://.../dhamma-path/
-const toURL = (u) => {
-    const cleanScope = SCOPE.endsWith('/') ? SCOPE : SCOPE + '/';
-    return cleanScope + u.replace(/^\//, '');
-};
+// Simple Service Worker for MorningFlow
+const CACHE_NAME = 'morningflow-v1';
+const urlsToCache = [
+  '/',
+  '/clean-index.html',
+  '/assets/js/simple-navigation.js',
+  '/assets/js/simple-timer.js',
+  '/assets/js/weather-integration.js',
+  '/manifest.json',
+  '/favicon.png'
+];
 
-const STATIC = 'dhamma-path-static-v1';
-const DYNAMIC = 'dhamma-path-dynamic-v1';
-
+// Install event
 self.addEventListener('install', (event) => {
-  const CRITICAL = [
-    '',                 // index
-    'offline.html',
-    'assets/css/styles.css',
-    'assets/js/app.js',
-    'assets/js/navigation.js',
-  ].map(toURL);
-
-  event.waitUntil((async () => {
-    const cache = await caches.open(STATIC);
-    const results = await Promise.allSettled(CRITICAL.map(u => cache.add(u)));
-    results.forEach((r, i) => {
-      if (r.status === 'rejected') console.warn('[SW] skipped', CRITICAL[i], r.reason);
-    });
-    self.skipWaiting();
-  })());
-});
-
-self.addEventListener('activate', (event) => {
+  console.log('Service Worker installing...');
   event.waitUntil(
-    caches.keys().then(keys => 
-      Promise.all(
-        keys.filter(k => ![STATIC, DYNAMIC].includes(k))
-            .map(k => caches.delete(k))
-      )
-    ).then(() => {
-      self.clients.claim();
-      self.skipWaiting();
-    })
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
   );
 });
 
+// Fetch event
 self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-
-  // ✅ Never intercept cross-origin (fixes Tailwind CDN fetch below)
-  if (url.origin !== self.location.origin) return;
-  
-  // ✅ Skip non-GET requests (POST, PUT, etc. are not cacheable)
-  if (event.request.method !== 'GET') return;
-
   event.respondWith(
-    caches.match(event.request).then((hit) =>
-      hit ||
-      fetch(event.request).then(res => {
-        const copy = res.clone();
-        caches.open(DYNAMIC).then(c => c.put(event.request, copy));
-        return res;
-      }).catch(() => caches.match(toURL('offline.html')))
-    )
+    caches.match(event.request)
+      .then((response) => {
+        // Return cached version or fetch from network
+        return response || fetch(event.request);
+      })
+  );
+});
+
+// Activate event
+self.addEventListener('activate', (event) => {
+  console.log('Service Worker activated');
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('Deleting old cache:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
 });
