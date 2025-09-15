@@ -1028,6 +1028,9 @@ class WeatherIntegration {
             this.toggleWeatherWidget();
         });
         
+        // Setup meditation-specific behavior
+        this.setupMeditationBehavior();
+        
         // Auto-hide after 10 seconds
         setTimeout(() => {
             if (widget.parentNode) {
@@ -1090,6 +1093,105 @@ class WeatherIntegration {
                 minimizeBtn.textContent = '➕ Expand';
             }
         }
+    }
+    
+    setupMeditationBehavior() {
+        // Listen for page changes to detect meditation timer
+        document.addEventListener('pageChanged', (e) => {
+            const currentPage = e.detail?.page || window.location.hash;
+            this.handlePageChange(currentPage);
+        });
+        
+        // Check current page on load
+        const currentPage = window.location.hash || '#welcome';
+        this.handlePageChange(currentPage);
+    }
+    
+    handlePageChange(page) {
+        const widget = document.getElementById('weather-widget');
+        if (!widget) return;
+        
+        // Define pages where weather should be visible
+        const weatherVisiblePages = ['welcome', 'home', ''];
+        const isMainPage = weatherVisiblePages.includes(page.replace('#', '')) || page === '' || page === '#welcome';
+        
+        // Define activity/engagement pages where weather should be hidden
+        const activityPages = ['timer', 'meditation', 'journal', 'gratitude', 'clarity', 'wisdom', 'workout', 'analytics'];
+        const isActivityPage = activityPages.some(activity => page.includes(activity));
+        
+        if (isMainPage) {
+            // Show weather on main pages
+            widget.style.display = 'block';
+            widget.classList.remove('meditation-mode', 'activity-mode');
+            widget.style.opacity = '1';
+            widget.style.transform = 'scale(1)';
+            
+            // Remove any activity indicators
+            const tempEl = widget.querySelector('#weather-temp');
+            if (tempEl) {
+                tempEl.innerHTML = tempEl.textContent.replace(/ [🧘📝💭📊🏃]/g, '');
+            }
+            
+            // Remove weather toggle button
+            const toggleBtn = document.getElementById('weather-toggle-btn');
+            if (toggleBtn) {
+                toggleBtn.remove();
+            }
+        } else if (isActivityPage) {
+            // Hide weather on activity pages for focus
+            widget.style.display = 'none';
+            widget.classList.add('activity-mode');
+            
+            // Show a small weather toggle button for manual override
+            this.createWeatherToggleButton();
+        } else {
+            // Default: show but minimized for other pages
+            widget.style.display = 'block';
+            widget.classList.add('activity-mode');
+            widget.style.opacity = '0.7';
+            widget.style.transform = 'scale(0.9)';
+        }
+    }
+    
+    createWeatherToggleButton() {
+        // Remove existing toggle button
+        const existingToggle = document.getElementById('weather-toggle-btn');
+        if (existingToggle) {
+            existingToggle.remove();
+        }
+        
+        // Create small weather toggle button
+        const toggleBtn = document.createElement('button');
+        toggleBtn.id = 'weather-toggle-btn';
+        toggleBtn.className = 'fixed top-20 right-4 z-50 bg-white/90 backdrop-blur-sm border border-sage-deep/20 rounded-full p-2 shadow-lg hover:shadow-xl transition-all duration-300 text-sage-deep hover:bg-sage-pale/30';
+        toggleBtn.innerHTML = '🌤️';
+        toggleBtn.title = 'Show weather';
+        toggleBtn.setAttribute('aria-label', 'Show weather widget');
+        
+        // Position based on screen size
+        const isMobile = window.innerWidth < 768;
+        if (isMobile) {
+            toggleBtn.style.top = '80px';
+            toggleBtn.style.right = '16px';
+        }
+        
+        toggleBtn.addEventListener('click', () => {
+            const widget = document.getElementById('weather-widget');
+            if (widget) {
+                widget.style.display = widget.style.display === 'none' ? 'block' : 'none';
+                toggleBtn.innerHTML = widget.style.display === 'none' ? '🌤️' : '👁️‍🗨️';
+                toggleBtn.title = widget.style.display === 'none' ? 'Show weather' : 'Hide weather';
+            }
+        });
+        
+        document.body.appendChild(toggleBtn);
+        
+        // Auto-hide toggle button after 5 seconds
+        setTimeout(() => {
+            if (toggleBtn.parentNode) {
+                toggleBtn.style.opacity = '0.6';
+            }
+        }, 5000);
     }
     
     showContextualRecommendations(recommendations) {

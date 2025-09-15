@@ -10939,6 +10939,22 @@ input[type="range"]::-moz-range-thumb:hover {
     transition: height 0.3s ease, overflow 0.3s ease;
 }
 
+/* Activity mode weather widget */
+.weather-widget.activity-mode {
+    transition: opacity 0.3s ease, transform 0.3s ease, display 0.3s ease;
+}
+
+/* Weather toggle button */
+#weather-toggle-btn {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+#weather-toggle-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
 .weather-widget.minimized .temperature-graph,
 .weather-widget.minimized .weather-recommendation,
 .weather-widget.minimized .weather-actions {
