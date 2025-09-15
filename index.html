@@ -533,6 +533,32 @@
         }, 3000);
       })();
 
+      // NUCLEAR CACHE CLEAR - Force fresh load
+      console.log('🚀 NUCLEAR CACHE CLEAR - Forcing fresh JavaScript load');
+      
+      // Clear all caches
+      if ('caches' in window) {
+        caches.keys().then(names => {
+          names.forEach(name => {
+            caches.delete(name);
+            console.log('🗑️ Deleted cache:', name);
+          });
+        });
+      }
+      
+      // Clear localStorage and sessionStorage
+      localStorage.clear();
+      sessionStorage.clear();
+      console.log('🗑️ Cleared all storage');
+      
+      // Force reload all scripts
+      const scripts = document.querySelectorAll('script[src*="assets/js/"]');
+      scripts.forEach(script => {
+        const newSrc = script.src.replace(/v=\d+/, 'v=' + Date.now());
+        script.src = newSrc;
+        console.log('🔄 Updated script:', newSrc);
+      });
+      
       console.log('✅ Early Boot Shim loaded');
     })();
     </script>
@@ -887,75 +913,75 @@
     
     <!-- Core Foundation -->
     <script src="assets/js/error-monitor.js"></script>
-    <script src="assets/js/performance.js?v=1757936000000"></script>
+    <script src="assets/js/performance.js?v=1757941000000"></script>
     <script src="assets/js/production-optimizer.js"></script>
-    <script src="assets/js/user-anticipation.js?v=1757936000000"></script>
-    <script src="assets/js/smart-predictions.js?v=1757936000000"></script>
-    <script src="assets/js/accessibility-enhancer.js?v=1757936000000"></script>
-    <script src="assets/js/data-persistence.js?v=1757936000000"></script>
-    <script src="assets/js/smart-notifications.js?v=1757936000000"></script>
-    <script src="assets/js/progress-visualization.js?v=1757936000000"></script>
-    <script src="assets/js/audio-system.js?v=1757936000000"></script>
-    <script src="assets/js/goal-system.js?v=1757936000000"></script>
-    <script src="assets/js/weather-integration.js?v=1757936000000"></script>
-    <script src="assets/js/journal-system.js?v=1757936000000"></script>
+    <script src="assets/js/user-anticipation.js?v=1757941000000"></script>
+    <script src="assets/js/smart-predictions.js?v=1757941000000"></script>
+    <script src="assets/js/accessibility-enhancer.js?v=1757941000000"></script>
+    <script src="assets/js/data-persistence.js?v=1757941000000"></script>
+    <script src="assets/js/smart-notifications.js?v=1757941000000"></script>
+    <script src="assets/js/progress-visualization.js?v=1757941000000"></script>
+    <script src="assets/js/audio-system.js?v=1757941000000"></script>
+    <script src="assets/js/goal-system.js?v=1757941000000"></script>
+    <script src="assets/js/weather-integration.js?v=1757941000000"></script>
+    <script src="assets/js/journal-system.js?v=1757941000000"></script>
     
     <!-- Core Systems -->
-    <script src="assets/js/navigation.js?v=1757936000000"></script>
-    <script src="assets/js/theme-manager.js?v=1757936000000"></script>
+    <script src="assets/js/navigation.js?v=1757941000000"></script>
+    <script src="assets/js/theme-manager.js?v=1757941000000"></script>
     <script src="assets/js/animations.js"></script>
-    <script src="assets/js/gesture-manager.js?v=1757936000000"></script>
+    <script src="assets/js/gesture-manager.js?v=1757941000000"></script>
     
     <!-- Flow and Navigation -->
-    <script src="assets/js/flow-navigation.js?v=1757936000000"></script>
-    <script src="assets/js/enhanced-interactions.js?v=1757936000000"></script>
+    <script src="assets/js/flow-navigation.js?v=1757941000000"></script>
+    <script src="assets/js/enhanced-interactions.js?v=1757941000000"></script>
     
     <!-- User Experience Systems -->
-    <script src="assets/js/welcome-screen.js?v=1757936000000"></script>
-    <script src="assets/js/seamless-flow.js?v=1757936000000"></script>
-    <script src="assets/js/prodigal-welcome.js?v=1757936000000"></script>
-    <script src="assets/js/temporal-echo.js?v=1757936000000"></script>
+    <script src="assets/js/welcome-screen.js?v=1757941000000"></script>
+    <script src="assets/js/seamless-flow.js?v=1757941000000"></script>
+    <script src="assets/js/prodigal-welcome.js?v=1757941000000"></script>
+    <script src="assets/js/temporal-echo.js?v=1757941000000"></script>
     
     <!-- Page-Specific Systems -->
-    <script src="assets/js/sacred-gateway.js?v=1757936000000"></script>
-    <script src="assets/js/sanctuary-system.js?v=1757936000000"></script>
-    <script src="assets/js/clarity-sanctuary.js?v=1757936000000"></script>
-    <script src="assets/js/meditation-timer.js?v=1757936000000"></script>
+    <script src="assets/js/sacred-gateway.js?v=1757941000000"></script>
+    <script src="assets/js/sanctuary-system.js?v=1757941000000"></script>
+    <script src="assets/js/clarity-sanctuary.js?v=1757941000000"></script>
+    <script src="assets/js/meditation-timer.js?v=1757941000000"></script>
     
     <!-- Advanced Features -->
-    <script src="assets/js/golden-thread-2.js?v=1757936000000"></script>
-    <script src="assets/js/mirror-duality-2.js?v=1757936000000"></script>
-    <script src="assets/js/physics-animations.js?v=1757936000000"></script>
-    <script src="assets/js/motion-system.js?v=1757936000000"></script>
-    <script src="assets/js/haptic-storytelling.js?v=1757936000000"></script>
+    <script src="assets/js/golden-thread-2.js?v=1757941000000"></script>
+    <script src="assets/js/mirror-duality-2.js?v=1757941000000"></script>
+    <script src="assets/js/physics-animations.js?v=1757941000000"></script>
+    <script src="assets/js/motion-system.js?v=1757941000000"></script>
+    <script src="assets/js/haptic-storytelling.js?v=1757941000000"></script>
     
     <!-- Intelligence Systems -->
-    <script src="assets/js/smart-recommendations.js?v=1757936000000"></script>
-    <script src="assets/js/adaptive-timing.js?v=1757936000000"></script>
-    <script src="assets/js/learning-system.js?v=1757936000000"></script>
-    <script src="assets/js/contextual-actions.js?v=1757936000000"></script>
+    <script src="assets/js/smart-recommendations.js?v=1757941000000"></script>
+    <script src="assets/js/adaptive-timing.js?v=1757941000000"></script>
+    <script src="assets/js/learning-system.js?v=1757941000000"></script>
+    <script src="assets/js/contextual-actions.js?v=1757941000000"></script>
     
     <!-- Mobile Optimization -->
-    <script src="assets/js/mobile-gestures.js?v=1757936000000"></script>
-    <script src="assets/js/mobile-performance.js?v=1757936000000"></script>
+    <script src="assets/js/mobile-gestures.js?v=1757941000000"></script>
+    <script src="assets/js/mobile-performance.js?v=1757941000000"></script>
     
     <!-- Health and Integration -->
-    <script src="assets/js/health-integration.js?v=1757936000000"></script>
+    <script src="assets/js/health-integration.js?v=1757941000000"></script>
     
     <!-- Polish and Enhancement -->
-    <script src="assets/js/performance-polish.js?v=1757936000000"></script>
-    <script src="assets/js/visual-polish.js?v=1757936000000"></script>
-    <script src="assets/js/accessibility-polish.js?v=1757936000000"></script>
-    <script src="assets/js/production-polish.js?v=1757936000000"></script>
+    <script src="assets/js/performance-polish.js?v=1757941000000"></script>
+    <script src="assets/js/visual-polish.js?v=1757941000000"></script>
+    <script src="assets/js/accessibility-polish.js?v=1757941000000"></script>
+    <script src="assets/js/production-polish.js?v=1757941000000"></script>
     
     <!-- Analytics and Testing -->
-    <script src="assets/js/analytics.js?v=1757936000000"></script>
-    <script src="assets/js/analytics-engine.js?v=1757936000000"></script>
-    <script src="assets/js/ab-testing.js?v=1757936000000"></script>
+    <script src="assets/js/analytics.js?v=1757941000000"></script>
+    <script src="assets/js/analytics-engine.js?v=1757941000000"></script>
+    <script src="assets/js/ab-testing.js?v=1757941000000"></script>
     
     <!-- Interactive Elements -->
-    <script src="assets/js/interactive-elements.js?v=1757936000000"></script>
-    <script src="assets/js/loading-states.js?v=1757936000000"></script>
+    <script src="assets/js/interactive-elements.js?v=1757941000000"></script>
+    <script src="assets/js/loading-states.js?v=1757941000000"></script>
     
     <!-- Page-Specific Error Handlers -->
     <script src="assets/js/page-error-handlers.js"></script>
@@ -966,10 +992,10 @@
     <script src="assets/js/error-dashboard.js"></script>
     
     <!-- Main Application (Loaded Last) -->
-    <script src="assets/js/app.js?v=1757936000000"></script>
+    <script src="assets/js/app.js?v=1757941000000"></script>
     
     <!-- Foundation Validation -->
-    <script src="validate-foundation.js?v=1757936000000"></script>
+    <script src="validate-foundation.js?v=1757941000000"></script>
     
     <!-- FORCE SCRIPT RELOAD -->
     <script>
