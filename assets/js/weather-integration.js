@@ -70,6 +70,7 @@ class WeatherIntegration {
                     
                     // Retry weather fetch with real location
                     this.getCurrentWeather();
+                    this.updateWeatherWidget(this.currentWeather);
                     return;
                 } catch (error) {
                     console.log('📍 Automatic location failed, falling back to browser detection:', error.message);
@@ -126,14 +127,37 @@ class WeatherIntegration {
     }
     
     displayLocationInWidget() {
-        // Add location info to weather widget
-        const weatherWidget = document.querySelector('.weather-widget, .weather-section');
-        if (weatherWidget && this.userLocation) {
-            const locationInfo = document.createElement('div');
-            locationInfo.className = 'location-info text-xs text-gray-600 mt-2';
-            locationInfo.innerHTML = `📍 ${this.userLocation.latitude.toFixed(4)}, ${this.userLocation.longitude.toFixed(4)}`;
-            weatherWidget.appendChild(locationInfo);
+        // Update the subtle weather widget with location info
+        const locationEl = document.getElementById('weather-location');
+        if (locationEl && this.userLocation) {
+            locationEl.textContent = `📍 ${this.userLocation.latitude.toFixed(4)}, ${this.userLocation.longitude.toFixed(4)}`;
         }
+    }
+    
+    updateWeatherWidget(weatherData) {
+        // Update the subtle weather widget with current weather
+        const iconEl = document.getElementById('weather-icon');
+        const tempEl = document.getElementById('weather-temp');
+        const descEl = document.getElementById('weather-desc');
+        
+        if (weatherData) {
+            const icon = this.getWeatherIcon(weatherData.condition || weatherData.weather);
+            if (iconEl) iconEl.textContent = icon;
+            if (tempEl) tempEl.textContent = `${weatherData.temperature || weatherData.temp || '--'}°${this.temperatureUnit}`;
+            if (descEl) descEl.textContent = weatherData.condition || weatherData.description || 'Unknown';
+        }
+    }
+    
+    getWeatherIcon(condition) {
+        if (!condition) return '🌤️';
+        const c = condition.toLowerCase();
+        if (c.includes('rain')) return '🌧️';
+        if (c.includes('cloud')) return '⛅';
+        if (c.includes('snow')) return '❄️';
+        if (c.includes('storm') || c.includes('thunder')) return '⛈️';
+        if (c.includes('fog') || c.includes('mist')) return '🌫️';
+        if (c.includes('sun') || c.includes('clear')) return '☀️';
+        return '🌤️';
     }
     
     setupWeatherAPI() {

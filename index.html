@@ -461,6 +461,38 @@
             }, { once: true });
           }
           
+          // Subtle weather toggle functionality
+          (function initWeatherToggle() {
+            const weatherBtn = document.getElementById('weather-btn');
+            const weatherWidget = document.getElementById('weather-widget');
+            let isWeatherVisible = false;
+            
+            if (weatherBtn && weatherWidget) {
+              weatherBtn.addEventListener('click', () => {
+                isWeatherVisible = !isWeatherVisible;
+                
+                if (isWeatherVisible) {
+                  weatherWidget.classList.remove('hidden', 'opacity-0');
+                  weatherWidget.classList.add('opacity-100');
+                  weatherBtn.textContent = '🌤️';
+                  weatherBtn.title = 'Hide weather';
+                  
+                  // Load weather data when shown
+                  if (window.weatherIntegration && window.weatherIntegration.getCurrentWeather) {
+                    window.weatherIntegration.getCurrentWeather();
+                  }
+                } else {
+                  weatherWidget.classList.add('opacity-0');
+                  setTimeout(() => {
+                    weatherWidget.classList.add('hidden');
+                  }, 300);
+                  weatherBtn.textContent = '🌤️';
+                  weatherBtn.title = 'Show weather';
+                }
+              });
+            }
+          })();
+          
           // Automatic location detection - no buttons needed
           setTimeout(() => {
             if (navigator.geolocation && window.weatherIntegration) {
@@ -857,8 +889,27 @@
         <!-- Breathing functionality for validation -->
         <button id="breathing-btn" type="button" hidden>Start Breathing</button>
         
+        <!-- Subtle weather toggle -->
+        <div id="weather-toggle" class="fixed top-4 right-4 z-50 opacity-60 hover:opacity-100 transition-opacity">
+            <button id="weather-btn" class="text-2xl cursor-pointer" title="Toggle weather display">
+                🌤️
+            </button>
+        </div>
+        
         
         <!-- Content will be loaded here dynamically -->
+        
+        <!-- Subtle weather widget (hidden by default) -->
+        <div id="weather-widget" class="fixed top-16 right-4 z-40 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg p-3 max-w-xs hidden opacity-0 transition-all duration-300">
+            <div class="text-sm text-gray-600">
+                <div id="weather-content" class="text-center">
+                    <div class="text-lg" id="weather-icon">🌤️</div>
+                    <div id="weather-temp" class="font-medium">--°</div>
+                    <div id="weather-desc" class="text-xs">Loading...</div>
+                    <div id="weather-location" class="text-xs text-gray-400 mt-1"></div>
+                </div>
+            </div>
+        </div>
         
         <!-- Skeleton loaders to prevent CLS -->
         <div class="weather-widget-placeholder" id="weather-skeleton"></div>
