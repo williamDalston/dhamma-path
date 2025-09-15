@@ -219,6 +219,38 @@ img[src*="sun.svg"], img[src*="weather"], img[src*="icon"], .weather-icon {
     contain-intrinsic-size: 48px;
 }
 
+/* Z-index layering to prevent overlay collisions */
+.weather-card {
+    z-index: 10;
+    position: relative;
+}
+
+.floating-action-button {
+    z-index: 40;
+}
+
+.audio-control-panel {
+    z-index: 30;
+}
+
+.error-feedback-button {
+    z-index: 20;
+}
+
+.install-button {
+    z-index: 50;
+}
+
+.error-dashboard {
+    z-index: 60;
+}
+
+/* Ensure weather card doesn't overlap other elements */
+.weather-card {
+    margin-bottom: 1rem;
+    max-width: 300px;
+}
+
 /* Avoid viewport toolbar jumps */
 :root, .app-root {
   min-height: 100dvh;

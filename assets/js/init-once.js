@@ -3,10 +3,14 @@
  * Prevents double initialization during cache busting and hot reloads
  */
 
+// Global app registry - load first, with defer or type="module"
+window.DP = window.DP || {};              // global app registry
+Object.seal(window.DP);                   // make accidental reassign obvious
+
 // tiny init-once helper
 const __mods = (window.__mf ||= { mods: new Map() }).mods;
 
-export function initOnce(name, fn) {
+function initOnce(name, fn) {
   if (__mods.has(name)) return __mods.get(name);
   const out = fn();
   __mods.set(name, out);
@@ -14,7 +18,7 @@ export function initOnce(name, fn) {
 }
 
 // Cleanup helper
-export function cleanupModule(name) {
+function cleanupModule(name) {
   if (__mods.has(name)) {
     const module = __mods.get(name);
     if (module && typeof module.cleanup === 'function') {
@@ -25,7 +29,7 @@ export function cleanupModule(name) {
 }
 
 // Cleanup all modules
-export function cleanupAllModules() {
+function cleanupAllModules() {
   __mods.forEach((module, name) => {
     if (module && typeof module.cleanup === 'function') {
       module.cleanup();

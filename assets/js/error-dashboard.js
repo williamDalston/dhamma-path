@@ -13,10 +13,13 @@ class ErrorDashboard {
     }
 
     init() {
-        this.setupDashboard();
-        this.registerHandlers();
-        this.startMonitoring();
-        this.setupKeyboardShortcuts();
+        // Only show in development/debug mode
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.__DEBUG__) {
+            this.setupDashboard();
+            this.registerHandlers();
+            this.startMonitoring();
+            this.setupKeyboardShortcuts();
+        }
     }
 
     setupDashboard() {

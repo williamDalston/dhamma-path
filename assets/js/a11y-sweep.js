@@ -6,13 +6,17 @@
 class AccessibilitySweep {
     constructor() {
         this.fixesApplied = 0;
-        this.init();
+        // Only initialize if not already done
+        if (!window.__A11Y_SWEEP_INITIALIZED__) {
+            this.init();
+        }
     }
 
     init() {
         // Single-shot + debounced a11y sweep
         if (!window.__A11Y_SWEEP__) {
             window.__A11Y_SWEEP__ = true;
+            window.__A11Y_SWEEP_INITIALIZED__ = true;
 
             let cleanStreak = 0;
             let idleId = null;

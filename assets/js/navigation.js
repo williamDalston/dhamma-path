@@ -293,7 +293,7 @@ class NavigationManager {
     getTimerPageContent() {
         return `
             <div class="text-center py-16">
-                <h1 class="text-4xl font-bold text-charcoal mb-8">🧘 Meditation Timer</h1>
+                <h2 class="text-4xl font-bold text-charcoal mb-8">🧘 Meditation Timer</h2>
                 <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-md mx-auto">
                     <div id="timer-display" class="text-6xl font-bold text-forest-green mb-6">10:00</div>
                     <div class="mb-6">
@@ -319,7 +319,7 @@ class NavigationManager {
     getJournalPageContent() {
         return `
             <div class="text-center py-16">
-                <h1 class="text-4xl font-bold text-charcoal mb-8">✍️ Journal</h1>
+                <h2 class="text-4xl font-bold text-charcoal mb-8">✍️ Journal</h2>
                 <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
                     <label for="journal-textarea" class="block text-sm font-medium text-charcoal mb-2">Journal Entry</label>
                     <textarea id="journal-textarea" class="w-full h-64 p-4 border-2 border-forest-green/30 rounded-xl resize-none" placeholder="What light touched your heart today? What wisdom emerged? How is your soul feeling?"></textarea>
@@ -332,10 +332,10 @@ class NavigationManager {
     getWorkoutPageContent() {
         return `
             <div class="text-center py-16">
-                <h1 class="text-4xl font-bold text-charcoal mb-8">💪 7-Minute Workout</h1>
+                <h2 class="text-4xl font-bold text-charcoal mb-8">💪 7-Minute Workout</h2>
                 <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-md mx-auto">
                     <div class="text-6xl mb-6">🏃‍♂️</div>
-                    <h2 class="text-2xl font-semibold mb-4">Jumping Jacks</h2>
+                    <h3 class="text-2xl font-semibold mb-4">Jumping Jacks</h3>
                     <div class="text-4xl font-bold text-forest-green mb-6">30</div>
                     <div class="flex gap-4">
                         <button id="workout-start-btn" class="flex-1 px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Start</button>
@@ -359,9 +359,9 @@ class NavigationManager {
                         <div class="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-sage-deep/20 to-forest-deep/20 rounded-full flex items-center justify-center">
                             <span class="text-3xl">🎤</span>
                         </div>
-                        <h1 class="text-4xl md:text-5xl font-bold text-forest-deep mb-4 leading-tight">
+                        <h2 class="text-4xl md:text-5xl font-bold text-forest-deep mb-4 leading-tight">
                             Clarity
-                        </h1>
+                        </h2>
                         <p class="text-xl md:text-2xl text-charcoal/70 font-medium max-w-lg mx-auto">
                             Transform your inner thoughts into clear, confident expression
                         </p>
@@ -372,9 +372,9 @@ class NavigationManager {
                         <!-- Current Prompt -->
                         <div class="prompt-display mb-8">
                             <div class="prompt-icon text-4xl mb-4">💭</div>
-                            <h2 class="prompt-title text-2xl md:text-3xl font-bold text-forest-deep mb-4" id="prompt-title">
+                            <h3 class="prompt-title text-2xl md:text-3xl font-bold text-forest-deep mb-4" id="prompt-title">
                                 What is one intention you hold for today?
-                            </h2>
+                            </h3>
                             <p class="prompt-description text-lg text-charcoal/70 leading-relaxed" id="prompt-description">
                                 Speak it into existence. Take your time and let your words flow naturally.
                             </p>
@@ -419,7 +419,7 @@ class NavigationManager {
                     
                     <!-- Clarity Cues -->
                     <div class="clarity-cues glass-card mb-8 animate-fade-up">
-                        <h3 class="text-lg font-bold text-forest-deep mb-4">Clarity Cues</h3>
+                        <h4 class="text-lg font-bold text-forest-deep mb-4">Clarity Cues</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-charcoal/70">
                             <div class="flex items-start space-x-2">
                                 <span class="text-sage-deep">•</span>

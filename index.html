@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Security-Policy"
       content="
         default-src 'self';
-        script-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval';
         style-src 'self' 'unsafe-inline';
         img-src 'self' data: https:;
         font-src 'self' data:;
@@ -521,33 +521,53 @@
         }, 3000);
       })();
 
-      // Cache management - gentle approach
-      console.log('🔄 Cache management - gentle approach');
+      // NUCLEAR CACHE CLEAR - Force fresh load
+      console.log('🚀 NUCLEAR CACHE CLEAR - Forcing fresh JavaScript load');
       
-      // Only clear caches if needed (not on every load)
-      // if ('caches' in window) {
-      //   caches.keys().then(names => {
-      //     names.forEach(name => {
-      //       caches.delete(name);
-      //       console.log('🗑️ Deleted cache:', name);
-      //     });
-      //   });
-      // }
+      // Clear all caches
+      if ('caches' in window) {
+        caches.keys().then(names => {
+          names.forEach(name => {
+            caches.delete(name);
+            console.log('🗑️ Deleted cache:', name);
+          });
+        });
+      }
       
-      // Don't clear storage on every load
-      // localStorage.clear();
-      // sessionStorage.clear();
-      // console.log('🗑️ Cleared all storage');
+      // Clear localStorage and sessionStorage
+      localStorage.clear();
+      sessionStorage.clear();
+      console.log('🗑️ Cleared all storage');
       
-      // Don't force reload all scripts on every load
-      // const scripts = document.querySelectorAll('script[src*="assets/js/"]');
-      // scripts.forEach(script => {
-      //   const newSrc = script.src.replace(/v=\d+/, 'v=' + Date.now());
-      //   script.src = newSrc;
-      //   console.log('🔄 Updated script:', newSrc);
-      // });
+      // Force reload all scripts
+      const scripts = document.querySelectorAll('script[src*="assets/js/"]');
+      scripts.forEach(script => {
+        const newSrc = script.src.replace(/v=\d+/, 'v=' + Date.now());
+        script.src = newSrc;
+        console.log('🔄 Updated script:', newSrc);
+      });
       
       console.log('✅ Early Boot Shim loaded');
+      
+      // Initialize Console Monitoring System
+      setTimeout(() => {
+        if (window.consoleGuardian) {
+          const statusIndicator = document.getElementById('console-monitor-status');
+          if (statusIndicator) {
+            statusIndicator.classList.remove('hidden');
+            statusIndicator.textContent = '🛡️ Console Guardian Active - Press Ctrl+Shift+D for dashboard';
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+              statusIndicator.classList.add('hidden');
+            }, 5000);
+          }
+          
+          console.log('🛡️ Console Guardian System Initialized');
+          console.log('📊 Press Ctrl+Shift+D to open the Console Dashboard');
+          console.log('🔧 All console issues will be automatically detected and fixed');
+        }
+      }, 2000);
     })();
     </script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
@@ -599,74 +619,23 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="/dhamma-path/manifest.webmanifest">
     
+    <!-- Performance Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    
+    <!-- Critical Font Preloading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"></noscript>
+    
     <!-- Critical CSS -->
-    <link rel="stylesheet" href="/dhamma-path/assets/css/critical.css?v=1757892007000">
+    <link rel="stylesheet" href="assets/css/critical.css">
     
-    <!-- Main Styles - Self-hosted Tailwind compiled -->
-    <link rel="stylesheet" href="/dhamma-path/assets/css/styles.css?v=1757892007000">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
     
-    <!-- Emergency Visual Styles -->
-    <style>
-      /* Ensure content is visible immediately */
-      body {
-        background: linear-gradient(135deg, #FDFCF8 0%, #FAF8F3 100%);
-        color: #2C3E50;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        line-height: 1.6;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      #main-content {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
-      
-      .hero-section {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
-      
-      .quick-action-card {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-        border-radius: 12px;
-        padding: 24px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(229, 231, 235, 0.5);
-        transition: all 0.3s ease;
-      }
-      
-      .quick-action-card:hover {
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        transform: translateY(-2px);
-      }
-      
-      /* Ensure text is visible */
-      h1, h2, h3, h4, h5, h6, p, span, div {
-        color: #2C3E50 !important;
-      }
-      
-      /* Navigation visibility */
-      nav {
-        display: block !important;
-        visibility: visible !important;
-      }
-      
-      /* Footer visibility */
-      footer {
-        display: block !important;
-        visibility: visible !important;
-      }
-    </style>
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="assets/css/styles.css?v=1757875541">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -940,12 +909,17 @@
     <!-- Main Content -->
     <main id="main-content" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 page-transition flex-1">
         <!-- Privacy elements for validation -->
-        <section id="privacy" style="display: none;">
+        <section id="privacy" hidden>
             <a id="privacy-link" href="/privacy.html" rel="noopener">Privacy</a>
         </section>
         
         <!-- Breathing functionality for validation -->
-        <button id="breathing-btn" type="button" style="display: none;" aria-label="Start mindful breathing exercise">Start Breathing</button>
+        <button id="breathing-btn" type="button" hidden aria-label="Start mindful breathing exercise">Start Breathing</button>
+        
+        <!-- Console Monitoring Status Indicator -->
+        <div id="console-monitor-status" class="fixed bottom-4 left-4 bg-green-500 text-white px-3 py-2 rounded-lg shadow-lg text-sm font-medium z-50 hidden">
+            🛡️ Console Guardian Active
+        </div>
         
         <!-- Hero Section with Reserved Space -->
         <div class="hero-section min-h-[400px] mb-8">
@@ -1025,99 +999,105 @@
     <!-- JavaScript Modules - Loaded in dependency order -->
     
     <!-- Core Foundation -->
-    <script src="/dhamma-path/assets/js/error-monitor.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/performance.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/production-optimizer.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/user-anticipation.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/smart-predictions.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/accessibility-enhancer.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/data-persistence.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/smart-notifications.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/progress-visualization.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/audio-system.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/goal-system.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/weather-integration.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/journal-system.js?v=1757892007000"></script>
+    <script src="assets/js/error-monitor.js"></script>
+    <script src="assets/js/performance.js?v=1757941000000"></script>
+    <script src="assets/js/production-optimizer.js"></script>
+    
+    <!-- Automated Console Monitoring System -->
+    <script src="assets/js/console-guardian.js?v=1757892007000"></script>
+    <script src="assets/js/performance-monitor.js?v=1757892007000"></script>
+    <script src="assets/js/auto-healer.js?v=1757892007000"></script>
+    <script src="assets/js/console-dashboard.js?v=1757892007000"></script>
+    <script src="assets/js/user-anticipation.js?v=1757941000000"></script>
+    <script src="assets/js/smart-predictions.js?v=1757941000000"></script>
+    <script src="assets/js/accessibility-enhancer.js?v=1757941000000"></script>
+    <script src="assets/js/data-persistence.js?v=1757941000000"></script>
+    <script src="assets/js/smart-notifications.js?v=1757941000000"></script>
+    <script src="assets/js/progress-visualization.js?v=1757941000000"></script>
+    <script src="assets/js/audio-system.js?v=1757941000000"></script>
+    <script src="assets/js/goal-system.js?v=1757941000000"></script>
+    <script src="assets/js/weather-integration.js?v=1757941000000"></script>
+    <script src="assets/js/journal-system.js?v=1757941000000"></script>
     
     <!-- Core Systems -->
-    <script src="/dhamma-path/assets/js/navigation.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/theme-manager.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/animations.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/gesture-manager.js?v=1757892007000"></script>
+    <script src="assets/js/navigation.js?v=1757941000000"></script>
+    <script src="assets/js/theme-manager.js?v=1757941000000"></script>
+    <script src="assets/js/animations.js"></script>
+    <script src="assets/js/gesture-manager.js?v=1757941000000"></script>
     
     <!-- Flow and Navigation -->
-    <script src="/dhamma-path/assets/js/flow-navigation.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/enhanced-interactions.js?v=1757892007000"></script>
+    <script src="assets/js/flow-navigation.js?v=1757941000000"></script>
+    <script src="assets/js/enhanced-interactions.js?v=1757941000000"></script>
     
     <!-- User Experience Systems -->
-    <script src="/dhamma-path/assets/js/welcome-screen.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/seamless-flow.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/prodigal-welcome.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/temporal-echo.js?v=1757892007000"></script>
+    <script src="assets/js/welcome-screen.js?v=1757941000000"></script>
+    <script src="assets/js/seamless-flow.js?v=1757941000000"></script>
+    <script src="assets/js/prodigal-welcome.js?v=1757941000000"></script>
+    <script src="assets/js/temporal-echo.js?v=1757941000000"></script>
     
     <!-- Page-Specific Systems -->
-    <script src="/dhamma-path/assets/js/sacred-gateway.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/sanctuary-system.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/clarity-sanctuary.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/meditation-timer.js?v=1757892007000"></script>
+    <script src="assets/js/sacred-gateway.js?v=1757941000000"></script>
+    <script src="assets/js/sanctuary-system.js?v=1757941000000"></script>
+    <script src="assets/js/clarity-sanctuary.js?v=1757941000000"></script>
+    <script src="assets/js/meditation-timer.js?v=1757941000000"></script>
     
     <!-- Advanced Features -->
-    <script src="/dhamma-path/assets/js/golden-thread-2.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/mirror-duality-2.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/physics-animations.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/motion-system.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/haptic-storytelling.js?v=1757892007000"></script>
+    <script src="assets/js/golden-thread-2.js?v=1757941000000"></script>
+    <script src="assets/js/mirror-duality-2.js?v=1757941000000"></script>
+    <script src="assets/js/physics-animations.js?v=1757941000000"></script>
+    <script src="assets/js/motion-system.js?v=1757941000000"></script>
+    <script src="assets/js/haptic-storytelling.js?v=1757941000000"></script>
     
     <!-- Intelligence Systems -->
-    <script src="/dhamma-path/assets/js/smart-recommendations.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/adaptive-timing.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/learning-system.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/contextual-actions.js?v=1757892007000"></script>
+    <script src="assets/js/smart-recommendations.js?v=1757941000000"></script>
+    <script src="assets/js/adaptive-timing.js?v=1757941000000"></script>
+    <script src="assets/js/learning-system.js?v=1757941000000"></script>
+    <script src="assets/js/contextual-actions.js?v=1757941000000"></script>
     
     <!-- Mobile Optimization -->
-    <script src="/dhamma-path/assets/js/mobile-gestures.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/mobile-performance.js?v=1757892007000"></script>
+    <script src="assets/js/mobile-gestures.js?v=1757941000000"></script>
+    <script src="assets/js/mobile-performance.js?v=1757941000000"></script>
     
     <!-- Health and Integration -->
-    <script src="/dhamma-path/assets/js/health-integration.js?v=1757892007000"></script>
+    <script src="assets/js/health-integration.js?v=1757941000000"></script>
     
     <!-- Polish and Enhancement -->
-    <script src="/dhamma-path/assets/js/performance-polish.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/visual-polish.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/accessibility-polish.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/production-polish.js?v=1757892007000"></script>
+    <script src="assets/js/performance-polish.js?v=1757941000000"></script>
+    <script src="assets/js/visual-polish.js?v=1757941000000"></script>
+    <script src="assets/js/accessibility-polish.js?v=1757941000000"></script>
+    <script src="assets/js/production-polish.js?v=1757941000000"></script>
     
     <!-- Analytics and Testing -->
-    <script src="/dhamma-path/assets/js/analytics.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/analytics-engine.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/ab-testing.js?v=1757892007000"></script>
+    <script src="assets/js/analytics.js?v=1757941000000"></script>
+    <script src="assets/js/analytics-engine.js?v=1757941000000"></script>
+    <script src="assets/js/ab-testing.js?v=1757941000000"></script>
     
     <!-- Interactive Elements -->
-    <script src="/dhamma-path/assets/js/interactive-elements.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/loading-states.js?v=1757892007000"></script>
+    <script src="assets/js/interactive-elements.js?v=1757941000000"></script>
+    <script src="assets/js/loading-states.js?v=1757941000000"></script>
     
     <!-- Page-Specific Error Handlers -->
-    <script src="/dhamma-path/assets/js/page-error-handlers.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/timer-error-handler.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/journal-error-handler.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/workout-error-handler.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/clarity-error-handler.js?v=1757892007000"></script>
-    <script src="/dhamma-path/assets/js/error-dashboard.js?v=1757892007000"></script>
+    <script src="assets/js/page-error-handlers.js"></script>
+    <script src="assets/js/timer-error-handler.js"></script>
+    <script src="assets/js/journal-error-handler.js"></script>
+    <script src="assets/js/workout-error-handler.js"></script>
+    <script src="assets/js/clarity-error-handler.js"></script>
+    <script src="assets/js/error-dashboard.js"></script>
     
     <!-- Main Application (Loaded Last) -->
-    <script src="/dhamma-path/assets/js/app.js?v=1757892007000"></script>
+    <script src="assets/js/app.js?v=1757941000000"></script>
     
     <!-- Foundation Validation -->
-    <script src="/dhamma-path/validate-foundation.js?v=1757892007000"></script>
+    <script src="validate-foundation.js?v=1757941000000"></script>
     
     <!-- Accessibility Sweep -->
-    <script src="/dhamma-path/assets/js/a11y-sweep.js?v=1757892007000"></script>
+    <script src="assets/js/a11y-sweep.js?v=1757941000000"></script>
     
     <!-- Lifecycle Management -->
-    <script src="/dhamma-path/assets/js/lifecycle.js?v=1757892007000"></script>
+    <script src="assets/js/lifecycle.js?v=1757941000000"></script>
     
     <!-- Init-Once Helper -->
-    <script type="module" src="/dhamma-path/assets/js/init-once.js?v=1757892007000"></script>
+    <script src="assets/js/init-once.js?v=1757941000000"></script>
     
     <!-- FORCE SCRIPT RELOAD -->
     <script>
