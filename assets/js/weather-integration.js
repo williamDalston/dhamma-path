@@ -53,28 +53,32 @@ class WeatherIntegration {
         console.log('🌤️ Weather recommendations system initialized');
     }
 
-    tryGeo({ onOk, onErr }) {
-        const geo = navigator?.geolocation;
+    async getAccurateLocation(opts = {}) {
+        const geo = navigator.geolocation;
         if (!geo || typeof geo.getCurrentPosition !== 'function') {
-            return onErr(new Error('Geolocation unavailable'));
+            throw new Error('Geolocation unavailable');
         }
         
-        // Always call getCurrentPosition off the object to preserve 'this'
-        geo.getCurrentPosition(
-            pos => {
-                if (pos && pos.coords) {
-                    onOk(pos);
-                } else {
-                    onErr(new Error('Invalid position data'));
-                }
-            },
-            err => onErr(err),
-            {
-                enableHighAccuracy: true,
-                timeout: 8000,
-                maximumAge: 0
-            }
+        const pos = await new Promise((res, rej) =>
+            geo.getCurrentPosition(res, rej, { 
+                enableHighAccuracy: true, 
+                timeout: 8000, 
+                maximumAge: 0, 
+                ...opts 
+            })
         );
+
+        // 🔒 Guard the callback shape
+        if (!pos || !pos.coords || !Number.isFinite(pos.coords.latitude)) {
+            throw new Error('Invalid geolocation payload');
+        }
+        return { lat: pos.coords.latitude, lng: pos.coords.longitude };
+    }
+    
+    tryGeo({ onOk, onErr }) {
+        this.getAccurateLocation()
+            .then(result => onOk({ coords: { latitude: result.lat, longitude: result.lng } }))
+            .catch(onErr);
     }
     
     async detectUserLocation() {

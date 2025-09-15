@@ -299,79 +299,42 @@ class AccessibilitySweep {
 // Initialize accessibility sweep
 window.AccessibilitySweep = AccessibilitySweep;
 
-// Throttled auto-initialize to prevent multiple runs
-if (!window.__a11ySweepInstalled) {
-    window.__a11ySweepInstalled = true;
-    
+// Single-shot + debounced a11y sweep
+if (!window.__A11Y_SWEEP__) {
+    window.__A11Y_SWEEP__ = true;
+
+    let cleanStreak = 0;
+    let idleId = null;
     let sweepInstance = null;
-    let isRunning = false;
-    
-    const runSweep = () => {
-        if (isRunning) return;
-        isRunning = true;
-        
+
+    function runSweep() {
         if (!sweepInstance) {
             sweepInstance = new AccessibilitySweep();
         } else {
             sweepInstance.runManualSweep();
         }
         
-        isRunning = false;
-    };
-    
-    const throttledSweep = (() => {
-        let timeoutId;
-        let lastRun = 0;
-        let runCount = 0;
-        return () => {
-            const now = Date.now();
-            runCount++;
-            
-            // Don't run more than once every 10 seconds after first 3 runs
-            if (runCount > 3 && now - lastRun < 10000) return;
-            
-            // Don't run more than 5 times total
-            if (runCount > 5) return;
-            
-            cancelIdleCallback?.(timeoutId);
-            timeoutId = requestIdleCallback(() => {
-                lastRun = now;
-                runSweep();
-            }, { timeout: 2000 });
-        };
-    })();
-    
-    // Run once on load
-    window.addEventListener('load', () => {
-        runSweep();
-    }, { once: true });
-    
-    // Throttled observer for new content - only watch for significant changes
-    const observer = new MutationObserver(mutations => {
-        let hasSignificantChange = false;
-        mutations.forEach(mutation => {
-            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                mutation.addedNodes.forEach(node => {
-                    if (node.nodeType === Node.ELEMENT_NODE) {
-                        // Only trigger on interactive elements
-                        if (node.matches && (node.matches('button, [role="button"], input, select, textarea') || 
-                            node.querySelector('button, [role="button"], input, select, textarea'))) {
-                            hasSignificantChange = true;
-                        }
-                    }
-                });
-            }
-        });
+        const fixes = sweepInstance.getStats().fixesApplied;
+        cleanStreak = fixes === 0 ? cleanStreak + 1 : 0;
         
-        if (hasSignificantChange) {
-            throttledSweep();
+        if (cleanStreak >= 3) { 
+            mo.disconnect(); // done until next page load
+            console.log('♿ A11y sweep completed - observer disconnected after clean passes');
         }
-    });
-    
-    observer.observe(document.body, { 
+    }
+
+    const schedule = () => {
+        if (idleId) cancelIdleCallback?.(idleId);
+        idleId = requestIdleCallback(runSweep, { timeout: 1500 });
+    };
+
+    const mo = new MutationObserver(schedule);
+    mo.observe(document.body, { 
         childList: true, 
-        subtree: true,
-        attributes: false,
-        characterData: false
+        subtree: true, 
+        attributes: true 
     });
+
+    // Run once on load
+    window.addEventListener('load', () => requestIdleCallback(runSweep), { once: true });
 }

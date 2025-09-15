@@ -172,10 +172,29 @@ img {
 }
 
 /* Specific image sizing for common elements */
-img[src*="sun.svg"], img[src*="weather"], img[src*="icon"] {
+img[src*="sun.svg"], img[src*="weather"], img[src*="icon"], .weather-icon {
   width: 48px;
   height: 48px;
   object-fit: contain;
+}
+
+/* Weather widget CLS prevention */
+#weather-widget {
+  min-height: 160px;
+  contain: layout paint style;
+  content-visibility: auto;
+  contain-intrinsic-size: 160px;
+}
+
+/* Weather content CLS prevention */
+#weather-temp {
+  min-width: 80px;
+  text-align: center;
+}
+
+#weather-desc {
+  min-height: 16px;
+  text-align: center;
 }
 
 /* Avoid viewport toolbar jumps */
