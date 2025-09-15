@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     
+    <!-- Content Security Policy for GitHub Pages -->
+    <meta http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data: https:;
+        font-src 'self' data:;
+        connect-src 'self' https:;
+        media-src 'self';
+        object-src 'none';
+        frame-src 'none';
+        worker-src 'self';
+        manifest-src 'self';
+      ">
+    
     <!-- Font optimization: preconnect + preload + swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -617,7 +633,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     
     <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="/dhamma-path/manifest.webmanifest">
     
     <!-- Performance Hints -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -887,11 +903,11 @@
         </section>
 
         <!-- Breathing functionality for validation -->
-        <button id="breathing-btn" type="button" hidden>Start Breathing</button>
+        <button id="breathing-btn" type="button" hidden aria-label="Start mindful breathing exercise">Start Breathing</button>
         
         <!-- Subtle weather toggle -->
         <div id="weather-toggle" class="fixed top-4 right-4 z-50 opacity-60 hover:opacity-100 transition-opacity">
-            <button id="weather-btn" class="text-2xl cursor-pointer" title="Toggle weather display">
+            <button id="weather-btn" class="text-2xl cursor-pointer" title="Toggle weather display" aria-label="Toggle weather display">
                 🌤️
             </button>
         </div>
@@ -1014,6 +1030,12 @@
     
     <!-- Foundation Validation -->
     <script src="validate-foundation.js?v=1757941000000"></script>
+    
+    <!-- Accessibility Sweep -->
+    <script src="assets/js/a11y-sweep.js?v=1757941000000"></script>
+    
+    <!-- Lifecycle Management -->
+    <script src="assets/js/lifecycle.js?v=1757941000000"></script>
     
     <!-- FORCE SCRIPT RELOAD -->
     <script>

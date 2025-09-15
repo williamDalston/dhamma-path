@@ -292,11 +292,10 @@ class PerformancePolish {
     
     preloadNextInteractions() {
         // Preload likely next pages based on user behavior
-        const likelyNextPages = ['timer', 'journal'];
+        const likelyNextPages = ['timer', 'journal', 'workout', 'gratitude', 'clarity'];
         
-        likelyNextPages.forEach(page => {
-            this.preloadRoute(page);
-        });
+        // Use lifecycle manager for one-time preloading
+        this.preloadRoutesOnce(likelyNextPages);
     }
     
     setupIntersectionObserver() {
@@ -361,6 +360,16 @@ class PerformancePolish {
                 .catch(error => {
                     console.error(`❌ Failed to preload route ${route}:`, error);
                 });
+        }
+    }
+
+    // Use lifecycle manager for route preloading
+    preloadRoutesOnce(routes) {
+        if (window.lifecycleManager) {
+            window.lifecycleManager.preloadRoutesOnce(routes);
+        } else {
+            // Fallback to direct preloading
+            routes.forEach(route => this.preloadRoute(route));
         }
     }
     

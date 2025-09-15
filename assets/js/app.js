@@ -567,7 +567,16 @@ class DhammaPathApp {
         }
     }
 
-    loadInitialPage() {
+    async loadInitialPage() {
+        // Wait for navigation to be ready
+        const ns = (window.__app ??= {});
+        if (!ns.navReady) {
+            await new Promise(resolve => {
+                const f = () => (document.removeEventListener('nav-ready', f), resolve());
+                document.addEventListener('nav-ready', f, { once: true });
+            });
+        }
+        
         // Check if user is new or returning
         const isFirstVisit = !localStorage.getItem('morningFlowUser');
         

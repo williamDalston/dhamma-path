@@ -1,0 +1,124 @@
+{
+  "name": "MorningFlow - Digital Sanctuary",
+  "short_name": "MorningFlow",
+  "description": "Transform your mornings, transform your life with science-based wellness practices, meditation, and health optimization tools",
+  "version": "1.0.0",
+  "start_url": "/dhamma-path/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#4A6C55",
+  "background_color": "#F8F9FA",
+  "scope": "/dhamma-path/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["health", "lifestyle", "productivity", "education"],
+  "icons": [
+    {
+      "src": "/dhamma-path/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/dhamma-path/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/dhamma-path/screenshots/desktop-home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Home page showing wellness and health optimization tools"
+    },
+    {
+      "src": "/dhamma-path/screenshots/mobile-timer.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile wellness timer interface"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start Meditation",
+      "short_name": "Meditate",
+      "description": "Quick access to stress reduction and mental clarity",
+      "url": "/dhamma-path/?page=timer",
+      "icons": [
+        {
+          "src": "/dhamma-path/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Write Journal",
+      "short_name": "Journal",
+      "description": "Quick access to personal growth tracking",
+      "url": "/dhamma-path/?page=journal",
+      "icons": [
+        {
+          "src": "/dhamma-path/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Start Workout",
+      "short_name": "Workout",
+      "description": "Quick access to physical health and energy boost",
+      "url": "/dhamma-path/?page=workout",
+      "icons": [
+        {
+          "src": "/dhamma-path/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "handle_links": "preferred",
+  "capture_links": "new-client",
+  "file_handlers": [
+    {
+      "action": "/dhamma-path/",
+      "accept": {
+        "text/markdown": [".md"],
+        "text/plain": [".txt"]
+      }
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+morningflow",
+      "url": "/dhamma-path/?action=%s"
+    }
+  ],
+  "share_target": {
+    "action": "/dhamma-path/",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "files",
+          "accept": ["text/markdown", "text/plain"]
+        }
+      ]
+    }
+  }
+}

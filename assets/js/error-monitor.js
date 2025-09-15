@@ -34,7 +34,9 @@ class ErrorMonitor {
                 url: window.location.href,
                 userAgent: navigator.userAgent
             });
-        });
+            // Don't swallow normal errors in prod: only tests need preventDefault
+            if (window.__TEST_ENV__) event.preventDefault();
+        }, { capture: true });
 
         // Unhandled promise rejections
         window.addEventListener('unhandledrejection', (event) => {
@@ -46,6 +48,8 @@ class ErrorMonitor {
                 url: window.location.href,
                 userAgent: navigator.userAgent
             });
+            // Don't swallow normal errors in prod: only tests need preventDefault
+            if (window.__TEST_ENV__) event.preventDefault();
         });
 
         // Resource loading errors

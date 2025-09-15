@@ -5,6 +5,11 @@
 
 class WeatherIntegration {
     constructor() {
+        // Singleton guard for hot reload
+        const ns = (window.__app ??= {});
+        if (ns.weatherInit) return;
+        ns.weatherInit = true;
+        
         this.apiKey = null; // Would be set from environment or user input
         this.currentWeather = null;
         this.weatherHistory = [];
@@ -47,6 +52,16 @@ class WeatherIntegration {
         };
         console.log('🌤️ Weather recommendations system initialized');
     }
+
+    tryGeo({ onOk, onErr }) {
+        const g = navigator?.geolocation;
+        if (!g?.getCurrentPosition) return onErr(new Error('no geolocation'));
+        g.getCurrentPosition(onOk, onErr, { 
+            maximumAge: 30_000, 
+            timeout: 4_000,
+            enableHighAccuracy: true 
+        });
+    }
     
     async detectUserLocation() {
         try {
@@ -54,12 +69,9 @@ class WeatherIntegration {
             if (navigator.geolocation) {
                 console.log('🌍 Attempting automatic location detection...');
                 try {
-                    const position = await new Promise((resolve, reject) => {
-                        navigator.geolocation.getCurrentPosition(resolve, reject, {
-                            enableHighAccuracy: true,
-                            timeout: 10000,
-                            maximumAge: 300000
-                        });
+                    const position = await this.tryGeo({
+                        onOk: (pos) => pos,
+                        onErr: (err) => { throw err; }
                     });
                     this.userLocation = {
                         latitude: position.coords.latitude,

@@ -135,9 +135,22 @@ img[width][height] {
 }
 
 /* Widget shells with content visibility */
-.widget-shell { 
-    content-visibility: auto; 
-    contain-intrinsic-size: 200px; 
+.widget-shell {
+    content-visibility: auto;
+    contain-intrinsic-size: 200px;
+}
+
+/* Shell reserves space before data arrives */
+.widget-shell.weather {
+    min-height: 150px;
+    contain: layout paint style;
+    content-visibility: auto;
+    contain-intrinsic-size: 150px;
+}
+
+/* Avoid viewport toolbar jumps */
+:root, .app-root { 
+    min-height: 100dvh; 
 }
 
 /* Hero images with proper loading attributes */

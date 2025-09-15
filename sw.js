@@ -5,6 +5,9 @@ const toURL = (u) => {
     return cleanScope + u.replace(/^\//, '');
 };
 
+const STATIC = 'dhamma-path-static-v1';
+const DYNAMIC = 'dhamma-path-dynamic-v1';
+
 self.addEventListener('install', (event) => {
   const CRITICAL = [
     '',                 // index
@@ -15,7 +18,7 @@ self.addEventListener('install', (event) => {
   ].map(toURL);
 
   event.waitUntil((async () => {
-    const cache = await caches.open('app-v1');
+    const cache = await caches.open(STATIC);
     const results = await Promise.allSettled(CRITICAL.map(u => cache.add(u)));
     results.forEach((r, i) => {
       if (r.status === 'rejected') console.warn('[SW] skipped', CRITICAL[i], r.reason);
@@ -38,7 +41,11 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((hit) =>
       hit ||
-      fetch(event.request).catch(() => caches.match(toURL('offline.html')))
+      fetch(event.request).then(res => {
+        const copy = res.clone();
+        caches.open(DYNAMIC).then(c => c.put(event.request, copy));
+        return res;
+      }).catch(() => caches.match(toURL('offline.html')))
     )
   );
 });

@@ -5,8 +5,15 @@
 
 class NavigationManager {
     constructor() {
+        // Singleton guard for hot reload
+        const ns = (window.__app ??= {});
+        if (ns.navInit) return;
+        ns.navInit = true;
+        
         this.currentPage = 'home';
         this.isMobileMenuOpen = false;
+        this.navQueue = [];
+        this.navReady = false;
         this.init();
     }
 
@@ -14,6 +21,9 @@ class NavigationManager {
         console.log('🚀 Setting up navigation system...');
         this.setupNavigationLinks();
         this.setupMobileMenu();
+        this.navReady = true;
+        this.processNavQueue();
+        document.dispatchEvent(new Event('nav-ready'));
         console.log('✅ Navigation system initialized');
     }
 
@@ -76,7 +86,19 @@ class NavigationManager {
         }
     }
 
+    processNavQueue() {
+        if (this.navQueue.length > 0) {
+            console.log('🔄 Processing queued navigation:', this.navQueue);
+            this.navQueue.splice(0).forEach(page => this.navigateToPage(page));
+        }
+    }
+
     navigateToPage(pageName) {
+        if (!this.navReady) {
+            this.navQueue.push(pageName);
+            return;
+        }
+        
         console.log('🔄 Navigating to page:', pageName);
         
         const mainContent = document.getElementById('main-content');
