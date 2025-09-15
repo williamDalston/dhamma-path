@@ -568,15 +568,6 @@ class DhammaPathApp {
     }
 
     async loadInitialPage() {
-        // Wait for navigation to be ready
-        const ns = (window.__app ??= {});
-        if (!ns.navReady) {
-            await new Promise(resolve => {
-                const f = () => (document.removeEventListener('nav-ready', f), resolve());
-                document.addEventListener('nav-ready', f, { once: true });
-            });
-        }
-        
         // Check if user is new or returning
         const isFirstVisit = !localStorage.getItem('morningFlowUser');
         
@@ -586,9 +577,35 @@ class DhammaPathApp {
             localStorage.setItem('morningFlowUser', 'true');
             localStorage.setItem('morningFlowFirstVisit', Date.now().toString());
         } else {
-            // Show home page for returning users
+            // Show home page for returning users immediately
             this.navigateToPage('home');
         }
+        
+        // Ensure content is visible immediately
+        this.ensureContentVisibility();
+    }
+    
+    ensureContentVisibility() {
+        // Make sure the main content is visible and not hidden
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.style.display = 'block';
+            mainContent.style.visibility = 'visible';
+        }
+        
+        // Ensure the hero section is visible
+        const heroSection = document.querySelector('.hero-section');
+        if (heroSection) {
+            heroSection.style.display = 'block';
+            heroSection.style.visibility = 'visible';
+        }
+        
+        // Show the quick action cards
+        const quickActionCards = document.querySelectorAll('.quick-action-card');
+        quickActionCards.forEach(card => {
+            card.style.display = 'block';
+            card.style.visibility = 'visible';
+        });
     }
 
     navigateToPage(pageName) {

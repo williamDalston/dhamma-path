@@ -24,7 +24,42 @@ class NavigationManager {
         this.navReady = true;
         this.processNavQueue();
         document.dispatchEvent(new Event('nav-ready'));
+        
+        // Load home page content immediately if no specific page is requested
+        const urlParams = new URLSearchParams(window.location.search);
+        const requestedPage = urlParams.get('page');
+        if (!requestedPage) {
+            this.loadHomePageContent();
+        }
+        
         console.log('✅ Navigation system initialized');
+    }
+    
+    loadHomePageContent() {
+        // Load home page content directly into the main content area
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            // The home page content is already in the HTML, just ensure it's visible
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                heroSection.style.display = 'block';
+                heroSection.style.visibility = 'visible';
+            }
+            
+            // Initialize quick action cards
+            this.initializeQuickActionCards();
+        }
+    }
+    
+    initializeQuickActionCards() {
+        const quickActionCards = document.querySelectorAll('.quick-action-card');
+        quickActionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const action = card.dataset.action;
+                console.log(`🚀 Quick action: ${action}`);
+                this.navigateToPage(action);
+            });
+        });
     }
 
     setupNavigationLinks() {

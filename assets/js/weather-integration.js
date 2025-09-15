@@ -157,12 +157,25 @@ class WeatherIntegration {
         const iconEl = document.getElementById('weather-icon');
         const tempEl = document.getElementById('weather-temp');
         const descEl = document.getElementById('weather-desc');
-        
+
         if (weatherData) {
             const icon = this.getWeatherIcon(weatherData.condition || weatherData.weather);
             if (iconEl) iconEl.textContent = icon;
-            if (tempEl) tempEl.textContent = `${weatherData.temperature || weatherData.temp || '--'}°${this.temperatureUnit}`;
-            if (descEl) descEl.textContent = weatherData.condition || weatherData.description || 'Unknown';
+            
+            // Ensure consistent unit display and prevent layout shifts
+            const temp = weatherData.temperature || weatherData.temp || '--';
+            const unit = this.temperatureUnit || 'F';
+            if (tempEl) {
+                tempEl.textContent = `${temp}°${unit}`;
+                // Reserve space for unit changes to prevent CLS
+                tempEl.style.minWidth = '60px';
+            }
+            
+            if (descEl) {
+                descEl.textContent = weatherData.condition || weatherData.description || 'Unknown';
+                // Reserve space for description changes
+                descEl.style.minHeight = '16px';
+            }
         }
     }
     
