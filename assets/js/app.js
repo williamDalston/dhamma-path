@@ -162,7 +162,6 @@ class DhammaPathApp {
         
         // Chunk heavy work to avoid long tasks
         this.chunkedInitialize(() => {
-            this.initializeAnalytics();
             this.initializeWeatherIntegration();
             this.startMemoryOptimization();
         });

@@ -73,9 +73,18 @@ class PerformanceMonitor {
         // Measure load time using navigation timing
         window.addEventListener('load', () => {
             const nav = performance.getEntriesByType('navigation')[0];
-            const loadTimeMs = nav ? nav.loadEventEnd - nav.startTime : performance.now();
-            this.metrics.loadTime = Math.max(0, Math.round(loadTimeMs));
-            console.log('🎯 Load Time:', this.metrics.loadTime + 'ms');
+            let loadTimeMs = 0;
+
+            if (nav) {
+                loadTimeMs = Math.max(0, Math.round(nav.loadEventEnd - nav.startTime));
+            } else {
+                // fallback if no NavigationTiming entry (old browsers, special iframes)
+                const t0 = (window.__perfStart = window.__perfStart ?? performance.now());
+                loadTimeMs = Math.max(0, Math.round(performance.now() - t0));
+            }
+
+            this.metrics.loadTime = loadTimeMs;
+            console.log('🎯 Load Time:', loadTimeMs, 'ms');
         });
     }
 

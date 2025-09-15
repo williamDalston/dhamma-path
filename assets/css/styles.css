@@ -8529,6 +8529,23 @@ input:focus, textarea:focus, select:focus {
     transition: all 0.3s ease;
 }
 
+/* CLS Prevention - Reserve space for dynamic content */
+.logo, .icon, .avatar {
+    width: 64px;
+    height: 64px;
+    aspect-ratio: 1 / 1;
+}
+
+.banner, .hero-image {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+}
+
+.weather-card, .prediction-card {
+    min-height: 120px;
+    aspect-ratio: 3 / 2;
+}
+
 /* Subtle Loading States */
 .loading-shimmer {
     background: linear-gradient(90deg, 
