@@ -7,7 +7,10 @@ class WeatherIntegration {
     constructor() {
         // Singleton guard for hot reload
         const ns = (window.__app ??= {});
-        if (ns.weatherInit) return ns.weatherInstance;
+        if (ns.weatherInit && ns.weatherInstance) {
+            console.log('🌤️ Weather already initialized, returning existing instance');
+            return ns.weatherInstance;
+        }
         ns.weatherInit = true;
         
         this.apiKey = null; // Would be set from environment or user input
@@ -1112,7 +1115,10 @@ class WeatherIntegration {
     
     handlePageChange(page) {
         const widget = document.getElementById('weather-widget');
-        if (!widget) return;
+        if (!widget) {
+            console.log('🌤️ Weather widget not found, skipping page change handling');
+            return;
+        }
         
         // Define pages where weather should be visible
         const weatherVisiblePages = ['welcome', 'home', ''];
@@ -1121,6 +1127,8 @@ class WeatherIntegration {
         // Define activity/engagement pages where weather should be hidden
         const activityPages = ['timer', 'meditation', 'journal', 'gratitude', 'clarity', 'wisdom', 'workout', 'analytics'];
         const isActivityPage = activityPages.some(activity => page.includes(activity));
+        
+        console.log('🌤️ Page change detected:', page, 'isMainPage:', isMainPage, 'isActivityPage:', isActivityPage);
         
         if (isMainPage) {
             // Show weather on main pages

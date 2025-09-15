@@ -728,7 +728,7 @@
         });
         
         // Premium Performance Monitoring
-    window.addEventListener('load', () => {
+        window.addEventListener('load', () => {
             // Report performance metrics using Navigation Timing API
             const nav = performance.getEntriesByType('navigation')[0];
             let loadTimeMs = 0;
@@ -763,35 +763,34 @@
             if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {
                 window.analyticsSystem.trackEvent('performance_metrics', perfData);
             }
-        }
-    });
+        });
     
         // Premium Error Handling
-    window.addEventListener('error', (event) => {
-        console.error('🚨 Global Error:', event.error);
+        window.addEventListener('error', (event) => {
+            console.error('🚨 Global Error:', event.error);
+            
+            // Send error to analytics
+            if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {
+                window.analyticsSystem.trackEvent('error', {
+                    message: event.error?.message || 'Unknown error',
+                    filename: event.filename,
+                    lineno: event.lineno,
+                    colno: event.colno
+                });
+            }
+        });
         
-        // Send error to analytics
-        if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {
-            window.analyticsSystem.trackEvent('error', {
-                message: event.error?.message || 'Unknown error',
-                filename: event.filename,
-                lineno: event.lineno,
-                colno: event.colno
-            });
-        }
-    });
-    
         // Premium Unhandled Promise Rejection Handling
-    window.addEventListener('unhandledrejection', (event) => {
-        console.error('🚨 Unhandled Promise Rejection:', event.reason);
-        
-        // Send error to analytics
-        if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {
-            window.analyticsSystem.trackEvent('unhandled_promise_rejection', {
-                reason: event.reason?.toString() || 'Unknown rejection'
-            });
-        }
-    });
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('🚨 Unhandled Promise Rejection:', event.reason);
+            
+            // Send error to analytics
+            if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {
+                window.analyticsSystem.trackEvent('unhandled_promise_rejection', {
+                    reason: event.reason?.toString() || 'Unknown rejection'
+                });
+            }
+        });
     
     // Lazy AudioContext creation to avoid console warnings
     let audioCtx;
