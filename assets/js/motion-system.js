@@ -5,6 +5,18 @@
 
 class MotionSystem {
     constructor() {
+        // Idempotent guard to prevent re-initialization
+        if (window.__mf?.modules?.motionSystem) {
+            return window.__mf.modules.motionSystem.instance;
+        }
+        
+        // Initialize module registry
+        window.__mf = window.__mf || { modules: {} };
+        window.__mf.modules.motionSystem = {
+            instance: this,
+            aborter: new AbortController()
+        };
+        
         this.isEnabled = true;
         this.performanceMode = 'auto';
         this.motionPreferences = {
@@ -50,6 +62,42 @@ class MotionSystem {
         };
         
         this.init();
+        
+        // Cleanup on page hide/unload
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                this.cleanup();
+            }
+        }, { signal: window.__mf.modules.motionSystem.aborter.signal });
+        
+        window.addEventListener('beforeunload', () => {
+            this.cleanup();
+        }, { signal: window.__mf.modules.motionSystem.aborter.signal });
+    }
+    
+    cleanup() {
+        // Cancel all active animations
+        this.activeAnimations.forEach(animation => {
+            if (animation.cancel) animation.cancel();
+        });
+        this.activeAnimations.clear();
+        
+        // Clear animation queue
+        this.animationQueue = [];
+        
+        // Clear motion history
+        this.motionHistory = [];
+        
+        // Disconnect observers
+        if (this.resizeObserver) {
+            this.resizeObserver.disconnect();
+        }
+        
+        console.log('🧹 Motion system cleaned up');
+    }
+    
+    clearCache() {
+        this.cleanup();
     }
 
     init() {

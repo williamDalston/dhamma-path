@@ -54,13 +54,21 @@ class WeatherIntegration {
     }
 
     tryGeo({ onOk, onErr }) {
-        const g = navigator?.geolocation;
-        if (!g?.getCurrentPosition) return onErr(new Error('no geolocation'));
-        g.getCurrentPosition(onOk, onErr, { 
-            maximumAge: 30_000, 
-            timeout: 4_000,
-            enableHighAccuracy: true 
-        });
+        const geo = navigator?.geolocation;
+        if (!geo || typeof geo.getCurrentPosition !== 'function') {
+            return onErr(new Error('Geolocation unavailable'));
+        }
+        
+        // Always call getCurrentPosition off the object to preserve 'this'
+        geo.getCurrentPosition(
+            pos => onOk(pos),
+            err => onErr(err),
+            {
+                enableHighAccuracy: true,
+                timeout: 8000,
+                maximumAge: 0
+            }
+        );
     }
     
     async detectUserLocation() {
@@ -162,19 +170,28 @@ class WeatherIntegration {
             const icon = this.getWeatherIcon(weatherData.condition || weatherData.weather);
             if (iconEl) iconEl.textContent = icon;
             
-            // Ensure consistent unit display and prevent layout shifts
+            // Compute units first, then render once to prevent CLS
             const temp = weatherData.temperature || weatherData.temp || '--';
             const unit = this.temperatureUnit || 'F';
+            
             if (tempEl) {
-                tempEl.textContent = `${temp}°${unit}`;
-                // Reserve space for unit changes to prevent CLS
-                tempEl.style.minWidth = '60px';
+                // Use requestAnimationFrame to prevent layout thrashing
+                requestAnimationFrame(() => {
+                    tempEl.textContent = `${temp}°${unit}`;
+                    // Reserve space for unit changes to prevent CLS
+                    tempEl.style.minWidth = '80px';
+                    tempEl.style.textAlign = 'center';
+                });
             }
             
             if (descEl) {
-                descEl.textContent = weatherData.condition || weatherData.description || 'Unknown';
-                // Reserve space for description changes
-                descEl.style.minHeight = '16px';
+                // Use requestAnimationFrame to prevent layout thrashing
+                requestAnimationFrame(() => {
+                    descEl.textContent = weatherData.condition || weatherData.description || 'Unknown';
+                    // Reserve space for description changes
+                    descEl.style.minHeight = '16px';
+                    descEl.style.textAlign = 'center';
+                });
             }
         }
     }

@@ -790,3 +790,8 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = AnalyticsEngine;
 }
+
+// ES6 export
+if (typeof window !== 'undefined') {
+    window.AnalyticsEngine = AnalyticsEngine;
+}

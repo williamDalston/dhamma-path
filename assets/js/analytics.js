@@ -5,12 +5,58 @@
 
 class AnalyticsSystem {
     constructor() {
+        // Idempotent guard to prevent re-initialization
+        if (window.__mf?.modules?.analytics) {
+            return window.__mf.modules.analytics.instance;
+        }
+        
+        // Initialize module registry
+        window.__mf = window.__mf || { modules: {} };
+        window.__mf.modules.analytics = {
+            instance: this,
+            aborter: new AbortController()
+        };
+        
         this.events = [];
         this.sessionId = this.generateSessionId();
         this.startTime = Date.now();
         this.userJourney = [];
         this.performanceMetrics = {};
         this.init();
+        
+        // Cleanup on page hide/unload
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                this.cleanup();
+            }
+        }, { signal: window.__mf.modules.analytics.aborter.signal });
+        
+        window.addEventListener('beforeunload', () => {
+            this.cleanup();
+        }, { signal: window.__mf.modules.analytics.aborter.signal });
+    }
+    
+    cleanup() {
+        // Clear old events to free memory
+        this.events = this.events.slice(-100); // Keep only last 100 events
+        
+        // Clear performance metrics cache
+        this.performanceMetrics = {};
+        
+        // Clear user journey if too long
+        if (this.userJourney.length > 50) {
+            this.userJourney = this.userJourney.slice(-25);
+        }
+        
+        console.log('🧹 Analytics system cleaned up');
+    }
+    
+    clearOldData() {
+        this.cleanup();
+    }
+    
+    clearCache() {
+        this.cleanup();
     }
 
     init() {

@@ -163,6 +163,7 @@ class ErrorMonitor {
         feedbackButton.id = 'error-feedback-btn';
         feedbackButton.className = 'fixed bottom-4 left-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-red-600 transition-colors z-50 hidden';
         feedbackButton.innerHTML = '🐛 Report Issue';
+        feedbackButton.setAttribute('aria-label', 'Report technical issue');
         feedbackButton.onclick = () => this.showFeedbackModal();
         document.body.appendChild(feedbackButton);
 

@@ -478,8 +478,9 @@ class AudioSystem {
         
         const audioButton = document.createElement('button');
         audioButton.className = 'audio-toggle-btn fixed top-4 right-4 z-30 bg-white/90 backdrop-blur-sm border border-sage-deep/20 rounded-lg p-3 shadow-lg transition-all duration-300 hover:scale-105';
+        audioButton.setAttribute('aria-label', 'Toggle audio settings');
         audioButton.innerHTML = `
-            <span class="text-lg">🎵</span>
+            <span class="text-lg" aria-hidden="true">🎵</span>
             <span class="text-xs ml-1">Audio</span>
         `;
         

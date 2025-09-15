@@ -16,16 +16,43 @@ class DhammaPathApp {
         this.animationSystem = null;
         this.analyticsSystem = null;
         this.isInitialized = false;
+        this.navigationQueue = [];
+        
+        // Track idle task handles for cleanup
+        this.idleHandles = [];
+        
         this.init();
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            this.cancelAllIdleTasks();
+        });
     }
 
     // Helper: Idle callback with fallback
     onIdle(callback) {
         if ('requestIdleCallback' in window) {
-            requestIdleCallback(callback, { timeout: 2000 });
+            const handle = requestIdleCallback(callback, { timeout: 2000 });
+            this.idleHandles.push(handle);
+            return handle;
         } else {
-            setTimeout(callback, 0);
+            const handle = setTimeout(callback, 0);
+            this.idleHandles.push(handle);
+            return handle;
         }
+    }
+    
+    // Cancel all idle tasks
+    cancelAllIdleTasks() {
+        this.idleHandles.forEach(handle => {
+            if (typeof handle === 'number') {
+                clearTimeout(handle);
+            } else if (handle && typeof handle.cancel === 'function') {
+                handle.cancel();
+            }
+        });
+        this.idleHandles = [];
+        console.log('🧹 All idle tasks cancelled');
     }
 
     // Helper: Chunk heavy work to prevent long tasks
@@ -202,6 +229,9 @@ class DhammaPathApp {
             await window.waitForGlobal('NavigationManager', 3000);
             this.navigationManager = new window.NavigationManager();
             console.log('✅ NavigationManager initialized');
+            
+            // Dispatch nav-ready event
+            document.dispatchEvent(new Event('nav-ready'));
             
             // Process any queued navigation requests
             this.processNavigationQueue();
@@ -572,6 +602,13 @@ class DhammaPathApp {
     }
 
     async loadInitialPage() {
+        // Wait for navigation to be ready
+        if (!this.navigationManager) {
+            await new Promise(resolve => {
+                document.addEventListener('nav-ready', resolve, { once: true });
+            });
+        }
+        
         // Check if user is new or returning
         const isFirstVisit = !localStorage.getItem('morningFlowUser');
         

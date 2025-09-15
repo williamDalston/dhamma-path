@@ -299,11 +299,32 @@ class AccessibilitySweep {
 // Initialize accessibility sweep
 window.AccessibilitySweep = AccessibilitySweep;
 
-// Auto-initialize
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        window.a11ySweep = new AccessibilitySweep();
-    });
-} else {
-    window.a11ySweep = new AccessibilitySweep();
+// Throttled auto-initialize to prevent multiple runs
+if (!window.__a11ySweepInstalled) {
+    window.__a11ySweepInstalled = true;
+    
+    const runSweep = () => {
+        if (!window.a11ySweep) {
+            window.a11ySweep = new AccessibilitySweep();
+        } else {
+            window.a11ySweep.runManualSweep();
+        }
+    };
+    
+    const throttledSweep = (() => {
+        let timeoutId;
+        return () => {
+            cancelIdleCallback?.(timeoutId);
+            timeoutId = requestIdleCallback(runSweep, { timeout: 2000 });
+        };
+    })();
+    
+    // Run once on load
+    window.addEventListener('load', () => {
+        runSweep();
+    }, { once: true });
+    
+    // Throttled observer for new content
+    const observer = new MutationObserver(throttledSweep);
+    observer.observe(document.body, { childList: true, subtree: true });
 }

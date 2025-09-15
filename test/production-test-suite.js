@@ -431,7 +431,7 @@ class ProductionTestSuite {
                 } else {
                     // Test cache strategies
                     const caches = await window.caches.keys();
-                    const expectedCaches = ['dhamma-path-static-', 'dhamma-path-dynamic-'];
+                    const expectedCaches = ['dhamma-path-static-v1', 'dhamma-path-dynamic-v1'];
                     
                     for (const expectedCache of expectedCaches) {
                         const found = caches.some(cache => cache.includes(expectedCache));
