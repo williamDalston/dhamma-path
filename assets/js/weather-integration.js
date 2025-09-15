@@ -54,7 +54,13 @@ class WeatherIntegration {
             if (navigator.geolocation) {
                 console.log('🌍 Attempting automatic location detection...');
                 try {
-                    const position = await this.getCurrentPosition();
+                    const position = await new Promise((resolve, reject) => {
+                        navigator.geolocation.getCurrentPosition(resolve, reject, {
+                            enableHighAccuracy: true,
+                            timeout: 10000,
+                            maximumAge: 300000
+                        });
+                    });
                     this.userLocation = {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude
