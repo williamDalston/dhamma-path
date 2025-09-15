@@ -729,15 +729,35 @@
         
         // Premium Performance Monitoring
     window.addEventListener('load', () => {
-            // Report performance metrics
-            if (window.performance && window.performance.timing) {
-                const perfData = {
-                    loadTime: window.performance.timing.loadEventEnd - window.performance.timing.navigationStart,
-                    domContentLoaded: window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart,
-                    firstPaint: performance.getEntriesByType('paint')[0]?.startTime || 0
-                };
+            // Report performance metrics using Navigation Timing API
+            const nav = performance.getEntriesByType('navigation')[0];
+            let loadTimeMs = 0;
+            let domContentLoadedMs = 0;
+            let firstPaintMs = 0;
+
+            if (nav && nav.loadEventEnd > 0) {
+                loadTimeMs = Math.max(0, Math.round(nav.loadEventEnd - nav.startTime));
+                domContentLoadedMs = Math.max(0, Math.round(nav.domContentLoadedEventEnd - nav.startTime));
+            } else {
+                // Fallback using performance.now()
+                const t0 = (window.__perfStart = window.__perfStart ?? performance.now());
+                loadTimeMs = Math.max(0, Math.round(performance.now() - t0));
+                domContentLoadedMs = loadTimeMs; // Approximate
+            }
+
+            // Get First Paint
+            const paintEntries = performance.getEntriesByType('paint');
+            if (paintEntries.length > 0) {
+                firstPaintMs = Math.round(paintEntries[0].startTime);
+            }
+
+            const perfData = {
+                loadTime: loadTimeMs,
+                domContentLoaded: domContentLoadedMs,
+                firstPaint: firstPaintMs
+            };
                 
-                console.log('🎯 Performance Metrics:', perfData);
+            console.log('🎯 Performance Metrics:', perfData);
                 
                 // Send to analytics
                 if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {

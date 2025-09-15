@@ -14,13 +14,13 @@
   "categories": ["health", "lifestyle", "productivity", "education"],
   "icons": [
     {
-      "src": "/dhamma-path/favicon.png",
+      "src": "/dhamma-path/assets/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/dhamma-path/favicon.png",
+      "src": "/dhamma-path/assets/icons/icon-192.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -50,7 +50,7 @@
       "url": "/dhamma-path/?page=timer",
       "icons": [
         {
-          "src": "/dhamma-path/favicon.png",
+          "src": "/dhamma-path/assets/icons/icon-192.png",
           "sizes": "96x96"
         }
       ]
@@ -62,7 +62,7 @@
       "url": "/dhamma-path/?page=journal",
       "icons": [
         {
-          "src": "/dhamma-path/favicon.png",
+          "src": "/dhamma-path/assets/icons/icon-192.png",
           "sizes": "96x96"
         }
       ]
@@ -74,7 +74,7 @@
       "url": "/dhamma-path/?page=workout",
       "icons": [
         {
-          "src": "/dhamma-path/favicon.png",
+          "src": "/dhamma-path/assets/icons/icon-192.png",
           "sizes": "96x96"
         }
       ]

@@ -239,30 +239,31 @@ class WeatherIntegration {
         const tempEl = document.getElementById('weather-temp');
         const descEl = document.getElementById('weather-desc');
         const locationEl = document.getElementById('weather-location');
+        const humidityEl = document.getElementById('weather-humidity');
+        const windEl = document.getElementById('weather-wind');
+        const feelsLikeEl = document.getElementById('weather-feels-like');
+        const recommendationEl = document.getElementById('weather-recommendation');
 
         if (weatherData) {
             const icon = this.getWeatherIcon(weatherData.condition || weatherData.weather);
             if (iconEl) iconEl.textContent = icon;
             
             // Compute units first, then render once to prevent CLS
-            const temp = weatherData.temperature || weatherData.temp || '--';
+            const temp = Math.round(weatherData.temperature || weatherData.temp || 0);
             const unit = this.temperatureUnit || 'F';
             
             if (tempEl) {
-                // Use requestAnimationFrame to prevent layout thrashing
                 requestAnimationFrame(() => {
                     tempEl.textContent = `${temp}°${unit}`;
-                    // Reserve space for unit changes to prevent CLS
                     tempEl.style.minWidth = '80px';
                     tempEl.style.textAlign = 'center';
                 });
             }
             
             if (descEl) {
-                // Use requestAnimationFrame to prevent layout thrashing
                 requestAnimationFrame(() => {
-                    descEl.textContent = weatherData.condition || weatherData.description || 'Unknown';
-                    // Reserve space for description changes
+                    const condition = weatherData.condition || weatherData.description || 'Unknown';
+                    descEl.textContent = this.capitalizeFirst(condition);
                     descEl.style.minHeight = '16px';
                     descEl.style.textAlign = 'center';
                 });
@@ -275,7 +276,33 @@ class WeatherIntegration {
                     locationEl.textContent = `📍 ${this.isUSLocation ? 'US' : 'International'} Location`;
                 }
             }
+            
+            // Update detailed weather information
+            if (humidityEl) {
+                humidityEl.textContent = `${weatherData.humidity || '--'}%`;
+            }
+            
+            if (windEl) {
+                const windSpeed = weatherData.windSpeed || weatherData.wind?.speed || 0;
+                const windUnit = this.isUSLocation ? 'mph' : 'm/s';
+                windEl.textContent = `${Math.round(windSpeed)} ${windUnit}`;
+            }
+            
+            if (feelsLikeEl) {
+                const feelsLike = weatherData.feelsLike || weatherData.main?.feels_like || temp;
+                const feelsLikeRounded = Math.round(feelsLike);
+                feelsLikeEl.textContent = `${feelsLikeRounded}°${unit}`;
+            }
+            
+            if (recommendationEl) {
+                const recommendation = this.getWeatherRecommendation(weatherData.condition);
+                recommendationEl.textContent = recommendation;
+            }
         }
+    }
+    
+    capitalizeFirst(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     }
     
     getWeatherIcon(condition) {
@@ -569,10 +596,23 @@ class WeatherIntegration {
         const condition = this.mapWeatherCondition(currentData.weather[0].main, currentData.weather[0].description);
         
         const processedData = {
-            temperature: currentData.main.temp,
+            temperature: Math.round(currentData.main.temp),
             condition: condition,
             humidity: currentData.main.humidity,
             windSpeed: currentData.wind.speed,
+            wind: {
+                speed: currentData.wind.speed,
+                direction: currentData.wind.deg || 0
+            },
+            feelsLike: Math.round(currentData.main.feels_like),
+            main: {
+                temp: Math.round(currentData.main.temp),
+                feels_like: Math.round(currentData.main.feels_like),
+                temp_min: Math.round(currentData.main.temp_min),
+                temp_max: Math.round(currentData.main.temp_max),
+                pressure: currentData.main.pressure,
+                humidity: currentData.main.humidity
+            },
             description: currentData.weather[0].description,
             icon: this.getWeatherIcon(currentData.weather[0].main),
             name: this.weatherConditions[condition]?.name || condition,
@@ -834,14 +874,17 @@ class WeatherIntegration {
 
     getWeatherRecommendation(condition) {
         const recommendations = {
-            'sunny': 'Perfect weather for outdoor meditation',
-            'cloudy': 'Gentle clouds invite peaceful reflection',
-            'rainy': 'Rain creates a soothing meditation soundtrack',
-            'snowy': 'Snow brings quiet, contemplative energy',
-            'windy': 'Wind can help release mental tension',
-            'foggy': 'Mysterious fog encourages inner exploration'
+            'sunny': '☀️ Perfect weather for outdoor meditation and morning walks',
+            'cloudy': '☁️ Gentle clouds create ideal conditions for focused reflection',
+            'rainy': '🌧️ Rain provides a soothing soundtrack for deep meditation',
+            'snowy': '❄️ Snow brings quiet, contemplative energy for inner work',
+            'windy': '💨 Wind can help release mental tension and stress',
+            'foggy': '🌫️ Mysterious fog encourages inner exploration and mindfulness',
+            'partly-cloudy': '⛅ Balanced weather perfect for varied morning activities',
+            'clear': '✨ Clear skies invite peaceful outdoor practice',
+            'overcast': '☁️ Overcast skies support deep, focused meditation'
         };
-        return recommendations[condition] || 'Beautiful day for mindfulness practice';
+        return recommendations[condition] || '🌤️ Beautiful day for your morning routine';
     }
 
     createWeatherWidget(weatherData) {
@@ -1108,15 +1151,24 @@ class WeatherIntegration {
     }
     
     async refreshWeather() {
-        const widget = document.getElementById('weather-widget');
-        if (widget) {
-            widget.style.opacity = '0.5';
-        }
+        console.log('🔄 Refreshing weather data...');
         
-        await this.getCurrentWeather();
+        // Show loading state
+        const tempEl = document.getElementById('weather-temp');
+        const descEl = document.getElementById('weather-desc');
         
-        if (widget) {
-            widget.style.opacity = '1';
+        if (tempEl) tempEl.textContent = '--°F';
+        if (descEl) descEl.textContent = 'Refreshing...';
+        
+        try {
+            await this.getCurrentWeather();
+            if (this.currentWeather) {
+                this.updateWeatherWidget(this.currentWeather);
+                console.log('✅ Weather refreshed successfully');
+            }
+        } catch (error) {
+            console.error('❌ Weather refresh failed:', error);
+            if (descEl) descEl.textContent = 'Refresh failed';
         }
     }
     

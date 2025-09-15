@@ -81,6 +81,11 @@ class PerformanceMonitor {
                 // fallback if no NavigationTiming entry or loadEventEnd is 0
                 const t0 = (window.__perfStart = window.__perfStart ?? performance.now());
                 loadTimeMs = Math.max(0, Math.round(performance.now() - t0));
+                
+                // Additional fallback: use DOMContentLoaded if available
+                if (nav && nav.domContentLoadedEventEnd > 0) {
+                    loadTimeMs = Math.max(loadTimeMs, Math.round(nav.domContentLoadedEventEnd - nav.startTime));
+                }
             }
 
             this.metrics.loadTime = loadTimeMs;

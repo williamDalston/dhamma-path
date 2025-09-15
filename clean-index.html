@@ -48,6 +48,9 @@
                     <a href="#" class="nav-link main-nav-link" data-page="workout">Workout</a>
                     <a href="#" class="nav-link main-nav-link" data-page="clarity">Clarity</a>
                     <a href="#" class="nav-link main-nav-link" data-page="gratitude">Gratitude</a>
+                    <button id="weather-toggle-nav" class="text-gray-600 hover:text-blue-600 transition-colors" title="Toggle weather widget">
+                        <span id="weather-nav-icon">🌤️</span>
+                    </button>
                 </nav>
                 
                 <!-- Mobile Menu Button -->
@@ -81,15 +84,49 @@
                 <h2 class="text-3xl font-bold text-gray-900 mb-8">Welcome to MorningFlow</h2>
                 <p class="text-lg text-gray-600 mb-8">Start your day with intention and purpose</p>
                 
-                <!-- Weather Widget Placeholder -->
+                <!-- Weather Widget -->
                 <div id="weather-widget-container" class="mb-8">
-                    <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-gray-200/50 max-w-sm mx-auto cursor-pointer hover:shadow-md transition-all duration-300" id="weather-widget-clickable">
-                        <div class="flex items-center justify-center space-x-3">
-                            <div id="weather-icon" class="text-2xl">🌤️</div>
+                    <div class="bg-gradient-to-br from-white/90 to-blue-50/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-blue-200/50 max-w-sm mx-auto transition-all duration-300 hover:shadow-xl hover:scale-105" id="weather-widget-clickable">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <div id="weather-icon" class="text-3xl">🌤️</div>
+                                <div>
+                                    <div id="weather-temp" class="text-2xl font-bold text-gray-800">--°F</div>
+                                    <div id="weather-desc" class="text-sm text-gray-600">Loading weather...</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-end space-y-1">
+                                <button id="weather-toggle" class="text-gray-400 hover:text-gray-600 transition-colors text-lg" title="Toggle weather details">
+                                    <span id="weather-toggle-icon">▼</span>
+                                </button>
+                                <button id="weather-refresh" class="text-gray-400 hover:text-blue-600 transition-colors text-sm" title="Refresh weather">
+                                    🔄
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Collapsible weather details -->
+                        <div id="weather-details" class="hidden space-y-3 pt-3 border-t border-gray-200/50">
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-gray-600">Location:</span>
+                                <span id="weather-location" class="text-gray-800 font-medium">📍 Detecting...</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-gray-600">Humidity:</span>
+                                <span id="weather-humidity" class="text-gray-800 font-medium">--%</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-gray-600">Wind:</span>
+                                <span id="weather-wind" class="text-gray-800 font-medium">-- mph</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-gray-600">Feels like:</span>
+                                <span id="weather-feels-like" class="text-gray-800 font-medium">--°F</span>
+                            </div>
                             <div class="text-center">
-                                <div id="weather-temp" class="text-xl font-semibold text-gray-800">--°F</div>
-                                <div id="weather-desc" class="text-sm text-gray-600">Loading weather...</div>
-                                <div id="weather-location" class="text-xs text-gray-500">📍 Detecting location...</div>
+                                <div id="weather-recommendation" class="text-xs text-blue-600 italic bg-blue-50 rounded-lg p-2">
+                                    Perfect weather for your morning routine!
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -217,12 +254,62 @@
                 window.weatherIntegration = new WeatherIntegration();
                 console.log('🌤️ Weather system initialized');
                 
-                // Add click handler for weather widget
+                // Add click handlers for weather widget
                 const weatherWidget = document.getElementById('weather-widget-clickable');
+                const weatherToggle = document.getElementById('weather-toggle');
+                const weatherRefresh = document.getElementById('weather-refresh');
+                const weatherToggleNav = document.getElementById('weather-toggle-nav');
+                const weatherContainer = document.getElementById('weather-widget-container');
+                
                 if (weatherWidget) {
-                    weatherWidget.addEventListener('click', () => {
+                    // Toggle weather details
+                    if (weatherToggle) {
+                        weatherToggle.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const details = document.getElementById('weather-details');
+                            const icon = document.getElementById('weather-toggle-icon');
+                            
+                            if (details.classList.contains('hidden')) {
+                                details.classList.remove('hidden');
+                                icon.textContent = '▲';
+                            } else {
+                                details.classList.add('hidden');
+                                icon.textContent = '▼';
+                            }
+                        });
+                    }
+                    
+                    // Refresh weather
+                    if (weatherRefresh) {
+                        weatherRefresh.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            if (window.weatherIntegration && window.weatherIntegration.refreshWeather) {
+                                window.weatherIntegration.refreshWeather();
+                            }
+                        });
+                    }
+                    
+                    // Request location permission on main widget click
+                    weatherWidget.addEventListener('click', (e) => {
+                        // Don't trigger if clicking on toggle or refresh buttons
+                        if (e.target.closest('#weather-toggle') || e.target.closest('#weather-refresh')) {
+                            return;
+                        }
+                        
                         if (window.weatherIntegration && window.weatherIntegration.requestLocationPermission) {
                             window.weatherIntegration.requestLocationPermission();
+                        }
+                    });
+                }
+                
+                // Toggle weather widget visibility
+                if (weatherToggleNav && weatherContainer) {
+                    weatherToggleNav.addEventListener('click', () => {
+                        const isHidden = weatherContainer.style.display === 'none';
+                        weatherContainer.style.display = isHidden ? 'block' : 'none';
+                        const icon = document.getElementById('weather-nav-icon');
+                        if (icon) {
+                            icon.textContent = isHidden ? '🌤️' : '🌤️';
                         }
                     });
                 }
