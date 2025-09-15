@@ -322,9 +322,16 @@ if (!window.__a11ySweepInstalled) {
     const throttledSweep = (() => {
         let timeoutId;
         let lastRun = 0;
+        let runCount = 0;
         return () => {
             const now = Date.now();
-            if (now - lastRun < 5000) return; // Don't run more than once every 5 seconds
+            runCount++;
+            
+            // Don't run more than once every 10 seconds after first 3 runs
+            if (runCount > 3 && now - lastRun < 10000) return;
+            
+            // Don't run more than 5 times total
+            if (runCount > 5) return;
             
             cancelIdleCallback?.(timeoutId);
             timeoutId = requestIdleCallback(() => {
