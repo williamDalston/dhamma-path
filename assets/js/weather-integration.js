@@ -17,6 +17,7 @@ class WeatherIntegration {
         this.userLocation = null;
         this.isUSLocation = true; // Default to US
         this.temperatureUnit = 'F'; // Default to Fahrenheit
+        this.inFlightFetch = null; // Prevent duplicate API calls
         
         this.initializeWeatherSystem();
         
@@ -541,6 +542,21 @@ class WeatherIntegration {
     }
     
     async fetchRealWeatherData() {
+        // Prevent duplicate API calls
+        if (this.inFlightFetch) {
+            console.log('🌤️ Weather fetch already in progress, waiting...');
+            return await this.inFlightFetch;
+        }
+        
+        this.inFlightFetch = this._doFetchRealWeatherData();
+        try {
+            return await this.inFlightFetch;
+        } finally {
+            this.inFlightFetch = null;
+        }
+    }
+    
+    async _doFetchRealWeatherData() {
         try {
             // Rate limiting to prevent API abuse
             const now = Date.now();

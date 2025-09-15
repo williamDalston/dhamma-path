@@ -162,7 +162,7 @@ class DhammaPathApp {
         
         // Chunk heavy work to avoid long tasks
         this.chunkedInitialize(() => {
-            this.initializeWeatherIntegration();
+            // Weather already initialized in Phase 2
             this.startMemoryOptimization();
         });
         
