@@ -73,9 +73,13 @@ class PerformanceMonitor {
         // Measure load time using navigation timing
         window.addEventListener('load', () => {
             const navigation = performance.getEntriesByType('navigation')[0];
-            if (navigation) {
+            if (navigation && navigation.loadEventEnd > 0) {
                 this.metrics.loadTime = navigation.loadEventEnd - navigation.loadEventStart;
                 console.log('🎯 Load Time:', this.metrics.loadTime + 'ms');
+            } else {
+                // Fallback: use performance.now() from page start
+                this.metrics.loadTime = performance.now();
+                console.log('🎯 Load Time (fallback):', this.metrics.loadTime + 'ms');
             }
         });
     }

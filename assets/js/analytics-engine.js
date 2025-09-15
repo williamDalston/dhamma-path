@@ -191,12 +191,6 @@ class AnalyticsEngine {
                     this.addAlert('warning', 'High Memory Usage', 
                         `Memory usage: ${this.metrics.system.memoryUsage.toFixed(2)}MB`);
                 }
-                
-                this.trackEvent('memory_usage', { 
-                    used: this.metrics.system.memoryUsage,
-                    total: memory.totalJSHeapSize / 1024 / 1024,
-                    limit: memory.jsHeapSizeLimit / 1024 / 1024
-                });
             }, 5000);
         }
         
