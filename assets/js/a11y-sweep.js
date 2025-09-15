@@ -10,15 +10,45 @@ class AccessibilitySweep {
     }
 
     init() {
-        // Run sweep after DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.runSweep());
-        } else {
-            this.runSweep();
-        }
+        // Single-shot + debounced a11y sweep
+        if (!window.__A11Y_SWEEP__) {
+            window.__A11Y_SWEEP__ = true;
 
-        // Re-run sweep when new content is added
-        this.observeNewContent();
+            let cleanStreak = 0;
+            let idleId = null;
+            let sweepInstance = null;
+
+            function runSweep() {
+                if (!sweepInstance) {
+                    sweepInstance = new AccessibilitySweep();
+                } else {
+                    sweepInstance.runManualSweep();
+                }
+                
+                const fixes = sweepInstance.getStats().fixesApplied;
+                cleanStreak = fixes === 0 ? cleanStreak + 1 : 0;
+                
+                if (cleanStreak >= 3) { 
+                    mo.disconnect(); // done until next page load
+                    console.log('♿ A11y sweep completed - observer disconnected after clean passes');
+                }
+            }
+
+            const schedule = () => {
+                if (idleId) cancelIdleCallback?.(idleId);
+                idleId = requestIdleCallback(runSweep, { timeout: 1500 });
+            };
+
+            const mo = new MutationObserver(schedule);
+            mo.observe(document.body, { 
+                childList: true, 
+                subtree: true, 
+                attributes: true 
+            });
+
+            // Run once on load
+            window.addEventListener('load', () => requestIdleCallback(runSweep), { once: true });
+        }
     }
 
     runSweep() {
@@ -32,6 +62,15 @@ class AccessibilitySweep {
         this.fixColorContrast();
         
         console.log(`♿ Accessibility sweep complete: ${this.fixesApplied} fixes applied`);
+    }
+
+    runManualSweep() {
+        this.fixesApplied = 0; // Reset counter for manual runs
+        this.runSweep();
+    }
+
+    getStats() {
+        return { fixesApplied: this.fixesApplied };
     }
 
     fixButtonLabels() {

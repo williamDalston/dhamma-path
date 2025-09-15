@@ -297,6 +297,7 @@ class NavigationManager {
                 <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-md mx-auto">
                     <div id="timer-display" class="text-6xl font-bold text-forest-green mb-6">10:00</div>
                     <div class="mb-6">
+                        <label for="timer-duration" class="block text-sm font-medium text-charcoal mb-2">Meditation Duration</label>
                         <select id="timer-duration" class="w-full px-4 py-3 border-2 border-forest-green/30 rounded-xl">
                             <option value="300">5 minutes</option>
                             <option value="600" selected>10 minutes</option>
@@ -320,6 +321,7 @@ class NavigationManager {
             <div class="text-center py-16">
                 <h1 class="text-4xl font-bold text-charcoal mb-8">✍️ Journal</h1>
                 <div class="bg-white/80 rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
+                    <label for="journal-textarea" class="block text-sm font-medium text-charcoal mb-2">Journal Entry</label>
                     <textarea id="journal-textarea" class="w-full h-64 p-4 border-2 border-forest-green/30 rounded-xl resize-none" placeholder="What light touched your heart today? What wisdom emerged? How is your soul feeling?"></textarea>
                     <button id="journal-save-btn" class="mt-4 px-6 py-3 bg-forest-green text-white rounded-xl font-semibold">Save Entry</button>
                 </div>
@@ -909,7 +911,7 @@ class NavigationManager {
             <div class="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-charcoal">Your Progress</h2>
-                    <button class="close-progress-modal text-charcoal/60 hover:text-charcoal text-2xl">×</button>
+                    <button class="close-progress-modal text-charcoal/60 hover:text-charcoal text-2xl" aria-label="Close progress modal">×</button>
                 </div>
                 
                 <div class="space-y-6">

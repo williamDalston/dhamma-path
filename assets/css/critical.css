@@ -180,21 +180,43 @@ img[src*="sun.svg"], img[src*="weather"], img[src*="icon"], .weather-icon {
 
 /* Weather widget CLS prevention */
 #weather-widget {
-  min-height: 160px;
-  contain: layout paint style;
-  content-visibility: auto;
-  contain-intrinsic-size: 160px;
+    min-height: 160px;
+    contain: layout paint style;
+    content-visibility: auto;
+    contain-intrinsic-size: 160px;
 }
 
 /* Weather content CLS prevention */
 #weather-temp {
-  min-width: 80px;
-  text-align: center;
+    min-width: 80px;
+    text-align: center;
 }
 
 #weather-desc {
-  min-height: 16px;
-  text-align: center;
+    min-height: 16px;
+    text-align: center;
+}
+
+/* Dynamic widget slots - prevent CLS */
+.weather-slot {
+    min-height: 160px;
+    contain: layout paint style;
+    content-visibility: auto;
+    contain-intrinsic-size: 160px;
+}
+
+.header-slot {
+    min-height: 64px;
+    contain: layout paint style;
+    content-visibility: auto;
+    contain-intrinsic-size: 64px;
+}
+
+.prediction-slot {
+    min-height: 48px;
+    contain: layout paint style;
+    content-visibility: auto;
+    contain-intrinsic-size: 48px;
 }
 
 /* Avoid viewport toolbar jumps */
