@@ -935,16 +935,16 @@ class WeatherIntegration {
         const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
         const isDesktop = window.innerWidth >= 1024;
         
-        let positionClass = 'fixed top-20 left-4 z-40';
+        let positionClass = 'fixed top-24 right-4 z-20 max-w-xs';
         if (isMobile) {
-            positionClass = 'fixed top-20 left-2 right-2 z-40';
+            positionClass = 'fixed top-24 right-2 z-20 max-w-xs';
         } else if (isTablet) {
-            positionClass = 'fixed top-20 left-4 z-40 max-w-sm';
+            positionClass = 'fixed top-24 right-4 z-20 max-w-sm';
         } else if (isDesktop) {
-            positionClass = 'fixed top-20 right-4 z-40 max-w-xs';
+            positionClass = 'fixed top-24 right-4 z-20 max-w-xs';
         }
         
-        widget.className = `weather-widget ${positionClass} z-30 bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-lg p-3 sm:p-4 shadow-lg transition-all duration-300`;
+        widget.className = `weather-widget ${positionClass} bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-lg p-3 sm:p-4 shadow-lg transition-all duration-300`;
         
         // Get daily temperature range from weather data
         const dailyTemps = safeWeatherData.dailyTemperatures || this.mockWeatherData?.dailyTemperatures || [];
