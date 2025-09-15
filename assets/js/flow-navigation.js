@@ -29,6 +29,13 @@ class FlowNavigation {
         const flowProgress = document.getElementById('flow-progress');
         if (!flowProgress) return;
 
+        // Don't show flow breadcrumbs on home page
+        const isHome = location.pathname === '/dhamma-path/' || location.pathname === '/' || location.hash === '' || location.hash === '#';
+        if (isHome) {
+            flowProgress.classList.add('hidden');
+            return;
+        }
+
         // Show progress indicator for flow pages
         const flowPages = ['timer', 'journal', 'workout'];
         const currentPage = this.getCurrentPage();

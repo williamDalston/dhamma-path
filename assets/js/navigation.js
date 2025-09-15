@@ -171,6 +171,12 @@ class NavigationManager {
         const mainContent = document.getElementById('main-content');
         if (!mainContent) return;
 
+        // Don't load template for home page - content is already in HTML
+        if (pageName === 'home') {
+            this.loadHomePageContent();
+            return;
+        }
+
         try {
             // Add loading state
             mainContent.innerHTML = this.getLoadingContent();
