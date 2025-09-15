@@ -397,6 +397,10 @@
     <script src="assets/js/sacred-gateway.js?v=1757953161724"></script>
     <script src="assets/js/meditation-timer.js?v=1757953161724"></script>
     <script src="assets/js/navigation.js?v=1757953161724"></script>
+    <script src="assets/js/theme-manager.js?v=1757953161724"></script>
+    <script src="assets/js/gesture-manager.js?v=1757953161724"></script>
+    <script src="assets/js/physics-animations.js?v=1757953161724"></script>
+    <script src="assets/js/weather-integration.js?v=1757953161724"></script>
     <script src="assets/js/app.js?v=1757953161724"></script>
     
     <!-- UI Fixes Script -->
@@ -416,13 +420,7 @@
                 console.error('❌ DhammaPathApp not available');
             }
             
-            // Initialize navigation manager
-            if (window.NavigationManager) {
-                window.navigationManager = new window.NavigationManager();
-                console.log('✅ NavigationManager initialized');
-            } else {
-                console.error('❌ NavigationManager not available');
-            }
+            // NavigationManager will be initialized by app.js
             
             // Initialize meditation timer
             if (window.MeditationTimer) {

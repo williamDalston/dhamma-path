@@ -772,7 +772,7 @@ class UIFixes {
             }
         `;
         document.head.appendChild(style);
-        document.body.appendChild(interface);
+        document.body.appendChild(breathingInterface);
 
         // Add event listeners
         this.setupBreathingEventListeners();
