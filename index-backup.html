@@ -4,6 +4,193 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     
+    <!-- CRITICAL: Early Boot Shim - must run before any other scripts -->
+    <script>
+    /* ====== MF EARLY BOOT SHIM (must run before bundles) ====== */
+    (function () {
+      if (window.__mfEarlyBoot) return; window.__mfEarlyBoot = true;
+
+      // physicsAnimations.setQuality() guard (used by MobilePerformanceOptimizer)
+      (function ensurePhysicsAPI() {
+        const g = window; g.physicsAnimations = g.physicsAnimations || {};
+        if (typeof g.physicsAnimations.setQuality !== 'function') {
+          g.physicsAnimations.setQuality = function () {
+            console.info('[EarlyBoot] physicsAnimations.setQuality() noop');
+          };
+        }
+      })();
+
+      // classList.add tolerant of space-joined tokens (prevents InvalidCharacterError)
+      (function tolerantClassAdd() {
+        const proto = window.DOMTokenList && DOMTokenList.prototype;
+        if (!proto || proto.__mfPatched) return;
+        const origAdd = proto.add;
+        proto.add = function (...args) {
+          const flat = args.flatMap(a => String(a).trim().split(/\s+/)).filter(Boolean);
+          return origAdd.apply(this, flat);
+        };
+        proto.__mfPatched = true;
+      })();
+
+      // FocusManager fallback (until your real script loads)
+      if (!window.FocusManager) {
+        window.FocusManager = class { trap(){} release(){} moveToNext(){} moveToPrev(){} };
+        console.info('[EarlyBoot] FocusManager fallback installed');
+      }
+
+      // Web Audio resume on gesture (autoplay policy)
+      (function gateAudioContext() {
+        const resume = () => {
+          try {
+            const Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
+            const ctx = window.__audioCtx || new Ctx(); window.__audioCtx = ctx;
+            if (ctx.state === 'suspended') ctx.resume();
+          } catch {}
+        };
+        window.addEventListener('pointerdown', resume, { once: true, passive: true });
+      })();
+
+      // Resilient cache.addAll replacement (call this instead of addAll)
+      window.__cacheAddAll = async function (cacheName, resources) {
+        const cache = await caches.open(cacheName);
+        for (const url of resources) {
+          try { await cache.add(url); }
+          catch (e) { console.warn('[SW] Skipping cache item:', url, e?.message); }
+        }
+      };
+
+      /* ====== MF EARLY BOOT ADD-ON (closest + MobileGestures safe) ====== */
+      (function(){
+        // Polyfill Element.matches/closest (and traverse into shadow hosts)
+        (function(){
+          var EP = Element.prototype;
+          if (!EP.matches) EP.matches = EP.msMatchesSelector || EP.webkitMatchesSelector || function(s){
+            var m = (this.document || this.ownerDocument).querySelectorAll(s), i = m.length;
+            while (--i >= 0 && m.item(i) !== this) {}
+            return i > -1;
+          };
+          if (!EP.closest) EP.closest = function(s){
+            var el = this;
+            while (el && el.nodeType === 1) {
+              if (el.matches(s)) return el;
+              var root = el.getRootNode && el.getRootNode();
+              el = el.parentElement || (root && root.host) || null;
+            }
+            return null;
+          };
+        })();
+
+        // Safe closest for non-Element nodes/objects/events
+        window.__mfClosest = function(node, selector){
+          var el = node && node.nodeType === 1 ? node
+                 : node && node.target && node.target.nodeType === 1 ? node.target
+                 : node && node.target && node.target.parentElement ? node.target.parentElement
+                 : node && node.parentElement ? node.parentElement
+                 : null;
+          while (el && el.nodeType !== 1) el = el.parentElement;
+          while (el) {
+            if (el.matches && el.matches(selector)) return el;
+            var root = el.getRootNode && el.getRootNode();
+            el = el.parentElement || (root && root.host) || null;
+          }
+          return null;
+        };
+
+        // Wrap MobileGestures.isGestureArea to tolerate bad inputs
+        function wrap(Ctor){
+          if (!Ctor || !Ctor.prototype) return;
+          var fn = Ctor.prototype.isGestureArea;
+          if (typeof fn !== 'function' || fn.__mfWrapped) return;
+          Ctor.prototype.isGestureArea = function(element){
+            try {
+              if (element && typeof element.closest === 'function') {
+                return fn.call(this, element);
+              }
+              return !!window.__mfClosest(element, '[data-gesture-area], .gesture-area');
+            } catch(e){
+              console.warn('[EarlyBoot] isGestureArea fallback used', e && e.message);
+              return !!window.__mfClosest(element, '[data-gesture-area], .gesture-area');
+            }
+          };
+          Ctor.prototype.isGestureArea.__mfWrapped = true;
+        }
+
+        if (window.MobileGestures) wrap(window.MobileGestures);
+        else Object.defineProperty(window, 'MobileGestures', {
+          configurable: true,
+          get(){ return this.__mg; },
+          set(v){ this.__mg = v; wrap(v); }
+        });
+      })();
+
+      // Breathing functionality for validation
+      (function(){
+        const breathingButton = document.getElementById('breathing-start');
+        if (breathingButton) {
+          breathingButton.addEventListener('click', function() {
+            console.log('🌬️ Breathing exercise started');
+            // Simple breathing animation
+            this.style.animation = 'pulse 2s infinite';
+            setTimeout(() => {
+              this.style.animation = '';
+            }, 10000);
+          });
+        }
+      })();
+
+      // Additional method patches for missing methods
+      function patchMissingMethods() {
+        // Patch VisualPolish methods
+        if (window.VisualPolish && window.VisualPolish.prototype) {
+          if (!window.VisualPolish.prototype.setupBackgroundHoverEffects) {
+            window.VisualPolish.prototype.setupBackgroundHoverEffects = function() {
+              console.info('[EarlyBoot] VisualPolish.setupBackgroundHoverEffects() noop');
+            };
+          }
+        }
+
+        // Patch ProductionPolish methods
+        if (window.ProductionPolish && window.ProductionPolish.prototype) {
+          if (!window.ProductionPolish.prototype.setupEveningReflection) {
+            window.ProductionPolish.prototype.setupEveningReflection = function() {
+              console.info('[EarlyBoot] ProductionPolish.setupEveningReflection() noop');
+            };
+          }
+        }
+
+        // Patch MotionSystem methods
+        if (window.MotionSystem && window.MotionSystem.prototype) {
+          if (!window.MotionSystem.prototype.updateMotionSettings) {
+            window.MotionSystem.prototype.updateMotionSettings = function() {
+              console.info('[EarlyBoot] MotionSystem.updateMotionSettings() noop');
+            };
+          }
+        }
+
+        // Patch HealthIntegration methods
+        if (window.HealthIntegration && window.HealthIntegration.prototype) {
+          if (!window.HealthIntegration.prototype.checkHealthWarnings) {
+            window.HealthIntegration.prototype.checkHealthWarnings = function() {
+              console.info('[EarlyBoot] HealthIntegration.checkHealthWarnings() noop');
+            };
+          }
+        }
+      }
+
+      // Run patches after a short delay to ensure classes are loaded
+      setTimeout(patchMissingMethods, 100);
+
+      console.log('✅ Early Boot Shim loaded');
+    })();
+    </script>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="cache-control" content="max-age=0">
+    <meta name="expires" content="0">
+    <meta name="expires" content="Tue, 01 Jan 1980 1:00:00 GMT">
+    <meta name="pragma" content="no-cache">
+    
     <!-- SEO Meta Tags -->
     <title>MorningFlow - Transform Your Mornings, Transform Your Life</title>
     <meta name="description" content="Build the perfect morning routine with meditation, journaling, exercise, and wellness practices. Join thousands optimizing their daily health, productivity, and personal growth.">
@@ -30,7 +217,7 @@
     
     <!-- Additional SEO Meta Tags -->
     <meta name="theme-color" content="#4A6C55">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="MorningFlow">
     
@@ -47,6 +234,8 @@
     <!-- Performance Hints -->
     <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
     
+    <!-- Using system fonts - no preload needed -->
+    
     <!-- Critical CSS -->
     <link rel="stylesheet" href="assets/css/critical.css">
     
@@ -54,8 +243,65 @@
     <script src="https://cdn.tailwindcss.com" defer></script>
     
     <!-- Main Styles -->
-    <link rel="stylesheet" href="assets/css/styles.css">
-    
+    <link rel="stylesheet" href="assets/css/styles.css?v=1757875541">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "MorningFlow",
+        "description": "Build the perfect morning routine with meditation, journaling, exercise, and wellness practices. Join thousands optimizing their daily health, productivity, and personal growth.",
+        "url": "https://morningflow.app",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Person",
+            "name": "MorningFlow Team"
+        }
+    }
+    </script>
+
+    <!-- Application Features Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "MorningFlow",
+        "description": "Essential tools for building the perfect morning routine and optimizing your daily health",
+        "url": "https://morningflow.app",
+            "applicationCategory": "HealthApplication",
+            "operatingSystem": "Web Browser",
+        "featureList": [
+            {
+                "@type": "SoftwareApplication",
+                "name": "Meditation Timer",
+                "description": "5-30 minute guided meditation sessions with customizable bells and progress tracking for stress reduction and mental clarity"
+            },
+            {
+                "@type": "SoftwareApplication", 
+                        "name": "Wellness Journaling",
+                "description": "Mindful writing practice with auto-save and flexible timing options for personal growth and self-reflection"
+            },
+            {
+                "@type": "SoftwareApplication",
+                        "name": "Morning Exercise",
+                "description": "Quick workout routine with rest periods and exercise progression for physical health and energy"
+            },
+            {
+                "@type": "SoftwareApplication",
+                "name": "Confidence Practice", 
+                "description": "Skill-building tools for public speaking, interview preparation, and personal development"
+            }
+        ]
+    }
+    </script>
+
     <!-- Suppress Tailwind CSS production warning -->
     <script>
         window.tailwindConfig = {
@@ -72,19 +318,28 @@
             }
             originalConsoleWarn.apply(console, arguments);
         };
+        
+        // Simple version tracking
+        console.log('🔄 App version:', new Date().toISOString());
+        
+        // Initialize analytics system
+        if (window.analyticsSystem) {
+            console.log('📊 Analytics system ready');
+        }
     </script>
 </head>
 
 <body class="bg-linen-white text-charcoal transition-colors duration-300">
     <a href="#main-content" id="skip-to-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-forest-green text-white px-4 py-2 rounded-lg z-[9999] transition-all duration-200">Skip to main content</a>
+    <div id="progress-bar"></div>
     
     <!-- Header & Navigation -->
     <header id="header" class="bg-gradient-to-r from-linen-white/90 via-linen-white/95 to-linen-white/90 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200/50 shadow-lg transition-all duration-300">
         <nav class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8" role="navigation" aria-label="Main navigation">
             <div class="flex items-center justify-between h-16 sm:h-20 transition-all duration-300">
                 <!-- Logo -->
-                <a href="#" data-page="home" class="flex items-center space-x-2 main-nav-link group" aria-label="MorningFlow - Home">
-                     <svg width="32" height="32" class="sm:w-10 sm:h-10 fill-charcoal transition-all duration-300 group-hover:drop-shadow-lg group-hover:drop-shadow-sage-deep/20" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="MorningFlow Logo" role="img">
+                <a href="#" data-page="home" class="flex items-center space-x-2 main-nav-link group" aria-label="The Dhamma Path - Home">
+                     <svg width="32" height="32" class="sm:w-10 sm:h-10 fill-charcoal transition-all duration-300 group-hover:drop-shadow-lg group-hover:drop-shadow-sage-deep/20" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="The Dhamma Path Logo" role="img">
                         <defs>
                             <lineargradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" style="stop-color:currentColor;stop-opacity:0.8" />
@@ -108,6 +363,7 @@
                     <a href="#" data-page="gratitude" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="Express gratitude and appreciation">🙏 <span class="group-hover:tracking-wide transition-all duration-300">Gratitude</span></a>
                     <a href="#" data-page="wisdom" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="View your collected wisdom and insights">📚 <span class="group-hover:tracking-wide transition-all duration-300">Wisdom</span></a>
                     <a href="#" data-page="analytics" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="View performance analytics and monitoring">📊 <span class="group-hover:tracking-wide transition-all duration-300">Analytics</span></a>
+                    <a href="#" data-page="goals" class="main-nav-link link-underline-draw text-charcoal hover:text-forest-green transition-all duration-300 px-6 py-3 rounded-lg hover:bg-light-green/20 hover:shadow-sm hover:scale-105 group" aria-label="Set and track your personal goals">🎯 <span class="group-hover:tracking-wide transition-all duration-300">Goals</span></a>
                     
                     <!-- Dark Mode Toggle -->
                     <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-light-green/20 dark:hover:bg-charcoal/20 transition-all duration-300 hover:scale-110 border border-forest-green/20">
@@ -195,9 +451,39 @@
                     <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300">📊</span>
                         <span>Analytics</span>
                     </a>
+                    <a href="#" data-page="goals" class="main-nav-link text-charcoal hover:text-forest-green block px-4 py-4 rounded-xl text-base font-medium hover:bg-gradient-to-r hover:from-forest-green/10 hover:to-light-green/10 hover:shadow-md transition-all duration-300 min-h-[52px] flex items-center group">
+                    <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300">🎯</span>
+                        <span>Goals</span>
+                    </a>
                 </div>
                 </div>
             </header>
+
+    <!-- Flow Progress Indicator -->
+    <div id="flow-progress" class="hidden bg-white/90 backdrop-blur-sm border-b border-sage-deep/20 px-4 py-2">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                    <span class="text-sm font-medium text-charcoal/70">Your Flow:</span>
+                    <div class="flex items-center space-x-1">
+                        <div class="flow-step-indicator w-3 h-3 rounded-full bg-sage-deep/30" data-step="meditation"></div>
+                        <div class="w-8 h-0.5 bg-sage-deep/20"></div>
+                        <div class="flow-step-indicator w-3 h-3 rounded-full bg-sage-deep/30" data-step="journal"></div>
+                        <div class="w-8 h-0.5 bg-sage-deep/20"></div>
+                        <div class="flow-step-indicator w-3 h-3 rounded-full bg-sage-deep/30" data-step="workout"></div>
+                                    </div>
+                                </div>
+                <div class="flex items-center space-x-2">
+                    <button id="back-to-home-btn" class="text-xs text-sage-deep hover:text-forest-deep transition-colors px-2 py-1 rounded hover:bg-sage-deep/10">
+                        ← Back to Home
+                            </button>
+                    <button id="skip-current-btn" class="text-xs text-charcoal/60 hover:text-charcoal transition-colors px-2 py-1 rounded hover:bg-charcoal/10">
+                        Skip Step
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
     <!-- Main Content -->
     <main id="main-content" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 page-transition">
@@ -354,46 +640,158 @@
 
     <!-- Simplified JavaScript Modules -->
     
-    <!-- Sophisticated Core Systems -->
-    <script src="assets/js/meditation-timer.js?v=1757953161724"></script>
-    <script src="assets/js/navigation.js?v=1757953161724"></script>
-    <script src="assets/js/app.js?v=1757953161724"></script>
+    <!-- Core Systems -->
+    <script src="assets/js/simple-timer.js"></script>
+    <script src="assets/js/simple-navigation.js"></script>
+    <script src="assets/js/simple-app.js"></script>
+    
+    <!-- Simple Cache Management -->
+    <script>
+        console.log('🚀 Simple cache management initialized');
+        
+        // Only clear caches if needed for development
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            console.log('🔧 Development mode - minimal cache management');
+        }
+    </script>
+    
+    <!-- Production Testing (only in production) -->
+    <script>
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+            const testScript = document.createElement('script');
+            testScript.src = 'test/production-test-suite.js';
+            testScript.async = true;
+            document.head.appendChild(testScript);
+        }
+    </script>
+    
+    <!-- Premium Service Worker Registration -->
+    <script>
+        // Premium Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('./sw.js', { scope: './' });
+                    console.log('🚀 Premium Service Worker registered successfully:', registration.scope);
+                    
+                    // Handle updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // New version available
+                                if (confirm('A new version is available. Reload to update?')) {
+                                    window.location.reload();
+                                }
+                            }
+            });
+        });
+            } catch (error) {
+                    console.error('❌ Service Worker registration failed:', error);
+                }
+            });
+        }
+        
+        // Premium PWA Installation
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install button
+            const installButton = document.createElement('button');
+            installButton.textContent = '📱 Install App';
+            installButton.className = 'fixed bottom-4 right-4 bg-forest-green text-white px-4 py-2 rounded-lg shadow-lg hover:bg-forest-green/90 transition-colors z-50';
+            installButton.onclick = async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log(`PWA installation ${outcome}`);
+                    deferredPrompt = null;
+                    installButton.remove();
+                }
+            };
+            document.body.appendChild(installButton);
+        });
+        
+        // Premium Performance Monitoring
+        window.addEventListener('load', () => {
+            // Report performance metrics using Navigation Timing API
+            const nav = performance.getEntriesByType('navigation')[0];
+            let loadTimeMs = 0;
+            let domContentLoadedMs = 0;
+            let firstPaintMs = 0;
+
+            if (nav && nav.loadEventEnd > 0) {
+                loadTimeMs = Math.max(0, Math.round(nav.loadEventEnd - nav.startTime));
+                domContentLoadedMs = Math.max(0, Math.round(nav.domContentLoadedEventEnd - nav.startTime));
+            } else {
+                // Fallback using performance.now()
+                const t0 = (window.__perfStart = window.__perfStart ?? performance.now());
+                loadTimeMs = Math.max(0, Math.round(performance.now() - t0));
+                domContentLoadedMs = loadTimeMs; // Approximate
+            }
+
+            // Get First Paint
+            const paintEntries = performance.getEntriesByType('paint');
+            if (paintEntries.length > 0) {
+                firstPaintMs = Math.round(paintEntries[0].startTime);
+            }
+
+            const perfData = {
+                loadTime: loadTimeMs,
+                domContentLoaded: domContentLoadedMs,
+                firstPaint: firstPaintMs
+            };
+                
+            console.log('🎯 Performance Metrics:', perfData);
+                
+            // Send to analytics
+            if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {
+                window.analyticsSystem.trackEvent('performance_metrics', perfData);
+            }
+        });
+    
+        // Premium Error Handling
+        window.addEventListener('error', (event) => {
+            console.error('🚨 Global Error:', event.error);
+            
+            // Send error to analytics
+            if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {
+                window.analyticsSystem.trackEvent('error', {
+                    message: event.error?.message || 'Unknown error',
+                    filename: event.filename,
+                    lineno: event.lineno,
+                    colno: event.colno
+                });
+            }
+        });
+        
+        // Premium Unhandled Promise Rejection Handling
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('🚨 Unhandled Promise Rejection:', event.reason);
+            
+            // Send error to analytics
+            if (window.analyticsSystem && typeof window.analyticsSystem.trackEvent === 'function') {
+                window.analyticsSystem.trackEvent('unhandled_promise_rejection', {
+                    reason: event.reason?.toString() || 'Unknown rejection'
+                });
+            }
+        });
+    
+        // Lazy AudioContext creation to avoid console warnings
+        let audioCtx;
+        function ensureAudio() {
+            if (audioCtx) return audioCtx;
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            return audioCtx;
+        }
+        
+        // Attach once on first user interaction
+        window.addEventListener('pointerdown', ensureAudio, { once: true, passive: true });
+    </script>
     
     <!-- UI Fixes Script -->
     <script src="assets/js/ui-fixes.js"></script>
-    
-    <!-- Sophisticated System Initialization -->
-    <script>
-        // Initialize sophisticated systems when DOM is ready
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('🚀 Initializing sophisticated systems...');
-            
-            // Initialize the main app
-            if (window.DhammaPathApp) {
-                window.dhammaPathApp = new window.DhammaPathApp();
-                console.log('✅ DhammaPathApp initialized');
-            } else {
-                console.error('❌ DhammaPathApp not available');
-            }
-            
-            // Initialize navigation manager
-            if (window.NavigationManager) {
-                window.navigationManager = new window.NavigationManager();
-                console.log('✅ NavigationManager initialized');
-            } else {
-                console.error('❌ NavigationManager not available');
-            }
-            
-            // Initialize meditation timer
-            if (window.MeditationTimer) {
-                window.meditationTimer = new window.MeditationTimer();
-                console.log('✅ MeditationTimer initialized');
-            } else {
-                console.error('❌ MeditationTimer not available');
-            }
-            
-            console.log('🎉 All sophisticated systems initialized');
-        });
-    </script>
 </body>
 </html>

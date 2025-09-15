@@ -23,38 +23,348 @@
         .page { display: none; }
         .page.active { display: block; }
         .nav-link.active { background-color: #10b981; color: white; }
-        .timer-display { font-size: 4rem; font-weight: bold; color: #059669; }
-        .btn-primary { background-color: #059669; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer; }
+        
+        /* Mobile-optimized timer display */
+        .timer-display { 
+            font-size: 3rem; 
+            font-weight: bold; 
+            color: #059669; 
+            line-height: 1;
+        }
+        
+        @media (min-width: 640px) {
+            .timer-display { font-size: 4rem; }
+        }
+        
+        @media (min-width: 1024px) {
+            .timer-display { font-size: 5rem; }
+        }
+        
+        /* Mobile-optimized buttons */
+        .btn-primary { 
+            background-color: #059669; 
+            color: white; 
+            padding: 0.875rem 1.5rem; 
+            border-radius: 0.75rem; 
+            border: none; 
+            cursor: pointer; 
+            font-size: 1rem;
+            font-weight: 600;
+            min-height: 48px;
+            touch-action: manipulation;
+            transition: all 0.2s ease;
+        }
+        
         .btn-primary:hover { background-color: #047857; }
-        .btn-secondary { background-color: #6b7280; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer; }
+        .btn-primary:active { transform: scale(0.98); }
+        
+        .btn-secondary { 
+            background-color: #6b7280; 
+            color: white; 
+            padding: 0.875rem 1.5rem; 
+            border-radius: 0.75rem; 
+            border: none; 
+            cursor: pointer; 
+            font-size: 1rem;
+            font-weight: 600;
+            min-height: 48px;
+            touch-action: manipulation;
+            transition: all 0.2s ease;
+        }
+        
         .btn-secondary:hover { background-color: #4b5563; }
+        .btn-secondary:active { transform: scale(0.98); }
+        
+        /* Mobile-optimized weather widget */
+        .weather-widget-mobile {
+            position: fixed;
+            top: 80px;
+            right: 16px;
+            left: 16px;
+            z-index: 30;
+            max-width: none;
+            margin: 0;
+        }
+        
+        @media (min-width: 640px) {
+            .weather-widget-mobile {
+                position: fixed;
+                top: 80px;
+                right: 16px;
+                left: auto;
+                width: 320px;
+                max-width: 320px;
+            }
+        }
+        
+        /* Mobile-optimized touch targets */
+        .touch-target {
+            min-height: 44px;
+            min-width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Mobile-optimized spacing */
+        .mobile-padding {
+            padding: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .mobile-padding {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-padding {
+                padding: 2rem;
+            }
+        }
+        
+        /* Mobile-optimized text sizes */
+        .mobile-text-sm { font-size: 0.875rem; }
+        .mobile-text-base { font-size: 1rem; }
+        .mobile-text-lg { font-size: 1.125rem; }
+        .mobile-text-xl { font-size: 1.25rem; }
+        .mobile-text-2xl { font-size: 1.5rem; }
+        .mobile-text-3xl { font-size: 1.875rem; }
+        
+        @media (min-width: 640px) {
+            .mobile-text-sm { font-size: 0.875rem; }
+            .mobile-text-base { font-size: 1rem; }
+            .mobile-text-lg { font-size: 1.125rem; }
+            .mobile-text-xl { font-size: 1.25rem; }
+            .mobile-text-2xl { font-size: 1.5rem; }
+            .mobile-text-3xl { font-size: 2.25rem; }
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-text-sm { font-size: 0.875rem; }
+            .mobile-text-base { font-size: 1rem; }
+            .mobile-text-lg { font-size: 1.125rem; }
+            .mobile-text-xl { font-size: 1.25rem; }
+            .mobile-text-2xl { font-size: 1.5rem; }
+            .mobile-text-3xl { font-size: 3rem; }
+        }
+        
+        /* Mobile-optimized weather toggle button */
+        .weather-toggle-mobile {
+            position: fixed;
+            top: 80px;
+            right: 16px;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .weather-toggle-mobile:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .weather-toggle-mobile:active {
+            transform: scale(0.95);
+        }
+        
+        /* Mobile-optimized modal */
+        .mobile-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: flex;
+            align-items: flex-end;
+            padding: 0;
+        }
+        
+        @media (min-width: 640px) {
+            .mobile-modal {
+                align-items: center;
+                padding: 1rem;
+            }
+        }
+        
+        .mobile-modal-content {
+            background: white;
+            border-radius: 1rem 1rem 0 0;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        
+        @media (min-width: 640px) {
+            .mobile-modal-content {
+                border-radius: 1rem;
+                max-width: 400px;
+                margin: 0 auto;
+                max-height: 90vh;
+            }
+        }
+        
+        /* Mobile-optimized grid */
+        .mobile-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .mobile-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+        }
+        
+        /* Mobile-optimized form elements */
+        .mobile-input {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            min-height: 48px;
+            touch-action: manipulation;
+        }
+        
+        .mobile-input:focus {
+            outline: none;
+            border-color: #059669;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+        
+        .mobile-textarea {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            min-height: 120px;
+            resize: vertical;
+            touch-action: manipulation;
+        }
+        
+        .mobile-textarea:focus {
+            outline: none;
+            border-color: #059669;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+        
+        /* Mobile-optimized weather details */
+        .weather-details-mobile {
+            font-size: 0.875rem;
+        }
+        
+        .weather-details-mobile .weather-detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .weather-details-mobile .weather-detail-item:last-child {
+            border-bottom: none;
+        }
+        
+        /* Mobile-optimized animations */
+        @media (prefers-reduced-motion: no-preference) {
+            .weather-widget-mobile {
+                animation: slideInFromRight 0.3s ease-out;
+            }
+            
+            .weather-toggle-mobile {
+                animation: fadeIn 0.3s ease-out;
+            }
+        }
+        
+        @keyframes slideInFromRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Mobile-optimized safe areas */
+        .safe-area-top {
+            padding-top: env(safe-area-inset-top);
+        }
+        
+        .safe-area-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        .safe-area-left {
+            padding-left: env(safe-area-inset-left);
+        }
+        
+        .safe-area-right {
+            padding-right: env(safe-area-inset-right);
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b">
+    <header class="bg-white shadow-sm border-b safe-area-top">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+            <div class="flex justify-between items-center h-16 sm:h-20">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <h1 class="text-xl font-bold text-gray-900">MorningFlow</h1>
+                    <h1 class="mobile-text-xl font-bold text-gray-900">MorningFlow</h1>
                 </div>
                 
                 <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#" class="nav-link main-nav-link" data-page="home">Home</a>
-                    <a href="#" class="nav-link main-nav-link" data-page="timer">Timer</a>
-                    <a href="#" class="nav-link main-nav-link" data-page="journal">Journal</a>
-                    <a href="#" class="nav-link main-nav-link" data-page="workout">Workout</a>
-                    <a href="#" class="nav-link main-nav-link" data-page="clarity">Clarity</a>
-                    <a href="#" class="nav-link main-nav-link" data-page="gratitude">Gratitude</a>
-                    <button id="weather-toggle-nav" class="text-gray-600 hover:text-blue-600 transition-colors" title="Toggle weather widget">
-                        <span id="weather-nav-icon">🌤️</span>
+                <nav class="hidden md:flex space-x-6 lg:space-x-8">
+                    <a href="#" class="nav-link main-nav-link touch-target px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors" data-page="home">Home</a>
+                    <a href="#" class="nav-link main-nav-link touch-target px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors" data-page="timer">Timer</a>
+                    <a href="#" class="nav-link main-nav-link touch-target px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors" data-page="journal">Journal</a>
+                    <a href="#" class="nav-link main-nav-link touch-target px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors" data-page="workout">Workout</a>
+                    <a href="#" class="nav-link main-nav-link touch-target px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors" data-page="clarity">Clarity</a>
+                    <a href="#" class="nav-link main-nav-link touch-target px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors" data-page="gratitude">Gratitude</a>
+                    <button id="weather-toggle-nav" class="touch-target text-gray-600 hover:text-blue-600 transition-colors" title="Toggle weather widget">
+                        <span id="weather-nav-icon" class="text-lg">🌤️</span>
                     </button>
                 </nav>
                 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900">
+                <button id="mobile-menu-button" class="md:hidden touch-target p-3 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
@@ -63,68 +373,104 @@
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#" class="nav-link main-nav-link block px-3 py-2 rounded-md text-base font-medium" data-page="home">Home</a>
-                <a href="#" class="nav-link main-nav-link block px-3 py-2 rounded-md text-base font-medium" data-page="timer">Timer</a>
-                <a href="#" class="nav-link main-nav-link block px-3 py-2 rounded-md text-base font-medium" data-page="journal">Journal</a>
-                <a href="#" class="nav-link main-nav-link block px-3 py-2 rounded-md text-base font-medium" data-page="workout">Workout</a>
-                <a href="#" class="nav-link main-nav-link block px-3 py-2 rounded-md text-base font-medium" data-page="clarity">Clarity</a>
-                <a href="#" class="nav-link main-nav-link block px-3 py-2 rounded-md text-base font-medium" data-page="gratitude">Gratitude</a>
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t safe-area-bottom">
+            <div class="px-4 pt-4 pb-6 space-y-2">
+                <a href="#" class="nav-link main-nav-link block px-4 py-4 rounded-xl text-base font-medium hover:bg-gray-50 transition-colors touch-target" data-page="home">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🏠</span>
+                        <span>Home</span>
+                    </div>
+                </a>
+                <a href="#" class="nav-link main-nav-link block px-4 py-4 rounded-xl text-base font-medium hover:bg-gray-50 transition-colors touch-target" data-page="timer">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🧘</span>
+                        <span>Timer</span>
+                    </div>
+                </a>
+                <a href="#" class="nav-link main-nav-link block px-4 py-4 rounded-xl text-base font-medium hover:bg-gray-50 transition-colors touch-target" data-page="journal">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">✍️</span>
+                        <span>Journal</span>
+                    </div>
+                </a>
+                <a href="#" class="nav-link main-nav-link block px-4 py-4 rounded-xl text-base font-medium hover:bg-gray-50 transition-colors touch-target" data-page="workout">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">💪</span>
+                        <span>Workout</span>
+                    </div>
+                </a>
+                <a href="#" class="nav-link main-nav-link block px-4 py-4 rounded-xl text-base font-medium hover:bg-gray-50 transition-colors touch-target" data-page="clarity">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🎤</span>
+                        <span>Clarity</span>
+                    </div>
+                </a>
+                <a href="#" class="nav-link main-nav-link block px-4 py-4 rounded-xl text-base font-medium hover:bg-gray-50 transition-colors touch-target" data-page="gratitude">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🙏</span>
+                        <span>Gratitude</span>
+                    </div>
+                </a>
+                <div class="pt-4 border-t border-gray-200">
+                    <button id="weather-toggle-mobile" class="w-full flex items-center justify-center px-4 py-4 rounded-xl text-base font-medium text-blue-600 hover:bg-blue-50 transition-colors touch-target">
+                        <span class="text-2xl mr-3">🌤️</span>
+                        <span>Weather</span>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 safe-area-bottom">
         
         <!-- Home Page -->
-        <div id="home-page" class="page active">
+        <div id="home-page" class="page active" data-page-section>
             <div class="text-center">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Welcome to MorningFlow</h2>
-                <p class="text-lg text-gray-600 mb-8">Start your day with intention and purpose</p>
+                <h2 class="mobile-text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Welcome to MorningFlow</h2>
+                <p class="mobile-text-lg text-gray-600 mb-6 sm:mb-8 px-4">Start your day with intention and purpose</p>
                 
                 <!-- Weather Widget -->
-                <div id="weather-widget-container" class="mb-8">
-                    <div class="bg-gradient-to-br from-white/90 to-blue-50/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-blue-200/50 max-w-sm mx-auto transition-all duration-300 hover:shadow-xl hover:scale-105" id="weather-widget-clickable">
+                <div id="weather-widget-container" class="mb-6 sm:mb-8">
+                    <div class="bg-gradient-to-br from-white/90 to-blue-50/90 backdrop-blur-sm rounded-2xl p-4 sm:p-6 shadow-lg border border-blue-200/50 max-w-sm mx-auto transition-all duration-300 hover:shadow-xl hover:scale-105" id="weather-widget-clickable">
                         <div class="flex items-center justify-between mb-3">
                             <div class="flex items-center space-x-3">
-                                <div id="weather-icon" class="text-3xl">🌤️</div>
+                                <div id="weather-icon" class="text-2xl sm:text-3xl">🌤️</div>
                                 <div>
-                                    <div id="weather-temp" class="text-2xl font-bold text-gray-800">--°F</div>
-                                    <div id="weather-desc" class="text-sm text-gray-600">Loading weather...</div>
+                                    <div id="weather-temp" class="mobile-text-2xl font-bold text-gray-800">--°F</div>
+                                    <div id="weather-desc" class="mobile-text-sm text-gray-600">Loading weather...</div>
                                 </div>
                             </div>
                             <div class="flex flex-col items-end space-y-1">
-                                <button id="weather-toggle" class="text-gray-400 hover:text-gray-600 transition-colors text-lg" title="Toggle weather details">
+                                <button id="weather-toggle" class="touch-target text-gray-400 hover:text-gray-600 transition-colors text-lg" title="Toggle weather details">
                                     <span id="weather-toggle-icon">▼</span>
                                 </button>
-                                <button id="weather-refresh" class="text-gray-400 hover:text-blue-600 transition-colors text-sm" title="Refresh weather">
+                                <button id="weather-refresh" class="touch-target text-gray-400 hover:text-blue-600 transition-colors text-sm" title="Refresh weather">
                                     🔄
                                 </button>
                             </div>
                         </div>
                         
                         <!-- Collapsible weather details -->
-                        <div id="weather-details" class="hidden space-y-3 pt-3 border-t border-gray-200/50">
-                            <div class="flex justify-between items-center text-sm">
+                        <div id="weather-details" class="hidden weather-details-mobile pt-3 border-t border-gray-200/50">
+                            <div class="weather-detail-item">
                                 <span class="text-gray-600">Location:</span>
                                 <span id="weather-location" class="text-gray-800 font-medium">📍 Detecting...</span>
                             </div>
-                            <div class="flex justify-between items-center text-sm">
+                            <div class="weather-detail-item">
                                 <span class="text-gray-600">Humidity:</span>
                                 <span id="weather-humidity" class="text-gray-800 font-medium">--%</span>
                             </div>
-                            <div class="flex justify-between items-center text-sm">
+                            <div class="weather-detail-item">
                                 <span class="text-gray-600">Wind:</span>
                                 <span id="weather-wind" class="text-gray-800 font-medium">-- mph</span>
                             </div>
-                            <div class="flex justify-between items-center text-sm">
+                            <div class="weather-detail-item">
                                 <span class="text-gray-600">Feels like:</span>
                                 <span id="weather-feels-like" class="text-gray-800 font-medium">--°F</span>
                             </div>
-                            <div class="text-center">
-                                <div id="weather-recommendation" class="text-xs text-blue-600 italic bg-blue-50 rounded-lg p-2">
+                            <div class="text-center pt-2">
+                                <div id="weather-recommendation" class="mobile-text-sm text-blue-600 italic bg-blue-50 rounded-lg p-3">
                                     Perfect weather for your morning routine!
                                 </div>
                             </div>
@@ -132,122 +478,169 @@
                     </div>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-xl font-semibold mb-4">🧘 Meditation Timer</h3>
-                        <p class="text-gray-600 mb-4">Find peace and clarity with guided meditation</p>
-                        <button class="btn-primary w-full" onclick="window.simpleNavigation.showPage('timer')">Start Timer</button>
+                <div class="mobile-grid">
+                    <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="text-center">
+                            <div class="text-4xl sm:text-5xl mb-4">🧘</div>
+                            <h3 class="mobile-text-xl font-semibold mb-3 sm:mb-4">Meditation Timer</h3>
+                            <p class="mobile-text-sm text-gray-600 mb-4 sm:mb-6">Find peace and clarity with guided meditation</p>
+                            <button class="btn-primary w-full" onclick="window.navigationManager.navigateToPage('timer')">Start Timer</button>
+                        </div>
                     </div>
                     
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-xl font-semibold mb-4">✍️ Journal</h3>
-                        <p class="text-gray-600 mb-4">Reflect and grow through mindful writing</p>
-                        <button class="btn-primary w-full" onclick="window.simpleNavigation.showPage('journal')">Start Journaling</button>
+                    <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="text-center">
+                            <div class="text-4xl sm:text-5xl mb-4">✍️</div>
+                            <h3 class="mobile-text-xl font-semibold mb-3 sm:mb-4">Journal</h3>
+                            <p class="mobile-text-sm text-gray-600 mb-4 sm:mb-6">Reflect and grow through mindful writing</p>
+                            <button class="btn-primary w-full" onclick="window.navigationManager.navigateToPage('journal')">Start Journaling</button>
+                        </div>
                     </div>
                     
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-xl font-semibold mb-4">💪 Workout</h3>
-                        <p class="text-gray-600 mb-4">Energize your body with morning exercise</p>
-                        <button class="btn-primary w-full" onclick="window.simpleNavigation.showPage('workout')">Start Workout</button>
+                    <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="text-center">
+                            <div class="text-4xl sm:text-5xl mb-4">💪</div>
+                            <h3 class="mobile-text-xl font-semibold mb-3 sm:mb-4">Workout</h3>
+                            <p class="mobile-text-sm text-gray-600 mb-4 sm:mb-6">Energize your body with morning exercise</p>
+                            <button class="btn-primary w-full" onclick="window.navigationManager.navigateToPage('workout')">Start Workout</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Timer Page -->
-        <div id="timer-page" class="page">
+        <div id="timer-page" class="page hidden" data-page-section>
             <div class="text-center">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Meditation Timer</h2>
+                <h2 class="mobile-text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Meditation Timer</h2>
                 
-                <div class="bg-white p-8 rounded-lg shadow max-w-md mx-auto">
-                    <div id="timer-display" class="timer-display mb-6">10:00</div>
-                    
-                    <div class="mb-6">
-                        <label for="timer-duration" class="block text-sm font-medium text-gray-700 mb-2">Duration</label>
-                        <select id="timer-duration" class="w-full px-3 py-2 border border-gray-300 rounded-md">
-                            <option value="300">5 minutes</option>
-                            <option value="600" selected>10 minutes</option>
-                            <option value="900">15 minutes</option>
-                            <option value="1200">20 minutes</option>
-                        </select>
-                    </div>
-                    
-                    <div class="flex gap-4">
-                        <button id="timer-start-btn" class="btn-primary flex-1">Start</button>
-                        <button id="timer-pause-btn" class="btn-secondary flex-1" style="display: none;">Pause</button>
-                        <button id="timer-reset-btn" class="btn-secondary flex-1">Reset</button>
-                    </div>
+                <div class="bg-white p-4 sm:p-8 rounded-xl shadow-lg max-w-md mx-auto">
+                    <div id="timer-container"></div>
                 </div>
             </div>
         </div>
 
         <!-- Journal Page -->
-        <div id="journal-page" class="page">
+        <div id="journal-page" class="page hidden" data-page-section>
             <div class="text-center">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Journal</h2>
+                <h2 class="mobile-text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Journal</h2>
                 
-                <div class="bg-white p-8 rounded-lg shadow max-w-2xl mx-auto">
-                    <label for="journal-textarea" class="block text-sm font-medium text-gray-700 mb-2">What's on your mind today?</label>
-                    <textarea id="journal-textarea" class="w-full h-64 p-4 border border-gray-300 rounded-md resize-none" placeholder="Reflect on your thoughts, feelings, and experiences..."></textarea>
-                    <button id="journal-save-btn" class="btn-primary mt-4">Save Entry</button>
+                <div class="bg-white p-4 sm:p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                    <label for="journal-textarea" class="block mobile-text-sm font-medium text-gray-700 mb-3">What's on your mind today?</label>
+                    <textarea id="journal-textarea" class="mobile-textarea h-48 sm:h-64" placeholder="Reflect on your thoughts, feelings, and experiences..."></textarea>
+                    <button id="journal-save-btn" class="btn-primary mt-4 w-full sm:w-auto">Save Entry</button>
                 </div>
             </div>
         </div>
 
         <!-- Workout Page -->
-        <div id="workout-page" class="page">
+        <div id="workout-page" class="page hidden" data-page-section>
             <div class="text-center">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Morning Workout</h2>
+                <h2 class="mobile-text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Morning Workout</h2>
                 
-                <div class="bg-white p-8 rounded-lg shadow max-w-md mx-auto">
-                    <div class="text-6xl mb-6">🏃‍♂️</div>
-                    <h3 class="text-2xl font-semibold mb-4">Jumping Jacks</h3>
-                    <div class="text-4xl font-bold text-green-600 mb-6">30</div>
-                    <div class="flex gap-4">
-                        <button id="workout-start-btn" class="btn-primary flex-1">Start</button>
-                        <button id="workout-pause-btn" class="btn-secondary flex-1">Pause</button>
+                <div class="bg-white p-4 sm:p-8 rounded-xl shadow-lg max-w-md mx-auto">
+                    <div class="text-5xl sm:text-6xl mb-4 sm:mb-6">🏃‍♂️</div>
+                    <h3 class="mobile-text-2xl font-semibold mb-3 sm:mb-4">Jumping Jacks</h3>
+                    <div class="mobile-text-3xl font-bold text-green-600 mb-6 sm:mb-8">30</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <button id="workout-start-btn" class="btn-primary">Start</button>
+                        <button id="workout-pause-btn" class="btn-secondary">Pause</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Clarity Page -->
-        <div id="clarity-page" class="page">
+        <div id="clarity-page" class="page hidden" data-page-section>
             <div class="text-center">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Clarity Practice</h2>
+                <h2 class="mobile-text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Clarity Practice</h2>
                 
-                <div class="bg-white p-8 rounded-lg shadow max-w-2xl mx-auto">
-                    <h3 class="text-xl font-semibold mb-4">What is one intention you hold for today?</h3>
-                    <p class="text-gray-600 mb-6">Speak it into existence. Take your time and let your words flow naturally.</p>
-                    <button id="clarity-record-btn" class="btn-primary">Start Recording</button>
+                <div class="bg-white p-4 sm:p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                    <div class="text-5xl sm:text-6xl mb-4 sm:mb-6">🎤</div>
+                    <h3 class="mobile-text-xl font-semibold mb-3 sm:mb-4">What is one intention you hold for today?</h3>
+                    <p class="mobile-text-sm text-gray-600 mb-6 sm:mb-8">Speak it into existence. Take your time and let your words flow naturally.</p>
+                    <button id="clarity-record-btn" class="btn-primary w-full sm:w-auto">Start Recording</button>
                 </div>
             </div>
         </div>
 
         <!-- Gratitude Page -->
-        <div id="gratitude-page" class="page">
+        <div id="gratitude-page" class="page hidden" data-page-section>
             <div class="text-center">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Gratitude Practice</h2>
+                <h2 class="mobile-text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Gratitude Practice</h2>
                 
-                <div class="bg-white p-8 rounded-lg shadow max-w-2xl mx-auto">
-                    <h3 class="text-xl font-semibold mb-4">What are you grateful for today?</h3>
-                    <textarea class="w-full h-48 p-4 border border-gray-300 rounded-md resize-none" placeholder="Write down three things you're grateful for..."></textarea>
-                    <button class="btn-primary mt-4">Save Gratitude</button>
+                <div class="bg-white p-4 sm:p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                    <div class="text-5xl sm:text-6xl mb-4 sm:mb-6">🙏</div>
+                    <h3 class="mobile-text-xl font-semibold mb-3 sm:mb-4">What are you grateful for today?</h3>
+                    <textarea class="mobile-textarea h-40 sm:h-48" placeholder="Write down three things you're grateful for..."></textarea>
+                    <button class="btn-primary mt-4 w-full sm:w-auto">Save Gratitude</button>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <!-- Scripts -->
-    <script src="assets/js/simple-timer.js"></script>
-    <script src="assets/js/simple-navigation.js"></script>
-    <script src="assets/js/weather-integration.js"></script>
+    <!-- Sophisticated Scripts -->
+    <script src="assets/js/meditation-timer.js?v=1757953161724"></script>
+    <script src="assets/js/navigation.js?v=1757953161724"></script>
+    <script src="assets/js/app.js?v=1757953161724"></script>
+    <script src="assets/js/weather-integration.js?v=1757953161724"></script>
     
     <!-- Initialize -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('MorningFlow initialized successfully!');
+            console.log('🚀 Initializing sophisticated MorningFlow systems...');
+            
+            // Initialize the main app
+            if (window.DhammaPathApp) {
+                window.dhammaPathApp = new window.DhammaPathApp();
+                console.log('✅ DhammaPathApp initialized');
+            } else {
+                console.error('❌ DhammaPathApp not available');
+            }
+            
+            // Initialize navigation manager
+            if (window.NavigationManager) {
+                window.navigationManager = new window.NavigationManager();
+                console.log('✅ NavigationManager initialized');
+            } else {
+                console.error('❌ NavigationManager not available');
+            }
+            
+            // Initialize meditation timer
+            if (window.MeditationTimer) {
+                window.meditationTimer = new window.MeditationTimer();
+                console.log('✅ MeditationTimer initialized');
+            } else {
+                console.error('❌ MeditationTimer not available');
+            }
+            
+            // Mobile menu functionality (backup)
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    // Update button icon
+                    const icon = mobileMenuButton.querySelector('svg');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
+                    } else {
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
+                    }
+                });
+                
+                // Close mobile menu when clicking on a link
+                const mobileMenuLinks = mobileMenu.querySelectorAll('.main-nav-link');
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        const icon = mobileMenuButton.querySelector('svg');
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
+                    });
+                });
+            }
             
             // Initialize weather system
             if (window.WeatherIntegration) {
@@ -259,6 +652,7 @@
                 const weatherToggle = document.getElementById('weather-toggle');
                 const weatherRefresh = document.getElementById('weather-refresh');
                 const weatherToggleNav = document.getElementById('weather-toggle-nav');
+                const weatherToggleMobile = document.getElementById('weather-toggle-mobile');
                 const weatherContainer = document.getElementById('weather-widget-container');
                 
                 if (weatherWidget) {
@@ -302,7 +696,7 @@
                     });
                 }
                 
-                // Toggle weather widget visibility
+                // Toggle weather widget visibility (desktop)
                 if (weatherToggleNav && weatherContainer) {
                     weatherToggleNav.addEventListener('click', () => {
                         const isHidden = weatherContainer.style.display === 'none';
@@ -313,7 +707,74 @@
                         }
                     });
                 }
+                
+                // Toggle weather widget visibility (mobile)
+                if (weatherToggleMobile && weatherContainer) {
+                    weatherToggleMobile.addEventListener('click', () => {
+                        const isHidden = weatherContainer.style.display === 'none';
+                        weatherContainer.style.display = isHidden ? 'block' : 'none';
+                        // Close mobile menu after toggling weather
+                        if (mobileMenu) {
+                            mobileMenu.classList.add('hidden');
+                            const icon = mobileMenuButton.querySelector('svg');
+                            if (icon) {
+                                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
+                            }
+                        }
+                    });
+                }
             }
+            
+            // Mobile-specific optimizations
+            const isMobile = window.innerWidth < 768;
+            if (isMobile) {
+                // Add mobile-specific classes
+                document.body.classList.add('mobile-optimized');
+                
+                // Optimize touch interactions
+                const buttons = document.querySelectorAll('button, .btn-primary, .btn-secondary');
+                buttons.forEach(button => {
+                    button.addEventListener('touchstart', function() {
+                        this.style.transform = 'scale(0.98)';
+                    });
+                    button.addEventListener('touchend', function() {
+                        this.style.transform = 'scale(1)';
+                    });
+                });
+                
+                // Prevent zoom on input focus (iOS)
+                const inputs = document.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        if (window.visualViewport) {
+                            window.visualViewport.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                });
+            }
+            
+            // Handle orientation changes
+            window.addEventListener('orientationchange', () => {
+                setTimeout(() => {
+                    // Recalculate weather widget position if needed
+                    if (window.weatherIntegration && window.weatherIntegration.updateWeatherWidgetPosition) {
+                        window.weatherIntegration.updateWeatherWidgetPosition();
+                    }
+                }, 100);
+            });
+            
+            // Handle resize events
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    // Update mobile state
+                    const isMobileNow = window.innerWidth < 768;
+                    if (isMobileNow !== isMobile) {
+                        location.reload(); // Simple solution for now
+                    }
+                }, 250);
+            });
         });
     </script>
 </body>

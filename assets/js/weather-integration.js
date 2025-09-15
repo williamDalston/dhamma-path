@@ -930,21 +930,35 @@ class WeatherIntegration {
         widget.id = 'weather-widget';
         widget.className = 'weather-widget';
         
-        // Enhanced responsive positioning with better spacing
+        // Enhanced responsive positioning with perfect mobile optimization
         const isMobile = window.innerWidth < 768;
         const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
         const isDesktop = window.innerWidth >= 1024;
+        const isSmallMobile = window.innerWidth < 480;
         
-        let positionClass = 'fixed top-24 right-4 z-20 max-w-xs';
-        if (isMobile) {
-            positionClass = 'fixed top-24 right-2 z-20 max-w-xs';
+        // Responsive positioning classes
+        let positionClass = '';
+        if (isSmallMobile) {
+            positionClass = 'fixed top-16 right-2 left-2 z-30';
+        } else if (isMobile) {
+            positionClass = 'fixed top-20 right-3 left-3 z-30 max-w-sm mx-auto';
         } else if (isTablet) {
-            positionClass = 'fixed top-24 right-4 z-20 max-w-sm';
-        } else if (isDesktop) {
-            positionClass = 'fixed top-24 right-4 z-20 max-w-xs';
+            positionClass = 'fixed top-20 right-4 z-30 max-w-sm';
+        } else {
+            positionClass = 'fixed top-20 right-4 z-30 max-w-xs';
         }
         
-        widget.className = `weather-widget ${positionClass} bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-lg p-3 sm:p-4 shadow-lg transition-all duration-300`;
+        // Enhanced styling with better visibility controls
+        widget.className = `weather-widget ${positionClass} bg-white/98 backdrop-blur-md border border-sage-deep/30 rounded-2xl shadow-xl transition-all duration-300 ease-out`;
+        
+        // Add responsive padding
+        if (isSmallMobile) {
+            widget.style.padding = '12px';
+        } else if (isMobile) {
+            widget.style.padding = '16px';
+        } else {
+            widget.style.padding = '20px';
+        }
         
         // Get daily temperature range from weather data
         const dailyTemps = safeWeatherData.dailyTemperatures || this.mockWeatherData?.dailyTemperatures || [];
@@ -956,51 +970,81 @@ class WeatherIntegration {
 
         widget.innerHTML = `
             <div class="weather-content">
+                <!-- Weather Header with Enhanced Controls -->
                 <div class="weather-header flex items-center justify-between mb-3">
-                    <div class="weather-info">
-                        <div class="weather-icon text-2xl">${safeWeatherData.icon}</div>
-                        <div class="weather-temp text-lg font-semibold text-forest-deep">${safeWeatherData.temperature}</div>
-                        <div class="temp-range text-xs text-charcoal/60">
-                            ${safeWeatherData.humidity} • ${safeWeatherData.windSpeed}
+                    <div class="weather-main-info flex items-center gap-3">
+                        <div class="weather-icon text-3xl">${safeWeatherData.icon}</div>
+                        <div class="weather-temp-info">
+                            <div class="weather-temp text-xl font-bold text-forest-deep">${safeWeatherData.temperature}</div>
+                            <div class="weather-condition text-sm font-medium text-charcoal capitalize">${safeWeatherData.condition}</div>
                         </div>
                     </div>
-                    <div class="weather-details text-right">
-                        <div class="weather-condition text-sm font-medium text-charcoal capitalize">${safeWeatherData.condition}</div>
-                        <div class="weather-description text-xs text-charcoal/60">${this.getWeatherRecommendation(safeWeatherData.condition)}</div>
-                        <div class="location-info text-xs text-sage-deep mt-1">
-                            ${this.isUSLocation ? '🇺🇸 US' : '🌍 International'}
+                    <div class="weather-controls flex items-center gap-2">
+                        <button class="weather-toggle-visibility text-lg p-1 rounded-full hover:bg-sage-pale/30 transition-colors" 
+                                title="Toggle weather visibility" aria-label="Toggle weather visibility">
+                            👁️
+                        </button>
+                        <button class="weather-minimize-btn text-lg p-1 rounded-full hover:bg-sage-pale/30 transition-colors" 
+                                title="Minimize weather widget" aria-label="Minimize weather widget">
+                            ➖
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Weather Details (Collapsible) -->
+                <div class="weather-details-expanded">
+                    <div class="weather-stats grid grid-cols-2 gap-3 mb-3">
+                        <div class="stat-item text-center">
+                            <div class="stat-value text-sm font-semibold text-forest-deep">${safeWeatherData.humidity}</div>
+                            <div class="stat-label text-xs text-charcoal/60">Humidity</div>
+                        </div>
+                        <div class="stat-item text-center">
+                            <div class="stat-value text-sm font-semibold text-forest-deep">${safeWeatherData.windSpeed}</div>
+                            <div class="stat-label text-xs text-charcoal/60">Wind</div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="temperature-graph mb-3">
-                    <div class="graph-title text-xs font-medium text-charcoal mb-2">Today's Temperature</div>
-                    <div class="graph-container h-12 bg-sage-pale/20 rounded-lg p-2 relative overflow-hidden">
-                        ${this.createTemperatureGraph()}
+                    
+                    <!-- Temperature Graph (Responsive) -->
+                    <div class="temperature-graph mb-3">
+                        <div class="graph-title text-xs font-medium text-charcoal mb-2 flex items-center justify-between">
+                            <span>Today's Temperature</span>
+                            <span class="temp-range text-xs text-sage-deep">${minTemp}° - ${maxTemp}°</span>
+                        </div>
+                        <div class="graph-container h-8 sm:h-10 bg-sage-pale/20 rounded-lg p-2 relative overflow-hidden">
+                            ${this.createTemperatureGraph()}
+                        </div>
+                    </div>
+                    
+                    <!-- Weather Recommendation -->
+                    <div class="weather-recommendation mb-3">
+                        <div class="recommendation-text text-sm text-forest-deep font-medium flex items-center gap-2">
+                            <span>🌸</span>
+                            <span>${this.getWeatherRecommendation(safeWeatherData.condition)}</span>
+                        </div>
+                        <div class="mood-impact text-xs text-sage-deep italic mt-1">
+                            ✨ Perfect weather for mindful reflection
+                        </div>
+                    </div>
+                    
+                    <!-- Location Info -->
+                    <div class="location-info text-xs text-sage-deep text-center mb-3">
+                        ${this.isUSLocation ? '🇺🇸 United States' : '🌍 International Location'}
                     </div>
                 </div>
                 
-                <div class="weather-recommendation">
-                    <div class="recommendation-text text-sm text-forest-deep mb-2 font-medium">
-                        🌸 ${this.getWeatherRecommendation(safeWeatherData.condition)}
-                    </div>
-                    <div class="mood-impact text-xs text-sage-deep italic">
-                        ✨ Perfect weather for mindful reflection
-                    </div>
-                </div>
-                
-                <div class="weather-actions mt-3 flex flex-wrap gap-2">
-                    <button class="weather-refresh text-xs text-sage-deep hover:text-forest-deep transition-colors px-2 py-1 rounded-md hover:bg-sage-pale/30">
-                        🔄 Refresh
+                <!-- Weather Actions (Responsive) -->
+                <div class="weather-actions flex flex-wrap gap-2 justify-center">
+                    <button class="weather-refresh text-xs text-sage-deep hover:text-forest-deep transition-colors px-3 py-2 rounded-lg hover:bg-sage-pale/30 flex items-center gap-1">
+                        <span>🔄</span>
+                        <span class="hidden sm:inline">Refresh</span>
                     </button>
-                    <button class="weather-details-btn text-xs text-sage-deep hover:text-forest-deep transition-colors px-2 py-1 rounded-md hover:bg-sage-pale/30">
-                        📊 Details
+                    <button class="weather-details-btn text-xs text-sage-deep hover:text-forest-deep transition-colors px-3 py-2 rounded-lg hover:bg-sage-pale/30 flex items-center gap-1">
+                        <span>📊</span>
+                        <span class="hidden sm:inline">Details</span>
                     </button>
-                    <button class="weather-graph-btn text-xs text-sage-deep hover:text-forest-deep transition-colors px-2 py-1 rounded-md hover:bg-sage-pale/30">
-                        📈 Graph
-                    </button>
-                    <button class="weather-minimize-btn text-xs text-sage-deep hover:text-forest-deep transition-colors px-2 py-1 rounded-md hover:bg-sage-pale/30">
-                        ➖ Minimize
+                    <button class="weather-graph-btn text-xs text-sage-deep hover:text-forest-deep transition-colors px-3 py-2 rounded-lg hover:bg-sage-pale/30 flex items-center gap-1">
+                        <span>📈</span>
+                        <span class="hidden sm:inline">Graph</span>
                     </button>
                 </div>
             </div>
@@ -1033,6 +1077,17 @@ class WeatherIntegration {
         widget.querySelector('.weather-minimize-btn').addEventListener('click', () => {
             this.toggleWeatherWidget();
         });
+        
+        // Add enhanced visibility toggle
+        const visibilityToggle = widget.querySelector('.weather-toggle-visibility');
+        if (visibilityToggle) {
+            visibilityToggle.addEventListener('click', () => {
+                this.toggleWeatherVisibility();
+            });
+        }
+        
+        // Add responsive CSS
+        this.addWeatherResponsiveCSS();
         
         // Setup meditation-specific behavior
         this.setupMeditationBehavior();
@@ -1099,6 +1154,253 @@ class WeatherIntegration {
                 minimizeBtn.textContent = '➕ Expand';
             }
         }
+    }
+
+    toggleWeatherVisibility() {
+        const widget = document.getElementById('weather-widget');
+        if (!widget) return;
+        
+        const visibilityToggle = widget.querySelector('.weather-toggle-visibility');
+        const isHidden = widget.classList.contains('weather-hidden');
+        
+        if (isHidden) {
+            // Show weather widget
+            widget.classList.remove('weather-hidden');
+            widget.style.opacity = '1';
+            widget.style.transform = 'scale(1)';
+            widget.style.pointerEvents = 'auto';
+            if (visibilityToggle) {
+                visibilityToggle.innerHTML = '👁️';
+                visibilityToggle.title = 'Hide weather widget';
+            }
+        } else {
+            // Hide weather widget
+            widget.classList.add('weather-hidden');
+            widget.style.opacity = '0.3';
+            widget.style.transform = 'scale(0.95)';
+            widget.style.pointerEvents = 'none';
+            if (visibilityToggle) {
+                visibilityToggle.innerHTML = '👁️‍🗨️';
+                visibilityToggle.title = 'Show weather widget';
+            }
+        }
+    }
+
+    addWeatherResponsiveCSS() {
+        // Check if CSS already added
+        if (document.getElementById('weather-responsive-css')) return;
+        
+        const style = document.createElement('style');
+        style.id = 'weather-responsive-css';
+        style.textContent = `
+            /* Enhanced Weather Widget Responsive Styles */
+            .weather-widget {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                line-height: 1.4;
+            }
+            
+            /* Small Mobile (320px - 479px) */
+            @media (max-width: 479px) {
+                .weather-widget {
+                    font-size: 14px;
+                    border-radius: 16px;
+                }
+                
+                .weather-icon {
+                    font-size: 24px !important;
+                }
+                
+                .weather-temp {
+                    font-size: 18px !important;
+                }
+                
+                .weather-condition {
+                    font-size: 12px !important;
+                }
+                
+                .weather-actions {
+                    gap: 4px !important;
+                }
+                
+                .weather-actions button {
+                    padding: 6px 8px !important;
+                    font-size: 10px !important;
+                }
+                
+                .graph-container {
+                    height: 24px !important;
+                }
+            }
+            
+            /* Mobile (480px - 767px) */
+            @media (min-width: 480px) and (max-width: 767px) {
+                .weather-widget {
+                    font-size: 15px;
+                    border-radius: 18px;
+                }
+                
+                .weather-icon {
+                    font-size: 28px !important;
+                }
+                
+                .weather-temp {
+                    font-size: 20px !important;
+                }
+                
+                .weather-condition {
+                    font-size: 13px !important;
+                }
+                
+                .graph-container {
+                    height: 32px !important;
+                }
+            }
+            
+            /* Tablet (768px - 1023px) */
+            @media (min-width: 768px) and (max-width: 1023px) {
+                .weather-widget {
+                    font-size: 16px;
+                    border-radius: 20px;
+                }
+                
+                .weather-icon {
+                    font-size: 32px !important;
+                }
+                
+                .weather-temp {
+                    font-size: 22px !important;
+                }
+                
+                .weather-condition {
+                    font-size: 14px !important;
+                }
+                
+                .graph-container {
+                    height: 40px !important;
+                }
+            }
+            
+            /* Desktop (1024px+) */
+            @media (min-width: 1024px) {
+                .weather-widget {
+                    font-size: 16px;
+                    border-radius: 24px;
+                }
+                
+                .weather-icon {
+                    font-size: 36px !important;
+                }
+                
+                .weather-temp {
+                    font-size: 24px !important;
+                }
+                
+                .weather-condition {
+                    font-size: 15px !important;
+                }
+                
+                .graph-container {
+                    height: 48px !important;
+                }
+            }
+            
+            /* Weather Widget States */
+            .weather-widget.weather-hidden {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .weather-widget.minimized {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            /* Hover Effects */
+            .weather-widget:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            }
+            
+            .weather-widget.weather-hidden:hover {
+                transform: scale(0.95);
+            }
+            
+            /* Button Hover Effects */
+            .weather-controls button:hover,
+            .weather-actions button:hover {
+                background-color: rgba(139, 195, 74, 0.1);
+                transform: scale(1.05);
+            }
+            
+            /* Grid Layout for Stats */
+            .weather-stats {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            
+            @media (max-width: 479px) {
+                .weather-stats {
+                    gap: 8px;
+                }
+            }
+            
+            /* Temperature Graph Responsive */
+            .graph-container {
+                position: relative;
+                background: linear-gradient(135deg, rgba(139, 195, 74, 0.1), rgba(76, 175, 80, 0.1));
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            
+            /* Accessibility Improvements */
+            .weather-widget:focus-within {
+                outline: 2px solid var(--sage-deep);
+                outline-offset: 2px;
+            }
+            
+            /* High Contrast Mode */
+            @media (prefers-contrast: high) {
+                .weather-widget {
+                    border-width: 2px;
+                    background: white;
+                }
+                
+                .weather-controls button,
+                .weather-actions button {
+                    border: 1px solid currentColor;
+                }
+            }
+            
+            /* Reduced Motion */
+            @media (prefers-reduced-motion: reduce) {
+                .weather-widget,
+                .weather-widget * {
+                    transition: none !important;
+                    animation: none !important;
+                }
+            }
+            
+            /* Dark Mode Support */
+            @media (prefers-color-scheme: dark) {
+                .weather-widget {
+                    background: rgba(30, 30, 30, 0.95);
+                    color: #e0e0e0;
+                    border-color: rgba(139, 195, 74, 0.4);
+                }
+                
+                .weather-temp {
+                    color: #4caf50 !important;
+                }
+                
+                .weather-condition {
+                    color: #e0e0e0 !important;
+                }
+                
+                .stat-label {
+                    color: #b0b0b0 !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     }
     
     setupMeditationBehavior() {
@@ -1174,7 +1476,7 @@ class WeatherIntegration {
         // Create small weather toggle button
         const toggleBtn = document.createElement('button');
         toggleBtn.id = 'weather-toggle-btn';
-        toggleBtn.className = 'fixed top-20 right-4 z-50 bg-white/90 backdrop-blur-sm border border-sage-deep/20 rounded-full p-2 shadow-lg hover:shadow-xl transition-all duration-300 text-sage-deep hover:bg-sage-pale/30';
+        toggleBtn.className = 'fixed top-20 right-4 z-50 bg-white/90 backdrop-blur-sm border border-sage-deep/20 rounded-full p-2 shadow-lg hover:shadow-xl transition-all duration-300 text-sage-deep hover:bg-sage-pale/30 touch-target';
         toggleBtn.innerHTML = '🌤️';
         toggleBtn.title = 'Show weather';
         toggleBtn.setAttribute('aria-label', 'Show weather widget');
@@ -1184,6 +1486,8 @@ class WeatherIntegration {
         if (isMobile) {
             toggleBtn.style.top = '80px';
             toggleBtn.style.right = '16px';
+            toggleBtn.style.width = '48px';
+            toggleBtn.style.height = '48px';
         }
         
         toggleBtn.addEventListener('click', () => {
@@ -1203,6 +1507,26 @@ class WeatherIntegration {
                 toggleBtn.style.opacity = '0.6';
             }
         }, 5000);
+    }
+    
+    updateWeatherWidgetPosition() {
+        const widget = document.getElementById('weather-widget');
+        if (!widget) return;
+        
+        const isMobile = window.innerWidth < 768;
+        const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+        const isDesktop = window.innerWidth >= 1024;
+        
+        let positionClass = 'fixed top-24 right-4 z-20 max-w-xs';
+        if (isMobile) {
+            positionClass = 'fixed top-24 right-2 left-2 z-20 max-w-none';
+        } else if (isTablet) {
+            positionClass = 'fixed top-24 right-4 z-20 max-w-sm';
+        } else if (isDesktop) {
+            positionClass = 'fixed top-24 right-4 z-20 max-w-xs';
+        }
+        
+        widget.className = `weather-widget ${positionClass} bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-xl p-3 sm:p-4 shadow-lg transition-all duration-300`;
     }
     
     showContextualRecommendations(recommendations) {

@@ -276,48 +276,68 @@ class UIFixes {
     applyWeatherWidgetStyles(widget) {
         const isMobile = window.innerWidth < 768;
         const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+        const isSmallMobile = window.innerWidth < 480;
         
-        // Responsive positioning
-        if (isMobile) {
+        // Enhanced responsive positioning
+        if (isSmallMobile) {
             widget.style.position = 'fixed';
-            widget.style.top = '70px';
+            widget.style.top = '60px';
             widget.style.right = '8px';
             widget.style.left = '8px';
             widget.style.maxWidth = 'none';
             widget.style.width = 'auto';
+        } else if (isMobile) {
+            widget.style.position = 'fixed';
+            widget.style.top = '70px';
+            widget.style.right = '12px';
+            widget.style.left = '12px';
+            widget.style.maxWidth = '400px';
+            widget.style.margin = '0 auto';
         } else if (isTablet) {
             widget.style.position = 'fixed';
             widget.style.top = '80px';
             widget.style.right = '16px';
-            widget.style.maxWidth = '320px';
+            widget.style.maxWidth = '380px';
         } else {
             widget.style.position = 'fixed';
             widget.style.top = '80px';
             widget.style.right = '20px';
-            widget.style.maxWidth = '300px';
+            widget.style.maxWidth = '320px';
         }
         
-        // Enhanced styling
+        // Enhanced styling with better visibility controls
         widget.style.zIndex = '1000';
         widget.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
         widget.style.backdropFilter = 'blur(20px)';
         widget.style.border = '1px solid rgba(139, 195, 74, 0.3)';
-        widget.style.borderRadius = '16px';
-        widget.style.padding = '16px';
+        widget.style.borderRadius = '20px';
         widget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08)';
         widget.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
         widget.style.cursor = 'move';
         
-        // Add hover effects
-        widget.addEventListener('mouseenter', () => {
-            widget.style.transform = 'translateY(-2px)';
-            widget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)';
-        });
+        // Responsive padding
+        if (isSmallMobile) {
+            widget.style.padding = '12px';
+        } else if (isMobile) {
+            widget.style.padding = '16px';
+        } else {
+            widget.style.padding = '20px';
+        }
         
-        widget.addEventListener('mouseleave', () => {
-            widget.style.transform = 'translateY(0)';
-            widget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08)';
-        });
+        // Add hover effects (only on desktop)
+        if (!isMobile) {
+            widget.addEventListener('mouseenter', () => {
+                if (!widget.classList.contains('weather-hidden')) {
+                    widget.style.transform = 'translateY(-2px)';
+                    widget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)';
+                }
+            });
+            
+            widget.addEventListener('mouseleave', () => {
+                widget.style.transform = 'translateY(0)';
+                widget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08)';
+            });
+        }
     }
 
     addDragFunctionality(widget) {
@@ -521,10 +541,10 @@ class UIFixes {
         }
 
         // Create enhanced breathing interface
-        const interface = document.createElement('div');
-        interface.id = 'breathing-interface';
-        interface.className = 'breathing-interface';
-        interface.innerHTML = `
+        const breathingInterface = document.createElement('div');
+        breathingInterface.id = 'breathing-interface';
+        breathingInterface.className = 'breathing-interface';
+        breathingInterface.innerHTML = `
             <div class="breathing-container">
                 <div class="breathing-header">
                     <h3 class="breathing-title">Guided Breathing</h3>

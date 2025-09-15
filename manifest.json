@@ -1,124 +1,20 @@
 {
-  "name": "MorningFlow - Premium Morning Routine App",
+  "name": "MorningFlow - Daily Wellness Companion",
   "short_name": "MorningFlow",
-  "description": "Transform your mornings, transform your life with science-based wellness practices, meditation, and health optimization tools",
-  "version": "1.0.0",
+  "description": "Your daily wellness companion for meditation, journaling, and mindful living",
   "start_url": "/",
   "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#059669",
   "orientation": "portrait-primary",
-  "theme_color": "#4A6C55",
-  "background_color": "#F8F9FA",
-  "scope": "/",
-  "lang": "en-US",
-  "dir": "ltr",
-  "categories": ["health", "lifestyle", "productivity", "education"],
   "icons": [
     {
-      "src": "/assets/icons/icon-192.png",
+      "src": "favicon.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/assets/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ],
-  "screenshots": [
-    {
-      "src": "/screenshots/desktop-home.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Home page showing wellness and health optimization tools"
-    },
-    {
-      "src": "/screenshots/mobile-timer.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Mobile wellness timer interface"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Start Meditation",
-      "short_name": "Meditate",
-      "description": "Quick access to stress reduction and mental clarity",
-      "url": "/?page=timer",
-      "icons": [
-        {
-          "src": "/assets/icons/icon-192.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Write Journal",
-      "short_name": "Journal",
-      "description": "Quick access to personal growth tracking",
-      "url": "/?page=journal",
-      "icons": [
-        {
-          "src": "/assets/icons/icon-192.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Start Workout",
-      "short_name": "Workout",
-      "description": "Quick access to physical health and energy boost",
-      "url": "/?page=workout",
-      "icons": [
-        {
-          "src": "/assets/icons/icon-192.png",
-          "sizes": "96x96"
-        }
-      ]
-    }
-  ],
-  "related_applications": [],
-  "prefer_related_applications": false,
-  "edge_side_panel": {
-    "preferred_width": 400
-  },
-  "launch_handler": {
-    "client_mode": "focus-existing"
-  },
-  "handle_links": "preferred",
-  "capture_links": "new-client",
-  "file_handlers": [
-    {
-      "action": "/",
-      "accept": {
-        "text/markdown": [".md"],
-        "text/plain": [".txt"]
-      }
-    }
-  ],
-  "protocol_handlers": [
-    {
-      "protocol": "web+morningflow",
-      "url": "/?action=%s"
-    }
-  ],
-  "share_target": {
-    "action": "/",
-    "method": "POST",
-    "enctype": "multipart/form-data",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url",
-      "files": [
-        {
-          "name": "files",
-          "accept": ["text/markdown", "text/plain"]
-        }
-      ]
-    }
-  }
+  "categories": ["health", "lifestyle", "productivity"],
+  "lang": "en",
+  "dir": "ltr"
 }
