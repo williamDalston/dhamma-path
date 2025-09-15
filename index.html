@@ -461,68 +461,25 @@
             }, { once: true });
           }
           
-          // Location button bootstrap
-          const locationBtn = document.getElementById('location-btn');
-          if (locationBtn) {
-            locationBtn.addEventListener('click', () => {
-              if (window.weatherIntegration && window.weatherIntegration.requestLocationPermission) {
-                window.weatherIntegration.requestLocationPermission();
-                locationBtn.textContent = '📍 Getting Location...';
-                locationBtn.disabled = true;
-                
-                // Reset button after 5 seconds
-                setTimeout(() => {
-                  locationBtn.textContent = '📍 Get Accurate Weather Location';
-                  locationBtn.disabled = false;
-                }, 5000);
-              } else {
-                console.warn('Weather integration not available yet');
-              }
-            });
-          }
-          
-          // Try to get location automatically after a short delay
+          // Automatic location detection - no buttons needed
           setTimeout(() => {
             if (navigator.geolocation && window.weatherIntegration) {
-              console.log('🌍 Attempting automatic location detection on page load...');
+              console.log('🌍 Attempting automatic location detection...');
               navigator.geolocation.getCurrentPosition(
                 (position) => {
-                  console.log('🌍 Automatic location success:', position.coords.latitude, position.coords.longitude);
-                  if (window.weatherIntegration.requestLocationPermission) {
-                    window.weatherIntegration.requestLocationPermission();
+                  console.log('🌍 Location detected automatically:', position.coords.latitude, position.coords.longitude);
+                  // Trigger weather refresh with new location
+                  if (window.weatherIntegration.getCurrentWeather) {
+                    window.weatherIntegration.getCurrentWeather();
                   }
                 },
                 (error) => {
-                  console.log('📍 Automatic location failed, user can click button:', error.message);
+                  console.log('📍 Automatic location failed, using browser detection:', error.message);
                 },
-                { timeout: 3000, enableHighAccuracy: false }
+                { timeout: 5000, enableHighAccuracy: true }
               );
             }
-          }, 2000);
-          
-          // Emergency mode toggle bootstrap
-          const emergencyBtn = document.getElementById('emergency-toggle');
-          if (emergencyBtn) {
-            emergencyBtn.addEventListener('click', () => {
-              const isEmergency = document.body.classList.contains('emergency-mode');
-              
-              if (isEmergency) {
-                // Disable emergency mode
-                document.body.classList.remove('emergency-mode', 'disable-animations');
-                emergencyBtn.textContent = '⚡ Toggle Emergency Mode';
-                emergencyBtn.classList.remove('bg-red-500', 'hover:bg-red-600');
-                emergencyBtn.classList.add('bg-orange-500', 'hover:bg-orange-600');
-                console.log('✅ Emergency mode disabled');
-              } else {
-                // Enable emergency mode
-                document.body.classList.add('emergency-mode', 'disable-animations');
-                emergencyBtn.textContent = '✅ Emergency Mode ON';
-                emergencyBtn.classList.remove('bg-orange-500', 'hover:bg-orange-600');
-                emergencyBtn.classList.add('bg-red-500', 'hover:bg-red-600');
-                console.log('🚨 Emergency mode enabled');
-              }
-            });
-          }
+          }, 1000);
           
           // expose privacy section
           document.getElementById('privacy')?.removeAttribute('hidden');
@@ -900,15 +857,6 @@
         <!-- Breathing functionality for validation -->
         <button id="breathing-btn" type="button" hidden>Start Breathing</button>
         
-        <!-- Location request button for accurate weather -->
-        <button id="location-btn" type="button" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            📍 Get Accurate Weather Location
-        </button>
-        
-        <!-- Emergency mode toggle -->
-        <button id="emergency-toggle" type="button" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            ⚡ Toggle Emergency Mode
-        </button>
         
         <!-- Content will be loaded here dynamically -->
         

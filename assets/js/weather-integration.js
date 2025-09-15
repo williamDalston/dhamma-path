@@ -65,13 +65,8 @@ class WeatherIntegration {
                     
                     console.log(`🌍 Automatic location detected: ${this.userLocation.latitude.toFixed(4)}, ${this.userLocation.longitude.toFixed(4)} - ${this.isUSLocation ? 'US' : 'International'} - Using ${this.temperatureUnit}°`);
                     
-                    // Update UI to show location was detected
-                    const locationBtn = document.getElementById('location-btn');
-                    if (locationBtn) {
-                        locationBtn.textContent = '✅ Location Detected!';
-                        locationBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
-                        locationBtn.classList.add('bg-green-500', 'hover:bg-green-600');
-                    }
+                    // Show location in weather widget
+                    this.displayLocationInWidget();
                     
                     // Retry weather fetch with real location
                     this.getCurrentWeather();
@@ -84,62 +79,7 @@ class WeatherIntegration {
             // Fallback to browser-based detection
             this.detectLocationFromBrowser();
             
-            // Store location request function for user gesture
-            this.requestLocationPermission = () => {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        (position) => {
-                            this.userLocation = {
-                                latitude: position.coords.latitude,
-                                longitude: position.coords.longitude
-                            };
-                            
-                            // Determine if user is in US based on coordinates
-                            this.isUSLocation = this.isLocationInUS(position.coords.latitude, position.coords.longitude);
-                            this.temperatureUnit = this.isUSLocation ? 'F' : 'C';
-                            
-                            console.log(`🌍 Precise location detected: ${this.userLocation.latitude.toFixed(4)}, ${this.userLocation.longitude.toFixed(4)} - ${this.isUSLocation ? 'US' : 'International'} - Using ${this.temperatureUnit}°`);
-                    
-                    // Show location in weather widget
-                    this.displayLocationInWidget();
-                            
-                            // Update UI to show location was detected
-                            const locationBtn = document.getElementById('location-btn');
-                            if (locationBtn) {
-                                locationBtn.textContent = '✅ Location Updated!';
-                                locationBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
-                                locationBtn.classList.add('bg-green-500', 'hover:bg-green-600');
-                            }
-                            
-                            // Retry weather fetch with real location
-                            this.getCurrentWeather();
-                        },
-                        (error) => {
-                            console.log('📍 Location access denied, keeping browser-based detection');
-                            
-                            // Update UI to show location was denied
-                            const locationBtn = document.getElementById('location-btn');
-                            if (locationBtn) {
-                                locationBtn.textContent = '❌ Location Denied';
-                                locationBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
-                                locationBtn.classList.add('bg-red-500', 'hover:bg-red-600');
-                                
-                                // Reset button after 3 seconds
-                                setTimeout(() => {
-                                    locationBtn.textContent = '📍 Get Accurate Weather Location';
-                                    locationBtn.classList.remove('bg-red-500', 'hover:bg-red-600');
-                                    locationBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
-                                    locationBtn.disabled = false;
-                                }, 3000);
-                            }
-                        },
-                        {
-                            timeout: 5000,
-                            enableHighAccuracy: false
-                        }
-                    );
-                }
-            };
+            // Location detection is now fully automatic - no manual function needed
             
         } catch (error) {
             console.log('🌍 Location detection failed, using browser-based detection');
