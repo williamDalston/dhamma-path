@@ -207,8 +207,16 @@ class HealthIntegrationSystem {
     }
 
     getScreenTime() {
-        // Mock screen time calculation - in real app, this would track actual usage
-        return Math.floor(Math.random() * 600) + 60; // 1-10 hours
+        // Use session baseline for accurate screen time calculation
+        const sessionStart = window.__sessionStart || (window.__sessionStart = Date.now());
+        const minutesOnPage = Math.max(0, Math.round((Date.now() - sessionStart) / 60000));
+        
+        // Only warn if actually extended (3+ hours)
+        if (minutesOnPage > 180) {
+            console.warn(`⚠️ Extended screen time detected: ${minutesOnPage} minutes`);
+        }
+        
+        return minutesOnPage;
     }
 
     getLastActivityTime() {

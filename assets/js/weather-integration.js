@@ -7,7 +7,7 @@ class WeatherIntegration {
     constructor() {
         // Singleton guard for hot reload
         const ns = (window.__app ??= {});
-        if (ns.weatherInit) return;
+        if (ns.weatherInit) return ns.weatherInstance;
         ns.weatherInit = true;
         
         this.apiKey = null; // Would be set from environment or user input
@@ -20,6 +20,9 @@ class WeatherIntegration {
         this.inFlightFetch = null; // Prevent duplicate API calls
         
         this.initializeWeatherSystem();
+        
+        // Store instance for singleton pattern
+        ns.weatherInstance = this;
         
         // Expose location request function globally
         window.weatherIntegration = this;
