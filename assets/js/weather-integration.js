@@ -50,8 +50,38 @@ class WeatherIntegration {
     
     async detectUserLocation() {
         try {
-            // Don't request location automatically - wait for user gesture
-            // Use browser-based detection first
+            // Try to get precise location automatically first
+            if (navigator.geolocation) {
+                console.log('🌍 Attempting automatic location detection...');
+                try {
+                    const position = await this.getCurrentPosition();
+                    this.userLocation = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    };
+                    
+                    this.isUSLocation = this.isLocationInUS(this.userLocation.latitude, this.userLocation.longitude);
+                    this.temperatureUnit = this.isUSLocation ? 'F' : 'C';
+                    
+                    console.log(`🌍 Automatic location detected: ${this.userLocation.latitude.toFixed(4)}, ${this.userLocation.longitude.toFixed(4)} - ${this.isUSLocation ? 'US' : 'International'} - Using ${this.temperatureUnit}°`);
+                    
+                    // Update UI to show location was detected
+                    const locationBtn = document.getElementById('location-btn');
+                    if (locationBtn) {
+                        locationBtn.textContent = '✅ Location Detected!';
+                        locationBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                        locationBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+                    }
+                    
+                    // Retry weather fetch with real location
+                    this.getCurrentWeather();
+                    return;
+                } catch (error) {
+                    console.log('📍 Automatic location failed, falling back to browser detection:', error.message);
+                }
+            }
+            
+            // Fallback to browser-based detection
             this.detectLocationFromBrowser();
             
             // Store location request function for user gesture
@@ -69,6 +99,9 @@ class WeatherIntegration {
                             this.temperatureUnit = this.isUSLocation ? 'F' : 'C';
                             
                             console.log(`🌍 Precise location detected: ${this.userLocation.latitude.toFixed(4)}, ${this.userLocation.longitude.toFixed(4)} - ${this.isUSLocation ? 'US' : 'International'} - Using ${this.temperatureUnit}°`);
+                    
+                    // Show location in weather widget
+                    this.displayLocationInWidget();
                             
                             // Update UI to show location was detected
                             const locationBtn = document.getElementById('location-btn');
@@ -150,6 +183,17 @@ class WeatherIntegration {
             lat >= 24.396308 && lat <= 71.538800 && // Latitude bounds
             lng >= -179.148909 && lng <= -66.885444 // Longitude bounds (includes Alaska and Hawaii)
         );
+    }
+    
+    displayLocationInWidget() {
+        // Add location info to weather widget
+        const weatherWidget = document.querySelector('.weather-widget, .weather-section');
+        if (weatherWidget && this.userLocation) {
+            const locationInfo = document.createElement('div');
+            locationInfo.className = 'location-info text-xs text-gray-600 mt-2';
+            locationInfo.innerHTML = `📍 ${this.userLocation.latitude.toFixed(4)}, ${this.userLocation.longitude.toFixed(4)}`;
+            weatherWidget.appendChild(locationInfo);
+        }
     }
     
     setupWeatherAPI() {

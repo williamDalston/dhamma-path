@@ -481,6 +481,25 @@
             });
           }
           
+          // Try to get location automatically after a short delay
+          setTimeout(() => {
+            if (navigator.geolocation && window.weatherIntegration) {
+              console.log('🌍 Attempting automatic location detection on page load...');
+              navigator.geolocation.getCurrentPosition(
+                (position) => {
+                  console.log('🌍 Automatic location success:', position.coords.latitude, position.coords.longitude);
+                  if (window.weatherIntegration.requestLocationPermission) {
+                    window.weatherIntegration.requestLocationPermission();
+                  }
+                },
+                (error) => {
+                  console.log('📍 Automatic location failed, user can click button:', error.message);
+                },
+                { timeout: 3000, enableHighAccuracy: false }
+              );
+            }
+          }, 2000);
+          
           // Emergency mode toggle bootstrap
           const emergencyBtn = document.getElementById('emergency-toggle');
           if (emergencyBtn) {
