@@ -680,6 +680,27 @@ class MotionSystem {
     onResize() {
         // Adjust animations for new screen size
         this.updateMotionSettings();
+        this.adjustAnimationsForResize();
+    }
+    
+    adjustAnimationsForResize() {
+        // Adjust animations based on new screen dimensions
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        // Update CSS custom properties for responsive animations
+        document.documentElement.style.setProperty('--screen-width', `${width}px`);
+        document.documentElement.style.setProperty('--screen-height', `${height}px`);
+        
+        // Adjust animation durations based on screen size
+        const baseDuration = width < 768 ? 0.3 : 0.5;
+        document.documentElement.style.setProperty('--animation-duration', `${baseDuration}s`);
+        
+        // Update parallax intensity based on screen size
+        const parallaxIntensity = width < 768 ? 0.5 : 1.0;
+        document.documentElement.style.setProperty('--parallax-intensity', parallaxIntensity);
+        
+        console.log('🎬 Animations adjusted for resize:', width, 'x', height);
     }
 
     updateMotionSettings() {

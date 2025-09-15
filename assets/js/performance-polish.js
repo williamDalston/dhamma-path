@@ -10,6 +10,7 @@ class PerformancePolish {
         this.observers = new Map();
         this.cache = new Map();
         this.loadingStates = new Set();
+        this.preloadedRoutes = new Set(); // Dedupe route preloading
         this.performanceMetrics = {
             loadTime: 0,
             renderTime: 0,
@@ -345,6 +346,9 @@ class PerformancePolish {
     }
     
     preloadRoute(route) {
+        if (this.preloadedRoutes.has(route)) return;
+        this.preloadedRoutes.add(route);
+        
         const routeUrl = `assets/templates/${route}.html`;
         
         if (!this.cache.has(routeUrl)) {

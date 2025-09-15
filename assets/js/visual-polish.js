@@ -266,7 +266,12 @@ class VisualPolish {
         this.setupElementTransitions();
         
         // State transitions
-        this.setupStateTransitions();
+        if (typeof this.setupStateTransitions === 'function') {
+            this.setupStateTransitions();
+        } else {
+            console.warn('setupStateTransitions not available yet, retrying...');
+            setTimeout(() => this.setupStateTransitions(), 100);
+        }
     }
     
     setupStateTransitions() {

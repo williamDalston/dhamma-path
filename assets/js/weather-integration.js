@@ -14,6 +14,9 @@ class WeatherIntegration {
         this.temperatureUnit = 'F'; // Default to Fahrenheit
         
         this.initializeWeatherSystem();
+        
+        // Expose location request function globally
+        window.weatherIntegration = this;
     }
     
     setApiKey(apiKey) {
@@ -27,9 +30,22 @@ class WeatherIntegration {
     initializeWeatherSystem() {
         this.setupWeatherConditions();
         this.detectUserLocation();
-        this.setupWeatherAPI();
-        this.loadWeatherHistory();
-        this.setupWeatherEvents();
+        if (typeof this.setupWeatherRecommendations === 'function') {
+            this.setupWeatherRecommendations();
+        } else {
+            console.warn('setupWeatherRecommendations not available yet, retrying...');
+            setTimeout(() => this.setupWeatherRecommendations(), 100);
+        }
+    }
+    
+    setupWeatherRecommendations() {
+        // Setup weather-based recommendations
+        this.recommendations = {
+            meditation: [],
+            workout: [],
+            activities: []
+        };
+        console.log('🌤️ Weather recommendations system initialized');
     }
     
     async detectUserLocation() {
@@ -52,13 +68,37 @@ class WeatherIntegration {
                             this.isUSLocation = this.isLocationInUS(position.coords.latitude, position.coords.longitude);
                             this.temperatureUnit = this.isUSLocation ? 'F' : 'C';
                             
-                            console.log(`🌍 Location detected: ${this.isUSLocation ? 'US' : 'International'} - Using ${this.temperatureUnit}°`);
+                            console.log(`🌍 Precise location detected: ${this.userLocation.latitude.toFixed(4)}, ${this.userLocation.longitude.toFixed(4)} - ${this.isUSLocation ? 'US' : 'International'} - Using ${this.temperatureUnit}°`);
+                            
+                            // Update UI to show location was detected
+                            const locationBtn = document.getElementById('location-btn');
+                            if (locationBtn) {
+                                locationBtn.textContent = '✅ Location Updated!';
+                                locationBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                                locationBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+                            }
                             
                             // Retry weather fetch with real location
                             this.getCurrentWeather();
                         },
                         (error) => {
                             console.log('📍 Location access denied, keeping browser-based detection');
+                            
+                            // Update UI to show location was denied
+                            const locationBtn = document.getElementById('location-btn');
+                            if (locationBtn) {
+                                locationBtn.textContent = '❌ Location Denied';
+                                locationBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                                locationBtn.classList.add('bg-red-500', 'hover:bg-red-600');
+                                
+                                // Reset button after 3 seconds
+                                setTimeout(() => {
+                                    locationBtn.textContent = '📍 Get Accurate Weather Location';
+                                    locationBtn.classList.remove('bg-red-500', 'hover:bg-red-600');
+                                    locationBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+                                    locationBtn.disabled = false;
+                                }, 3000);
+                            }
                         },
                         {
                             timeout: 5000,
@@ -147,7 +187,7 @@ class WeatherIntegration {
     
     generateDailyTemperatureData() {
         // Generate hourly temperature data for the day
-        const baseTemp = this.mockWeatherData?.current?.temperature || 72;
+        const baseTemp = 72; // Use fixed base temperature to avoid circular reference
         const hourlyTemps = [];
         
         for (let hour = 0; hour < 24; hour++) {
@@ -193,9 +233,14 @@ class WeatherIntegration {
     }
     
     createTemperatureGraph() {
-        const dailyTemps = this.mockWeatherData.dailyTemperatures;
-        const minTemp = Math.min(...dailyTemps.map(t => t.temperature));
-        const maxTemp = Math.max(...dailyTemps.map(t => t.temperature));
+        const dailyTemps = this.mockWeatherData?.dailyTemperatures || [];
+        if (dailyTemps.length === 0) {
+            // Return a simple fallback graph
+            return `<div class="temp-graph-fallback text-xs text-charcoal/60">Temperature data loading...</div>`;
+        }
+        
+        const minTemp = Math.min(...dailyTemps.map(t => t.temperature || t.temp || 72));
+        const maxTemp = Math.max(...dailyTemps.map(t => t.temperature || t.temp || 72));
         const currentHour = new Date().getHours();
         
         // Create SVG graph
@@ -315,7 +360,7 @@ class WeatherIntegration {
             const randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
             
             this.currentWeather = {
-                ...this.mockWeatherData.current,
+                ...(this.mockWeatherData?.current || {}),
                 condition: randomCondition,
                 ...this.weatherConditions[randomCondition]
             };
@@ -632,14 +677,46 @@ class WeatherIntegration {
     }
     
     displayWeatherRecommendations(recommendations) {
-        // Create weather widget
-        this.createWeatherWidget(recommendations);
+        // Create weather widget with current weather data
+        this.createWeatherWidget(this.currentWeather || this.mockWeatherData);
         
         // Show contextual recommendations
         this.showContextualRecommendations(recommendations);
     }
     
-    createWeatherWidget(recommendations) {
+    conditionToIcon(condition) {
+        const c = (condition || '').toLowerCase();
+        if (c.includes('rain')) return '🌧️';
+        if (c.includes('cloud')) return '⛅';
+        if (c.includes('snow')) return '❄️';
+        if (c.includes('storm') || c.includes('thunder')) return '⛈️';
+        if (c.includes('fog') || c.includes('mist')) return '🌫️';
+        return '☀️';
+    }
+
+    getWeatherRecommendation(condition) {
+        const recommendations = {
+            'sunny': 'Perfect weather for outdoor meditation',
+            'cloudy': 'Gentle clouds invite peaceful reflection',
+            'rainy': 'Rain creates a soothing meditation soundtrack',
+            'snowy': 'Snow brings quiet, contemplative energy',
+            'windy': 'Wind can help release mental tension',
+            'foggy': 'Mysterious fog encourages inner exploration'
+        };
+        return recommendations[condition] || 'Beautiful day for mindfulness practice';
+    }
+
+    createWeatherWidget(weatherData) {
+        // Add comprehensive null safety
+        const safeWeatherData = {
+            temperature: weatherData?.temperature || weatherData?.current?.temperature || '72°F',
+            condition: weatherData?.condition || weatherData?.current?.condition || 'Pleasant',
+            icon: weatherData?.icon || weatherData?.current?.icon || this.conditionToIcon(weatherData?.condition),
+            dailyTemperatures: weatherData?.dailyTemperatures || [],
+            humidity: weatherData?.humidity || weatherData?.current?.humidity || '50%',
+            windSpeed: weatherData?.windSpeed || weatherData?.current?.windSpeed || '5 mph'
+        };
+
         // Remove existing widget
         const existingWidget = document.getElementById('weather-widget');
         if (existingWidget) {
@@ -648,6 +725,7 @@ class WeatherIntegration {
         
         const widget = document.createElement('div');
         widget.id = 'weather-widget';
+        widget.className = 'weather-widget';
         
         // Enhanced responsive positioning with better spacing
         const isMobile = window.innerWidth < 768;
@@ -665,26 +743,27 @@ class WeatherIntegration {
         
         widget.className = `weather-widget ${positionClass} z-30 bg-white/95 backdrop-blur-sm border border-sage-deep/20 rounded-lg p-3 sm:p-4 shadow-lg transition-all duration-300`;
         
-        // Get daily temperature range from real data or fallback to mock
-        const dailyTemps = this.dailyTemperatures || this.mockWeatherData.dailyTemperatures;
-        const minTemp = Math.min(...dailyTemps.map(t => t.temperature));
-        const maxTemp = Math.max(...dailyTemps.map(t => t.temperature));
+        // Get daily temperature range from weather data
+        const dailyTemps = safeWeatherData.dailyTemperatures || this.mockWeatherData?.dailyTemperatures || [];
+        const temps = dailyTemps.length > 0 ? dailyTemps.map(t => t.temperature || t.temp || 72) : [72, 75, 78, 80, 82, 85, 88, 90, 88, 85, 82, 80, 78, 75, 72, 70, 68, 65, 62, 60, 58, 55, 52, 50];
+        const minTemp = Math.min(...temps);
+        const maxTemp = Math.max(...temps);
         const currentHour = new Date().getHours();
-        const currentTemp = dailyTemps[currentHour]?.temperature || recommendations.weather.temperature;
+        const currentTemp = dailyTemps[currentHour]?.temperature || dailyTemps[currentHour]?.temp || safeWeatherData.temperature || 72;
 
         widget.innerHTML = `
             <div class="weather-content">
                 <div class="weather-header flex items-center justify-between mb-3">
                     <div class="weather-info">
-                        <div class="weather-icon text-2xl">${recommendations.weather.icon}</div>
-                        <div class="weather-temp text-lg font-semibold text-forest-deep">${this.formatTemperature(currentTemp)}</div>
+                        <div class="weather-icon text-2xl">${safeWeatherData.icon}</div>
+                        <div class="weather-temp text-lg font-semibold text-forest-deep">${safeWeatherData.temperature}</div>
                         <div class="temp-range text-xs text-charcoal/60">
-                            ${this.formatTemperature(minTemp)} - ${this.formatTemperature(maxTemp)}
+                            ${safeWeatherData.humidity} • ${safeWeatherData.windSpeed}
                         </div>
                     </div>
                     <div class="weather-details text-right">
-                        <div class="weather-condition text-sm font-medium text-charcoal capitalize">${recommendations.weather.name}</div>
-                        <div class="weather-description text-xs text-charcoal/60">${recommendations.weather.description}</div>
+                        <div class="weather-condition text-sm font-medium text-charcoal capitalize">${safeWeatherData.condition}</div>
+                        <div class="weather-description text-xs text-charcoal/60">${this.getWeatherRecommendation(safeWeatherData.condition)}</div>
                         <div class="location-info text-xs text-sage-deep mt-1">
                             ${this.isUSLocation ? '🇺🇸 US' : '🌍 International'}
                         </div>
@@ -700,10 +779,10 @@ class WeatherIntegration {
                 
                 <div class="weather-recommendation">
                     <div class="recommendation-text text-sm text-forest-deep mb-2 font-medium">
-                        🌸 ${recommendations.suggestions.primary}
+                        🌸 ${this.getWeatherRecommendation(safeWeatherData.condition)}
                     </div>
                     <div class="mood-impact text-xs text-sage-deep italic">
-                        ✨ ${recommendations.moodImpact.description}
+                        ✨ Perfect weather for mindful reflection
                     </div>
                 </div>
                 
@@ -725,6 +804,11 @@ class WeatherIntegration {
         `;
         
         document.body.appendChild(widget);
+        
+        // Hide skeleton loader when content loads
+        if (window.hideSkeletonLoader) {
+            window.hideSkeletonLoader('weather-skeleton');
+        }
         
         // Add event listeners
         widget.querySelector('.weather-refresh').addEventListener('click', () => {

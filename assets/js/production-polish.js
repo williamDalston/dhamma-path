@@ -263,6 +263,15 @@ class ProductionPolish {
     
     setupBreakReminder() {
         // Setup break reminder notifications
+        this.breakReminderInterval = setInterval(() => {
+            if (this.notificationPermission === 'granted') {
+                new Notification('Time for a Break', {
+                    body: 'Take a moment to breathe and recenter yourself.',
+                    icon: '/assets/icons/icon-192.png',
+                    tag: 'break-reminder'
+                });
+            }
+        }, 2 * 60 * 60 * 1000); // Every 2 hours
         console.log('⏰ Break reminder notifications initialized');
     }
 

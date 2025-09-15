@@ -28,6 +28,11 @@ class AnalyticsSystem {
     }
 
     trackPageView() {
+        // Prevent duplicate page_view on the same URL
+        const seen = (window.__mf ||= {});
+        if (seen.lastPV && seen.lastPV === location.href) return;
+        seen.lastPV = location.href;
+        
         const pageView = {
             type: 'page_view',
             timestamp: Date.now(),

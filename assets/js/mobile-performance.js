@@ -5,6 +5,11 @@
 
 class MobilePerformanceOptimizer {
     constructor() {
+        // Singleton guard for hot reload
+        const NS = (window.__mf ||= {});
+        if (NS.mobilePerfInitialized) return;
+        NS.mobilePerfInitialized = true;
+        
         this.isEnabled = true;
         this.connectionType = 'unknown';
         this.deviceCapabilities = {
@@ -307,9 +312,16 @@ class MobilePerformanceOptimizer {
             }
         } else if (deviceType === 'mobile') {
             // Optimize JavaScript for mobile
-            if (window.physicsAnimations && typeof window.physicsAnimations.setQuality === 'function') {
-                window.physicsAnimations.setQuality('medium');
-            }
+            // Wait for physics animations to be available
+            const waitForPhysicsAnimations = () => {
+                if (window.physicsAnimations && typeof window.physicsAnimations.setQuality === 'function') {
+                    window.physicsAnimations.setQuality('medium');
+                } else {
+                    // Retry after a short delay
+                    setTimeout(waitForPhysicsAnimations, 100);
+                }
+            };
+            waitForPhysicsAnimations();
             
             if (window.hapticStorytelling) {
                 window.hapticStorytelling.setIntensity('light');

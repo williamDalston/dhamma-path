@@ -23,7 +23,12 @@ class DataPersistenceSystem {
         this.loadAllData();
         this.setupAutoSave();
         this.setupDataExport();
-        this.setupAnalytics();
+        if (typeof this.setupAnalytics === 'function') {
+            this.setupAnalytics();
+        } else {
+            console.warn('setupAnalytics not available yet, retrying...');
+            setTimeout(() => this.setupAnalytics(), 100);
+        }
     }
     
     setupAnalytics() {

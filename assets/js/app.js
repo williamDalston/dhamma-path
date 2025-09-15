@@ -5,6 +5,11 @@
 
 class DhammaPathApp {
     constructor() {
+        // Singleton guard for hot reload
+        const ns = (window.__app ||= {});
+        if (ns.appInitialized) return;
+        ns.appInitialized = true;
+        
         this.navigationManager = null;
         this.meditationTimer = null;
         this.performanceMonitor = null;
@@ -12,6 +17,61 @@ class DhammaPathApp {
         this.analyticsSystem = null;
         this.isInitialized = false;
         this.init();
+    }
+
+    // Helper: Idle callback with fallback
+    onIdle(callback) {
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(callback, { timeout: 2000 });
+        } else {
+            setTimeout(callback, 0);
+        }
+    }
+
+    // Helper: Chunk heavy work to prevent long tasks
+    chunked(items, fn, size = 200) {
+        let i = 0;
+        const loop = () => {
+            const end = Math.min(i + size, items.length);
+            for (; i < end; i++) fn(items[i]);
+            if (i < items.length) setTimeout(loop, 0); // yield back to UI
+        };
+        loop();
+    }
+
+    // Phase 1: Critical initialization (blocking-critical only)
+    initCritical() {
+        console.log('🚀 Phase 1: Critical initialization');
+        this.setupErrorHandling();
+        this.initializePerformanceMonitoring();
+    }
+
+    // Phase 2: Interactive features (above-the-fold)
+    async initInteractive() {
+        console.log('🎯 Phase 2: Interactive features');
+        requestAnimationFrame(async () => {
+            await this.initializeNavigation();
+            await this.initializeThemeManager();
+            this.setupGlobalEventListeners();
+        });
+    }
+
+    // Phase 3: Idle features (analytics, widgets, haptics)
+    async initIdle() {
+        console.log('⏳ Phase 3: Idle features');
+        
+        // Use existing global instances (already loaded)
+        this.analyticsSystem = window.analytics;
+        this.hapticSystem = window.hapticStorytelling;
+        
+        // Load other non-critical features
+        await this.initializeNonCriticalFeatures();
+    }
+
+    // Phase 4: Heavy features (delayed further)
+    async initHeavy() {
+        console.log('⚡ Phase 4: Heavy features');
+        await this.initializeHeavyFeatures();
     }
 
     init() {
@@ -27,21 +87,17 @@ class DhammaPathApp {
 
     async initialize() {
         try {
-            // Critical initialization first
-            this.setupErrorHandling();
-            this.initializePerformanceMonitoring();
-            this.initializeNavigation();
-            this.initializeThemeManager();
-            this.setupGlobalEventListeners();
+            // Phase 1: Critical initialization (blocking-critical only)
+            this.initCritical();
             
-            // Use requestIdleCallback for non-critical features
-            if (window.requestIdleCallback) {
-                requestIdleCallback(async () => {
-                    await this.initializeNonCriticalFeatures();
-                });
-            } else {
-                setTimeout(async () => await this.initializeNonCriticalFeatures(), 0);
-            }
+            // Phase 2: Interactive features (above-the-fold)
+            this.initInteractive();
+            
+            // Phase 3: Idle features (analytics, widgets, haptics)
+            this.onIdle(() => this.initIdle());
+            
+            // Phase 4: Heavy features (delayed further)
+            setTimeout(() => this.initHeavy(), 1000);
             
             this.loadInitialPage();
             this.isInitialized = true;
@@ -71,6 +127,36 @@ class DhammaPathApp {
         this.initializeMobileGestures();
         this.initializeMobilePerformance();
         this.setupPremiumFeatures();
+    }
+
+    initializeHeavyFeatures() {
+        // Heavy features that can be delayed even further
+        console.log('🔄 Initializing heavy features...');
+        
+        // Chunk heavy work to avoid long tasks
+        this.chunkedInitialize(() => {
+            this.initializeAnalytics();
+            this.initializeWeatherIntegration();
+        });
+        
+        this.chunkedInitialize(() => {
+            this.initializeHapticStorytelling();
+            this.initializeMotionSystem();
+        });
+        
+        this.chunkedInitialize(() => {
+            this.initializeLearningSystem();
+            this.initializeSmartRecommendations();
+        });
+    }
+
+    chunkedInitialize(fn) {
+        // Use requestIdleCallback to chunk work and avoid long tasks
+        if (window.requestIdleCallback) {
+            requestIdleCallback(fn, { timeout: 1000 });
+        } else {
+            setTimeout(fn, 0);
+        }
     }
 
     setupErrorHandling() {
@@ -110,27 +196,33 @@ class DhammaPathApp {
         }
     }
 
-    initializeNavigation() {
-        if (window.NavigationManager) {
+    async initializeNavigation() {
+        try {
+            await window.waitForGlobal('NavigationManager', 3000);
             this.navigationManager = new window.NavigationManager();
-        } else {
-            console.error('❌ NavigationManager not found');
+            console.log('✅ NavigationManager initialized');
+        } catch (error) {
+            console.error('❌ NavigationManager not found:', error.message);
         }
     }
 
-    initializeThemeManager() {
-        if (window.ThemeManager) {
+    async initializeThemeManager() {
+        try {
+            await window.waitForGlobal('ThemeManager', 3000);
             this.themeManager = new window.ThemeManager();
-        } else {
-            console.error('❌ ThemeManager not found');
+            console.log('✅ ThemeManager initialized');
+        } catch (error) {
+            console.error('❌ ThemeManager not found:', error.message);
         }
     }
 
-    initializeGestureManager() {
-        if (window.GestureManager) {
+    async initializeGestureManager() {
+        try {
+            await window.waitForGlobal('GestureManager', 3000);
             this.gestureManager = new window.GestureManager();
-        } else {
-            console.error('❌ GestureManager not found');
+            console.log('✅ GestureManager initialized');
+        } catch (error) {
+            console.error('❌ GestureManager not found:', error.message);
         }
     }
 

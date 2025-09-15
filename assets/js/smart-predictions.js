@@ -223,19 +223,22 @@ class SmartPredictionsSystem {
     }
     
     addSafeClass(element, className) {
-        if (className && !className.includes(' ') && !className.includes('/')) {
-            element.classList.add(className);
-        } else {
-            console.warn('Invalid CSS class name:', className);
-            // Split and add valid classes
-            if (className) {
-                className.split(' ').forEach(cls => {
-                    if (cls && !cls.includes('/')) {
-                        element.classList.add(cls);
-                    }
-                });
+        if (!className) return;
+        
+        // Handle multiple classes separated by spaces
+        const classes = className.split(/\s+/).filter(Boolean);
+        
+        classes.forEach(cls => {
+            // Clean the class name to remove invalid characters
+            const cleanClass = cls.replace(/[^a-zA-Z0-9_-]/g, '');
+            if (cleanClass) {
+                try {
+                    element.classList.add(cleanClass);
+                } catch (e) {
+                    console.warn('Failed to add class:', cleanClass, e.message);
+                }
             }
-        }
+        });
     }
     
     displayPrediction(message, type) {

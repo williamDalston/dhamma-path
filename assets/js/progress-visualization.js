@@ -14,6 +14,22 @@ class ProgressVisualizationSystem {
         this.setupChartLibrary();
         this.loadProgressData();
         this.setupVisualizationEvents();
+        if (typeof this.setupInsightsEngine === 'function') {
+            this.setupInsightsEngine();
+        } else {
+            console.warn('setupInsightsEngine not available yet, retrying...');
+            setTimeout(() => this.setupInsightsEngine(), 100);
+        }
+    }
+    
+    setupInsightsEngine() {
+        // Setup insights and recommendations engine
+        this.insights = {
+            trends: [],
+            recommendations: [],
+            patterns: []
+        };
+        console.log('🧠 Progress insights engine initialized');
     }
     
     setupChartLibrary() {

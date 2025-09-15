@@ -35,7 +35,12 @@ class AccessibilityEnhancer {
         }
         
         // Apply settings immediately
-        this.applyAccessibilitySettings();
+        if (typeof this.applyAccessibilitySettings === 'function') {
+            this.applyAccessibilitySettings();
+        } else {
+            console.warn('applyAccessibilitySettings not available yet, retrying...');
+            setTimeout(() => this.applyAccessibilitySettings(), 100);
+        }
     }
     
     saveAccessibilitySettings() {
@@ -495,7 +500,9 @@ class AccessibilityEnhancer {
     applyReducedMotion() {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (prefersReducedMotion) {
-            document.body.classList.add('reduce-motion');
+            document.documentElement.style.setProperty('--animation-duration', '0.01ms');
+            document.documentElement.style.setProperty('--transition-duration', '0.01ms');
+            document.documentElement.classList.add('reduced-motion');
         }
     }
     

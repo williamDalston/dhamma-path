@@ -8,6 +8,8 @@ class AudioSystem {
         this.audioContext = null;
         this.audioNodes = {};
         this.currentSounds = new Map();
+        this.isInitialized = false;
+        this.pendingSounds = [];
         this.settings = {
             masterVolume: 0.7,
             ambientVolume: 0.5,
@@ -18,8 +20,47 @@ class AudioSystem {
             autoPlay: false
         };
         
-        this.initializeAudioSystem();
-        this.setupAudioResume();
+        this.setupUserGestureListener();
+    }
+    
+    setupUserGestureListener() {
+        const initAudio = async () => {
+            if (this.isInitialized) return;
+            
+            try {
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                if (this.audioContext.state === 'suspended') {
+                    await this.audioContext.resume();
+                }
+                this.isInitialized = true;
+                console.log('🎵 Audio system activated');
+                
+                // Initialize the full audio system
+                this.initializeAudioSystem();
+                
+                // Process any pending sounds
+                this.pendingSounds.forEach(sound => this.playSound(sound));
+                this.pendingSounds = [];
+                
+            } catch (error) {
+                console.log('🎵 Audio unavailable, continuing silently');
+            }
+        };
+
+        // Listen for any user interaction
+        ['click', 'touchstart', 'keydown'].forEach(event => {
+            document.addEventListener(event, initAudio, { once: true });
+        });
+    }
+    
+    playSound(soundName) {
+        if (!this.isInitialized) {
+            this.pendingSounds.push(soundName);
+            return;
+        }
+        
+        // Your actual sound playing logic here
+        console.log(`🎵 Playing sound: ${soundName}`);
     }
     
     initializeAudioSystem() {
@@ -28,6 +69,17 @@ class AudioSystem {
         this.createAmbientSounds();
         this.setupAudioControls();
         this.setupVoiceGuidance();
+        
+        // Resume audio context on user gesture (Chrome autoplay policy)
+        document.addEventListener('click', () => {
+            try { 
+                if (this.audioContext && this.audioContext.state === 'suspended') {
+                    this.audioContext.resume();
+                }
+            } catch (e) {
+                console.warn('AudioContext resume failed:', e);
+            }
+        }, { once: true });
     }
     
     loadSettings() {
@@ -54,7 +106,21 @@ class AudioSystem {
             console.log('Audio context initialized');
         } catch (error) {
             console.error('Failed to initialize audio context:', error);
+            // Set up user gesture handler to retry
+            this.setupUserGestureHandler();
         }
+    }
+    
+    setupUserGestureHandler() {
+        const initAudio = () => {
+            this.setupAudioContext();
+        };
+        
+        // Try to initialize on first user interaction with enhanced gesture detection
+        document.addEventListener('pointerdown', initAudio, { once: true, passive: true });
+        document.addEventListener('click', initAudio, { once: true });
+        document.addEventListener('touchstart', initAudio, { once: true });
+        document.addEventListener('keydown', initAudio, { once: true });
     }
 
     // Add user gesture handler for AudioContext resume

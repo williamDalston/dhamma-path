@@ -42,6 +42,25 @@ class PhysicsAnimations {
             this.enableComplexAnimations();
         }
     }
+
+    pause() {
+        this.isPaused = true;
+        console.log('⏸️ Physics animations paused');
+    }
+
+    resume() {
+        this.isPaused = false;
+        console.log('▶️ Physics animations resumed');
+    }
+
+    cleanupStaleAnimations() {
+        // Clean up any stale animation frames or intervals
+        if (this.animationFrame) {
+            cancelAnimationFrame(this.animationFrame);
+            this.animationFrame = null;
+        }
+        console.log('🧹 Physics animations cleaned up');
+    }
     
     disableComplexAnimations() {
         document.body.classList.add('reduce-physics');
@@ -427,11 +446,87 @@ class PhysicsAnimations {
 // Initialize physics animations
 window.PhysicsAnimations = PhysicsAnimations;
 
+// Enhanced compatibility layer with queue + flush for pre-init calls
+window.physicsAnimations ??= (() => {
+    const q = [];
+    const proxy = new Proxy({}, { 
+        get: (_, m) => (...a) => {
+            if (m === '__flush') return (real => q.splice(0).forEach(([method, args]) => real[method]?.(...args)));
+            q.push([m, a]);
+        }
+    });
+    return proxy;
+})();
+
 // Auto-initialize if DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        window.physicsAnimations = new PhysicsAnimations();
+        const real = new PhysicsAnimations();
+        
+        // Enhanced API with compatibility methods
+        const api = {
+            ...real,
+            setQuality: real.setQuality.bind(real),
+            pause: function() {
+                this.lastQuality ??= 'medium';
+                this._wasRunning = true;
+                this.setQuality('low');
+                console.log('⏸️ Physics animations paused (compatibility)');
+            },
+            resume: function() {
+                this.setQuality(this.lastQuality || 'medium');
+                if (this._wasRunning) {
+                    console.log('▶️ Physics animations resumed (compatibility)');
+                }
+            },
+            cleanupStaleAnimations: function() {
+                if (this.animationFrame) {
+                    cancelAnimationFrame(this.animationFrame);
+                    this.animationFrame = null;
+                }
+                console.log('🧹 Physics animations cleaned up (compatibility)');
+            }
+        };
+        
+        // Flush any queued calls
+        const pending = window.physicsAnimations;
+        window.physicsAnimations = api;
+        pending?.__flush?.(api); // replay anything that happened pre-init
+        
+        console.log('✅ Physics animations API ready with compatibility layer');
     });
 } else {
-    window.physicsAnimations = new PhysicsAnimations();
+    const real = new PhysicsAnimations();
+    
+    // Enhanced API with compatibility methods
+    const api = {
+        ...real,
+        setQuality: real.setQuality.bind(real),
+        pause: function() {
+            this.lastQuality ??= 'medium';
+            this._wasRunning = true;
+            this.setQuality('low');
+            console.log('⏸️ Physics animations paused (compatibility)');
+        },
+        resume: function() {
+            this.setQuality(this.lastQuality || 'medium');
+            if (this._wasRunning) {
+                console.log('▶️ Physics animations resumed (compatibility)');
+            }
+        },
+        cleanupStaleAnimations: function() {
+            if (this.animationFrame) {
+                cancelAnimationFrame(this.animationFrame);
+                this.animationFrame = null;
+            }
+            console.log('🧹 Physics animations cleaned up (compatibility)');
+        }
+    };
+    
+    // Flush any queued calls
+    const pending = window.physicsAnimations;
+    window.physicsAnimations = api;
+    pending?.__flush?.(api); // replay anything that happened pre-init
+    
+    console.log('✅ Physics animations API ready with compatibility layer');
 }

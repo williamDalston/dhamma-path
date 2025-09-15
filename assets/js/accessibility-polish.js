@@ -5,9 +5,34 @@
  * focus management, and WCAG 2.1 AA compliance.
  */
 
+class FocusManager {
+    constructor() {
+        this.focusableElements = [];
+        this.currentIndex = -1;
+    }
+    
+    updateFocusableElements() {
+        this.focusableElements = Array.from(document.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        ));
+    }
+    
+    focusNext() {
+        this.updateFocusableElements();
+        this.currentIndex = (this.currentIndex + 1) % this.focusableElements.length;
+        this.focusableElements[this.currentIndex]?.focus();
+    }
+    
+    focusPrevious() {
+        this.updateFocusableElements();
+        this.currentIndex = this.currentIndex <= 0 ? this.focusableElements.length - 1 : this.currentIndex - 1;
+        this.focusableElements[this.currentIndex]?.focus();
+    }
+}
+
 class AccessibilityPolish {
     constructor() {
-        this.focusManager = this.createFocusManager();
+        this.focusManager = typeof FocusManager !== 'undefined' ? new FocusManager() : null;
         this.screenReader = this.createScreenReaderSupport();
         this.keyboardNavigation = this.createKeyboardNavigation();
         this.colorContrast = this.createColorContrastChecker();

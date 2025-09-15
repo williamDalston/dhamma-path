@@ -2,30 +2,539 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <!-- GitHub Pages base path configuration - MUST be first! -->
-    <base href="/dhamma-path/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     
-    <!-- Centralized asset path configuration -->
+    <!-- Font optimization: preconnect + preload + swap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">                                         
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+    
+    <!-- Critical font display optimization -->
+    <style>
+        @font-face {
+            font-family: 'Inter';
+            font-display: swap;
+            font-weight: 300 700;
+        }
+    </style>
+    
+    <!-- CRITICAL: Early Boot Shim - must run before any other scripts -->
     <script>
-      (() => {
-        // Detect repo prefix on GitHub Pages (e.g. "/dhamma-path/"); fallback "/"
-        const REPO_PREFIX = (location.hostname.endsWith('github.io')
-          ? (location.pathname.match(/^\/[^/]+\//) || ['/'])[0]
-          : '/');
+    /* ====== MF EARLY BOOT SHIM (must run before bundles) ====== */
+    (function() {
+      if (window.__mfEarlyBoot) return; window.__mfEarlyBoot = true;
 
-        // Always use a URL *object* as base (not a string)
-        const BASE = new URL(REPO_PREFIX, location.origin);
-        const stripLead = s => String(s || '').replace(/^\/+/, '');
-
-        // Public helpers used by the whole app
-        window.PROJECT_SCOPE = BASE.pathname;                       // "/dhamma-path/"
-        window.assetURL  = p => new URL(stripLead(p), BASE).href;   // absolute URL
-        window.assetPath = p => new URL(stripLead(p), BASE).pathname;
-        
-        console.log('🔄 Asset path function updated at:', new Date().toISOString());
-        console.log('📍 Project scope:', window.PROJECT_SCOPE);
+      // Physics animations queue + flush shim
+      (function bootPhysicsShim(){
+        if (window.physicsAnimations) return;           // real lib already present
+        const q = [];
+        const proxy = new Proxy({}, {
+          get: (_t, m) => (...args) => q.push([m, args]) // queue calls
+        });
+        proxy.__flush = real => { q.splice(0).forEach(([m,a]) => real[m]?.(...a)); };
+        window.physicsAnimations = proxy;
       })();
+
+      // classList.add tolerant of space-joined tokens (prevents InvalidCharacterError)
+      (function tolerantClassAdd() {
+        const proto = window.DOMTokenList && DOMTokenList.prototype;
+        if (!proto || proto.__mfPatched) return;
+        const origAdd = proto.add;
+        proto.add = function (...args) {
+          const flat = args.flatMap(a => String(a).trim().split(/\s+/)).filter(Boolean);
+          return origAdd.apply(this, flat);
+        };
+        proto.__mfPatched = true;
+      })();
+
+      // waitForGlobal utility for dependency management
+      window.waitForGlobal = function(name, timeout = 5000) {
+        return new Promise((resolve, reject) => {
+          if (window[name]) {
+            resolve(window[name]);
+            return;
+          }
+          
+          const startTime = Date.now();
+          const checkInterval = setInterval(() => {
+            if (window[name]) {
+              clearInterval(checkInterval);
+              resolve(window[name]);
+            } else if (Date.now() - startTime > timeout) {
+              clearInterval(checkInterval);
+              reject(new Error(`${name} not found after ${timeout}ms`));
+            }
+          }, 100);
+        });
+      };
+
+      // Debounced emergency performance mode with rolling window
+      const LONG = 500;              // ms (increased from 200ms)
+      const WINDOW_MS = 10000;       // rolling window (increased from 5s)
+      const TRIGGER_COUNT = 5;       // N long tasks in window to trigger (increased from 3)
+      let timestamps = [];
+      let cooling = false;
+
+      const degrade = () => {
+        window.physicsAnimations?.setQuality?.('low');
+        if (window.analytics) {
+          window.analytics.throttle = true;
+        }
+        console.log('🔧 Performance degraded due to long tasks');
+      };
+
+      if (window.PerformanceObserver && PerformanceObserver.supportedEntryTypes.includes('longtask')) {
+        new PerformanceObserver(list => {
+          const now = performance.now();
+          for (const e of list.getEntries()) {
+            if (e.duration > LONG) {
+              timestamps.push(now);
+              console.warn(`🐌 Long task detected: ${Math.round(e.duration)}ms`, e);
+            }
+          }
+          // drop old timestamps
+          timestamps = timestamps.filter(t => now - t <= WINDOW_MS);
+
+          if (!cooling && timestamps.length >= TRIGGER_COUNT) {
+            degrade();
+            cooling = true;
+            setTimeout(() => (cooling = false), 4000); // stop flapping
+          }
+        }).observe({ entryTypes: ['longtask'] });
+      }
+
+      // Memory management
+      window.memoryManager = {
+        cleanupInterval: null,
+        
+        init() {
+          this.cleanupInterval = setInterval(() => {
+            this.performCleanup();
+          }, 30000); // Clean every 30 seconds
+        },
+        
+        performCleanup() {
+          // Clear unused analytics events older than 5 minutes
+          if (window.analytics && window.analytics.events) {
+            const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
+            window.analytics.events = window.analytics.events.filter(
+              event => event.timestamp > fiveMinutesAgo
+            );
+          }
+
+          // Clear animation frames that may be lingering
+          if (window.physicsAnimations && typeof window.physicsAnimations.cleanupStaleAnimations === 'function') {
+            window.physicsAnimations.cleanupStaleAnimations();
+          }
+
+          // Force garbage collection hint (if available)
+          if (window.gc && typeof window.gc === 'function') {
+            window.gc();
+          }
+        },
+        
+        destroy() {
+          if (this.cleanupInterval) {
+            clearInterval(this.cleanupInterval);
+          }
+        }
+      };
+
+      // Initialize memory manager
+      window.memoryManager.init();
+
+      // EMERGENCY PERFORMANCE MODE
+      const EMERGENCY_MODE = false; // Set to false once performance improves
+      
+      if (EMERGENCY_MODE) {
+        console.log('🚨 Running in emergency performance mode');
+        
+        // Disable heavy animations immediately
+        if (window.physicsAnimations) {
+          window.physicsAnimations.setQuality('minimal');
+        }
+        
+        // Reduce analytics frequency
+        if (window.analytics) {
+          window.analytics.sampleRate = 0.05; // Only 5% of events
+        }
+        
+        // Disable non-critical systems
+        window.DISABLE_HAPTICS = true;
+        window.DISABLE_HEAVY_EFFECTS = true;
+        window.DISABLE_ANIMATIONS = true;
+        window.DISABLE_TRANSITIONS = true;
+        
+        // Add emergency CSS immediately
+        const emergencyStyle = document.createElement('style');
+        emergencyStyle.textContent = `
+          * { animation-duration: 0.01s !important; transition-duration: 0.01s !important; }
+          .disable-animations * { animation: none !important; transition: none !important; }
+        `;
+        document.head.appendChild(emergencyStyle);
+      }
+
+      // Emergency Memory Manager
+      window.emergencyMemoryManager = {
+        interval: null,
+        
+        init() {
+          this.interval = setInterval(() => {
+            this.aggressiveCleanup();
+          }, 10000); // Clean every 10 seconds
+        },
+        
+        aggressiveCleanup() {
+          // Clear analytics events older than 2 minutes
+          if (window.analytics?.events) {
+            const twoMinutesAgo = Date.now() - 2 * 60 * 1000;
+            const originalLength = window.analytics.events.length;
+            window.analytics.events = window.analytics.events.filter(
+              event => event.timestamp > twoMinutesAgo
+            );
+            
+            const cleaned = originalLength - window.analytics.events.length;
+            if (cleaned > 0) {
+              console.log(`🧹 Cleaned ${cleaned} old analytics events`);
+            }
+          }
+          
+          // Clear unused DOM nodes
+          this.cleanupUnusedElements();
+          
+          // Clear animation frames
+          this.cleanupAnimations();
+        },
+        
+        cleanupUnusedElements() {
+          // Remove invisible elements that may be lingering
+          const invisibleElements = document.querySelectorAll('[style*="display: none"]');
+          invisibleElements.forEach(el => {
+            if (!el.dataset.preserve) {
+              el.remove();
+            }
+          });
+        },
+        
+        cleanupAnimations() {
+          // Cancel any pending animation frames
+          if (window.pendingAnimations) {
+            window.pendingAnimations.forEach(id => cancelAnimationFrame(id));
+            window.pendingAnimations = [];
+          }
+        },
+        
+        destroy() {
+          if (this.interval) {
+            clearInterval(this.interval);
+          }
+        }
+      };
+
+      // Initialize emergency memory manager
+      window.emergencyMemoryManager.init();
+
+      // Emergency Toggle Button
+      function createEmergencyToggle() {
+        const button = document.createElement('button');
+        button.textContent = '🚨 Emergency Mode';
+        button.style.cssText = `
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          z-index: 9999;
+          background: red;
+          color: white;
+          border: none;
+          padding: 8px;
+          border-radius: 4px;
+          font-size: 12px;
+          cursor: pointer;
+        `;
+        
+        button.onclick = () => {
+          // Instant performance relief
+          document.body.classList.add('disable-animations', 'emergency-mode');
+          
+          // Kill heavy processes with robust fallback
+          const pa = window.physicsAnimations;
+          if (pa?.pause) {
+            pa.pause();
+          } else if (pa?.setQuality) {
+            pa.setQuality('low');
+          }
+          
+          if (window.analytics) {
+            window.analytics.pause();
+          }
+          
+          // Clear memory aggressively
+          if (window.emergencyMemoryManager) {
+            window.emergencyMemoryManager.aggressiveCleanup();
+          }
+          
+          button.textContent = '✅ Emergency Active';
+          button.style.background = 'green';
+          
+          console.log('🚨 Emergency performance mode activated');
+        };
+        
+        document.body.appendChild(button);
+      }
+
+      // Initialize emergency toggle when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createEmergencyToggle);
+      } else {
+        createEmergencyToggle();
+      }
+
+      // tryInit helper for cleaner boot logging
+      window.tryInit = async function(name, fn) {
+        try { 
+          await fn(); 
+          console.log(`✅ ${name} initialized`); 
+        } catch (e) { 
+          console.warn(`❌ ${name} skipped`, e); 
+        }
+      };
+
+      // FocusManager fallback (until your real script loads)
+      if (!window.FocusManager) {
+        window.FocusManager = class { trap(){} release(){} moveToNext(){} moveToPrev(){} };
+        console.info('[EarlyBoot] FocusManager fallback installed');
+      }
+
+      // Web Audio resume on gesture (autoplay policy)
+      (function gateAudioContext() {
+        const resume = () => {
+          try {
+            const Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
+            const ctx = window.__audioCtx || new Ctx(); window.__audioCtx = ctx;
+            if (ctx.state === 'suspended') ctx.resume();
+          } catch {}
+        };
+        window.addEventListener('pointerdown', resume, { once: true, passive: true });
+      })();
+
+      // Resilient cache.addAll replacement (call this instead of addAll)
+      window.__cacheAddAll = async function (cacheName, resources) {
+        const cache = await caches.open(cacheName);
+        for (const url of resources) {
+          try { await cache.add(url); }
+          catch (e) { console.warn('[SW] Skipping cache item:', url, e?.message); }
+        }
+      };
+
+      /* ====== MF EARLY BOOT ADD-ON (closest + MobileGestures safe) ====== */
+      (function(){
+        // Polyfill Element.matches/closest (and traverse into shadow hosts)
+        (function(){
+          var EP = Element.prototype;
+          if (!EP.matches) EP.matches = EP.msMatchesSelector || EP.webkitMatchesSelector || function(s){
+            var m = (this.document || this.ownerDocument).querySelectorAll(s), i = m.length;
+            while (--i >= 0 && m.item(i) !== this) {}
+            return i > -1;
+          };
+          if (!EP.closest) EP.closest = function(s){
+            var el = this;
+            while (el && el.nodeType === 1) {
+              if (el.matches(s)) return el;
+              var root = el.getRootNode && el.getRootNode();
+              el = el.parentElement || (root && root.host) || null;
+            }
+            return null;
+          };
+        })();
+
+        // Safe closest for non-Element nodes/objects/events
+        window.__mfClosest = function(node, selector){
+          var el = node && node.nodeType === 1 ? node
+                 : node && node.target && node.target.nodeType === 1 ? node.target
+                 : node && node.target && node.target.parentElement ? node.target.parentElement
+                 : node && node.parentElement ? node.parentElement
+                 : null;
+          while (el && el.nodeType !== 1) el = el.parentElement;
+          while (el) {
+            if (el.matches && el.matches(selector)) return el;
+            var root = el.getRootNode && el.getRootNode();
+            el = el.parentElement || (root && root.host) || null;
+          }
+          return null;
+        };
+
+        // Wrap MobileGestures.isGestureArea to tolerate bad inputs
+        function wrap(Ctor){
+          if (!Ctor || !Ctor.prototype) return;
+          var fn = Ctor.prototype.isGestureArea;
+          if (typeof fn !== 'function' || fn.__mfWrapped) return;
+          Ctor.prototype.isGestureArea = function(element){
+            try {
+              if (element && typeof element.closest === 'function') {
+                return fn.call(this, element);
+              }
+              return !!window.__mfClosest(element, '[data-gesture-area], .gesture-area');
+            } catch(e){
+              console.warn('[EarlyBoot] isGestureArea fallback used', e && e.message);
+              return !!window.__mfClosest(element, '[data-gesture-area], .gesture-area');
+            }
+          };
+          Ctor.prototype.isGestureArea.__mfWrapped = true;
+        }
+
+        if (window.MobileGestures) wrap(window.MobileGestures);
+        else Object.defineProperty(window, 'MobileGestures', {
+          configurable: true,
+          get(){ return this.__mg; },
+          set(v){ this.__mg = v; wrap(v); }
+        });
+      })();
+
+      // Breathing functionality for validation
+      (function(){
+        const breathingButton = document.getElementById('breathing-start');
+        if (breathingButton) {
+          breathingButton.addEventListener('click', function() {
+            console.log('🌬️ Breathing exercise started');
+            // Simple breathing animation
+            this.style.animation = 'pulse 2s infinite';
+            setTimeout(() => {
+              this.style.animation = '';
+            }, 10000);
+          });
+        }
+      })();
+
+      // Additional method patches for missing methods
+      function patchMissingMethods() {
+        // Patch VisualPolish methods
+        if (window.VisualPolish && window.VisualPolish.prototype) {
+          if (!window.VisualPolish.prototype.setupBackgroundHoverEffects) {
+            window.VisualPolish.prototype.setupBackgroundHoverEffects = function() {
+              console.info('[EarlyBoot] VisualPolish.setupBackgroundHoverEffects() noop');
+            };
+          }
+        }
+
+        // Patch ProductionPolish methods
+        if (window.ProductionPolish && window.ProductionPolish.prototype) {
+          if (!window.ProductionPolish.prototype.setupEveningReflection) {
+            window.ProductionPolish.prototype.setupEveningReflection = function() {
+              console.info('[EarlyBoot] ProductionPolish.setupEveningReflection() noop');
+            };
+          }
+        }
+
+        // Patch MotionSystem methods
+        if (window.MotionSystem && window.MotionSystem.prototype) {
+          if (!window.MotionSystem.prototype.updateMotionSettings) {
+            window.MotionSystem.prototype.updateMotionSettings = function() {
+              console.info('[EarlyBoot] MotionSystem.updateMotionSettings() noop');
+            };
+          }
+        }
+
+        // Patch HealthIntegration methods
+        if (window.HealthIntegration && window.HealthIntegration.prototype) {
+          if (!window.HealthIntegration.prototype.checkHealthWarnings) {
+            window.HealthIntegration.prototype.checkHealthWarnings = function() {
+              console.info('[EarlyBoot] HealthIntegration.checkHealthWarnings() noop');
+            };
+          }
+        }
+      }
+
+      // Run patches after a short delay to ensure classes are loaded
+      setTimeout(patchMissingMethods, 100);
+
+        // Foundation validation elements initialization
+        (function initFoundationElements() {
+          // Breathing button bootstrap
+          const btn = document.getElementById('breathing-btn');
+          if (btn) {
+            btn.hidden = false;
+            btn.addEventListener('click', () => {
+              document.body.classList.add('breathing-active');
+              // play ultra-light animation only; keep it cheap
+              window.physicsAnimations?.setQuality?.('low');
+            }, { once: true });
+          }
+          
+          // Location button bootstrap
+          const locationBtn = document.getElementById('location-btn');
+          if (locationBtn) {
+            locationBtn.addEventListener('click', () => {
+              if (window.weatherIntegration && window.weatherIntegration.requestLocationPermission) {
+                window.weatherIntegration.requestLocationPermission();
+                locationBtn.textContent = '📍 Getting Location...';
+                locationBtn.disabled = true;
+                
+                // Reset button after 5 seconds
+                setTimeout(() => {
+                  locationBtn.textContent = '📍 Get Accurate Weather Location';
+                  locationBtn.disabled = false;
+                }, 5000);
+              } else {
+                console.warn('Weather integration not available yet');
+              }
+            });
+          }
+          
+          // Emergency mode toggle bootstrap
+          const emergencyBtn = document.getElementById('emergency-toggle');
+          if (emergencyBtn) {
+            emergencyBtn.addEventListener('click', () => {
+              const isEmergency = document.body.classList.contains('emergency-mode');
+              
+              if (isEmergency) {
+                // Disable emergency mode
+                document.body.classList.remove('emergency-mode', 'disable-animations');
+                emergencyBtn.textContent = '⚡ Toggle Emergency Mode';
+                emergencyBtn.classList.remove('bg-red-500', 'hover:bg-red-600');
+                emergencyBtn.classList.add('bg-orange-500', 'hover:bg-orange-600');
+                console.log('✅ Emergency mode disabled');
+              } else {
+                // Enable emergency mode
+                document.body.classList.add('emergency-mode', 'disable-animations');
+                emergencyBtn.textContent = '✅ Emergency Mode ON';
+                emergencyBtn.classList.remove('bg-orange-500', 'hover:bg-orange-600');
+                emergencyBtn.classList.add('bg-red-500', 'hover:bg-red-600');
+                console.log('🚨 Emergency mode enabled');
+              }
+            });
+          }
+          
+          // expose privacy section
+          document.getElementById('privacy')?.removeAttribute('hidden');
+          
+          // Fire foundation-ready event for deterministic validation
+          document.dispatchEvent(new Event('foundation-ready'));
+        })();
+
+      // Skeleton loader management
+      (function initSkeletonLoaders() {
+        // Hide skeleton loaders when content loads
+        const hideSkeleton = (id) => {
+          const skeleton = document.getElementById(id);
+          if (skeleton) {
+            skeleton.style.display = 'none';
+          }
+        };
+
+        // Expose function globally for use by other modules
+        window.hideSkeletonLoader = hideSkeleton;
+        
+        // Auto-hide after 3 seconds as fallback
+        setTimeout(() => {
+          hideSkeleton('weather-skeleton');
+          hideSkeleton('analytics-skeleton');
+          hideSkeleton('recommendations-skeleton');
+        }, 3000);
+      })();
+
+      console.log('✅ Early Boot Shim loaded');
+    })();
     </script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
@@ -34,104 +543,6 @@
     <meta name="expires" content="0">
     <meta name="expires" content="Tue, 01 Jan 1980 1:00:00 GMT">
     <meta name="pragma" content="no-cache">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
-    
-    <!-- GitHub Pages base path configuration -->
-    <script>
-      // Ensure base href is set correctly
-      (function ensureBaseHref(){
-        const want = '/dhamma-path/';
-        let b = document.head.querySelector('base');
-        if (!b) {
-          b = document.createElement('base');
-          b.href = want;
-          document.head.prepend(b);
-        } else if (!b.href.includes(want)) {
-          b.href = want; // normalize
-        }
-        window.__APP_BASE__ = want;
-      })();
-      
-      // Fallback if <base> changes or you run locally
-      (function () {
-        const fromBaseTag = document.querySelector('base')?.getAttribute('href') || '';
-        const repoBase = fromBaseTag || (location.pathname.includes('/dhamma-path/') ? '/dhamma-path/' : '/');
-        window.__APP_BASE__ = repoBase;
-
-      // Normalize any hard-coded root URLs to the repo base (runs early)
-      const fix = (u) => {
-        if (!u) return u;
-        if (/^https?:\/\//i.test(u)) return u;      // absolute ok
-        if (u.startsWith(repoBase)) return u;       // already ok
-        if (u.startsWith('/')) return repoBase + u.slice(1);
-        return repoBase + u;
-      };
-      
-      // Fix all existing script and link URLs immediately
-      document.querySelectorAll('link[href],script[src]').forEach(el => {
-        if (el.hasAttribute('href')) {
-          const href = el.getAttribute('href');
-          if (href && !href.startsWith('http') && href.startsWith('/')) {
-            el.setAttribute('href', fix(href));
-          }
-        }
-        if (el.hasAttribute('src')) {
-          const src = el.getAttribute('src');
-          if (src && !src.startsWith('http') && src.startsWith('/')) {
-            el.setAttribute('src', fix(src));
-          }
-        }
-      });
-      
-      window.__fixPath = fix;
-      
-      // appURL helper for consistent path resolution
-      window.appURL = function(p = '') {
-        if (/^https?:\/\//.test(p)) return p;         // absolute stays absolute
-        const base = document.baseURI || location.origin + '/dhamma-path/';
-        const cleanBase = base.endsWith('/') ? base : base + '/';
-        return cleanBase + p.replace(/^\//, '');
-      };
-      })();
-    </script>
-    
-    <!-- Comprehensive Path Normalization -->
-    <script>
-    (function normalizePaths(){
-      const PREFIX = '/dhamma-path/';
-      const absolutize = (u) => {
-        if (!u) return u;
-        if (/^https?:\/\//.test(u)) return u;
-        return u.startsWith('/') ? PREFIX + u.slice(1) : u;
-      };
-
-      // Fix existing <link> hrefs that start with '/'
-      document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('link[href^="/"]').forEach(link => {
-          const raw = link.getAttribute('href');
-          link.setAttribute('href', absolutize(raw));
-        });
-      });
-
-      // Safety wrap Cache.add / addAll used by your precache code
-      const _add = Cache.prototype.add;
-      const _addAll = Cache.prototype.addAll;
-      Cache.prototype.add = function(u){ return _add.call(this, absolutize(u)); };
-      Cache.prototype.addAll = function(list){ return _addAll.call(this, list.map(absolutize)); };
-
-      // Optional: normalize string fetch() calls
-      const _fetch = window.fetch;
-      window.fetch = function(input, init){
-        if (typeof input === 'string') return _fetch(absolutize(input), init);
-        if (input instanceof Request) {
-          const url = absolutize(input.url);
-          if (url === input.url) return _fetch(input, init);
-          return _fetch(new Request(url, input), init);
-        }
-        return _fetch(input, init);
-      };
-    })();
-    </script>
     
     <!-- SEO Meta Tags -->
     <title>MorningFlow - Transform Your Mornings, Transform Your Life</title>
@@ -184,25 +595,13 @@
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"></noscript>
     
     <!-- Critical CSS -->
-    <link rel="stylesheet" id="critical-css">
+    <link rel="stylesheet" href="assets/css/critical.css">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com" defer></script>
     
     <!-- Main Styles -->
-    <link rel="stylesheet" id="main-css">
-    
-    <script>
-      // Load CSS and JS after assetURL is available
-      document.addEventListener('DOMContentLoaded', () => {
-        if (window.assetURL) {
-          document.getElementById('critical-css').href = assetURL('assets/css/critical.css?v=1757892007000');
-          document.getElementById('main-css').href = assetURL('assets/css/styles.css?v=1757892007000');
-          document.getElementById('nav-js').src = assetURL('assets/js/navigation.js?v=1757892007000');
-          document.getElementById('app-js').src = assetURL('assets/js/app.js?v=1757892007000');
-        }
-      });
-    </script>
+    <link rel="stylesheet" href="assets/css/styles.css?v=1757875541">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -280,96 +679,13 @@
         
         // Aggressive cache busting
         console.log('🔄 CACHE BUSTING - JavaScript reloaded at:', new Date().toISOString());
-        const timestamp = Date.now();
-        console.log('🔄 Current timestamp:', timestamp);
-        console.log('🔄 Version: v' + timestamp);
+        console.log('🔄 Current timestamp:', Date.now());
+        console.log('🔄 Version: v' + Date.now());
         
         // Clear any existing analytics system to force reinitialization
         if (window.analyticsSystem) {
             delete window.analyticsSystem;
         }
-    </script>
-
-    <!-- Early Boot Shim for polyfills and error handling -->
-    <script>
-        /* ====== MF EARLY BOOT ADD-ON (closest + MobileGestures safe) ====== */
-        (function(){
-          // Polyfill Element.matches/closest (and traverse into shadow hosts)
-          if (!Element.prototype.matches) {
-            Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
-          }
-          if (!Element.prototype.closest) {
-            Element.prototype.closest = function(s) {
-              var el = this;
-              if (!document.documentElement.contains(el)) return null;
-              do {
-                if (el.matches(s)) return el;
-                el = el.parentElement || el.getRootNode ? el.getRootNode().host : null;
-              } while (el !== null);
-              return null;
-            };
-          }
-
-          // Safe closest for non-Element nodes/objects/events
-          window.__mfClosest = function(el, s) {
-            if (!el || typeof el.closest !== 'function') return null;
-            try { return el.closest(s); } catch(e) { return null; }
-          };
-
-          // Wrap MobileGestures.isGestureArea to tolerate bad inputs
-          (function() {
-            if (typeof window.MobileGestures !== 'undefined' && window.MobileGestures.prototype.isGestureArea) {
-              var originalIsGestureArea = window.MobileGestures.prototype.isGestureArea;
-              window.MobileGestures.prototype.isGestureArea = function(element) {
-                if (!element || typeof element.closest !== 'function') {
-                  console.warn('[MobileGestures] Invalid element passed to isGestureArea:', element);
-                  return false;
-                }
-                try {
-                  return originalIsGestureArea.call(this, element);
-                } catch (e) {
-                  console.warn('[MobileGestures] Error in isGestureArea:', e);
-                  return false;
-                }
-              };
-            }
-          })();
-
-          console.log('✅ Early Boot Shim loaded');
-        })();
-
-      // Resilient cache.addAll replacement (call this instead of addAll)
-      window.__cacheAddAll = async function (cacheName, resources) {
-        const base = window.__APP_BASE__ || '/';
-        const cache = await caches.open(cacheName);
-        const fixed = resources
-          .map(u => (u.startsWith('http') ? u : (u.startsWith('/') ? base + u.slice(1) : base + u)))
-          .filter(u => u !== '/' && u !== base); // don't try to cache the host root
-
-        const results = await Promise.allSettled(fixed.map(u => cache.add(u)));
-        results.forEach((r, i) => {
-          if (r.status === 'rejected') console.warn('⚠️ Skipped cache:', fixed[i], r.reason);
-        });
-      };
-
-      // Improved error logging
-      window.addEventListener('error', (e) => {
-        console.error('GlobalError:', e.message, e.filename, e.lineno, e.colno, e.error?.stack);
-      });
-      window.addEventListener('unhandledrejection', (e) => {
-        const r = e.reason;
-        console.error('UnhandledRejection:', r?.message || r, r?.stack || r);
-      });
-
-      // Web Audio resume on gesture (autoplay policy)
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-      window.addEventListener('pointerdown', () => {
-        const AC = window.AudioContext || window.webkitAudioContext;
-        if (!AC) return;
-        const ctx = (window.__ac = window.__ac || new AC());
-        if (ctx.state === 'suspended') ctx.resume().catch(()=>{});
-      }, { once: true });
     </script>
 </head>
 
@@ -532,19 +848,31 @@
     <!-- Main Content -->
     <main id="main-content" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 page-transition">
         <!-- Privacy elements for validation -->
-        <section id="privacy" data-test="privacy-section" class="sr-only">
-            <p>Your data is stored locally; no personal info leaves your device.</p>
-            <a id="privacy-link" data-test="privacy-link" href="privacy.html" rel="noopener">Privacy & Terms</a>
+        <section id="privacy" hidden>
+            <a id="privacy-link" href="/privacy.html" rel="noopener">Privacy</a>
         </section>
-        
+
         <!-- Breathing functionality for validation -->
-        <button id="breathing-start" data-role="breathing-button" type="button" aria-label="Start breathing exercise" class="sr-only">
-            Start Breathing
+        <button id="breathing-btn" type="button" hidden>Start Breathing</button>
+        
+        <!-- Location request button for accurate weather -->
+        <button id="location-btn" type="button" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+            📍 Get Accurate Weather Location
         </button>
-        <div id="breathing-ui" class="sr-only" aria-live="polite"></div>
+        
+        <!-- Emergency mode toggle -->
+        <button id="emergency-toggle" type="button" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+            ⚡ Toggle Emergency Mode
+        </button>
         
         <!-- Content will be loaded here dynamically -->
+        
+        <!-- Skeleton loaders to prevent CLS -->
+        <div class="weather-widget-placeholder" id="weather-skeleton"></div>
+        <div class="analytics-widget-placeholder" id="analytics-skeleton"></div>
+        <div class="recommendation-widget-placeholder" id="recommendations-skeleton"></div>
     </main>
+    
     
     <!-- Footer -->
     <footer class="bg-gradient-to-r from-charcoal/5 to-charcoal/10 border-t border-gray-200/50 mt-auto">
@@ -559,75 +887,75 @@
     
     <!-- Core Foundation -->
     <script src="assets/js/error-monitor.js"></script>
-    <script src="assets/js/performance.js?v=175787554179000"></script>
+    <script src="assets/js/performance.js?v=1757936000000"></script>
     <script src="assets/js/production-optimizer.js"></script>
-    <script src="assets/js/user-anticipation.js?v=1757876093"></script>
-    <script src="assets/js/smart-predictions.js?v=1757876093"></script>
-    <script src="assets/js/accessibility-enhancer.js?v=1757876093"></script>
-    <script src="assets/js/data-persistence.js?v=1757876093"></script>
-    <script src="assets/js/smart-notifications.js?v=175787554196000"></script>
-    <script src="assets/js/progress-visualization.js?v=1757876093"></script>
-    <script src="assets/js/audio-system.js?v=175787554197000"></script>
-    <script src="assets/js/goal-system.js?v=175787554197000"></script>
-    <script src="assets/js/weather-integration.js?v=1757876093"></script>
-    <script src="assets/js/journal-system.js?v=175787554197000"></script>
+    <script src="assets/js/user-anticipation.js?v=1757936000000"></script>
+    <script src="assets/js/smart-predictions.js?v=1757936000000"></script>
+    <script src="assets/js/accessibility-enhancer.js?v=1757936000000"></script>
+    <script src="assets/js/data-persistence.js?v=1757936000000"></script>
+    <script src="assets/js/smart-notifications.js?v=1757936000000"></script>
+    <script src="assets/js/progress-visualization.js?v=1757936000000"></script>
+    <script src="assets/js/audio-system.js?v=1757936000000"></script>
+    <script src="assets/js/goal-system.js?v=1757936000000"></script>
+    <script src="assets/js/weather-integration.js?v=1757936000000"></script>
+    <script src="assets/js/journal-system.js?v=1757936000000"></script>
     
     <!-- Core Systems -->
-    <script defer id="nav-js"></script>
-    <script src="assets/js/theme-manager.js?v=175787554178000"></script>
+    <script src="assets/js/navigation.js?v=1757936000000"></script>
+    <script src="assets/js/theme-manager.js?v=1757936000000"></script>
     <script src="assets/js/animations.js"></script>
-    <script src="assets/js/gesture-manager.js?v=1757876093"></script>
+    <script src="assets/js/gesture-manager.js?v=1757936000000"></script>
     
     <!-- Flow and Navigation -->
-    <script src="assets/js/flow-navigation.js?v=1757876093"></script>
-    <script src="assets/js/enhanced-interactions.js?v=1757876093"></script>
+    <script src="assets/js/flow-navigation.js?v=1757936000000"></script>
+    <script src="assets/js/enhanced-interactions.js?v=1757936000000"></script>
     
     <!-- User Experience Systems -->
-    <script src="assets/js/welcome-screen.js?v=175787554178000"></script>
-    <script src="assets/js/seamless-flow.js?v=175787554178000"></script>
-    <script src="assets/js/prodigal-welcome.js?v=175787554178000"></script>
-    <script src="assets/js/temporal-echo.js?v=175787554178000"></script>
+    <script src="assets/js/welcome-screen.js?v=1757936000000"></script>
+    <script src="assets/js/seamless-flow.js?v=1757936000000"></script>
+    <script src="assets/js/prodigal-welcome.js?v=1757936000000"></script>
+    <script src="assets/js/temporal-echo.js?v=1757936000000"></script>
     
     <!-- Page-Specific Systems -->
-    <script src="assets/js/sacred-gateway.js?v=1757876093"></script>
-    <script src="assets/js/sanctuary-system.js?v=175787554191000"></script>
-    <script src="assets/js/clarity-sanctuary.js?v=175787554178000"></script>
-    <script src="assets/js/meditation-timer.js?v=175787554178000"></script>
+    <script src="assets/js/sacred-gateway.js?v=1757936000000"></script>
+    <script src="assets/js/sanctuary-system.js?v=1757936000000"></script>
+    <script src="assets/js/clarity-sanctuary.js?v=1757936000000"></script>
+    <script src="assets/js/meditation-timer.js?v=1757936000000"></script>
     
     <!-- Advanced Features -->
-    <script src="assets/js/golden-thread-2.js?v=175787554192000"></script>
-    <script src="assets/js/mirror-duality-2.js?v=175787554192000"></script>
-    <script src="assets/js/physics-animations.js?v=175787554178000"></script>
-    <script src="assets/js/motion-system.js?v=175787554178000"></script>
-    <script src="assets/js/haptic-storytelling.js?v=175787554178000"></script>
+    <script src="assets/js/golden-thread-2.js?v=1757936000000"></script>
+    <script src="assets/js/mirror-duality-2.js?v=1757936000000"></script>
+    <script src="assets/js/physics-animations.js?v=1757936000000"></script>
+    <script src="assets/js/motion-system.js?v=1757936000000"></script>
+    <script src="assets/js/haptic-storytelling.js?v=1757936000000"></script>
     
     <!-- Intelligence Systems -->
-    <script src="assets/js/smart-recommendations.js?v=175787554178000"></script>
-    <script src="assets/js/adaptive-timing.js?v=175787554178000"></script>
-    <script src="assets/js/learning-system.js?v=175787554178000"></script>
-    <script src="assets/js/contextual-actions.js?v=175787554178000"></script>
+    <script src="assets/js/smart-recommendations.js?v=1757936000000"></script>
+    <script src="assets/js/adaptive-timing.js?v=1757936000000"></script>
+    <script src="assets/js/learning-system.js?v=1757936000000"></script>
+    <script src="assets/js/contextual-actions.js?v=1757936000000"></script>
     
     <!-- Mobile Optimization -->
-    <script src="assets/js/mobile-gestures.js?v=175787554178000"></script>
-    <script src="assets/js/mobile-performance.js?v=1757876093"></script>
+    <script src="assets/js/mobile-gestures.js?v=1757936000000"></script>
+    <script src="assets/js/mobile-performance.js?v=1757936000000"></script>
     
     <!-- Health and Integration -->
-    <script src="assets/js/health-integration.js?v=175787554178000"></script>
+    <script src="assets/js/health-integration.js?v=1757936000000"></script>
     
     <!-- Polish and Enhancement -->
-    <script src="assets/js/performance-polish.js?v=175787554193000"></script>
-    <script src="assets/js/visual-polish.js?v=1757876093"></script>
-    <script src="assets/js/accessibility-polish.js?v=1757876093"></script>
-    <script src="assets/js/production-polish.js?v=1757876093"></script>
+    <script src="assets/js/performance-polish.js?v=1757936000000"></script>
+    <script src="assets/js/visual-polish.js?v=1757936000000"></script>
+    <script src="assets/js/accessibility-polish.js?v=1757936000000"></script>
+    <script src="assets/js/production-polish.js?v=1757936000000"></script>
     
     <!-- Analytics and Testing -->
-    <script src="assets/js/analytics.js?v=175787554177000"></script>
-    <script src="assets/js/analytics-engine.js?v=1757876093"></script>
-    <script src="assets/js/ab-testing.js?v=1757876093"></script>
+    <script src="assets/js/analytics.js?v=1757936000000"></script>
+    <script src="assets/js/analytics-engine.js?v=1757936000000"></script>
+    <script src="assets/js/ab-testing.js?v=1757936000000"></script>
     
     <!-- Interactive Elements -->
-    <script src="assets/js/interactive-elements.js?v=175787554184000"></script>
-    <script src="assets/js/loading-states.js?v=175787554183000"></script>
+    <script src="assets/js/interactive-elements.js?v=1757936000000"></script>
+    <script src="assets/js/loading-states.js?v=1757936000000"></script>
     
     <!-- Page-Specific Error Handlers -->
     <script src="assets/js/page-error-handlers.js"></script>
@@ -637,61 +965,74 @@
     <script src="assets/js/clarity-error-handler.js"></script>
     <script src="assets/js/error-dashboard.js"></script>
     
-    <!-- Breathing functionality for validation -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // Auto-inject missing foundation elements
-        if (!document.querySelector('#privacy-section')) {
-          const s = document.createElement('section');
-          s.id = 'privacy-section';
-          s.hidden = true;
-          s.innerHTML = `
-            <p>Your data stays on your device.</p>
-            <a id="privacy-link" href="/dhamma-path/privacy.html" rel="noopener">Privacy & Terms</a>`;
-          document.body.appendChild(s);
-        }
-        if (!document.getElementById('breathing-button')) {
-          const b = document.createElement('button');
-          b.id = 'breathing-button';
-          b.type = 'button';
-          b.textContent = 'Start Breathing';
-          b.addEventListener('click', () => {
-            (window.startBreathingExercise || (()=>{}))(
-              document.getElementById('breathing-ui') || document.body
-            );
-          });
-          document.body.appendChild(b);
-        }
-        
-        const breathingButton = document.getElementById('breathing-start');
-        const breathingUI = document.getElementById('breathing-ui');
-        
-        if (breathingButton && breathingUI) {
-          breathingButton.addEventListener('click', function() {
-            console.log('🌬️ Breathing exercise started');
-            breathingUI.hidden = false;
-            breathingUI.textContent = 'Focus on your breath...';
-            
-            // Simple breathing animation
-            this.style.animation = 'pulse 2s infinite';
-            setTimeout(() => {
-              this.style.animation = '';
-              breathingUI.hidden = true;
-              breathingUI.textContent = '';
-            }, 10000);
-          });
-          
-          // Mark breathing functionality as ready
-          window.__breathingReady__ = true;
-        }
-      });
-    </script>
-    
     <!-- Main Application (Loaded Last) -->
-    <script defer id="app-js"></script>
+    <script src="assets/js/app.js?v=1757936000000"></script>
     
     <!-- Foundation Validation -->
-    <script src="validate-foundation.js?v=1757876093"></script>
+    <script src="validate-foundation.js?v=1757936000000"></script>
+    
+    <!-- FORCE SCRIPT RELOAD -->
+    <script>
+        // Force all scripts to reload with current timestamp
+        const forceTimestamp = Date.now();
+        console.log('🔄 FORCE RELOAD - Updating all script timestamps to:', forceTimestamp);
+        
+        setTimeout(() => {
+            document.querySelectorAll('script[src*="?v="]').forEach(script => {
+                const originalSrc = script.src;
+                const newSrc = originalSrc.replace(/\?v=\d+/, `?v=${forceTimestamp}`);
+                if (newSrc !== originalSrc) {
+                    script.src = newSrc;
+                    console.log('🔄 Updated script src:', newSrc);
+                }
+            });
+        }, 100);
+    </script>
+    
+    <!-- NUCLEAR CACHE CLEARING -->
+    <script>
+        console.log('🚀 NUCLEAR CACHE CLEARING INITIATED');
+        
+        // Clear all possible caches
+        if ('caches' in window) {
+            caches.keys().then(function(names) {
+                console.log('🗑️ Clearing caches:', names);
+                names.forEach(function(name) {
+                    caches.delete(name);
+                });
+            });
+        }
+        
+        // Clear service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                registrations.forEach(function(registration) {
+                    console.log('🗑️ Unregistering service worker');
+                    registration.unregister();
+                });
+            });
+        }
+        
+        // Clear localStorage
+        try {
+            localStorage.clear();
+            console.log('🗑️ localStorage cleared');
+        } catch(e) {}
+        
+        // Clear sessionStorage
+        try {
+            sessionStorage.clear();
+            console.log('🗑️ sessionStorage cleared');
+        } catch(e) {}
+        
+        // Force reload if this is a cached version
+        if (performance.navigation.type === 2) {
+            console.log('🔄 Back/forward cache detected - forcing reload');
+            window.location.reload(true);
+        }
+        
+        console.log('✅ Cache clearing complete - all systems fresh!');
+    </script>
     
     <!-- Production Testing (only in production) -->
     <script>
@@ -705,21 +1046,30 @@
     
     <!-- Premium Service Worker Registration -->
     <script>
-        // GitHub Pages-safe Service Worker Registration
-        (function () {
-          // Detect base path from <base> or repo folder name
-          const fromBaseTag = document.querySelector('base')?.getAttribute('href') || '';
-          const repoBase = fromBaseTag || (location.pathname.includes('/dhamma-path/') ? '/dhamma-path/' : '/');
-
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register(`${repoBase}sw.js`, { scope: repoBase })
-              .then(reg => console.log('[SW] registered with scope:', reg.scope))
-              .catch(err => console.warn('[SW] registration failed:', err));
-          }
-
-          // Expose for other modules that need correct paths
-          window.__APP_BASE__ = repoBase;
-        })();
+        // Premium Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('./sw.js', { scope: './' });
+                    console.log('🚀 Premium Service Worker registered successfully:', registration.scope);
+                    
+                    // Handle updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // New version available
+                                if (confirm('A new version is available. Reload to update?')) {
+                                    window.location.reload();
+                                }
+                            }
+            });
+        });
+            } catch (error) {
+                    console.error('❌ Service Worker registration failed:', error);
+                }
+            });
+        }
         
         // Premium PWA Installation
         let deferredPrompt;

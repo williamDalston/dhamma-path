@@ -7,6 +7,236 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-display: swap;
+}
+
+/* Weather widget styles to prevent CLS */
+.weather-widget {
+    min-height: 120px;
+    width: 100%;
+    contain: layout style;
+    transform: translateZ(0); /* Force GPU layer */
+}
+
+/* Trust elements styling */
+.trust-elements {
+    min-height: 100px;
+    contain: layout style;
+    margin-bottom: 1rem;
+}
+
+.privacy-notice {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.privacy-link {
+    color: #4a5568;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.privacy-link:hover {
+    color: #2d3748;
+    text-decoration: underline;
+}
+
+/* Breathing controls styling */
+.breathing-controls {
+    min-height: 80px;
+    contain: layout style;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.breathing-btn {
+    background: linear-gradient(135deg, #4a5568, #2d3748);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.breathing-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.breath-icon {
+    font-size: 18px;
+}
+
+/* Loading placeholders to prevent CLS */
+.content-placeholder {
+    height: var(--expected-height, 200px);
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.1) 25%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.1) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* EMERGENCY CLS PREVENTION - CRITICAL FIXES */
+.welcome-section,
+.main-content,
+.weather-section {
+    min-height: 400px; /* Reserve space */
+    contain: layout style;
+    transform: translateZ(0); /* Force layer */
+}
+
+.weather-widget,
+.analytics-widget,
+.recommendation-widget {
+    min-height: 120px;
+    max-height: 120px;
+    contain: layout style paint size;
+    will-change: auto; /* Remove after loading */
+}
+
+/* Reserve space for hero/banner */
+.hero { 
+    min-height: 280px; 
+}
+
+/* Images with known aspect ratio - responsive-safe */
+img[width][height] { 
+    height: auto; 
+    max-width: 100%;
+}
+
+/* Modern aspect ratio for cards */
+.card-thumb { 
+    aspect-ratio: 16/9; 
+    object-fit: cover; 
+    display: block;
+    width: 100%;
+}
+
+/* Widget shells with content visibility */
+.widget-shell { 
+    content-visibility: auto; 
+    contain-intrinsic-size: 200px; 
+}
+
+/* Hero images with proper loading attributes */
+.hero img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Skeleton loaders for dynamic content */
+.skeleton-loader {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Skeleton loaders to prevent CLS */
+.weather-widget-placeholder,
+.analytics-widget-placeholder,
+.recommendation-widget-placeholder {
+    min-height: 150px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 8px;
+    margin: 8px 0;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Font loading optimization */
+@font-face {
+    font-family: 'Inter';
+    font-display: swap;
+    src: url('data:font/woff2;base64,') format('woff2');
+}
+
+/* Prevent layout shifts from dynamic content */
+.dynamic-content {
+    min-height: 200px;
+    contain: layout style;
+}
+
+/* Reserve space for theme transitions */
+.theme-transition {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Emergency loading states */
+.loading-content {
+    height: var(--content-height, 200px);
+    background: linear-gradient(
+        90deg, 
+        rgba(200,200,200,0.1) 25%, 
+        rgba(200,200,200,0.2) 50%, 
+        rgba(200,200,200,0.1) 75%
+    );
+    background-size: 400% 100%;
+    animation: emergency-shimmer 1s infinite linear;
+    border-radius: 4px;
+}
+
+@keyframes emergency-shimmer {
+    0% { background-position: -400% 0; }
+    100% { background-position: 400% 0; }
+}
+
+/* Prevent font loading shifts */
+* {
+    font-display: swap;
+}
+
+/* Critical performance boost */
+.heavy-animation {
+    animation-duration: 0.1s; /* Reduce all animations */
+}
+
+.disable-animations * {
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+}
+
+/* Emergency performance mode */
+.emergency-mode {
+    contain: layout style paint;
+}
+
+.emergency-mode * {
+    will-change: auto;
+    transform: translateZ(0);
 }
 
 /* Critical layout classes */

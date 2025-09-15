@@ -44,16 +44,7 @@ class ABTestingFramework {
             });
         };
         
-        // Track experiment interactions
-        this.trackExperimentInteraction = (experimentId, variant, interactionType, element = null) => {
-            this.trackEvent('experiment_interaction', {
-                experiment_id: experimentId,
-                variant: variant,
-                interaction_type: interactionType,
-                element: element,
-                timestamp: Date.now()
-            });
-        };
+        // Track experiment interactions - will be defined as class method
     }
     
     initializeExperiments() {
@@ -351,9 +342,31 @@ class ABTestingFramework {
         this.trackExperimentConversion(experimentId, variant, conversionType, value);
     }
     
+    trackExperimentInteraction(experimentId, variant, interactionType, element = null) {
+        this.trackEvent('experiment_interaction', {
+            experiment_id: experimentId,
+            variant: variant,
+            interaction_type: interactionType,
+            element: element,
+            timestamp: Date.now()
+        });
+    }
+
     trackInteraction(experimentId, interactionType, element = null) {
-        const variant = this.getUserVariant(experimentId);
-        this.trackExperimentInteraction(experimentId, variant, interactionType, element);
+        try {
+            const variant = this.getUserVariant(experimentId);
+            this.trackExperimentInteraction(experimentId, variant, interactionType, element);
+        } catch (err) {
+            console.warn('[AB] Fallback interaction track', err);
+            // Fallback to direct analytics call
+            this.analytics?.track?.('experiment_interaction', { 
+                experiment_id: experimentId, 
+                variant: this.getUserVariant(experimentId),
+                interaction_type: interactionType,
+                element: element?.id || element?.tagName,
+                timestamp: Date.now()
+            });
+        }
     }
     
     calculateResults(experimentId) {

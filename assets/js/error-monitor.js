@@ -230,8 +230,26 @@ class ErrorMonitor {
     async reportError(errorData) {
         const IS_PAGES = /github\.io$/.test(location.hostname);
         if (IS_PAGES) { 
-            console.warn('⚠️ Error endpoint not available on GitHub Pages'); 
-            return; 
+            console.warn('⚠️ Error endpoint not available on GitHub Pages - logging locally only'); 
+            // Log locally instead of trying to send to server
+            const payload = {
+                ...errorData,
+                sessionId: this.getSessionId(),
+                userId: this.getUserId(),
+                viewport: { width: window.innerWidth, height: window.innerHeight },
+                screen: { width: screen.width, height: screen.height },
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                language: navigator.language,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Store in local buffer for potential future analysis
+            const buf = JSON.parse(localStorage.getItem('mf_error_buffer') || '[]');
+            buf.push({ t: Date.now(), payload });
+            // Keep only last 50 errors to prevent storage bloat
+            if (buf.length > 50) buf.splice(0, buf.length - 50);
+            localStorage.setItem('mf_error_buffer', JSON.stringify(buf));
+            return;
         }
 
         const payload = {
