@@ -925,9 +925,9 @@ class UIFixes {
     }
 
     stopBreathingExercise() {
-        const interface = document.getElementById('breathing-interface');
-        if (interface) {
-            interface.remove();
+        const breathingInterface = document.getElementById('breathing-interface');
+        if (breathingInterface) {
+            breathingInterface.remove();
         }
         this.isBreathingPaused = false;
     }

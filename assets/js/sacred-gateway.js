@@ -376,3 +376,6 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = SacredGateway;
 }
+
+// Export to global window
+window.SacredGateway = SacredGateway;
