@@ -137,6 +137,7 @@ class DhammaPathApp {
         this.chunkedInitialize(() => {
             this.initializeAnalytics();
             this.initializeWeatherIntegration();
+            this.startMemoryOptimization();
         });
         
         this.chunkedInitialize(() => {
@@ -201,6 +202,9 @@ class DhammaPathApp {
             await window.waitForGlobal('NavigationManager', 3000);
             this.navigationManager = new window.NavigationManager();
             console.log('✅ NavigationManager initialized');
+            
+            // Process any queued navigation requests
+            this.processNavigationQueue();
         } catch (error) {
             console.error('❌ NavigationManager not found:', error.message);
         }
@@ -612,7 +616,36 @@ class DhammaPathApp {
         if (this.navigationManager) {
             this.navigationManager.navigateToPage(pageName);
         } else {
-            console.error('❌ Navigation manager not available');
+            // Queue the navigation request until the manager is ready
+            console.log('⏳ Navigation manager not ready, queuing request for:', pageName);
+            if (!this.navigationQueue) {
+                this.navigationQueue = [];
+            }
+            this.navigationQueue.push(pageName);
+        }
+    }
+    
+    processNavigationQueue() {
+        if (this.navigationQueue && this.navigationQueue.length > 0 && this.navigationManager) {
+            console.log('🔄 Processing queued navigation requests:', this.navigationQueue);
+            this.navigationQueue.forEach(pageName => {
+                this.navigationManager.navigateToPage(pageName);
+            });
+            this.navigationQueue = [];
+        }
+    }
+
+    startMemoryOptimization() {
+        // Start periodic memory cleanup
+        if (window.lifecycleManager) {
+            // Run aggressive cleanup every 2 minutes
+            setInterval(() => {
+                if (window.lifecycleManager.aggressiveCleanup) {
+                    window.lifecycleManager.aggressiveCleanup();
+                }
+            }, 120000); // 2 minutes
+            
+            console.log('🧠 Memory optimization started');
         }
     }
 

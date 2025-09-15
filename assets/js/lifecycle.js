@@ -183,14 +183,14 @@ class LifecycleManager {
             const limitMB = memory.jsHeapSizeLimit / 1024 / 1024;
             const usagePercent = (usedMB / limitMB) * 100;
 
-            if (usagePercent > 80) {
+            if (usagePercent > 70) { // Lowered threshold for earlier cleanup
                 console.warn(`🧠 High memory usage: ${usedMB.toFixed(2)}MB (${usagePercent.toFixed(1)}%)`);
                 this.aggressiveCleanup();
             }
         };
 
-        // Check memory every 30 seconds
-        this.trackInterval(setInterval(checkMemory, 30000));
+        // Check memory every 60 seconds (reduced frequency)
+        this.trackInterval(setInterval(checkMemory, 60000));
     }
 
     // Aggressive cleanup when memory is high
@@ -205,9 +205,93 @@ class LifecycleManager {
         // Clean up unused DOM elements
         this.cleanupUnusedElements();
 
+        // Clear unused event listeners
+        this.clearUnusedEventListeners();
+
+        // Clear unused intervals and timeouts
+        this.clearUnusedTimers();
+
+        // Clear unused observers
+        this.clearUnusedObservers();
+
+        // Clear unused global objects
+        this.clearUnusedGlobals();
+
         // Force garbage collection if available
         if (window.gc) {
             window.gc();
+        }
+    }
+
+    // Clear unused event listeners
+    clearUnusedEventListeners() {
+        // Remove event listeners from elements that are no longer in the DOM
+        this.eventListeners.forEach((listeners, key) => {
+            listeners.forEach(({ element, event, handler, options }) => {
+                if (!document.contains(element)) {
+                    element.removeEventListener(event, handler, options);
+                }
+            });
+        });
+    }
+
+    // Clear unused timers
+    clearUnusedTimers() {
+        // Clear intervals that might be stale
+        this.intervals.forEach(id => {
+            try {
+                clearInterval(id);
+            } catch (e) {
+                // Interval might already be cleared
+            }
+        });
+        this.intervals.clear();
+
+        // Clear timeouts that might be stale
+        this.timeouts.forEach(id => {
+            try {
+                clearTimeout(id);
+            } catch (e) {
+                // Timeout might already be cleared
+            }
+        });
+        this.timeouts.clear();
+    }
+
+    // Clear unused observers
+    clearUnusedObservers() {
+        this.observers.forEach(observer => {
+            if (observer.disconnect) {
+                try {
+                    observer.disconnect();
+                } catch (e) {
+                    // Observer might already be disconnected
+                }
+            }
+        });
+        this.observers.clear();
+    }
+
+    // Clear unused global objects
+    clearUnusedGlobals() {
+        // Clear unused analytics data
+        if (window.analytics?.clearCache) {
+            window.analytics.clearCache();
+        }
+
+        // Clear unused physics animations
+        if (window.physicsAnimations?.clearStaleAnimations) {
+            window.physicsAnimations.clearStaleAnimations();
+        }
+
+        // Clear unused motion system data
+        if (window.motionSystem?.clearCache) {
+            window.motionSystem.clearCache();
+        }
+
+        // Clear unused haptic data
+        if (window.hapticStorytelling?.clearCache) {
+            window.hapticStorytelling.clearCache();
         }
     }
 
